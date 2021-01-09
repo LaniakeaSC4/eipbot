@@ -6,16 +6,9 @@ client.on('ready', () => {
 
 client.on('message', message => {
 
-    if (message.content === 'ping') {
+if(message.content.startsWith("//inrole"))
 
-       message.reply('pong');
-
-       }
-});
-
-client.on('message', message => {
-  
-if(message.content.startsWith("//inrole")){
+{
     let roleName = message.content.split(" ").slice(1).join(" ");
 
     //Filtering the guild members only keeping those with the role
