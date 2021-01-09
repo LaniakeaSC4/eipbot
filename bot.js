@@ -24,7 +24,7 @@ if(message.content.startsWith("//inrole")){
     });
 
     return message.channel.send({embed});
-});
+}
 
 // THIS  MUST  BE  THIS  WAY
 
