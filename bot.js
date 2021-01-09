@@ -6,9 +6,7 @@ client.on('ready', () => {
 
 client.on('message', message => {
 
-if(message.content.startsWith("//inrole"))
-
-{
+if(message.content.startsWith("//inrole")){
     let roleName = message.content.split(" ").slice(1).join(" ");
 
     //Filtering the guild members only keeping those with the role
