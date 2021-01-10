@@ -38,7 +38,7 @@ console.log('one loop')
         for (var i=Members2.length; i--;) {Members2[i] = '\n' + Members2[i];} 
         
         //send message as output - broke Here? 
-        message.channel.send(`Users with ${Role.name}: ${Members2}`);
+        message.channel.send(`Users with ${Role.name}:\n ${Members2}`);
         
         teams.unshift(therole)
         
