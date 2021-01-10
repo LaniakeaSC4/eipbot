@@ -14,19 +14,20 @@ for (const property in teams) {
 
 //start
 client.on('message', async message => {
+  
+  //pop the role stack
+const therole = teams.pop();
+console.log(therole) 
+
   //look for trigger
     if (message.content.startsWith("!egg")) {
       //find role
-      const Role = message.guild.roles.cache.find(role => role.name == "egg-streme" );
+      const Role = message.guild.roles.cache.find(role => role.name == therole );
       //fill members array with users in that role
       const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
 
         //basic output to channel (for troubleshooting)
         //message.channel.send(`1. Users with ${Role.name}: ${Members}`);
-        
-          
-const therole = teams.pop();
-console.log(therole) 
  
         //Duplicate Members into Members2 so we can mess with Members 2 preserving Members
         var Members2 = JSON.parse(JSON.stringify(Members)); 
