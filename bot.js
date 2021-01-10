@@ -27,8 +27,8 @@ client.on('message', async message => {
     if (message.content.startsWith("!egg")) {
       
       
-      
-      for (i = 0;i < numofroles; i++){
+      var loops 
+      for (loops = 0;i < numofroles; loops++){
       
       const therole = teams.pop();
 console.log(therole) 
