@@ -10,7 +10,7 @@ client.on("message", message => {
       
       
       let roleID = "797014592780894209";
-let membersWithRole = message.guild.roles.get.get(roleID).members;
+let membersWithRole = message.guilds.roles.get.get(roleID).members;
 console.log(`Got ${membersWithRole.size} members with that role.`);
 
 
