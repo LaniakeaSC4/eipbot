@@ -29,21 +29,23 @@ client.on('message', async message => {
          const Role = message.guild.roles.cache.find(role => role.name == therole );
          //fill members array with users in that role
           const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
- 
-          //Duplicate Members into Members2 so we can mess with Members 2 preserving Members
-            var Members2 = JSON.parse(JSON.stringify(Members)); 
            
             //append \n to each arrary string so discord takes new line
-            for (var i=Members2.length; i--;) {Members2[i] = '\n' + Members2[i];} 
+            for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
             
              //Simple - send message as output
-              //message.channel.send(`\n Users with ${Role.name}: ${Members2}`);
+              //message.channel.send(`\n Users with ${Role.name}: ${Members}`);
           
              //rich embed
              const teamoutput = new Discord.MessageEmbed()
              .setColor('#0099ff')
              .setTitle(role.name)
-           .setDescription(Members2)
+             
+             //need to pop members here? Working here
+             var nameloops = Members.lenght
+             var popnames
+             
+             .setDescription((for popnames = 0,popnames < nameloops, popnames++){Members.pop()})
           
           message.channel.send(teamoutput);
           
