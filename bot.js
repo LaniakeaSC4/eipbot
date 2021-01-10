@@ -44,7 +44,7 @@ client.on('message', async message => {
              //need to pop members here? Working here
              
              
-             .setDescription(Members.pop();)
+             .setDescription($Members.pop();)
           
           message.channel.send(teamoutput);
           
