@@ -10,7 +10,7 @@ client.on('ready', () => {
 });
 
 //how long is teams
-var numofroles = teams.length();
+var numofroles = teams.length;
 console.log(numofroles)
 
 //for each teams array in teams
