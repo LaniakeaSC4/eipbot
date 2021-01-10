@@ -39,12 +39,12 @@ console.log(therole)
     };
 });
 
-
-//rebuild team array
-var teams = [ 'egg-streme', 'over-easy'];
-
 //end forEach
 };
+
+//rebuild team array
+var teams = [ 'egg-streme', 'over-easy'] ; 
+
 
 // THIS  MUST  BE  THIS  WAY
 
