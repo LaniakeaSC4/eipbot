@@ -25,7 +25,7 @@ client.on('message', async message => {
 
   //look for trigger
     if (message.content.startsWith("!egg")) {
-      
+      console.log('Seen an egg')
       
       var loops 
       for (loops = 0;i < numofroles; loops++){
