@@ -2,14 +2,11 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.on('ready', () => {
     console.log('I am ready!');
+});
 
 let myRole = message.guild.roles.cache.find(role => role.name === "Gambler");
 
 client.on("message", message => {
-
-    if(message.content.startsWith(`!!go4-add`)) {
-        message.mentions.members.first().addRole('$myRole'); // gets the <GuildMember> from a mention and then adds the role to that member                     
-    }
 
     if(message.content == `!!go4-list`) {
         const ListEmbed = new Discord.RichEmbed()
