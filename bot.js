@@ -6,7 +6,7 @@ client.on('ready', () => {
 
 client.on("message", message => {
 
-    if(message.content.startsWith(`${prefix}go4-add`)) {
+    if(message.content.startsWith(`!!go4-add`)) {
         message.mentions.members.first().addRole('415665311828803584'); // gets the <GuildMember> from a mention and then adds the role to that member                     
     }
 
