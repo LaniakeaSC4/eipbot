@@ -10,7 +10,7 @@ client.on('message', async message => {
     if (message.content.startsWith("!egg")) {
         const Role = message.guild.roles.cache.find(role => role.name == "egg-streme");
         const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
-        message.channel.send(`Users with ${Role.name}: ${Members}.join('\n')`);
+        message.channel.send(`Users with ${Role.name}: ${Members + '\n'}`);
     };
 });
 
