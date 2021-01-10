@@ -8,15 +8,8 @@ client.on('ready', () => {
     console.log('I am ready!');
     console.log(teams)
 });
-
-//how long is teams
-  //var numofroles = teams.length;
-  //console.log(numofroles)
-
 //start
 client.on('message', async message => {
-
-
   //look for trigger
       if (message.content.startsWith("!egg")) {
        console.log('Seen an egg')
@@ -25,29 +18,23 @@ client.on('message', async message => {
         var loops
         for (loops = 0;loops < numofroles; loops++){
         
-       const therole = teams.pop();
-       //what role did we pop?
-         console.log(therole) 
-         
-       //debug counter. How many loops?
-          //console.log('one loop')
-        
-       //find role for this loop
-       const Role = message.guild.roles.cache.find(role => role.name == therole );
-        //fill members array with users in that role
-        const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
-
-       //basic output to channel (for troubleshooting)
-         //message.channel.send(`1. Users with ${Role.name}: ${Members}`);
+          const therole = teams.pop();
+          //what role did we pop?
+           console.log(therole) 
+           
+         //find role for this loop
+         const Role = message.guild.roles.cache.find(role => role.name == therole );
+         //fill members array with users in that role
+          const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
  
-         //Duplicate Members into Members2 so we can mess with Members 2 preserving Members
-           var Members2 = JSON.parse(JSON.stringify(Members)); 
-          
-          //append \n to each arrary string so discord takes new line
-          for (var i=Members2.length; i--;) {Members2[i] = '\n' + Members2[i];} 
-          
-          //send message as output
-          message.channel.send(`\n Users with ${Role.name}: ${Members2}`);
+          //Duplicate Members into Members2 so we can mess with Members 2 preserving Members
+            var Members2 = JSON.parse(JSON.stringify(Members)); 
+           
+            //append \n to each arrary string so discord takes new line
+            for (var i=Members2.length; i--;) {Members2[i] = '\n' + Members2[i];} 
+            
+             //send message as output
+              message.channel.send(`\n Users with ${Role.name}: ${Members2}`);
           
          //Put role back in stack at the bottom
           teams.unshift(therole)
