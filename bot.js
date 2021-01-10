@@ -11,10 +11,6 @@ client.on('ready', () => {
 
 //for each teams array in teams
 for (const property in teams) {
-  
-  
-const therole = teams.pop();
-console.log(therole)
 
 //start
 client.on('message', async message => {
@@ -27,6 +23,10 @@ client.on('message', async message => {
 
         //basic output to channel (for troubleshooting)
         //message.channel.send(`1. Users with ${Role.name}: ${Members}`);
+        
+          
+const therole = teams.pop();
+console.log(therole) 
  
         //Duplicate Members into Members2 so we can mess with Members 2 preserving Members
         var Members2 = JSON.parse(JSON.stringify(Members)); 
