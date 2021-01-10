@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 //build team array
-var teams = [ 'egg-streme', 'over-easy']
+var teams = [ 'egg-streme', 'over-easy'];
 
 client.on('ready', () => {
     console.log('I am ready!');
@@ -38,6 +38,10 @@ console.log(therole)
         message.channel.send(`Users with ${Role.name}: ${Members2}`);
     };
 });
+
+
+//rebuild team array
+var teams = [ 'egg-streme', 'over-easy'];
 
 //end forEach
 };
