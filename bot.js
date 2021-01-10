@@ -12,7 +12,8 @@ client.on('message', async message => {
         const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
         message.channel.send(`1. Users with ${Role.name}: ${Members}`);
         
-        Const Members2 = array.from(Members);
+var Members2 = JSON.parse(JSON.stringify(Members)); 
+        //Const Members2 = array.from(Members);
         
         message.channel.send(`2. Users with ${Role.name}: ${Members2}`);
         
