@@ -6,7 +6,7 @@ var teams = [ 'egg-streme', 'over-easy']
 
 client.on('ready', () => {
     console.log('I am ready!');
-    console.log('Ready 2')
+    console.log('teams')
 });
 
 //start
