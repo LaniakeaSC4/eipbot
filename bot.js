@@ -5,21 +5,25 @@ client.on('ready', () => {
 });
 
 
-
+//start
 client.on('message', async message => {
+  //look for trigger
     if (message.content.startsWith("!egg")) {
-        const Role = message.guild.roles.cache.find(role => role.name == "egg-streme");
-        const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
-        message.channel.send(`1. Users with ${Role.name}: ${Members}`);
-        
-var Members2 = JSON.parse(JSON.stringify(Members)); 
+      //find role
+      const Role = message.guild.roles.cache.find(role => role.name == "egg-streme");
+      //fill members array with users in that role
+      const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
 
-for (var i=Members2.length; i--;) {
-    Members2[i] = '\n' + Members2[i];
-} 
-        
-        message.channel.send(`2. Users with ${Role.name}: ${Members2}`);
-        
+        //basic output to channel (for troubleshooting)
+        //message.channel.send(`1. Users with ${Role.name}: ${Members}`);
+ 
+        //Duplicate Members into Members2 so we can mess with Members 2 preserving Members
+        var Members2 = JSON.parse(JSON.stringify(Members)); 
+        //append \n to each arrary string so discord takes new line
+        for (var i=Members2.length; i--;) {Members2[i] = '\n' + Members2[i];} 
+
+        //send message as output
+        message.channel.send(`Users with ${Role.name}: ${Members2}`);
     };
 });
 
