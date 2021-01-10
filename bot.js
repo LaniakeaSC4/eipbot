@@ -6,7 +6,7 @@ var teams = [ 'egg-streme', 'over-easy', 'sunny-side', 'hard-boiled', 'fowl-play
 
 client.on('ready', () => {
     console.log('I am ready!');
-    console.log(teams)
+    //console.log(teams)
 });
 //start
 client.on('message', async message => {
@@ -23,7 +23,7 @@ client.on('message', async message => {
         
           const therole = teams.pop();
           //what role did we pop?
-           console.log(therole) 
+           //console.log(therole) 
            
          //find role for this loop
          const Role = message.guild.roles.cache.find(role => role.name == therole );
@@ -39,6 +39,7 @@ client.on('message', async message => {
              //rich embed
              const teamoutput = new Discord.MessageEmbed()
             .setColor('#0099ff')
+            console.log(role.name)
             .setTitle('${role.name}')
              
              //need to pop members here? Working here
