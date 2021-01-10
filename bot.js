@@ -4,6 +4,7 @@ client.on('ready', () => {
     console.log('I am ready!');
 });
 
+client.on("message", message => {
 if(message.content.startsWith("//inrole")){
     let roleName = message.content.split(" ").slice(1).join(" ");
 
@@ -23,7 +24,7 @@ if(message.content.startsWith("//inrole")){
 
     return message.channel.send({embed});
 }
-
+} 
 // THIS  MUST  BE  THIS  WAY
 
 client.login(process.env.BOT_TOKEN);
