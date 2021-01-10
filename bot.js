@@ -14,6 +14,9 @@ client.on('message', async message => {
       if (message.content.startsWith("!egg")) {
        console.log('Seen an egg')
        
+       //how many roles to loop?
+       var numofroles = teams.length
+       
         //Set number of loops equal to number of roles
         var loops
         for (loops = 0;loops < numofroles; loops++){
