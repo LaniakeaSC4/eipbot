@@ -13,7 +13,8 @@ client.on('message', async message => {
         message.channel.send(`1. Users with ${Role.name}: ${Members}`);
         
 var Members2 = JSON.parse(JSON.stringify(Members)); 
-        //Const Members2 = array.from(Members);
+
+Members2 = Members2.map(i => '#' + i); 
         
         message.channel.send(`2. Users with ${Role.name}: ${Members2}`);
         
