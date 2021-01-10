@@ -17,7 +17,7 @@ client.on('message', async message => {
   //look for trigger
     if (message.content.startsWith("!egg")) {
       //find role
-      const Role = message.guild.roles.cache.find(role => role.name == '${teams}' );
+      const Role = message.guild.roles.cache.find(role => role.name == {teams[i]} );
       //fill members array with users in that role
       const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
 
@@ -28,9 +28,9 @@ client.on('message', async message => {
         var Members2 = JSON.parse(JSON.stringify(Members)); 
         //append \n to each arrary string so discord takes new line
         for (var i=Members2.length; i--;) {Members2[i] = '\n' + Members2[i];} 
-console.log(${teams});
+        
         //send message as output - broke Here? 
-        //message.channel.send(`Users with ${Role.name}: ${Members2}`);
+        message.channel.send(`Users with ${Role.name}: ${Members2}`);
     };
 });
 
