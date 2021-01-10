@@ -4,7 +4,7 @@ client.on('ready', () => {
     console.log('I am ready!');
 });
 
-Bot.on("message", message => {
+bot.on("message", message => {
 
     if(message.content == `!!go4-list`) {
       
