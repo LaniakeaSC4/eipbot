@@ -16,7 +16,7 @@ console.log(numofroles)
 //for each teams array in teams
 //for (const property in teams) {
 
-for (i = 0;i < teams.length; i++){
+for (i = 0;i < numofroles; i++){
 
 //start
 client.on('message', async message => {
