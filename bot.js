@@ -8,7 +8,7 @@ client.on("message", message => {
 
     if(message.content == `!!go4-list`) {
       
-let myRole = message.guild.roles.cache.find(role => role.name === "Gambler");
+let myRole = message.guild.roles.cache.get("797014592780894209");
       
         const ListEmbed = new Discord.RichEmbed()
             .setTitle('Users with the go4 role:')
