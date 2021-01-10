@@ -42,10 +42,9 @@ client.on('message', async message => {
              .setTitle(role.name)
              
              //need to pop members here? Working here
-             var nameloops = Members.lenght
-             var popnames
              
-             .setDescription((for popnames = 0,popnames < nameloops, popnames++){Members.pop()})
+             
+             .setDescription(Members.pop();)
           
           message.channel.send(teamoutput);
           
