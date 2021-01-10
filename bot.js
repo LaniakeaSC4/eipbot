@@ -9,7 +9,7 @@ client.on('ready', () => {
     console.log(teams)
 });
 
-teams.forEach(
+teams.forEach({
 //start
 client.on('message', async message => {
   //look for trigger
@@ -31,7 +31,7 @@ client.on('message', async message => {
         message.channel.send(`Users with ${Role.name}: ${Members2}`);
     };
 });
-);
+});
 // THIS  MUST  BE  THIS  WAY
 
 client.login(process.env.BOT_TOKEN);
