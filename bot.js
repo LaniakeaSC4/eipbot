@@ -42,8 +42,8 @@ client.on('message', async message => {
              //rich embed
              const teamoutput = new Discord.MessageEmbed()
              .setColor('#0099ff')
-             .setTitle(${role.name})
-           .setDescription(${Members2})
+             .setTitle(role.name)
+           .setDescription(Members2)
           
           message.channel.send(teamoutput);
           
