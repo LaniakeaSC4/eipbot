@@ -2,18 +2,19 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.on('ready', () => {
     console.log('I am ready!');
-});
+
+let myRole = message.guild.roles.cache.find(role => role.name === "Moderators");
 
 client.on("message", message => {
 
     if(message.content.startsWith(`!!go4-add`)) {
-        message.mentions.members.first().addRole('415665311828803584'); // gets the <GuildMember> from a mention and then adds the role to that member                     
+        message.mentions.members.first().addRole('$myRole'); // gets the <GuildMember> from a mention and then adds the role to that member                     
     }
 
     if(message.content == `!!go4-list`) {
         const ListEmbed = new Discord.RichEmbed()
             .setTitle('Users with the go4 role:')
-            .setDescription(message.guild.roles.get('415665311828803584').members.map(m=>m.user.tag).join('\n'));
+            .setDescription(message.guild.roles.get('$myRole').members.map(m=>m.user.tag).join('\n'));
         message.channel.send(ListEmbed);                    
     }
 });
