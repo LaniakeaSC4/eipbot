@@ -19,6 +19,9 @@ client.on('message', async message => {
 const therole = teams.pop();
 console.log(therole) 
 
+//debug counter
+console.log('one loop')
+
   //look for trigger
     if (message.content.startsWith("!egg")) {
       //find role
