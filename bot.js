@@ -11,6 +11,10 @@ client.on('ready', () => {
 
 //for each teams array in teams
 for (const property in teams) {
+  
+  
+console.log(teams)
+
 
 //start
 client.on('message', async message => {
