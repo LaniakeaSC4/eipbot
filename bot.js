@@ -16,20 +16,28 @@ console.log(numofroles)
 //for each teams array in teams
 //for (const property in teams) {
 
-for (i = 0;i < numofroles; i++){
+
 
 //start
 client.on('message', async message => {
   
   //pop the role stack
-const therole = teams.pop();
+
+  //look for trigger
+    if (message.content.startsWith("!egg")) {
+      
+      
+      
+      for (i = 0;i < numofroles; i++){
+      
+      const therole = teams.pop();
 console.log(therole) 
 
 //debug counter
 console.log('one loop')
 
-  //look for trigger
-    if (message.content.startsWith("!egg")) {
+      
+      
       //find role
       const Role = message.guild.roles.cache.find(role => role.name == therole );
       //fill members array with users in that role
