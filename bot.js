@@ -57,10 +57,10 @@ console.log('one loop')
         teams.unshift(therole)
         
     };
-});
+};
 
 //end forEach
-};
+});
 
 // THIS  MUST  BE  THIS  WAY
 
