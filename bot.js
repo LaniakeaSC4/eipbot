@@ -6,9 +6,10 @@ client.on('ready', () => {
 
 client.on("message", message => {
 
-let myRole = message.guild.roles.cache.find(role => role.name === "Gambler");
-
     if(message.content == `!!go4-list`) {
+      
+let myRole = message.guild.roles.cache.find(role => role.name === "Gambler");
+      
         const ListEmbed = new Discord.RichEmbed()
             .setTitle('Users with the go4 role:')
             .setDescription(message.guild.roles.get('$myRole').members.map(m=>m.user.tag).join('\n'));
