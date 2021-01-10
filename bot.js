@@ -4,9 +4,9 @@ client.on('ready', () => {
     console.log('I am ready!');
 });
 
-let myRole = message.guild.roles.cache.find(role => role.name === "Gambler");
-
 client.on("message", message => {
+
+let myRole = message.guild.roles.cache.find(role => role.name === "Gambler");
 
     if(message.content == `!!go4-list`) {
         const ListEmbed = new Discord.RichEmbed()
