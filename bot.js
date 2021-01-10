@@ -14,7 +14,7 @@ client.on('message', async message => {
         
             let embed = new discord.RichEmbed({
         "title": `Users with the ${Role.name} role`,
-        "description": ${Members}.join("\n"),
+        "description": `${Members}`),
         "color": 0xFFFF
     }); 
         
