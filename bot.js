@@ -45,7 +45,7 @@ client.on('message', async message => {
              .setTitle('${role.name}')
            .setDescription('${Members2}')
           
-          channel.send(teamoutput);
+          message.channel.send(teamoutput);
           
          //Put role back in stack at the bottom
           teams.unshift(therole)
