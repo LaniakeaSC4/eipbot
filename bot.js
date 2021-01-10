@@ -36,15 +36,14 @@ console.log(therole)
         
         //send message as output - broke Here? 
         message.channel.send(`Users with ${Role.name}: ${Members2}`);
+        
+        teams.unshift(therole)
+        
     };
 });
 
 //end forEach
 };
-
-//rebuild team array
-var teams = [ 'egg-streme', 'over-easy'] ; 
-
 
 // THIS  MUST  BE  THIS  WAY
 
