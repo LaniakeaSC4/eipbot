@@ -15,7 +15,7 @@ client.on('message', async message => {
 var Members2 = JSON.parse(JSON.stringify(Members)); 
 
 for (var i=Members2.length; i--;) {
-    Members2[i] = Members2[i] + '\n';
+    Members2[i] = '\n' + Members2[i];
 } 
         
         message.channel.send(`2. Users with ${Role.name}: ${Members2}`);
