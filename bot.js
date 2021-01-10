@@ -3,7 +3,7 @@ const client = new Discord.Client();
 client.on('ready', () => {
     console.log('I am ready!');
 
-let myRole = message.guild.roles.cache.find(role => role.name === "Moderators");
+let myRole = message.guild.roles.cache.find(role => role.name === "Gambler");
 
 client.on("message", message => {
 
