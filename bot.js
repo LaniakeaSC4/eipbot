@@ -17,7 +17,7 @@ client.on('message', async message => {
   //look for trigger
     if (message.content.startsWith("!egg")) {
       //find role
-      const Role = message.guild.roles.cache.find(role => role.name == ${teams});
+      const Role = message.guild.roles.cache.find(role => role.name == '${teams}' );
       //fill members array with users in that role
       const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
 
