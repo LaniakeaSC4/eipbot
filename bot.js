@@ -4,11 +4,17 @@ client.on('ready', () => {
     console.log('I am ready!');
 });
 
-bot.on("message", message => {
+client.on("message", message => {
 
     if(message.content == `!!go4-list`) {
       
-let myRole = message.guild.roles.cache.get("797014592780894209");
+      
+      let roleID = "797014592780894209";
+let membersWithRole = message.guild.roles.cache.get(roleID).members;
+console.log(`Got ${membersWithRole.size} members with that role.`);
+
+
+//let myRole = message.guild.roles.cache.get("797014592780894209");
       
         const ListEmbed = new Discord.RichEmbed()
             .setTitle('Users with the go4 role:')
