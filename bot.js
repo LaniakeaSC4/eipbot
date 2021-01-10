@@ -39,8 +39,8 @@ client.on('message', async message => {
              //rich embed
              const teamoutput = new Discord.MessageEmbed()
             .setColor('#0099ff')
-            console.log(role.name)
-            .setTitle('${role.name}')
+            console.log(therole)
+            .setTitle('${therole}')
              
              //need to pop members here? Working here
              
