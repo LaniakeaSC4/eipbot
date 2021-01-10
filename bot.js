@@ -36,8 +36,16 @@ client.on('message', async message => {
             //append \n to each arrary string so discord takes new line
             for (var i=Members2.length; i--;) {Members2[i] = '\n' + Members2[i];} 
             
-             //send message as output
-              message.channel.send(`\n Users with ${Role.name}: ${Members2}`);
+             //Simple - send message as output
+              //message.channel.send(`\n Users with ${Role.name}: ${Members2}`);
+          
+             //rich embed
+             const teamoutput = new Discord.MessageEmbed()
+             .setColor('#0099ff')
+             .setTitle('${role.name}')
+           .setDescription('${Members2}')
+          
+          channel.send(teamoutput);
           
          //Put role back in stack at the bottom
           teams.unshift(therole)
