@@ -9,8 +9,8 @@ client.on('ready', () => {
     console.log(teams)
 });
 
-//for each teams array item
-teams.forEach(
+//for each teams array in teams
+for (const property in teams) {
 
 //start
 client.on('message', async message => {
@@ -35,7 +35,7 @@ client.on('message', async message => {
 });
 
 //end forEach
-);
+};
 
 // THIS  MUST  BE  THIS  WAY
 
