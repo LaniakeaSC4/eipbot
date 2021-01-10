@@ -13,8 +13,8 @@ client.on('ready', () => {
 for (const property in teams) {
   
   
-console.log(teams)
-
+const therole = teams.pop();
+console.log(therole)
 
 //start
 client.on('message', async message => {
