@@ -28,9 +28,9 @@ client.on('message', async message => {
         var Members2 = JSON.parse(JSON.stringify(Members)); 
         //append \n to each arrary string so discord takes new line
         for (var i=Members2.length; i--;) {Members2[i] = '\n' + Members2[i];} 
-
-        //send message as output
-        message.channel.send(`Users with ${Role.name}: ${Members2}`);
+console.log(${teams});
+        //send message as output - broke Here? 
+        //message.channel.send(`Users with ${Role.name}: ${Members2}`);
     };
 });
 
