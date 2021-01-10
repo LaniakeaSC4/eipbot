@@ -38,13 +38,13 @@ client.on('message', async message => {
           
              //rich embed
              const teamoutput = new Discord.MessageEmbed()
-             .setColor('#0099ff')
-             .setTitle(role.name)
+            .setColor('#0099ff')
+            .setTitle('role.name')
              
              //need to pop members here? Working here
              
              
-             .setDescription($Members.pop();)
+             .setDescription('Members.pop();');
           
           message.channel.send(teamoutput);
           
