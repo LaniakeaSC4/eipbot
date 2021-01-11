@@ -36,7 +36,7 @@ const Role = message.guild.roles.cache.find(role => role.name == therole );
 //fill members array with users in that role
 //const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.username);
 const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
-
+console.log(Members)
 //format members array
 	
 	//for each member in the arrary, look them up and grab all their roles
