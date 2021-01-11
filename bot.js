@@ -57,7 +57,7 @@ if (therole == 'egg-streme') {
   teamtitle = 'Did not match a team';
 };
 
-console.log(thistitle)
+console.log(teamtitle)
 
 //Build our rich embed output
 const teamoutput = {
