@@ -20,11 +20,11 @@ if (message.content.startsWith("!egg")) {
 	//console.log('Seen an egg')
 
 //how many roles to loop?
-var numofroles = teams.length
+//var numofroles = teams.length
        
 //Set number of loops equal to number of roles
 var loops
-for (loops = 0;loops < numofroles; loops++){
+for (loops = 0;loops < teams.length; loops++){
 
 //pop a role to work with for this loop
 const therole = teams.pop();
