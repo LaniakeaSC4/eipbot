@@ -27,64 +27,65 @@ client.on('message', async message => {
            
          //find role for this loop
          const Role = message.guild.roles.cache.find(role => role.name == therole );
+		
          //fill members array with users in that role
           const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
            
-            //append \n to each arrary string so discord takes new line
-            for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
+         //append \n to each arrary string so discord takes new line
+         for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
             
-             //Simple - send message as output
-              //message.channel.send(`Users with ${Role.name}: ${Members}`);
+         //Simple - send message as output
+         //message.channel.send(`Users with ${Role.name}: ${Members}`);
           
-             //rich embed
+         //Build our rich embed output
              const teamoutput = {
-	color: 0x0099ff,
-	title: 'Some titlse',
-	url: 'https://discord.js.org',
-	author: {
-		name: 'Some name',
-		icon_url: 'https://i.imgur.com/wSTFkRM.png',
+		color: 0x0099ff,
+		title: therole,
 		url: 'https://discord.js.org',
-	},
-	description: 'Some description here',
-	thumbnail: {
-		url: 'https://i.imgur.com/wSTFkRM.png',
-	},
-	fields: [
-		{
-			name: 'Regular field title',
-			value: 'Some value here',
+		author: {
+			name: 'Some name',
+			icon_url: 'https://i.imgur.com/wSTFkRM.png',
+			url: 'https://discord.js.org',
+			},
+		description: 'Some description here',
+		thumbnail: {
+			url: 'https://i.imgur.com/wSTFkRM.png',
+			},
+		fields: [
+			{
+				name: 'Regular field title',
+				value: 'Some value here',
+			},
+			{
+				name: '\u200b',
+				value: '\u200b',
+				inline: false,
+			},
+			{
+				name: 'Inline field title',
+				value: 'Some value here',
+				inline: true,
+			},
+			{
+				name: 'Inline field title',
+				value: 'Some value here',
+				inline: true,
+			},
+			{
+				name: 'Inline field title',
+				value: 'Some value here',
+				inline: true,
+			},
+		],
+		image: {
+			url: 'https://i.imgur.com/wSTFkRM.png',
 		},
-		{
-			name: '\u200b',
-			value: '\u200b',
-			inline: false,
+		timestamp: new Date(),
+		footer: {
+			text: 'Some footer text here',
+			icon_url: 'https://i.imgur.com/wSTFkRM.png',
 		},
-		{
-			name: 'Inline field title',
-			value: 'Some value here',
-			inline: true,
-		},
-		{
-			name: 'Inline field title',
-			value: 'Some value here',
-			inline: true,
-		},
-		{
-			name: 'Inline field title',
-			value: 'Some value here',
-			inline: true,
-		},
-	],
-	image: {
-		url: 'https://i.imgur.com/wSTFkRM.png',
-	},
-	timestamp: new Date(),
-	footer: {
-		text: 'Some footer text here',
-		icon_url: 'https://i.imgur.com/wSTFkRM.png',
-	},
-};
+	};
 
 message.channel.send({ embed: teamoutput });
             
