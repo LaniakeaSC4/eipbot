@@ -34,20 +34,60 @@ client.on('message', async message => {
             for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
             
              //Simple - send message as output
-              //message.channel.send(`\n Users with ${Role.name}: ${Members}`);
+              //message.channel.send(`Users with ${Role.name}: ${Members}`);
           
              //rich embed
-             const teamoutput = new Discord.MessageEmbed()
-            .setColor('#0099ff');
-            console.log(therole);
-            .setTitle(therole);
-             
-             //need to pop members here? Working here
-             
-             
-             .setDescription('Members.pop();');
-          
-          message.channel.send(teamoutput);
+             const teamoutput = {
+	color: 0x0099ff,
+	title: 'Some titlse',
+	url: 'https://discord.js.org',
+	author: {
+		name: 'Some name',
+		icon_url: 'https://i.imgur.com/wSTFkRM.png',
+		url: 'https://discord.js.org',
+	},
+	description: 'Some description here',
+	thumbnail: {
+		url: 'https://i.imgur.com/wSTFkRM.png',
+	},
+	fields: [
+		{
+			name: 'Regular field title',
+			value: 'Some value here',
+		},
+		{
+			name: '\u200b',
+			value: '\u200b',
+			inline: false,
+		},
+		{
+			name: 'Inline field title',
+			value: 'Some value here',
+			inline: true,
+		},
+		{
+			name: 'Inline field title',
+			value: 'Some value here',
+			inline: true,
+		},
+		{
+			name: 'Inline field title',
+			value: 'Some value here',
+			inline: true,
+		},
+	],
+	image: {
+		url: 'https://i.imgur.com/wSTFkRM.png',
+	},
+	timestamp: new Date(),
+	footer: {
+		text: 'Some footer text here',
+		icon_url: 'https://i.imgur.com/wSTFkRM.png',
+	},
+};
+
+channel.send({ embed: teamoutput });
+            
           
          //Put role back in stack at the bottom
           teams.unshift(therole)
