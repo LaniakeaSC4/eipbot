@@ -43,13 +43,13 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 const teamcolor = '0x0099ff';
 const teamtitle = 'Members of team Egg-streme';
 
-if (therole = 'egg-streme') {
+if (therole == 'egg-streme') {
   teamcolor = '0x0099ff';
   teamtitle = 'Members of team Egg-streme';
-} else if (therole = 'hard-boiled' ) {
+} else if (therole == 'hard-boiled' ) {
   teamcolor = '0x0099ff';
   teamtitle = 'Members of team Egg-streme';
-} else if (therole = 'yolksters' ) {
+} else if (therole == 'yolksters' ) {
   teamcolor = '0x0099ff';
   teamtitle = 'Members of team Egg-streme';
 } else {
