@@ -44,14 +44,14 @@ var teamcolor;
 var teamtitle;
 
 if (therole == 'egg-streme') {
-  teamcolor = '0x0099ff';
+  teamcolor = '0xb16dd0';
   teamtitle = 'Members of team Egg-streme';
 } else if (therole == 'hard-boiled' ) {
-  teamcolor = '0x0099ff';
-  teamtitle = 'Members of team Egg-streme';
+  teamcolor = '0x5c90e1';
+  teamtitle = 'Members of team Hard Boiled';
 } else if (therole == 'yolksters' ) {
-  teamcolor = '0x0099ff';
-  teamtitle = 'Members of team Egg-streme';
+  teamcolor = '0xf0ba05';
+  teamtitle = 'Members of team Yolksters';
 } else {
   teamcolor = '0x0099ff';
   teamtitle = 'Did not match a team';
@@ -61,8 +61,8 @@ console.log(teamtitle)
 
 //Build our rich embed output
 const teamoutput = {
-	color: 0x0099ff,
-	title: therole,
+	color: teamcolor,
+	title: teamtitle,
 	description: `${Members}`,
 	};
 
