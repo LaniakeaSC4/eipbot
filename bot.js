@@ -86,7 +86,7 @@ client.on('message', async message => {
 	},
 };
 
-channel.send({ embed: teamoutput });
+message.channel.send({ embed: teamoutput });
             
           
          //Put role back in stack at the bottom
