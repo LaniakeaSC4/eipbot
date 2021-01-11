@@ -38,31 +38,36 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 	//append \n to each arrary string so discord takes new line
 	for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
 
-//Get ready for team-specific formatting
+//Add timezone pretend-array to test aligning it in output
+var timezone = [ 'Timezone1', 'Timezone2', 'Timezone3'];
+	//Debug - Export timezones
+	console.log(timezone);
+	
+//Team-specific formatting
 
-var teamcolor;
-var teamtitle;
-
-if (therole == 'egg-streme') {
-  teamcolor = '0xb16dd0';
-  teamtitle = 'Members of team Egg-streme';
-} else if (therole == 'hard-boiled' ) {
-  teamcolor = '0x5c90e1';
-  teamtitle = 'Members of team Hard Boiled';
-} else if (therole == 'yolksters' ) {
-  teamcolor = '0xf0ba05';
-  teamtitle = 'Members of team Yolksters';
-} else {
-  teamcolor = '0x0099ff';
-  teamtitle = 'Did not match a team';
-};
-
-console.log(teamtitle)
+	// Change title and hilight color based on team
+	var teamcolor;
+	var teamtitle;
+	
+	if (therole == 'egg-streme') {
+  	teamcolor = '0xb16dd0';
+  	teamtitle = 'Team Egg-streme';
+	} else if (therole == 'hard-boiled' ) {
+  	teamcolor = '0x5c90e1';
+  	teamtitle = 'Team Hard Boiled';
+	} else if (therole == 'yolksters' ) {
+  	teamcolor = '0xf0ba05';
+  	teamtitle = 'Team Yolksters';
+	} else {
+  	teamcolor = '0x0099ff';
+	teamtitle = 'Did not match a team';
+	};
 
 //Build our rich embed output
 const teamoutput = {
 	color: teamcolor,
 	title: teamtitle,
+	// Change this from a description to a field? Then can I add another field beside it with timezone?
 	description: `${Members}`,
 	};
 
