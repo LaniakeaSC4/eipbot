@@ -47,7 +47,7 @@ client.on('message', async message => {
 			icon_url: 'https://i.imgur.com/wSTFkRM.png',
 			url: 'https://discord.js.org',
 			},
-		description: 'Some description here',
+		description: Members,
 		thumbnail: {
 			url: 'https://i.imgur.com/wSTFkRM.png',
 			},
