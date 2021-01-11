@@ -37,6 +37,7 @@ const Role = message.guild.roles.cache.find(role => role.name == therole );
 //const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.username);
 const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
 console.log(Members)
+console.log(Members.pop())
 //format members array
 	
 	//for each member in the arrary, look them up and grab all their roles
@@ -59,7 +60,7 @@ console.log(Members)
 		
 		//repeat for all egg levels. Can I pop from the arrary for checking?
 	} 
-	console.log(Members)
+	//console.log(Members)
 //Team-specific formatting
 
 	// Change title and hilight color based on team
