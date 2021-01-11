@@ -40,17 +40,17 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 
 //Get ready for team-specific formatting
 if (therole = 'egg-streme') {
-  thiscolor = '0x0099ff'
-  thistitle = 'Members of team Egg-streme'
+  thiscolor = '0x0099ff';
+  thistitle = 'Members of team Egg-streme';
 } else if (therole = 'hard-boiled' ) {
-  thiscolor = '0x0099ff'
-  thistitle = 'Members of team Egg-streme'
+  thiscolor = '0x0099ff';
+  thistitle = 'Members of team Egg-streme';
 } else if (therole = 'yolksters' ) {
-  thiscolor = '0x0099ff'
-  thistitle = 'Members of team Egg-streme' 
+  thiscolor = '0x0099ff';
+  thistitle = 'Members of team Egg-streme';
 } else {
-  thiscolor = '0x0099ff'
-  thistitle = 'Did not match a team' 
+  thiscolor = '0x0099ff';
+  thistitle = 'Did not match a team';
 };
 
 console.log(thistitle)
