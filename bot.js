@@ -86,7 +86,7 @@ const teamoutput = {
 	color: teamcolor,
 	title: teamtitle,
 	// Change this from a description to a field? Then can I add another field beside it with timezone?
-	description: `${Members}`,
+	description: `${Members}`
 	};
 
 //Send our embeded message
