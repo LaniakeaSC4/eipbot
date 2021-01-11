@@ -60,7 +60,7 @@ console.log(Members.pop())
 		
 		//repeat for all egg levels. Can I pop from the arrary for checking?
 	} 
-	//console.log(Members)
+console.log(Members.pop())
 //Team-specific formatting
 
 	// Change title and hilight color based on team
