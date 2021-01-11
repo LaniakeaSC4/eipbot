@@ -29,10 +29,13 @@ const therole = teams.pop();
         //console.log(therole) 
 
 //find role for this loop
+//const Role = message.guild.roles.cache.find(role => role.name == therole );
+
 const Role = message.guild.roles.cache.find(role => role.name == therole );
-	
+
 //fill members array with users in that role
-const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.username);
+//const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.username);
+const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
 
 //format members array
 	
