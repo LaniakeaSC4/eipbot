@@ -43,7 +43,7 @@ console.log(Members.pop())
 const acceptedRoles = ["Europe", "US-WC", "US-EC"];
 
 //construct this like one above. Filter by popped Id
-const modRole = message.guild.members.cache.filter(member => member.roles.cache.find(role => acceptedRoles.includes(role.name));
+const modRole = message.guild.members.cache.filter(member => member.roles.cache.find(role => acceptedRoles.includes(role.name)) );
 
 if(!modRole) return "No timezone found"; 
 console.log('found' + modRole)
