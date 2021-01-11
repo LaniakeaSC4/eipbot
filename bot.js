@@ -38,6 +38,23 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 	//append \n to each arrary string so discord takes new line
 	for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
 
+//Get ready for team-specific formatting
+if (therole = 'egg-streme') {
+  thiscolor = '0x0099ff'
+  thistitle = 'Members of team Egg-streme'
+} else if (therole = 'hard-boiled' ) {
+  thiscolor = '0x0099ff'
+  thistitle = 'Members of team Egg-streme'
+} else if (therole = 'yolksters' ) {
+  thiscolor = '0x0099ff'
+  thistitle = 'Members of team Egg-streme' 
+} else {
+  thiscolor = '0x0099ff'
+  thistitle = 'Did not match a team' 
+};
+
+console.log(thistitle)
+
 //Build our rich embed output
 const teamoutput = {
 	color: 0x0099ff,
