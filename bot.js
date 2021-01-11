@@ -5,54 +5,57 @@ const client = new Discord.Client();
 var teams = [ 'egg-streme', 'over-easy', 'sunny-side', 'hard-boiled', 'fowl-play', 'yolksters'];
 
 client.on('ready', () => {
-    console.log('I am ready!');
-    //console.log(teams)
+	//Are we alive?
+	console.log('I am ready!');
+	//Debug - Output the teams array to console
+	//console.log(teams)
 });
+
 //start
 client.on('message', async message => {
-  //look for trigger
-      if (message.content.startsWith("!egg")) {
-       console.log('Seen an egg')
+
+//look for !egg trigger
+if (message.content.startsWith("!egg")) {
+	//Debug - Log that an !egg command was seen
+	//console.log('Seen an egg')
+
+//how many roles to loop?
+var numofroles = teams.length
        
-       //how many roles to loop?
-       var numofroles = teams.length
-       
-        //Set number of loops equal to number of roles
-        var loops
-        for (loops = 0;loops < numofroles; loops++){
-        
-          const therole = teams.pop();
-          //what role did we pop?
-           //console.log(therole) 
-           
-         //find role for this loop
-         const Role = message.guild.roles.cache.find(role => role.name == therole );
-		
-         //fill members array with users in that role
-          const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
-           
-         //append \n to each arrary string so discord takes new line
-         for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
-            
-         //Simple - send message as output
-         //message.channel.send(`Users with ${Role.name}: ${Members}`);
-          
-         //Build our rich embed output
-             const teamoutput = {
-		color: 0x0099ff,
-		title: therole,
-		description: `${Members}`,
-		};
+//Set number of loops equal to number of roles
+var loops
+for (loops = 0;loops < numofroles; loops++){
+
+//pop a role to work with for this loop
+const therole = teams.pop();
+	//Debug - what role did we pop?
+        //console.log(therole) 
+
+//find role for this loop
+const Role = message.guild.roles.cache.find(role => role.name == therole );
 	
-	//Send our embeded message
-	message.channel.send({ embed: teamoutput });
-            
+//fill members array with users in that role
+const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
+
+//format members array
+	//append \n to each arrary string so discord takes new line
+	for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
+
+//Build our rich embed output
+const teamoutput = {
+	color: 0x0099ff,
+	title: therole,
+	description: `${Members}`,
+	};
+
+//Send our embeded message
+message.channel.send({ embed: teamoutput });
+
+//Put the role we popped back in stack at the bottom (so stack isnt emptied and we can run again)
+teams.unshift(therole)
           
-         //Put role back in stack at the bottom
-          teams.unshift(therole)
-          
-     }; //end for loop
-  }; //end !egg trigger block
+}; //end the for loop running for number of roles we have in array
+}; //end !egg trigger block
 }); //end 'on message'
 
 // THIS  MUST  BE  THIS  WAY
