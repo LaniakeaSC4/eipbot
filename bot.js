@@ -32,7 +32,7 @@ const therole = teams.pop();
 const Role = message.guild.roles.cache.find(role => role.name == therole );
 	
 //fill members array with users in that role
-const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.tag);
+const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.username);
 
 //format members array
 	//append \n to each arrary string so discord takes new line
