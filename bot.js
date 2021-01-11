@@ -36,30 +36,14 @@ const Role = message.guild.roles.cache.find(role => role.name == therole );
 //fill members array with users in that role
 //const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.username);
 const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
+
 console.log(Members)
 console.log(Members.pop())
 //format members array
-	
-	//for each member in the arrary, look them up and grab all their roles
-	//search thier roles for one of the egg levels. Will be something like; 
-	//for [length of roles-they-have arrary], if [role]=[medical egg] append [username] - [Medical Egg]. Else if {}
-	//can probably add the /n in the same edit
-	
-	//let's try...
-	
-	//for each member in the team
-	for (var i=Members.length; i--;)
-	
-	{
-		//look them up and get roles into new arrary
-				
-		//for lenght of that arrary, check if Egg-level 1
-		
-		//if so, append members [i] like this
-		Members[i] = '\n' + Members[i];
-		
-		//repeat for all egg levels. Can I pop from the arrary for checking?
-	} 
+
+	//add n to arrary
+	for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
+
 console.log(Members.pop())
 //Team-specific formatting
 
@@ -86,7 +70,7 @@ const teamoutput = {
 	color: teamcolor,
 	title: teamtitle,
 	// Change this from a description to a field? Then can I add another field beside it with timezone?
-	description: `${Members}`
+	description: `${Members}`, 
 	};
 
 //Send our embeded message
