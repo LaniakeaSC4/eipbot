@@ -39,6 +39,10 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 	for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
 
 //Get ready for team-specific formatting
+
+var thiscolor
+var thistitle
+
 if (therole = 'egg-streme') {
   thiscolor = '0x0099ff';
   thistitle = 'Members of team Egg-streme';
