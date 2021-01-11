@@ -39,12 +39,20 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 
 console.log(Members)
 console.log(Members.pop())
+
+const acceptedRoles = ["Europe", "US-WC", "US-EC"];
+
+//construct this like one above. Filter by popped Id
+const modRole = message.guild.members.cache.filter(member => member.roles.cache.find(role => acceptedRoles.includes(role.name));
+
+if(!modRole) return "No timezone found"; 
+console.log('found' + modRole)
+
 //format members array
 
 	//add n to arrary
 	for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
 
-console.log(Members.pop())
 //Team-specific formatting
 
 	// Change title and hilight color based on team
