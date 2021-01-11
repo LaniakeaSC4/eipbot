@@ -40,8 +40,8 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 
 //Get ready for team-specific formatting
 
-const teamcolor = '0x0099ff';
-const teamtitle = 'Members of team Egg-streme';
+var teamcolor;
+var teamtitle;
 
 if (therole == 'egg-streme') {
   teamcolor = '0x0099ff';
