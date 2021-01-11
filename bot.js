@@ -18,13 +18,10 @@ client.on('message', async message => {
 if (message.content.startsWith("!egg")) {
 	//Debug - Log that an !egg command was seen
 	//console.log('Seen an egg')
-
-//how many roles to loop?
-//var numofroles = teams.length
        
 //Set number of loops equal to number of roles
-var loops
-for (loops = 0;loops < teams.length; loops++){
+var roleloops
+for (roleloops = 0;roleloops < teams.length; roleloops++){
 
 //pop a role to work with for this loop
 const therole = teams.pop();
