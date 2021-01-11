@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 //build team array
-var teams = [ 'egg-streme', 'hard-boiled', 'yolksters'];
+var teams = [ 'egg-streme' ];
 
 client.on('ready', () => {
 	//Are we alive?
@@ -59,7 +59,7 @@ console.log(Members)
 		
 		//repeat for all egg levels. Can I pop from the arrary for checking?
 	} 
-	
+	console.log(Members)
 //Team-specific formatting
 
 	// Change title and hilight color based on team
