@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 //build team array
-var teams = [ 'egg-streme', 'over-easy', 'sunny-side', 'hard-boiled', 'fowl-play', 'yolksters'];
+var teams = [ 'egg-streme', 'hard-boiled', 'yolksters'];
 
 client.on('ready', () => {
 	//Are we alive?
