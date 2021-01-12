@@ -31,28 +31,12 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 //now we have all the members in the arrary, let's go into a for loop to build the final arrary for output
 for (var i=Members.length; i--;){
 	
-	//Find role ID for the role we are looking for (Europe in this example)
-	//var thisrole = message.guild.roles.cache.find(role => role.name === 'Europe');
-	
-	//hardcode role ID for debug
-	//var thisrole = '797227088935518249'
-	
-	//true/false does the member have the role?
-	//var haseurope = message.guild.members.cache.filter(member => Members[i]).has(thisrole);
-	//var haseurope = message.guild.members.cache.find(member => Members[i]).has(thisrole);
-	//var haseurope = message.member.roles.cache.some(r => r.name === 'Europe');
-	
-	//Debug log
-	//console.log(i + ' The member is:' + Members[i]);		
-	//console.log(i + ' The role is:' + thisrole);
-	//onsole.log(i + ' Has Europe is:' + haseurope); 
-	
 	let members = message.guild.members.cache.array();
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
-	for(let member of members) {
+	//for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
 	   console.log(`${member.id}: ${hasRole}`);
-	}
+	//}
 	
 	Members[i] = '\n' + Members[i];
 	
