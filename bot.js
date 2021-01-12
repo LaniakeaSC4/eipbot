@@ -35,7 +35,7 @@ for (var i=Members.length; i--;){
 	//var thisrole = message.guild.roles.cache.find(role => role.name === 'Europe');
 	
 	//hardcode role ID for debug
-	var thisrole = '797227088935518249'
+	//var thisrole = '797227088935518249'
 	
 	//true/false does the member have the role?
 	//var haseurope = message.guild.members.cache.filter(member => Members[i]).has(thisrole);
@@ -44,7 +44,7 @@ for (var i=Members.length; i--;){
 	
 	//Debug log
 	console.log(i + ' The member is:' + Members[i]);		
-	console.log(i + ' The role is:' + thisrole);
+	//console.log(i + ' The role is:' + thisrole);
 	console.log(i + ' Has Europe is:' + haseurope); 
 	
 	Members[i] = '\n' + Members[i];
