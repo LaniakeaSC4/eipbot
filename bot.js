@@ -34,7 +34,7 @@ thisteam = teams.pop();
 	  //console.log(userroles);
 	   
 	   //console.log(`${member.displayName}: is ` + thisteam + ' and has ' + userroles);
-	   client.message.send(`${member.displayName}: is ` + thisteam + ' and has ' + userroles)
+	   message.channel.send(`${member.displayName}: is ` + thisteam + ' and has ' + userroles)
  } 
 //else { 
   //console.log(`${member.id}: is not found`)};
