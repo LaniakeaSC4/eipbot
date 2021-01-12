@@ -30,7 +30,7 @@ thisteam = teams.pop();
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
  if (hasRole === true){
-	   userroles = member.roles.cache.map();
+	   userroles = message.member.roles.cache.map();
 	   console.log(userroles);
 	   
 	   console.log(`${member.id}: is ` + thisteam)
