@@ -37,16 +37,18 @@ const Role = message.guild.roles.cache.find(role => role.name == therole );
 //const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.username);
 const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
 
-console.log(Members)
-console.log(Members.pop())
+//console.log(Members)
 
-const acceptedRoles = ["Europe", "US-WC", "US-EC"];
+//Find role
+    var thisrole = message.guild.roles.find(role => role.name === 'Europe');
+    //pop member
+    let thismember = Members.pop();
 
-//construct this like one above. Filter by popped Id
-const modRole = message.guild.members.cache.filter(member => member.roles.cache.find(role => acceptedRoles.includes(role.name)) );
+console.log(thisrole);
+console.log(thismember);
 
-if(!modRole) return "No timezone found"; 
-console.log('found' + modRole)
+//from web
+console.log(message.thismember.roles.cache.has(thisrole));
 
 //format members array
 
