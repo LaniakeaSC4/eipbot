@@ -39,24 +39,25 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 
 //console.log(Members)
 
+
+//format members array
+
+	//add n to arrary
+	for (var i=Members.length; i--;)
+	
+	{Members[i] = '\n' + Members[i];
+	  
+	
 //Find role
     var thisrole = message.guild.roles.cache.find(role => role.name === 'Europe');
     //pop member
     let member = Members.pop();
 
-var haseurope = message.member.roles.cache.has(thisrole)
-
-//console.log(thisrole);
-//console.log(member);
-
+var haseurope = message.member.roles.cache.has(thisrole);
 
 //from web
 console.log(haseurope);
-
-//format members array
-
-	//add n to arrary
-	for (var i=Members.length; i--;) {Members[i] = '\n' + Members[i];} 
+	} 
 
 //Team-specific formatting
 
