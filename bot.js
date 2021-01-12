@@ -44,9 +44,9 @@ for (var i=Members.length; i--;){
 	
 	
 	//Debug log
-	console.log('The member is:' + Members[i]);		
-	console.log('The role is:' + thisrole);
-	console.log('Has Europe is:' + haseurope); 
+	console.log(i + 'The member is:' + Members[i]);		
+	console.log(i + 'The role is:' + thisrole);
+	console.log(i + 'Has Europe is:' + haseurope); 
 	
 	Members[i] = '\n' + Members[i];
 	
