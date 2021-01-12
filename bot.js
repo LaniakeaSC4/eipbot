@@ -40,8 +40,8 @@ for (var i=Members.length; i--;){
 	//true/false does the member have the role?
 	//var haseurope = message.guild.members.cache.filter(member => Members[i]).has(thisrole);
 	//var haseurope = message.guild.members.cache.find(member => Members[i]).has(thisrole);
-	var haseurope = message.member.roles.cache.some(r => r.name === 'Europe');
-	
+	//var haseurope = message.member.roles.cache.some(r => r.name === 'Europe');
+	var haseurope = message.guild.members.cache.find(member => Members[i]).some(r => r.name === 'Europe');	
 	
 	//Debug log
 	console.log(i + 'The member is:' + Members[i]);		
