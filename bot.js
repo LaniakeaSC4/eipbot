@@ -37,7 +37,7 @@ thisteam = teams.pop();
  } 
 else { 
   //console.log(`${member.id}: is not found`)};
-} 
+};
 teams.unshift(thisteam);
 };
 }; //end !egg trigger block
