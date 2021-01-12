@@ -29,16 +29,16 @@ const Role = message.guild.roles.cache.find(role => role.name == therole );
 //const thesemembers = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
 
 const thesemembers = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role));
-	console.log('Here comes thesemembers');
-	console.log(thesemembers);	
+	//console.log('Here comes thesemembers');
+	//console.log(thesemembers);	
 //now we have all the members in the arrary, let's go into a for loop to build the final arrary for output
 //for (var i=thesemembers.length; i--;){
 for (var i=6; i--;){
 	
-	let members = message.guild.members.cache.array();
-	//let members = Array.from(thesemembers);
-	console.log('Here comes members');
-	console.log(members);
+	//let members = message.guild.members.cache.array();
+	let members = Array.from(thesemembers);
+	//console.log('Here comes members');
+	//console.log(members);
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
