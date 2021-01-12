@@ -31,11 +31,12 @@ thisteam = teams.pop();
    	let hasRole = member.roles.cache.has(role.id);
  if (hasRole === true){
 	   userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
-	   console.log(userroles);
+	  //console.log(userroles);
 	   
-	   console.log(`${member.id}: is ` + thisteam)
+	   console.log(`${member.id}: is ` + thisteam + 'and has ' + userroles)
  } 
-else { console.log(`${member.id}: is not found`)};
+else { 
+  //console.log(`${member.id}: is not found`)};
 } 
 teams.unshift(thisteam);
 };
