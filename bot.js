@@ -26,12 +26,15 @@ const therole = teams.pop();
 const Role = message.guild.roles.cache.find(role => role.name == therole );
 
 //filtered by those with therole for the loop, fill members array with users ids with that role
-const thesemembers = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
+//const thesemembers = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
 
+const thesemembers = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role));
+console.log(thesemembers);	
 //now we have all the members in the arrary, let's go into a for loop to build the final arrary for output
 for (var i=thesemembers.length; i--;){
 	
-	let members = message.guild.members.cache.array();
+	//let members = message.guild.members.cache.array();
+	let members = thesemembers;
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
