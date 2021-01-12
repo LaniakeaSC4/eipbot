@@ -31,13 +31,15 @@ thisteam = teams.pop();
    	let hasRole = member.roles.cache.has(role.id);
  if (hasRole === true){
 	   userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
-	  //console.log(userroles);
+	  
+	  if (userroles.includes('Europe')){
 	   
 	   //console.log(`${member.displayName}: is ` + thisteam + ' and has ' + userroles);
-	   message.channel.send(`${member.displayName}: is ` + thisteam + ' and has ' + userroles)
- } 
+	   message.channel.send(`${member.displayName}: is ` + thisteam + ' and has ' + userroles);
+ };
 //else { 
   //console.log(`${member.id}: is not found`)};
+};
 };
 teams.unshift(thisteam);
 };
