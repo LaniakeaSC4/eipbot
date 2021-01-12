@@ -47,12 +47,13 @@ for (var i=Members.length; i--;){
 	//console.log(i + ' The role is:' + thisrole);
 	//onsole.log(i + ' Has Europe is:' + haseurope); 
 	
-	let Members = message.guild.members.cache.array();
+	let members = message.guild.members.cache.array();
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
-	for(let member of Members) {
+	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
 	   console.log(`${member.id}: ${hasRole}`);
-	}	
+	}
+	
 	Members[i] = '\n' + Members[i];
 	
 	} 
