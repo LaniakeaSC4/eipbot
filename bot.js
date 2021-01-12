@@ -37,7 +37,7 @@ const therole = teams.pop();
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
  //  	if (hasRole = true){
-	   console.log(`${member.id}: ${hasRole}`);
+	   console.log(`${member.id}: ${hasRole}`);} 
 //	} else { console.log('false')} 
 //	thesemembers[i] = '\n' + thesemembers[i];
 	
@@ -79,7 +79,7 @@ teams.unshift(therole)
           
 }; //end the for loop running for number of roles we have in array
 }; //end !egg trigger block
-}); //end 'on message'
+//}); //end 'on message'
 
 // THIS  MUST  BE  THIS  WAY
 
