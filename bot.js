@@ -33,10 +33,10 @@ for (var i=Members.length; i--;){
 	
 	let members = message.guild.members.cache.array();
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
-	//for(let member of members) {
+	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
 	   console.log(`${member.id}: ${hasRole}`);
-	//}
+	}
 	
 	Members[i] = '\n' + Members[i];
 	
