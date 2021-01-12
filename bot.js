@@ -30,19 +30,19 @@ const thesemembers = message.guild.members.cache.filter(member => member.roles.c
 
 //now we have all the members in the arrary, let's go into a for loop to build the final arrary for output
 
-for (var i=thesemembers.length; i--;){
+//for (var i=thesemembers.length; i--;){
 	
 	let members = message.guild.members.cache.array();
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
-   	if (hasRole = true){
+ //  	if (hasRole = true){
 	   console.log(`${member.id}: ${hasRole}`);
-	} else { console.log('false')} 
+//	} else { console.log('false')} 
 	};
 	thesemembers[i] = '\n' + thesemembers[i];
 	
-	};
+	//};
 
 //copy of origional for loop for backup
 //for (var i=Members.length; i--;){Members[i] = '\n' + Members[i];} 
