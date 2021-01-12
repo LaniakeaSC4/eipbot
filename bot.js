@@ -23,10 +23,10 @@ for (roleloops = 0;roleloops < teams.length; roleloops++){
 const therole = teams.pop();
 
 //find role for this loop
-const Role = message.guild.roles.cache.find(role => role.name == therole );
+//const Role = message.guild.roles.cache.find(role => role.name == therole );
 
 //filtered by those with therole for the loop, fill members array with users ids with that role
-const thesemembers = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
+//const thesemembers = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
 
 //now we have all the members in the arrary, let's go into a for loop to build the final arrary for output
 
@@ -39,13 +39,9 @@ const thesemembers = message.guild.members.cache.filter(member => member.roles.c
  //  	if (hasRole = true){
 	   console.log(`${member.id}: ${hasRole}`);
 //	} else { console.log('false')} 
-	};
-	thesemembers[i] = '\n' + thesemembers[i];
+//	thesemembers[i] = '\n' + thesemembers[i];
 	
 	//};
-
-//copy of origional for loop for backup
-//for (var i=Members.length; i--;){Members[i] = '\n' + Members[i];} 
 
 //Team-specific formatting
 
