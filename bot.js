@@ -12,8 +12,18 @@ client.on('message', async message => {
 //look for !egg trigger
 if (message.content.startsWith("!egg")) {
 
-	let members = message.guild.members.cache.array();
-	let role = message.guild.roles.cache.find(r => r.name === 'egg-streme');
+//load up the members 
+let members = message.guild.members.cache.array();
+
+//add loop here? For each role
+teams = ['egg-streme', 'yolksters']
+
+var i
+for (i = 0; i < teams.length; i++){
+
+thisrole = teams.pop();
+
+	let role = message.guild.roles.cache.find(r => r.name === thisrole);
 	
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
@@ -23,7 +33,7 @@ if (message.content.startsWith("!egg")) {
 else { console.log(`${member.id}: is not egg-streme`)};
 } 
 //teams.unshift(therole);
-
+};
 }; //end !egg trigger block
 }); //end 'on message'
 
