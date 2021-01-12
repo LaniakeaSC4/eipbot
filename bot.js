@@ -42,7 +42,7 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 	for (var i=Members.length; i--;){
 	
 //Find role
-    var thisrole = '"' + message.guild.roles.cache.find(role => role.name === 'Europe') + '"';
+    var thisrole = message.guild.roles.cache.find(role => role.name === 'Europe');
     //pop member
     let member = Members[i];
 
