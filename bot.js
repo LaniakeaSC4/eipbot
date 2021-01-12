@@ -52,7 +52,7 @@ for (var i=Members.length; i--;){
 	for(let member of Members) {
    	let hasRole = member.roles.cache.has(role.id);
 	   console.log(`${member.id}: ${hasRole}`);
-		
+	}	
 	Members[i] = '\n' + Members[i];
 	
 	} 
