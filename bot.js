@@ -36,13 +36,13 @@ for (var i=thesemembers.length; i--;){
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
-   	if ( hasRole = true){
+   	if (hasRole = true){
 	   console.log(`${member.id}: ${hasRole}`);
-	}
-	} 
+	} else { console.log('false')} 
+	};
 	thesemembers[i] = '\n' + thesemembers[i];
 	
-	} 
+	};
 
 //copy of origional for loop for backup
 //for (var i=Members.length; i--;){Members[i] = '\n' + Members[i];} 
