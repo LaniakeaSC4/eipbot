@@ -24,7 +24,7 @@ const therole = teams.pop();
 	
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
- if (hasRole = 'true'){
+ if (hasRole === true){
 	   console.log(`${member.id}:apple ${hasRole}`)
  } 
 else { console.log('banana')};
