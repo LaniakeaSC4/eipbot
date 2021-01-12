@@ -35,7 +35,7 @@ thisteam = teams.pop();
 	   
 	   console.log(`${member.id}: is ` + thisteam + 'and has ' + userroles);
  } 
-else { 
+//else { 
   //console.log(`${member.id}: is not found`)};
 };
 teams.unshift(thisteam);
