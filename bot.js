@@ -17,22 +17,24 @@ let members = message.guild.members.cache.array();
 
 //add loop here? For each role
 teams = ['egg-streme', 'yolksters']
+timezones = ['Europe', 'US-WC', 'US-EC', 'South America']
+
 
 var i
 for (i = 0; i < teams.length; i++){
 
-thisrole = teams.pop();
+thisteam = teams.pop();
 
-	let role = message.guild.roles.cache.find(r => r.name === thisrole);
+	let role = message.guild.roles.cache.find(r => r.name === thisteam);
 	
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
  if (hasRole === true){
-	   console.log(`${member.id}: is ` + thisrole)
+	   console.log(`${member.id}: is ` + thisteam)
  } 
 else { console.log(`${member.id}: is not found`)};
 } 
-teams.unshift(thisrole);
+teams.unshift(thisteam);
 };
 }; //end !egg trigger block
 }); //end 'on message'
