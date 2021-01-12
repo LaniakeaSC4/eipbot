@@ -16,8 +16,8 @@ client.on('message', async message => {
 if (message.content.startsWith("!egg")) {
        
 //Set number of loops equal to number of roles in the teams arrary
-var roleloops
-for (roleloops = 0;roleloops < teams.length; roleloops++){
+//var roleloops
+//for (roleloops = 0;roleloops < teams.length; roleloops++){
 
 //pop a role to work with for this loop
 const therole = teams.pop();
@@ -46,38 +46,38 @@ const therole = teams.pop();
 //Team-specific formatting
 
 	// Change title and hilight color based on team
-	var teamcolor;
-	var teamtitle;
+//	var teamcolor;
+//	var teamtitle;
 	
-	if (therole == 'egg-streme') {
-  	teamcolor = '0xb16dd0';
-  	teamtitle = 'Team Egg-streme';
-	} else if (therole == 'hard-boiled' ) {
-  	teamcolor = '0x5c90e1';
-  	teamtitle = 'Team Hard Boiled';
-	} else if (therole == 'yolksters' ) {
-  	teamcolor = '0xf0ba05';
-  	teamtitle = 'Team Yolksters';
-	} else {
-  	teamcolor = '0x0099ff';
-	teamtitle = 'Did not match a team';
-	};
+//	if (therole == 'egg-streme') {
+  //	teamcolor = '0xb16dd0';
+ // 	teamtitle = 'Team Egg-streme';
+//	} else if (therole == 'hard-boiled' ) {
+  //	teamcolor = '0x5c90e1';
+ // 	teamtitle = 'Team Hard Boiled';
+//	} else if (therole == 'yolksters' ) {
+  //	teamcolor = '0xf0ba05';
+//  	teamtitle = 'Team Yolksters';
+//	} else {
+//  	teamcolor = '0x0099ff';
+//	teamtitle = 'Did not match a team';
+//	};
 
 //Build our rich embed output
-const teamoutput = {
-	color: teamcolor,
-	title: teamtitle,
+//const teamoutput = {
+	//color: teamcolor,
+	//title: teamtitle,
 	// Change this from a description to a field? Then can I add another field beside it with timezone?
-	description: `${thesemembers}`, 
-	};
+	//description: `${thesemembers}`, 
+	//};
 
 //Send our embeded message
-message.channel.send({ embed: teamoutput });
+//message.channel.send({ embed: teamoutput });
 
 //Put the role we popped back in stack at the bottom (so stack isnt emptied and we can run again)
 teams.unshift(therole)
           
-}; //end the for loop running for number of roles we have in array
+//}; //end the for loop running for number of roles we have in array
 }; //end !egg trigger block
 //}); //end 'on message'
 
