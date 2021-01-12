@@ -36,9 +36,10 @@ const therole = teams.pop();
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
- //  	if (hasRole = true){
-	   console.log(`${member.id}: ${hasRole}`);} 
-//	} else { console.log('false')} 
+ if (hasRole = true){
+	   console.log(`${member.id}: ${hasRole}`);
+ } 
+else { console.log('false')} 
 //	thesemembers[i] = '\n' + thesemembers[i];
 	
 	//};
