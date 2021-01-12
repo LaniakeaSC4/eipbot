@@ -46,7 +46,7 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
     //pop member
     let member = Members[i];
 
-var haseurope = message.member(Members[i]).roles.cache.has(thisrole);
+var haseurope = message.guild.members.cache.filter(member => Members[i]).has(thisrole);
 
 //from web
 console.log('The member is:' + Members[i]);		
