@@ -28,11 +28,11 @@ thisrole = teams.pop();
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
  if (hasRole === true){
-	   console.log(`${member.id}: is egg-streme`)
+	   console.log(`${member.id}: is ` + thisrole)
  } 
-else { console.log(`${member.id}: is not egg-streme`)};
+else { console.log(`${member.id}: is not found`)};
 } 
-//teams.unshift(therole);
+teams.unshift(therole);
 };
 }; //end !egg trigger block
 }); //end 'on message'
