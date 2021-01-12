@@ -7,8 +7,6 @@ var teams = [ 'egg-streme' ];
 client.on('ready', () => {
 	//Are we alive?
 	console.log('I am ready!');
-	//Debug - Output the teams array to console
-	//console.log(teams)
 });
 
 //start
@@ -16,55 +14,43 @@ client.on('message', async message => {
 
 //look for !egg trigger
 if (message.content.startsWith("!egg")) {
-	//Debug - Log that an !egg command was seen
-	//console.log('Seen an egg')
        
-//Set number of loops equal to number of roles
+//Set number of loops equal to number of roles in the teams arrary
 var roleloops
 for (roleloops = 0;roleloops < teams.length; roleloops++){
 
 //pop a role to work with for this loop
 const therole = teams.pop();
-	//Debug - what role did we pop?
-        //console.log(therole) 
 
 //find role for this loop
-//const Role = message.guild.roles.cache.find(role => role.name == therole );
-
 const Role = message.guild.roles.cache.find(role => role.name == therole );
 
-//fill members array with users in that role
-//const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.username);
+//filtered by those with therole for the loop, fill members array with users ids with that role
 const Members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role)).map(member => member.user.id);
 
-//console.log(Members)
-
-	for (var i=Members.length; i--;){
+//now we have all the members in the arrary, let's go into a for loop to build the final arrary for output
+for (var i=Members.length; i--;){
 	
-//Find role
-    var thisrole = message.guild.roles.cache.find(role => role.name === 'Europe');
-    //pop member
-    let member = Members[i];
-
-var haseurope = message.guild.members.cache.filter(member => Members[i]).has(thisrole);
-
-//from web
-console.log('The member is:' + Members[i]);		
-console.log('The role is:' + thisrole);
-console.log('Has Europe is:' + haseurope); 
-
-Members[i] = '\n' + Members[i];
-
-} 
-
-//format members array
-
-	//add n to arrary
-//	for (var i=Members.length; i--;)
+	//Find role ID for the role we are looking for (Europe in this example)
+	//var thisrole = message.guild.roles.cache.find(role => role.name === 'Europe');
 	
-//	{Members[i] = '\n' + Members[i];
+	//hardcode role ID for debug
+	var thisrole = '797227088935518249'
 	
-//	} 
+	//true/false does the member have the role?
+	var haseurope = message.guild.members.cache.filter(member => Members[i]).has(thisrole);
+
+	//Debug log
+	console.log('The member is:' + Members[i]);		
+	console.log('The role is:' + thisrole);
+	console.log('Has Europe is:' + haseurope); 
+	
+	Members[i] = '\n' + Members[i];
+	
+	} 
+
+//copy of origional for loop for backup
+//for (var i=Members.length; i--;){Members[i] = '\n' + Members[i];} 
 
 //Team-specific formatting
 
