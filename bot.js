@@ -32,7 +32,8 @@ const thesemembers = message.guild.members.cache.filter(member => member.roles.c
 	console.log('Here comes thesemembers');
 	console.log(thesemembers);	
 //now we have all the members in the arrary, let's go into a for loop to build the final arrary for output
-for (var i=thesemembers.length; i--;){
+//for (var i=thesemembers.length; i--;){
+for (var i=6; i--;){
 	
 	//let members = message.guild.members.cache.array();
 	let members = Arrary.from(thesemembers);
