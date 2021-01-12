@@ -44,11 +44,14 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
     //pop member
     let member = Members.pop();
 
+var haseurope = message.member.roles.cache.has(thisrole)
+
 console.log(thisrole);
-console.log(thismember);
+console.log(member);
+
 
 //from web
-console.log(message.member.roles.cache.has(thisrole));
+console.log(haseurope);
 
 //format members array
 
