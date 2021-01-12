@@ -36,7 +36,8 @@ const thesemembers = message.guild.members.cache.filter(member => member.roles.c
 for (var i=6; i--;){
 	
 	//let members = message.guild.members.cache.array();
-	let members = Array.from(thesemembers);
+	//let members = Array.from(thesemembers);
+	let members = message.guild.members.cache.filter(member => member.roles.cache.find(role => role == Role));
 	//console.log('Here comes members');
 	//console.log(members);
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
