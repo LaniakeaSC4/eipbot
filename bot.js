@@ -33,7 +33,8 @@ thisteam = teams.pop();
 	   userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
 	  //console.log(userroles);
 	   
-	   console.log(`${member.displayName}: is ` + thisteam + ' and has ' + userroles);
+	   //console.log(`${member.displayName}: is ` + thisteam + ' and has ' + userroles);
+	   client.message.send(`${member.displayName}: is ` + thisteam + ' and has ' + userroles)
  } 
 //else { 
   //console.log(`${member.id}: is not found`)};
