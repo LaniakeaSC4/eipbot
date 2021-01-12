@@ -78,7 +78,7 @@ const therole = teams.pop();
 teams.unshift(therole)
           
 //}; //end the for loop running for number of roles we have in array
-//}; //end !egg trigger block
+}; //end !egg trigger block
 }); //end 'on message'
 
 // THIS  MUST  BE  THIS  WAY
