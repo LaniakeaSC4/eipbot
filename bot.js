@@ -32,7 +32,7 @@ const thesemembers = message.guild.members.cache.filter(member => member.roles.c
 
 for (var i=thesemembers.length; i--;){
 	
-	//let members = message.guild.members.cache.array();
+	let members = message.guild.members.cache.array();
 	let role = message.guild.roles.cache.find(r => r.name === 'Europe');
 	for(let member of members) {
    	let hasRole = member.roles.cache.has(role.id);
