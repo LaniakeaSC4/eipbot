@@ -32,7 +32,7 @@ thisrole = teams.pop();
  } 
 else { console.log(`${member.id}: is not found`)};
 } 
-teams.unshift(therole);
+teams.unshift(thisrole);
 };
 }; //end !egg trigger block
 }); //end 'on message'
