@@ -49,6 +49,7 @@ const Members = message.guild.members.cache.filter(member => member.roles.cache.
 var haseurope = message.member.roles.cache.has(thisrole);
 
 //from web
+console.log('The member is:" + Members[i]);		
 console.log('The role is:' + thisrole);
 console.log('Has Europe is:' + haseurope); 
 
