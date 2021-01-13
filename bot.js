@@ -47,7 +47,7 @@ thisteam = teams.pop();
 	//if they are in this team
 	if (hasRole === true){
 		//start member details with display name
-		memberdetails.push(${member.displayName});
+		memberdetails.push(member.displayName);
 		console.log('Memberdetails array ' + memberdetails);
 		
 		//first lets get all thier roles into a string
