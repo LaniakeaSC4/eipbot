@@ -67,7 +67,7 @@ thisteam = teams.pop();
 	for (eb = 0; eb < eggbonus.length;eb++){
 	  
 	  if (userroles.includes(eggbonus[eb])){
-	  memberdetails.splice(buildcount,0, member.displayName);
+	  memberdetails.splice(buildcount,0, eggbonus[eb]);
 		console.log('eggbonus: ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
 	}}
