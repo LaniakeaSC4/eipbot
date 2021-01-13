@@ -46,14 +46,14 @@ thisteam = teams.pop();
    	let hasRole = member.roles.cache.has(role.id);
 	
 	//we are going to need a counter incremented for each match below so that we can order things into the array
-	arraybuildcount = 0;
+	buildcount = 0;
 	
 	//if they are in this team
 	if (hasRole === true){
 		//start member details with display name
-		memberdetails[arrarybuildcount].push(member.displayName);
-		console.log('Memberdetails array ' + memberdetails[arraybuildcount]);
-		arraybuildcount = arraybuildcount + 1;
+		memberdetails[buildcount].push(member.displayName);
+		console.log('Memberdetails array ' + memberdetails[buildcount]);
+		buildcount = buildcount + 1;
 		
 		//first lets get all thier roles into a string
 		userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
