@@ -62,6 +62,15 @@ thisteam = teams.pop();
 	  	
 		//Now we need to build memberdetails and store it in member arrary
 		//[here] start a for loop, for the length of eggbonus. Check each one against the userroles string
+		
+	var eb
+	for (eb = 0; eb < eggbonus.length;eb++){
+	  
+	  if (userroles.includes(eggbonus[eb])){
+	  memberdetails.splice(buildcount,0, member.displayName);
+		console.log('Memberdetails array ' + memberdetails[buildcount]);
+		buildcount = buildcount + 1;
+	}}
 		if (userroles.includes('Europe')){
    
 	   console.log(`${member.displayName}: is ` + thisteam + ' and has ' + userroles);
