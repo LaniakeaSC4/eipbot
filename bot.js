@@ -68,16 +68,9 @@ thisteam = teams.pop();
 	  
 	  if (userroles.includes(eggbonus[eb])){
 	  memberdetails.splice(buildcount,0, member.displayName);
-		console.log('Memberdetails array ' + memberdetails[buildcount]);
+		console.log('eggbonus: ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
 	}}
-		if (userroles.includes('Europe')){
-   
-	   console.log(`${member.displayName}: is ` + thisteam + ' and has ' + userroles);
-	   //message.channel.send(`${member.displayName}: is ` + thisteam + ' and has ' + userroles);
- };
-//else { 
-  //console.log(`${member.id}: is not found`)};
 };
 };
 teams.unshift(thisteam);
