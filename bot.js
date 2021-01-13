@@ -17,7 +17,7 @@ let members = message.guild.members.cache.array();
 
 //Define the things we are going to want to sort by
 teams = ['egg-streme']
-timezones = ['Europe', 'US-WC', 'US-EC', 'South America', 'Oceania']
+timezone = ['Europe', 'US-WC', 'US-EC', 'South America', 'Oceania']
 eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger']
 permitstatus = ['Pro Permit', 'Standard Permit']
 	
@@ -70,14 +70,23 @@ thisteam = teams.pop();
 	  memberdetails.splice(buildcount,0, eggbonus[eb]);
 		console.log('eggbonus: ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
-	} else {memberdetails.splice(buildcount,0, 'No EB Selected'); buildcount = buildcount + 1;}
+	} 
+	};
+	 var tz
+	for (tz = 0; tz < timezone.length;tz++){
 	  
-	  
-	}
+	  if (userroles.includes(timezone[tz])){
+	  memberdetails.splice(buildcount,0, timezone[tz]);
+		console.log('timezone: ' + memberdetails[buildcount]);
+		buildcount = buildcount + 1;
+	    
+	  };
+	
 };
 };
 teams.unshift(thisteam);
 console.log(memberdetails)
+};
 };
 }; //end !egg trigger block
 }); //end 'on message'
