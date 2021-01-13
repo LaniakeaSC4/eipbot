@@ -54,7 +54,7 @@ thisteam = teams.pop();
 		//I think these next 4 rows need to go after all the role examination. memberarray[0] should contain (in this order) ['displayname', 'eggrank','permit','timezone']
 		//start member details with display name. Splice it into the arrary at position of this loop.
 		memberdetails.splice(buildcount,0, member.displayName);
-		console.log('Memberdetails array ' + memberdetails[buildcount]);
+		//console.log('Memberdetails array ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
 		
 		//first lets get all thier roles into a string
@@ -68,7 +68,7 @@ thisteam = teams.pop();
 	  
 	  if (userroles.includes(eggbonus[eb])){
 	  memberdetails.splice(buildcount,0, eggbonus[eb]);
-		console.log('eggbonus: ' + memberdetails[buildcount]);
+		//console.log('eggbonus: ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
 	} 
 	};
@@ -77,7 +77,7 @@ thisteam = teams.pop();
 	  
 	  if (userroles.includes(timezone[tz])){
 	  memberdetails.splice(buildcount,0, timezone[tz]);
-		console.log('timezone: ' + memberdetails[buildcount]);
+		//console.log('timezone: ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
 	    
 	  };
