@@ -90,10 +90,12 @@ teams.unshift(thisteam);
 
 
 };
+
+console.log(memberdetails);
 }; //end !egg trigger block
 }); //end 'on message'
 
-console.log(memberdetails);
+
 
 // THIS  MUST  BE  THIS  WAY
 
