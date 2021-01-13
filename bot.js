@@ -18,6 +18,7 @@ let members = message.guild.members.cache.array();
 //add loop here? For each role
 teams = ['egg-streme', 'yolksters']
 timezones = ['Europe', 'US-WC', 'US-EC', 'South America']
+const teamarray = [];
 
 
 var i
