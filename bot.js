@@ -70,7 +70,10 @@ thisteam = teams.pop();
 	  memberdetails.splice(buildcount,0, eggbonus[eb]);
 		console.log('eggbonus: ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
-	}}
+	} else {memberdetails.splice(buildcount,0, 'No EB Selected'); buildcount = buildcount + 1;}
+	  
+	  
+	}
 };
 };
 teams.unshift(thisteam);
