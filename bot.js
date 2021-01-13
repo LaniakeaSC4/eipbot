@@ -74,6 +74,7 @@ thisteam = teams.pop();
 };
 };
 teams.unshift(thisteam);
+console.log(memberdetails)
 };
 }; //end !egg trigger block
 }); //end 'on message'
