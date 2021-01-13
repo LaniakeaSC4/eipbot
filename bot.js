@@ -88,10 +88,10 @@ teams.unshift(thisteam);
 
 };
 
-
+console.log(memberdetails);
 };
 
-console.log(memberdetails);
+
 }; //end !egg trigger block
 }); //end 'on message'
 
