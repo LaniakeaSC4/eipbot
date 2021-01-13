@@ -50,7 +50,9 @@ thisteam = teams.pop();
 	
 	//if they are in this team
 	if (hasRole === true){
-		//start member details with display name
+		
+		//I think these next 4 rows need to go after all the role examination. memberarray[0] should contain (in this order) ['displayname', 'eggrank','permit','timezone']
+		//start member details with display name. Splice it into the arrary at position of this loop.
 		memberdetails.splice(buildcount,0, member.displayName);
 		console.log('Memberdetails array ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
