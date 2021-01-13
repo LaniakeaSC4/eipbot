@@ -51,7 +51,7 @@ thisteam = teams.pop();
 	//if they are in this team
 	if (hasRole === true){
 		//start member details with display name
-		memberdetails[buildcount].push(member.displayName);
+		memberdetails.insert(buildcount, member.displayName);
 		console.log('Memberdetails array ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
 		
