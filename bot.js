@@ -93,7 +93,7 @@ teams.unshift(thisteam);
 }; //end !egg trigger block
 }); //end 'on message'
 
-console.log(memberdetails)
+console.log(memberdetails);
 
 // THIS  MUST  BE  THIS  WAY
 
