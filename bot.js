@@ -104,7 +104,7 @@ thisteam = teams.pop();
 console.log('Memberdetails in at end : ' + memberdetails);
 teamarray.splice(teambuildcount,0,memberdetails);
 teambuildcount = teambuildcount + 1;
-console.log('teamarray in at end : ' + teamarray);
+console.log('teamarray at tbc in at end : ' + teamarray[teambuildcount]);
 	
 teams.unshift(thisteam);
 };// end loop for each team
