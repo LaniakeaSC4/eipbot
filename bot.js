@@ -98,7 +98,8 @@ thisteam = teams.pop();
 		memberarray.splice(teambuildcount,0, memberdetails);
 		teambuildcount = teambuildcount + 1;
 		//console.log(memberarray);
-		console.log('before clear: ' + memberdetails);
+		console.log('Memberdetails before clear: ' + memberdetails);
+		console.log('Mmemberarray before clear: ' + memberarray);
 		memberdetails.length = 0;
 			
 	  		}
