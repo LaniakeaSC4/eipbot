@@ -109,15 +109,17 @@ thisteam = teams.pop();
 		//teamarray.splice(teambuildcount,0,[memberdetails]);
 		teamarray.push([memberdetails]);
 		//console.log('teamarray is : ' + [teamarray]);
-		console.log('teamarray at 0 is: ' + teamarray[0]);
-			console.log('teamarray at 0 is: ' + teamarray[1]);
-		teambuildcount = teambuildcount + 1;	
+
+		//teambuildcount = teambuildcount + 1;	
 			memberdetails.length = 0;
 
 	
 teams.unshift(thisteam);
 };// end loop for each team
 
+			console.log('teamarray at 0 is: ' + teamarray[0]);
+			console.log('teamarray at 1 is: ' + teamarray[1]);
+	
 } //end !egg trigger block
 }); //end 'on message'
 
