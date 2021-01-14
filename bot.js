@@ -93,7 +93,7 @@ thisteam = teams.pop();
 			membuildcount = membuildcount + 1;
 				
 							
-		memberarray.splice(teambuildcount,0, memberdetails);
+		memberarray.splice(teambuildcount,1, memberdetails);
 		teambuildcount = teambuildcount + 1;
 		console.log(memberarray);
 		memberdetails.length = 0;
