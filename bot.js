@@ -55,9 +55,12 @@ thisteam = teams.pop();
 	//if they are in this team
 	if (hasRole === true){
 		
+		//add a splitter
+		memberdetails.splice(membuildcount,0, '@@@');
+		membuildcount = membuildcount + 1;
+		
 		//start member details with display name. Splice it into the arrary at position of this loop.
 		memberdetails.splice(membuildcount,0, member.displayName);
-		//console.log('Memberdetails array ' + memberdetails[buildcount]);
 		membuildcount = membuildcount + 1;
 		
 		//first lets get all thier roles into a string
