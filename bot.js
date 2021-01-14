@@ -55,10 +55,6 @@ thisteam = teams.pop();
 	//if they are in this team
 	if (hasRole === true){
 		
-		//add a splitter
-		memberdetails.splice(membuildcount,0, '@@@');
-		membuildcount = membuildcount + 1;
-		
 		//start member details with display name. Splice it into the arrary at position of this loop.
 		memberdetails.splice(membuildcount,0, member.displayName);
 		membuildcount = membuildcount + 1;
@@ -72,7 +68,7 @@ thisteam = teams.pop();
 		for (eb = 0; eb < eggbonus.length;eb++){
 	  	
 	  		if (userroles.includes(eggbonus[eb])){
-	  		memberdetails.splice(membuildcount,0, eggbonus[eb]);
+	  		memberdetails.splice(membuildcount,0, 'EB: ' + eggbonus[eb]);
 			//console.log('eggbonus: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
 			} 
@@ -82,7 +78,7 @@ thisteam = teams.pop();
 		for (tz = 0; tz < timezone.length;tz++){
 			
 			if (userroles.includes(timezone[tz])){
-	  		memberdetails.splice(membuildcount,0, timezone[tz]);
+	  		memberdetails.splice(membuildcount,0, 'TZ: ' + timezone[tz]);
 			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
 	  		}
@@ -93,30 +89,18 @@ thisteam = teams.pop();
 		for (ps = 0; ps < permitstatus.length;ps++){
 			
 			if (userroles.includes(permitstatus[ps])){
-	  		memberdetails.splice(membuildcount,0, permitstatus[ps]);
+	  		memberdetails.splice(membuildcount,0, 'PS: ' + permitstatus[ps]);
 			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
 				
-							
-		//memberarray.splice(teambuildcount,0, memberdetails);
-		//teambuildcount = teambuildcount + 1;
-		//console.log(memberarray);
-		console.log('Memberdetails in loop : ' + memberdetails);
-		//console.log('Mmemberarray before clear: ' + memberarray);
-		//memberdetails.length = 0;
-			
 	  		}
-	
 
 		}
 	
-
-		
 	};//end if role is true
-		
-
-		
+	
 	};//end for (let member of members) - every member on the server
+
 console.log('Memberdetails in at end : ' + memberdetails);
 teams.unshift(thisteam);
 };// end loop for each team
