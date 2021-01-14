@@ -79,11 +79,11 @@ thisteam = teams.pop();
 	  memberdetails.splice(buildcount,0, timezone[tz]);
 		//console.log('timezone: ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
-	    
+console.log(memberdetails);
 	  };
 	
 };
-console.log(memberdetails);
+
 
 };
 teams.unshift(thisteam);
