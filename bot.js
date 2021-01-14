@@ -102,6 +102,10 @@ thisteam = teams.pop();
 	};//end for (let member of members) - every member on the server
 
 console.log('Memberdetails in at end : ' + memberdetails);
+teamarray.splice(teambuildcount,0,memberdetails);
+teambuildcount = teambuildcount + 1;
+console.log('teamarray in at end : ' + teamarray);
+	
 teams.unshift(thisteam);
 };// end loop for each team
 
