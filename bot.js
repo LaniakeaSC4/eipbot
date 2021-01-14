@@ -16,10 +16,10 @@ if (message.content.startsWith("!egg")) {
 let members = message.guild.members.cache.array();
 
 //Define the things we are going to want to sort by
-teams = ['egg-streme']
-timezone = ['Europe', 'US-WC', 'US-EC', 'South America', 'Oceania']
-eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger']
-permitstatus = ['Pro Permit', 'Standard Permit']
+teams = ['egg-streme'];
+timezone = ['Europe', 'US-WC', 'US-EC', 'South America', 'Oceania'];
+eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger'];
+permitstatus = ['Pro Permit', 'Standard Permit'];
 	
 //This will be the top level arrary for each team
 const teamarray = [];
@@ -31,7 +31,7 @@ const memberarray = [];
 const memberdetails = [];
 
 //starting loop for each team
-var i
+var i;
 for (i = 0; i < teams.length; i++){
 
 //pop a team to get started
@@ -71,30 +71,30 @@ thisteam = teams.pop();
 		//console.log('eggbonus: ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
 	} 
-	};
-	 var tz
+	}
+	 var tz;
 	for (tz = 0; tz < timezone.length;tz++){
 	  
 	  if (userroles.includes(timezone[tz])){
 	  memberdetails.splice(buildcount,0, timezone[tz]);
 		//console.log('timezone: ' + memberdetails[buildcount]);
 		buildcount = buildcount + 1;
-console.log(memberdetails);
-	  };
+
+	  }
 	
-};
+}
 
 
-};
+}
 teams.unshift(thisteam);
-
-};
-
-
-};
+console.log(memberdetails);
+}
 
 
-}; //end !egg trigger block
+}
+
+
+} //end !egg trigger block
 }); //end 'on message'
 
 
