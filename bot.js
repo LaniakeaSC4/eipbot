@@ -53,7 +53,7 @@ thisteam = teams.pop();
 	var membuildcount = 0;
 	
 	//if they are in this team
-	if (hasRole === true){
+//	if (hasRole === true){
 		
 		//start member details with display name. Splice it into the arrary at position of this loop.
 		memberdetails.splice(membuildcount,0, member.displayName);
@@ -104,7 +104,7 @@ thisteam = teams.pop();
 	
 
 		
-	};//end if role is true
+//	};//end if role is true
 	
 	};//end for (let member of members) - every member on the server
 
