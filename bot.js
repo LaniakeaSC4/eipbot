@@ -97,14 +97,18 @@ thisteam = teams.pop();
 
 		}
 	
+		console.log('teambuildcount is: ' + teambuildcount);
+		console.log('Memberdetails is : ' + [memberdetails]);
+		teamarray.splice(teambuildcount,0,[memberdetails]);
+		console.log('teamarray is : ' + [teamarray]]);
+		console.log('teamarray at tbc is: ' + teamarray[teambuildcount]);
+		teambuildcount = teambuildcount + 1;
+		
 	};//end if role is true
 	
 	};//end for (let member of members) - every member on the server
 
-console.log('Memberdetails in at end : ' + memberdetails);
-teamarray.splice(teambuildcount,0,[memberdetails]);
-console.log('teamarray at tbc in at end : ' + teamarray[teambuildcount]);
-teambuildcount = teambuildcount + 1;
+
 
 	
 teams.unshift(thisteam);
