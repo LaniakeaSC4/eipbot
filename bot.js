@@ -97,11 +97,12 @@ thisteam = teams.pop();
 		
 	};//end if role is true
 		
-		
-	};//end for (let member of members) - every member on the server
 memberarray.splice(teambuildcount,0, memberdetails);
 teambuildcount = teambuildcount + 1;
 console.log(memberarray);
+		
+	};//end for (let member of members) - every member on the server
+
 teams.unshift(thisteam);
 };// end loop for each team
 //console.log(memberdetails);
