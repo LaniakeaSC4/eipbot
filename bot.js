@@ -81,7 +81,7 @@ thisteam = teams.pop();
 	  		}
 	
 		}
-
+	};//end if role is true
 	};//end for (let member of members) - every member on the server
 		
 teams.unshift(thisteam);
