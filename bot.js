@@ -98,6 +98,7 @@ thisteam = teams.pop();
 		memberarray.splice(teambuildcount,0, memberdetails);
 		teambuildcount = teambuildcount + 1;
 		//console.log(memberarray);
+		console.log('before clear: ' + memberdetails);
 		memberdetails.length = 0;
 			
 	  		}
@@ -115,7 +116,7 @@ thisteam = teams.pop();
 console.log(memberarray);
 teams.unshift(thisteam);
 };// end loop for each team
-//console.log(memberdetails);
+
 } //end !egg trigger block
 }); //end 'on message'
 
