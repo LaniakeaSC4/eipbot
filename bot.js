@@ -117,8 +117,8 @@ thisteam = teams.pop();
 teams.unshift(thisteam);
 };// end loop for each team
 
-			console.log('teamarray at 0 is: ' + teamarray[0]);
-			console.log('teamarray at 1 is: ' + teamarray[1]);
+			setTimeout(console.log('teamarray at 0 is: ' + teamarray[0]);,10000);
+			setTimeout(console.log('teamarray at 1 is: ' + teamarray[1]);,10000);
 	
 } //end !egg trigger block
 }); //end 'on message'
