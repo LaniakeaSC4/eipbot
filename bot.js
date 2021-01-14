@@ -81,6 +81,18 @@ thisteam = teams.pop();
 	  		}
 	
 		}
+		
+		var ps;
+		for (ps = 0; ps < permitstatus.length;ps++){
+			
+			if (userroles.includes(permitstatus[ps])){
+	  		memberdetails.splice(buildcount,0, permitstatus[ps]);
+			//console.log('timezone: ' + memberdetails[buildcount]);
+			buildcount = buildcount + 1;
+	  		}
+	
+		}
+		
 	};//end if role is true
 	};//end for (let member of members) - every member on the server
 		
