@@ -95,12 +95,12 @@ thisteam = teams.pop();
 			membuildcount = membuildcount + 1;
 				
 							
-		memberarray.splice(teambuildcount,0, memberdetails);
-		teambuildcount = teambuildcount + 1;
+		//memberarray.splice(teambuildcount,0, memberdetails);
+		//teambuildcount = teambuildcount + 1;
 		//console.log(memberarray);
-		console.log('Memberdetails before clear: ' + memberdetails);
-		console.log('Mmemberarray before clear: ' + memberarray);
-		memberdetails.length = 0;
+		console.log('Memberdetails in loop : ' + memberdetails);
+		//console.log('Mmemberarray before clear: ' + memberarray);
+		//memberdetails.length = 0;
 			
 	  		}
 	
@@ -114,7 +114,7 @@ thisteam = teams.pop();
 
 		
 	};//end for (let member of members) - every member on the server
-console.log(memberarray);
+console.log('Memberdetails in at end : ' + memberdetails);
 teams.unshift(thisteam);
 };// end loop for each team
 
