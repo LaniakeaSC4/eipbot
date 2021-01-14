@@ -40,21 +40,23 @@ thisteam = teams.pop();
 	//this loop is for thisteam
 	let role = message.guild.roles.cache.find(r => r.name === thisteam);
 	
+	var teambuildcount = 0 
+	
 	//for every member on the server
 	for(let member of members) {
 	//check who are in the team for this loop
    	let hasRole = member.roles.cache.has(role.id);
 	
 	//we are going to need a counter incremented for each match below so that we can order things into the array
-	buildcount = 0;
+	var membuildcount = 0;
 	
 	//if they are in this team
 	if (hasRole === true){
 		
 		//start member details with display name. Splice it into the arrary at position of this loop.
-		memberdetails.splice(buildcount,0, member.displayName);
+		memberdetails.splice(membuildcount,0, member.displayName);
 		//console.log('Memberdetails array ' + memberdetails[buildcount]);
-		buildcount = buildcount + 1;
+		membuildcount = membuildcount + 1;
 		
 		//first lets get all thier roles into a string
 		userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
@@ -65,9 +67,9 @@ thisteam = teams.pop();
 		for (eb = 0; eb < eggbonus.length;eb++){
 	  	
 	  		if (userroles.includes(eggbonus[eb])){
-	  		memberdetails.splice(buildcount,0, eggbonus[eb]);
+	  		memberdetails.splice(membuildcount,0, eggbonus[eb]);
 			//console.log('eggbonus: ' + memberdetails[buildcount]);
-			buildcount = buildcount + 1;
+			membuildcount = membuildcount + 1;
 			} 
 		}
 	
@@ -75,9 +77,9 @@ thisteam = teams.pop();
 		for (tz = 0; tz < timezone.length;tz++){
 			
 			if (userroles.includes(timezone[tz])){
-	  		memberdetails.splice(buildcount,0, timezone[tz]);
+	  		memberdetails.splice(membuildcount,0, timezone[tz]);
 			//console.log('timezone: ' + memberdetails[buildcount]);
-			buildcount = buildcount + 1;
+			membuildcount = membuildcount + 1;
 	  		}
 	
 		}
@@ -86,16 +88,19 @@ thisteam = teams.pop();
 		for (ps = 0; ps < permitstatus.length;ps++){
 			
 			if (userroles.includes(permitstatus[ps])){
-	  		memberdetails.splice(buildcount,0, permitstatus[ps]);
+	  		memberdetails.splice(membuildcount,0, permitstatus[ps]);
 			//console.log('timezone: ' + memberdetails[buildcount]);
-			buildcount = buildcount + 1;
+			membuildcount = membuildcount + 1;
 	  		}
 	
 		}
 		
 	};//end if role is true
-	};//end for (let member of members) - every member on the server
 		
+		
+	};//end for (let member of members) - every member on the server
+
+
 teams.unshift(thisteam);
 };// end loop for each team
 console.log(memberdetails);
