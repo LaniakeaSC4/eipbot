@@ -92,17 +92,19 @@ thisteam = teams.pop();
 	  		memberdetails.splice(membuildcount,0, 'PS: ' + permitstatus[ps]);
 			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
-				
-	  		}
-
-		}
-	
-		console.log('teambuildcount is: ' + teambuildcount);
+			
+					console.log('teambuildcount is: ' + teambuildcount);
 		console.log('Memberdetails is : ' + [memberdetails]);
 		teamarray.splice(teambuildcount,0,[memberdetails]);
 		console.log('teamarray is : ' + [teamarray]);
 		console.log('teamarray at tbc is: ' + teamarray[teambuildcount]);
-		teambuildcount = teambuildcount + 1;
+		teambuildcount = teambuildcount + 1;	
+			
+	  		}
+
+		}
+	
+
 		
 	};//end if role is true
 	
