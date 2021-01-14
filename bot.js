@@ -99,7 +99,7 @@ thisteam = teams.pop();
 		console.log('teamarray is : ' + [teamarray]);
 		console.log('teamarray at tbc is: ' + teamarray[teambuildcount]);
 		teambuildcount = teambuildcount + 1;	
-			
+			memberdetails.length = 0;
 	  		}
 
 		}
