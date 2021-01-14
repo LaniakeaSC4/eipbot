@@ -93,9 +93,10 @@ thisteam = teams.pop();
 			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
 			
-					console.log('teambuildcount is: ' + teambuildcount);
+		console.log('teambuildcount is: ' + teambuildcount);
 		console.log('Memberdetails is : ' + [memberdetails]);
-		teamarray.splice(teambuildcount,0,[memberdetails]);
+		//teamarray.splice(teambuildcount,0,[memberdetails]);
+		teamarray.push([memberdetails]);
 		console.log('teamarray is : ' + [teamarray]);
 		console.log('teamarray at tbc is: ' + teamarray[teambuildcount]);
 		teambuildcount = teambuildcount + 1;	
