@@ -93,14 +93,7 @@ thisteam = teams.pop();
 			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
 			
-		console.log('teambuildcount is: ' + teambuildcount);
-		console.log('Memberdetails is : ' + [memberdetails]);
-		//teamarray.splice(teambuildcount,0,[memberdetails]);
-		teamarray.push([memberdetails]);
-		console.log('teamarray is : ' + [teamarray]);
-		console.log('teamarray at tbc is: ' + teamarray[teambuildcount]);
-		teambuildcount = teambuildcount + 1;	
-			memberdetails.length = 0;
+
 	  		}
 
 		}
@@ -111,7 +104,14 @@ thisteam = teams.pop();
 	
 	};//end for (let member of members) - every member on the server
 
-
+		console.log('teambuildcount is: ' + teambuildcount);
+		console.log('Memberdetails is : ' + [memberdetails]);
+		//teamarray.splice(teambuildcount,0,[memberdetails]);
+		teamarray.push([memberdetails]);
+		console.log('teamarray is : ' + [teamarray]);
+		console.log('teamarray at tbc is: ' + teamarray[teambuildcount]);
+		teambuildcount = teambuildcount + 1;	
+			memberdetails.length = 0;
 
 	
 teams.unshift(thisteam);
