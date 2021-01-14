@@ -28,7 +28,7 @@ permitstatus = ['Pro Permit', 'Standard Permit'];
 //const memberarray = [];
 
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
-//const memberdetails = [];
+const memberdetails = [];
 
 var teambuildcount = 0 
 	
