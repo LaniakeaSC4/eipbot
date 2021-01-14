@@ -16,7 +16,7 @@ if (message.content.startsWith("!egg")) {
 let members = message.guild.members.cache.array();
 
 //Define the things we are going to want to sort by
-teams = ['egg-streme'];
+teams = ['egg-streme', 'yolksters'];
 timezone = ['Europe', 'US-WC', 'US-EC', 'South America', 'Oceania'];
 eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger'];
 permitstatus = ['Pro Permit', 'Standard Permit'];
