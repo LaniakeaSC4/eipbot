@@ -94,12 +94,14 @@ thisteam = teams.pop();
 	  		}
 	
 		}
+	
+		memberarray.splice(teambuildcount,0, memberdetails);
+teambuildcount = teambuildcount + 1;
+console.log(memberarray);
 		
 	};//end if role is true
 		
-memberarray.splice(teambuildcount,0, memberdetails);
-teambuildcount = teambuildcount + 1;
-console.log(memberarray);
+
 		
 	};//end for (let member of members) - every member on the server
 
