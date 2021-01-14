@@ -57,6 +57,7 @@ thisteam = teams.pop();
 		
 		//start member details with display name. Splice it into the arrary at position of this loop.
 		memberdetails.splice(membuildcount,0, member.displayName);
+		memberarray.splice(membuildcount, 0, member);
 		membuildcount = membuildcount + 1;
 		
 		//first lets get all thier roles into a string
@@ -93,6 +94,7 @@ thisteam = teams.pop();
 			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
 			
+			console.log('member arrary is' + memberarray);
 
 	  		}
 
@@ -117,9 +119,9 @@ thisteam = teams.pop();
 teams.unshift(thisteam);
 };// end loop for each team
 
-	setTimeout(function(){
-     console.log('teamarray at 0 is: ' + teamarray[0])
-  }, 10000);
+	//setTimeout(function(){
+    // console.log('teamarray at 0 is: ' + teamarray[0])
+  //}, 10000);
 	
 			//setTimeout({console.log('teamarray at 0 is: ' + teamarray[0])},10000);
 			//setTimeout({console.log('teamarray at 1 is: ' + teamarray[1])},10000);
