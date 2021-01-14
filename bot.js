@@ -51,7 +51,6 @@ thisteam = teams.pop();
 	//if they are in this team
 	if (hasRole === true){
 		
-		//I think these next 4 rows need to go after all the role examination. memberarray[0] should contain (in this order) ['displayname', 'eggrank','permit','timezone']
 		//start member details with display name. Splice it into the arrary at position of this loop.
 		memberdetails.splice(buildcount,0, member.displayName);
 		//console.log('Memberdetails array ' + memberdetails[buildcount]);
@@ -61,39 +60,33 @@ thisteam = teams.pop();
 		userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
 	  	
 		//Now we need to build memberdetails and store it in member arrary
-		//[here] start a for loop, for the length of eggbonus. Check each one against the userroles string
 		
-	var eb
-	for (eb = 0; eb < eggbonus.length;eb++){
-	  
-	  if (userroles.includes(eggbonus[eb])){
-	  memberdetails.splice(buildcount,0, eggbonus[eb]);
-		//console.log('eggbonus: ' + memberdetails[buildcount]);
-		buildcount = buildcount + 1;
-	} 
-	}
-	 var tz;
-	for (tz = 0; tz < timezone.length;tz++){
-	  
-	  if (userroles.includes(timezone[tz])){
-	  memberdetails.splice(buildcount,0, timezone[tz]);
-		//console.log('timezone: ' + memberdetails[buildcount]);
-		buildcount = buildcount + 1;
-
-	  }
+		var eb
+		for (eb = 0; eb < eggbonus.length;eb++){
+	  	
+	  		if (userroles.includes(eggbonus[eb])){
+	  		memberdetails.splice(buildcount,0, eggbonus[eb]);
+			//console.log('eggbonus: ' + memberdetails[buildcount]);
+			buildcount = buildcount + 1;
+			} 
+		}
 	
-}
+		var tz;
+		for (tz = 0; tz < timezone.length;tz++){
+			
+			if (userroles.includes(timezone[tz])){
+	  		memberdetails.splice(buildcount,0, timezone[tz]);
+			//console.log('timezone: ' + memberdetails[buildcount]);
+			buildcount = buildcount + 1;
+	  		}
+	
+		}
 
-
-}
+	};//end for (let member of members) - every member on the server
+		
 teams.unshift(thisteam);
+};// end loop for each team
 console.log(memberdetails);
-}
-
-
-}
-
-
 } //end !egg trigger block
 }); //end 'on message'
 
