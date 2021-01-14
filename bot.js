@@ -104,12 +104,13 @@ thisteam = teams.pop();
 	
 	};//end for (let member of members) - every member on the server
 
-		console.log('teambuildcount is: ' + teambuildcount);
-		console.log('Memberdetails is : ' + [memberdetails]);
+		//console.log('teambuildcount is: ' + teambuildcount);
+		//console.log('Memberdetails is : ' + [memberdetails]);
 		//teamarray.splice(teambuildcount,0,[memberdetails]);
 		teamarray.push([memberdetails]);
-		console.log('teamarray is : ' + [teamarray]);
-		console.log('teamarray at tbc is: ' + teamarray[teambuildcount]);
+		//console.log('teamarray is : ' + [teamarray]);
+		console.log('teamarray at 0 is: ' + teamarray[0]);
+			console.log('teamarray at 0 is: ' + teamarray[1]);
 		teambuildcount = teambuildcount + 1;	
 			memberdetails.length = 0;
 
