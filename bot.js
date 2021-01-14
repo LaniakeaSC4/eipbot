@@ -83,12 +83,14 @@ thisteam = teams.pop();
 	  };
 	
 };
+console.log(memberdetails);
+
 };
 teams.unshift(thisteam);
 
 };
 
-console.log(memberdetails);
+
 };
 
 
