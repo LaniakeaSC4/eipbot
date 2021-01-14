@@ -99,11 +99,12 @@ thisteam = teams.pop();
 		
 		
 	};//end for (let member of members) - every member on the server
-
-
+memberarray.splice(teambuildcount,0, memberdetails);
+teambuildcount = teambuildcount + 1;
+console.log(memberarray);
 teams.unshift(thisteam);
 };// end loop for each team
-console.log(memberdetails);
+//console.log(memberdetails);
 } //end !egg trigger block
 }); //end 'on message'
 
