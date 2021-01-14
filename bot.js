@@ -22,13 +22,13 @@ eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger'
 permitstatus = ['Pro Permit', 'Standard Permit'];
 	
 //This will be the top level arrary for each team
-const teamarray = [];
+//const teamarray = [];
 
 //each object in teamarrary will be an arrary of the member display names
-const memberarray = [];
+//const memberarray = [];
 
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
-const memberdetails = [];
+//const memberdetails = [];
 
 var teambuildcount = 0 
 	
