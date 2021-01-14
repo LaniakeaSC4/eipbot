@@ -82,7 +82,9 @@ thisteam = teams.pop();
 	  		memberdetails.splice(membuildcount,0, 'TZ: ' + timezone[tz]);
 			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
-	  		}
+	  		} else { memberdetails.splice(membuildcount,0, 'TZ: None');
+	  		  
+	  		} 
 	
 		}
 		
@@ -94,7 +96,7 @@ thisteam = teams.pop();
 			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
 			
-			console.log('member arrary is' + memberarray);
+			console.log('member details is' + memberdetails);
 
 	  		}
 
@@ -106,26 +108,13 @@ thisteam = teams.pop();
 	
 	};//end for (let member of members) - every member on the server
 
-		//console.log('teambuildcount is: ' + teambuildcount);
-		//console.log('Memberdetails is : ' + [memberdetails]);
-		//teamarray.splice(teambuildcount,0,[memberdetails]);
-		teamarray.push([memberdetails]);
-		//console.log('teamarray is : ' + [teamarray]);
 
-		//teambuildcount = teambuildcount + 1;	
-			memberdetails.length = 0;
+		teamarray.push([memberdetails]);
+		memberdetails.length = 0;
 
 	
 teams.unshift(thisteam);
-};// end loop for each team
-
-	//setTimeout(function(){
-    // console.log('teamarray at 0 is: ' + teamarray[0])
-  //}, 10000);
-	
-			//setTimeout({console.log('teamarray at 0 is: ' + teamarray[0])},10000);
-			//setTimeout({console.log('teamarray at 1 is: ' + teamarray[1])},10000);
-	
+}// end loop for each team
 } //end !egg trigger block
 }); //end 'on message'
 
