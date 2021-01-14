@@ -30,6 +30,8 @@ const memberarray = [];
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
 const memberdetails = [];
 
+var teambuildcount = 0 
+	
 //starting loop for each team
 var i;
 for (i = 0; i < teams.length; i++){
@@ -40,7 +42,7 @@ thisteam = teams.pop();
 	//this loop is for thisteam
 	let role = message.guild.roles.cache.find(r => r.name === thisteam);
 	
-	var teambuildcount = 0 
+	
 	
 	//for every member on the server
 	for(let member of members) {
@@ -93,7 +95,7 @@ thisteam = teams.pop();
 			membuildcount = membuildcount + 1;
 				
 							
-		memberarray.splice(teambuildcount,1, memberdetails);
+		memberarray.splice(teambuildcount,0, memberdetails);
 		teambuildcount = teambuildcount + 1;
 		console.log(memberarray);
 		memberdetails.length = 0;
