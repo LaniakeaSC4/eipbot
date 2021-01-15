@@ -35,6 +35,16 @@ permitstatus = ['Pro Permit', 'Standard Permit'];
   		return false;
 		}
 
+	//check egg function
+	function checkbonus(value) {
+		for (var i = 0; i < userroles.length; i++) {
+    		if (value.indexOf(userroles[i]) > -1) {
+      		return true;
+    			}
+  		}
+  		return false;
+		}
+
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
 var memberdetails = [];
 
@@ -72,6 +82,11 @@ teampick = teams.filter(checkteam);
 memberdetails.splice(membuildcount,0, teampick);		
 membuildcount = membuildcount + 1;
 
+//Add egg bonus
+bonuspick = teams.filter(checkbonus);
+memberdetails.splice(membuildcount,0, bonuspick);		
+membuildcount = membuildcount + 1;
+		
 //console.log(userroles);
 		
 
