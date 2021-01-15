@@ -48,40 +48,44 @@ var memberdetails = [];
 		var tm
 		for (tm = 0; tm < teams.length;tm++){
 	  	
-	  		if (userroles.some(function(v) { return teams[tm].indexOf(v) >= 0;})) {
+	  		if (userroles.includes(teams[tm])) {
 	  		console.log("Team matched :" + teams[tm]);
+			let found = 1
 			membuildcount = membuildcount + 1;
-			} else { console.log("No match"); }
+			}
 		}		
-				
-		var eb
-		for (eb = 0; eb < eggbonus.length;eb++){
-	  	
-	  		if (userroles.includes(eggbonus[eb])){
-	  		memberdetails.splice(membuildcount,0, 'EB: ' + eggbonus[eb]);
-			membuildcount = membuildcount + 1;
-			} 
-		}
-	
-		var tz;
-		for (tz = 0; tz < timezone.length;tz++){
-			
-			if (userroles.includes(timezone[tz])){
-	  		memberdetails.splice(membuildcount,0, 'TZ: ' + timezone[tz]);
-			membuildcount = membuildcount + 1;
-	  		} 
-	
-		}
 		
-		var ps;
-		for (ps = 0; ps < permitstatus.length;ps++){
+		if (found = 0) {console.log("No Team Match");
+		found = 0
+		
+		//var eb
+		//for (eb = 0; eb < eggbonus.length;eb++){
+	  	
+	  	//	if (userroles.includes(eggbonus[eb])){
+	  	//	memberdetails.splice(membuildcount,0, 'EB: ' + eggbonus[eb]);
+		//	membuildcount = membuildcount + 1;
+		//	} 
+		//}
+	
+		//var tz;
+		//for (tz = 0; tz < timezone.length;tz++){
 			
-			if (userroles.includes(permitstatus[ps])){
-	  		memberdetails.splice(membuildcount,0, 'PS: ' + permitstatus[ps]);
-			membuildcount = membuildcount + 1;
-	  		}
+		//	if (userroles.includes(timezone[tz])){
+	  	//	memberdetails.splice(membuildcount,0, 'TZ: ' + timezone[tz]);
+		//	membuildcount = membuildcount + 1;
+	  	//	} 
+	
+		//}
+		
+		//var ps;
+		//for (ps = 0; ps < permitstatus.length;ps++){
+			
+		//	if (userroles.includes(permitstatus[ps])){
+	  	//	memberdetails.splice(membuildcount,0, 'PS: ' + permitstatus[ps]);
+		//	membuildcount = membuildcount + 1;
+	  	//	}
 
-		}
+		//}
 		
 	};//end for (let member of members) - every member on the server
 
