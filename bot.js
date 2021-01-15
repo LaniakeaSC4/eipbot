@@ -44,19 +44,23 @@ var memberdetails = [];
 		userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
 	  	
 		//Now we need to build memberdetails and store it in member arrary
-		var found = 0;
+		
 		var tm
 		for (tm = 0; tm < teams.length;tm++){
 	  	
 	  		if (userroles.includes(teams[tm])) {
 	  		console.log("Team matched :" + teams[tm]);
-			let found = 1
 			membuildcount = membuildcount + 1;
 			}
-		if (found = 0) {console.log("No Team Match"); }
-		found = 0
 		}		
 		
+		for (tm = 0; tm < teams.length;tm++){
+	  	
+	  		if (!userroles.includes(teams[tm])) {
+	  		console.log("No Match");
+			membuildcount = membuildcount + 1;
+			}
+		}
 		
 		
 		//var eb
