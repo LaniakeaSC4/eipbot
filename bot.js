@@ -46,14 +46,15 @@ var memberdetails = [];
 //var arr = ['banana', 'monkey banana', 'apple', 'kiwi', 'orange'];
 
 function checkteam(value) {
-  //var prohibited = ['banana', 'apple'];
-
-  for (var i = 0; i < teams.length; i++) {
-    if (value.indexOf(teams[i]) > -1) {
-      return teams[i];
+	
+	
+ // for (var i = 0; i < teams.length; i++) {
+	  
+    if (userroles.some(r=> teams.indexOf(r) >= 0)) {
+      return true;
     }
-  }
-  return 'No Team';
+ // }
+  return false;
 }
 
 thisteam = userroles.filter(checkteam);
