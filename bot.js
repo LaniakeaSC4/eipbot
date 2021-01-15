@@ -36,7 +36,7 @@ permitstatus = ['Pro Permit', 'Standard Permit'];
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
 var memberdetails = [];
 
-//start
+//start update
 client.on('message', async message => {
 
 //look for !egg trigger
@@ -76,6 +76,16 @@ membuildcount = membuildcount + 1;
 } //end !egg trigger block
 }); //end 'on message'
 
+
+//start print to log
+client.on('message', async message => {
+
+//look for !egg trigger
+if (message.content.startsWith("!print")) {
+	
+console.log(memberdetails);
+
+}); //end 'on message'
 
 
 // THIS  MUST  BE  THIS  WAY
