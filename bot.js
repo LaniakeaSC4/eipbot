@@ -41,7 +41,7 @@ var memberdetails = [];
 		membuildcount = membuildcount + 1;
 		
 		//first lets get all thier roles into a string
-		userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
+		userroles = member.roles.cache.map(r => '`'+r.name+'`');
 	  	
 //var arr = ['banana', 'monkey banana', 'apple', 'kiwi', 'orange'];
 
