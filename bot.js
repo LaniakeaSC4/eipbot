@@ -57,7 +57,7 @@ var memberdetails = [];
 		
 		if(found = 0){ for (tm = 0; tm < teams.length;tm++){
 	  	
-	  		if (!userroles.includes(teams[tm]) && found = 0) {
+	  		if (!userroles.includes(teams[tm]); && found = 0) {
 	  		console.log("No Match");
 			membuildcount = membuildcount + 1;
 			found = 1;
