@@ -6,6 +6,23 @@ client.on('ready', () => {
 	console.log('I am ready!');
 });
 
+function checkteam(value) {
+	
+	
+ for (var i = 0; i < userroles.length; i++) {
+	  //(value.indexOf(prohibited[i]) > -1) 
+    if (value.indexOf(userroles[i]) > -1) {
+     console.log("true");
+      return true;
+
+    }
+  }
+  	console.log("false");
+  return false;
+
+}
+
+
 //start
 client.on('message', async message => {
 
@@ -45,19 +62,7 @@ var memberdetails = [];
 	  	
 //var arr = ['banana', 'monkey banana', 'apple', 'kiwi', 'orange'];
 
-function checkteam(value) {
-	
-	
- for (var i = 0; i < userroles.length; i++) {
-	  //(value.indexOf(prohibited[i]) > -1) 
-    if (value.indexOf(userroles[i]) > -1) {
-      return true;
-	    console.log("true");
-    }
-  }
-  return false;
-	console.log("false");
-}
+
 
 teams = teams.filter(checkteam);
 console.log(member.displayName + "'s teams is: " + teams);
@@ -118,7 +123,7 @@ console.log(member.displayName + "'s teams is: " + teams);
 
 		//}
 		
-	};//end for (let member of members) - every member on the server
+	}//end for (let member of members) - every member on the server
 
 //}// end loop for each team
 } //end !egg trigger block
