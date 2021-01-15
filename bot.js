@@ -95,6 +95,11 @@ if (message.content.startsWith("!print")) {
 	console.log(memberdetails[9]);
 	console.log(memberdetails[10]);
 	console.log(memberdetails[11]);
+	console.log(memberdetails[12]);
+	console.log(memberdetails[13]);
+	console.log(memberdetails[14]);
+	console.log(memberdetails[15]);
+	console.log(memberdetails[16]);
 }
 }); //end 'on message'
 
