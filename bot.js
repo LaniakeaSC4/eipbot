@@ -84,7 +84,8 @@ let members = message.guild.members.cache.array();
 
 //Add timezone
 timepick = timezone.filter(checktime);
-memberdetails.splice(membuildcount,0, timepick);		
+if (timepick === ""){timepick = "No Timezone")} else {
+memberdetails.splice(membuildcount,0, timepick);}		
 membuildcount = membuildcount + 1;
 		
 //Add team
