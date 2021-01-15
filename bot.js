@@ -86,7 +86,7 @@ let members = message.guild.members.cache.array();
 timepick = timezone.filter(checktime);
 console.log(timepick.length);
 		
-if (timepick.lenght == 0)
+if (timepick.length == 0)
 	{memberdetails.splice(membuildcount,0, "No Timezone")} 
 		else {memberdetails.splice(membuildcount,0, timepick)}		
 membuildcount = membuildcount + 1;
