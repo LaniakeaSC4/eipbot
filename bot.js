@@ -25,8 +25,8 @@ permitstatus = ['Pro Permit', 'Standard Permit'];
 
 	//check time function
 	function checktime(value) {
-		for (var i = 0; i < timezone.length; i++) {
-    		if (value.indexOf(timezone[i]) > -1) {
+		for (var i = 0; i < userroles.length; i++) {
+    		if (value.indexOf(userroles[i]) > -1) {
       		return true;
     			}
   		}
@@ -67,7 +67,7 @@ membuildcount = membuildcount + 1;
 //Add timezone
 timepick = teams.filter(checktime);
 memberdetails.splice(membuildcount,0, timepick);		
-console.log(memberdetails);
+//console.log(memberdetails);
 membuildcount = membuildcount + 1;
 		
 	}//end for (let member of members) - every member on the server
