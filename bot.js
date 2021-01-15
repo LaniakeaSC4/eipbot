@@ -58,7 +58,7 @@ function checkteam(value) {
 }
 
 teams = teams.filter(checkteam);
-console.log(member.displayName + "'s teams is: " + thisteam);
+console.log(member.displayName + "'s teams is: " + teams);
 		
 		
 		
