@@ -64,6 +64,8 @@ let members = message.guild.members.cache.array();
 teampick = teams.filter(checkteam);
 memberdetails.splice(membuildcount,0, teampick);		
 membuildcount = membuildcount + 1;
+
+console.log(userroles);
 		
 //Add timezone
 timepick = timezone.filter(checktime);
