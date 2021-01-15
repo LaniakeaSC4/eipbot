@@ -84,7 +84,7 @@ client.on('message', async message => {
 if (message.content.startsWith("!print")) {
 	
 console.log(memberdetails);
-
+}
 }); //end 'on message'
 
 
