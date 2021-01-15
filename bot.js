@@ -50,10 +50,10 @@ function checkteam(value) {
 
   for (var i = 0; i < teams.length; i++) {
     if (value.indexOf(teams[i]) > -1) {
-      return false;
+      return teams[i];
     }
   }
-  return true;
+  return 'No Team';
 }
 
 thisteam = userroles.filter(checkteam);
