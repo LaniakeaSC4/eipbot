@@ -83,7 +83,12 @@ client.on('message', async message => {
 //look for !egg trigger
 if (message.content.startsWith("!print")) {
 	
-console.log(memberdetails);
+	console.log(memberdetails[0]);
+	console.log(memberdetails[1]);
+	console.log(memberdetails[2]);
+	console.log(memberdetails[3]);
+	console.log(memberdetails[4]);
+	console.log(memberdetails[5]);
 }
 }); //end 'on message'
 
