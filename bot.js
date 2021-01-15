@@ -48,16 +48,16 @@ var memberdetails = [];
 function checkteam(value) {
 	
 	
- // for (var i = 0; i < teams.length; i++) {
+ for (var i = 0; i < userroles.length; i++) {
 	  
-    if (value.some(r=> teams.indexOf(r) >= 0)) {
+    if (value.some(r=> userroles.indexOf(r) >= 0)) {
       return true;
     }
- // }
+  }
   return false;
 }
 
-thisteam = userroles.filter(checkteam);
+thisteam = teams.filter(checkteam);
 console.log(member.displayName + "'s teams is: " + thisteam);
 		
 		
