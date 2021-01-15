@@ -60,17 +60,19 @@ let members = message.guild.members.cache.array();
 		//first lets get all thier roles into a string
 		userroles = member.roles.cache.map(r => r.name);
 
+//Add timezone
+timepick = timezone.filter(checktime);
+memberdetails.splice(membuildcount,0, timepick);		
+membuildcount = membuildcount + 1;
+		
 //Add team
 teampick = teams.filter(checkteam);
 memberdetails.splice(membuildcount,0, teampick);		
 membuildcount = membuildcount + 1;
 
-console.log(userroles);
+//console.log(userroles);
 		
-//Add timezone
-timepick = timezone.filter(checktime);
-memberdetails.splice(membuildcount,0, timepick);		
-membuildcount = membuildcount + 1;
+
 		
 	}//end for (let member of members) - every member on the server
 
