@@ -41,15 +41,17 @@ client.on('message', async message => {
 
 //look for !egg trigger
 if (message.content.startsWith("!update")) {
-
+	
+		//we are going to need a counter incremented for each match below so that we can order things into the array
+		var membuildcount = 0;
+	
 //load up the members 
 let members = message.guild.members.cache.array();
 	
 	//for every member on the server
 	for(let member of members) {
 	
-		//we are going to need a counter incremented for each match below so that we can order things into the array
-		var membuildcount = 0;
+
 	
 		//start member details with display name. Splice it into the arrary at position of this loop.
 		memberdetails.splice(membuildcount,0, member.displayName);
