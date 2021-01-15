@@ -104,6 +104,23 @@ if (message.content.startsWith("!print")) {
 	console.log(memberdetails[14]);
 	console.log(memberdetails[15]);
 	console.log(memberdetails[16]);
+	console.log(memberdetails[17]);
+	console.log(memberdetails[18]);
+	console.log(memberdetails[19]);
+	console.log(memberdetails[20]);
+	console.log(memberdetails[21]);
+	console.log(memberdetails[22]);
+	console.log(memberdetails[23]);
+	console.log(memberdetails[24]);
+	console.log(memberdetails[25]);
+	console.log(memberdetails[26]);
+	console.log(memberdetails[27]);
+	console.log(memberdetails[28]);
+	console.log(memberdetails[29]);
+	console.log(memberdetails[30]);
+	console.log(memberdetails[31]);
+	console.log(memberdetails[32]);
+	console.log(memberdetails[33]);
 }
 }); //end 'on message'
 
