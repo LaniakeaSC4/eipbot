@@ -55,7 +55,7 @@ var memberdetails = [];
 			}
 		}		
 		
-		if (found = 0) {console.log("No Team Match");
+		if (found = 0) {console.log("No Team Match"); }
 		found = 0
 		
 		//var eb
