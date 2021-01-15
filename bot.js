@@ -63,13 +63,11 @@ let members = message.guild.members.cache.array();
 //Add team
 teampick = teams.filter(checkteam);
 memberdetails.splice(membuildcount,0, teampick);		
-//console.log(memberdetails);
 membuildcount = membuildcount + 1;
 
 //Add timezone
 timepick = teams.filter(checktime);
 memberdetails.splice(membuildcount,0, timepick);		
-//console.log(memberdetails);
 membuildcount = membuildcount + 1;
 		
 	}//end for (let member of members) - every member on the server
@@ -91,6 +89,12 @@ if (message.content.startsWith("!print")) {
 	console.log(memberdetails[3]);
 	console.log(memberdetails[4]);
 	console.log(memberdetails[5]);
+	console.log(memberdetails[6]);
+	console.log(memberdetails[7]);
+	console.log(memberdetails[8]);
+	console.log(memberdetails[9]);
+	console.log(memberdetails[10]);
+	console.log(memberdetails[11]);
 }
 }); //end 'on message'
 
