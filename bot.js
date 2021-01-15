@@ -6,22 +6,25 @@ client.on('ready', () => {
 	console.log('I am ready!');
 });
 
+//check team function
 function checkteam(value) {
-	
-	
- for (var i = 0; i < userroles.length; i++) {
-	  //(value.indexOf(prohibited[i]) > -1) 
-    if (value.indexOf(userroles[i]) > -1) {
-     console.log("true");
-      return true;
+	for (var i = 0; i < userroles.length; i++) {
+    	if (value.indexOf(userroles[i]) > -1) {
+      	return true;
+    		}
+  	}
+  	return false;
+	}
 
-    }
-  }
-  	console.log("false");
-  return false;
-
-}
-
+//check time function
+function checktime(value) {
+	for (var i = 0; i < timezone.length; i++) {
+    	if (value.indexOf(timezone[i]) > -1) {
+      	return true;
+    		}
+  	}
+  	return false;
+	}
 
 //start
 client.on('message', async message => {
@@ -59,70 +62,18 @@ var memberdetails = [];
 		
 		//first lets get all thier roles into a string
 		userroles = member.roles.cache.map(r => r.name);
-	  	
-//var arr = ['banana', 'monkey banana', 'apple', 'kiwi', 'orange'];
 
-
-
+//Add team
 teampick = teams.filter(checkteam);
 memberdetails.splice(membuildcount,0, teampick);		
-console.log(member.displayName + "'s teams is: " + teampick);
-console.log(memberdetails);		
-		
-		
-		
-		
-		//Now we need to build memberdetails and store it in member arrary
-		//var found = 0;
-		//var tm
-		//for (tm = 0; tm < teams.length;tm++){
-	  	
-	  	//	if (userroles.includes(teams[tm])) {
-	  	//	console.log("Team matched :" + teams[tm]);
-		//	found = 1;
-		//	membuildcount = membuildcount + 1;
-		//	}
-		//}		
-		
-		//if(found = 0){ for (tm = 0; tm < teams.length;tm++){
-	  	
-	  	//	if (!userroles.includes(teams[tm]); && found = 0) {
-	  	//	console.log("No Match");
-		//	membuildcount = membuildcount + 1;
-		//	found = 1;
-		//	}
-		//}
-		//	     }
-		//found = 0;
-		
-		//var eb
-		//for (eb = 0; eb < eggbonus.length;eb++){
-	  	
-	  	//	if (userroles.includes(eggbonus[eb])){
-	  	//	memberdetails.splice(membuildcount,0, 'EB: ' + eggbonus[eb]);
-		//	membuildcount = membuildcount + 1;
-		//	} 
-		//}
-	
-		//var tz;
-		//for (tz = 0; tz < timezone.length;tz++){
-			
-		//	if (userroles.includes(timezone[tz])){
-	  	//	memberdetails.splice(membuildcount,0, 'TZ: ' + timezone[tz]);
-		//	membuildcount = membuildcount + 1;
-	  	//	} 
-	
-		//}
-		
-		//var ps;
-		//for (ps = 0; ps < permitstatus.length;ps++){
-			
-		//	if (userroles.includes(permitstatus[ps])){
-	  	//	memberdetails.splice(membuildcount,0, 'PS: ' + permitstatus[ps]);
-		//	membuildcount = membuildcount + 1;
-	  	//	}
+//console.log(memberdetails);
+membuildcount = membuildcount + 1;
 
-		//}
+//Add timezone
+timepick = teams.filter(checktime);
+memberdetails.splice(membuildcount,0, timepick);		
+console.log(memberdetails);
+membuildcount = membuildcount + 1;
 		
 	}//end for (let member of members) - every member on the server
 
