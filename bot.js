@@ -56,7 +56,7 @@ function checkteam(value) {
   return true;
 }
 
-thisteam = teams.filter(checkteam);
+thisteam = userroles.filter(checkteam);
 console.log(member.displayName + "'s teams is: " + thisteam);
 		
 		
