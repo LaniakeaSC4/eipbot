@@ -51,7 +51,7 @@ var memberdetails = [];
 	  		if (userroles.some(v => teams[tm].includes(v))){
 	  		console.log("Team matched :" + teams[tm]);
 			membuildcount = membuildcount + 1;
-			} else { console.log("No match");
+			} else { console.log("No match"); }
 		}		
 				
 		var eb
