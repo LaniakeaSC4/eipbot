@@ -84,7 +84,7 @@ let members = message.guild.members.cache.array();
 
 //Add timezone
 timepick = timezone.filter(checktime);
-if (timepick.length == 0){timepick = "No Timezone"} else {
+if (!timepick.isArray(timepick) || !timepick.length)){timepick = "No Timezone"} else {
 memberdetails.splice(membuildcount,0, timepick);}		
 membuildcount = membuildcount + 1;
 		
