@@ -29,35 +29,15 @@ var memberarray = [];
 
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
 var memberdetails = [];
-
-var teambuildcount = 0 
-	
-//starting loop for each team
-var i;
-for (i = 0; i < teams.length; i++){
-
-//pop a team to get started
-thisteam = teams.pop();
-
-	//this loop is for thisteam
-	let role = message.guild.roles.cache.find(r => r.name === thisteam);
-	
-	
 	
 	//for every member on the server
 	for(let member of members) {
-	//check who are in the team for this loop
-   	let hasRole = member.roles.cache.has(role.id);
 	
-	//we are going to need a counter incremented for each match below so that we can order things into the array
-	var membuildcount = 0;
+		//we are going to need a counter incremented for each match below so that we can order things into the array
+		var membuildcount = 0;
 	
-	//if they are in this team
-//	if (hasRole === true){
-		
 		//start member details with display name. Splice it into the arrary at position of this loop.
 		memberdetails.splice(membuildcount,0, member.displayName);
-		memberarray.splice(membuildcount, 0, member);
 		membuildcount = membuildcount + 1;
 		
 		//first lets get all thier roles into a string
@@ -65,12 +45,20 @@ thisteam = teams.pop();
 	  	
 		//Now we need to build memberdetails and store it in member arrary
 		
+		var tm
+		for (tm = 0; tm < teams.length;tm++){
+	  	
+	  		if (userroles.some(v => teams[tm].includes(v))){
+	  		console.log("Team matched :" + teams[tm]);
+			membuildcount = membuildcount + 1;
+			} else { console.log("No match");
+		}		
+				
 		var eb
 		for (eb = 0; eb < eggbonus.length;eb++){
 	  	
 	  		if (userroles.includes(eggbonus[eb])){
 	  		memberdetails.splice(membuildcount,0, 'EB: ' + eggbonus[eb]);
-			//console.log('eggbonus: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
 			} 
 		}
@@ -80,10 +68,7 @@ thisteam = teams.pop();
 			
 			if (userroles.includes(timezone[tz])){
 	  		memberdetails.splice(membuildcount,0, 'TZ: ' + timezone[tz]);
-			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
-	  		} else { memberdetails.splice(membuildcount,0, 'TZ: None');
-	  		  
 	  		} 
 	
 		}
@@ -93,28 +78,14 @@ thisteam = teams.pop();
 			
 			if (userroles.includes(permitstatus[ps])){
 	  		memberdetails.splice(membuildcount,0, 'PS: ' + permitstatus[ps]);
-			//console.log('timezone: ' + memberdetails[buildcount]);
 			membuildcount = membuildcount + 1;
-			
-			console.log('member details is' + memberdetails);
-
 	  		}
 
 		}
-	
-
 		
-//	};//end if role is true
-	
 	};//end for (let member of members) - every member on the server
 
-
-		teamarray.push([memberdetails]);
-		memberdetails.length = 0;
-
-	
-teams.unshift(thisteam);
-}// end loop for each team
+//}// end loop for each team
 } //end !egg trigger block
 }); //end 'on message'
 
