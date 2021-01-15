@@ -53,10 +53,11 @@ var memberdetails = [];
 			let found = 1
 			membuildcount = membuildcount + 1;
 			}
-		}		
-		
 		if (found = 0) {console.log("No Team Match"); }
 		found = 0
+		}		
+		
+		
 		
 		//var eb
 		//for (eb = 0; eb < eggbonus.length;eb++){
