@@ -49,8 +49,8 @@ function checkteam(value) {
 	
 	
  for (var i = 0; i < userroles.length; i++) {
-	  
-    if (value.some(r=> userroles.indexOf(r) >= 0)) {
+	  //(value.indexOf(prohibited[i]) > -1) 
+    if (value.indexOf(userroles[i]) > -1)) {
       return true;
     }
   }
