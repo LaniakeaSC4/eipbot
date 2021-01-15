@@ -88,7 +88,7 @@ console.log(timepick.length);
 		
 if (timepick.length == 0)
 	{memberdetails.splice(membuildcount,0, "No Timezone")} 
-		else {memberdetails.splice(membuildcount,0, timepick)}		
+		else {memberdetails.splice(membuildcount,0, String(timepick))}		
 membuildcount = membuildcount + 1;
 		
 //Add team
