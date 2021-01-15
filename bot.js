@@ -52,9 +52,11 @@ function checkteam(value) {
 	  //(value.indexOf(prohibited[i]) > -1) 
     if (value.indexOf(userroles[i]) > -1) {
       return true;
+	    console.log("true");
     }
   }
   return false;
+	console.log("false");
 }
 
 teams = teams.filter(checkteam);
