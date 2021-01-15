@@ -6,6 +6,8 @@ client.on('ready', () => {
 	console.log('I am ready!');
 });
 
+const userroles = [];
+
 //Define the things we are going to want to sort by
 teams = ['egg-streme', 'yolksters','sunny-side','fowl-play','hard-boiled','over-easy'];
 timezone = ['Europe', 'US-WC', 'US-EC', 'South America', 'Oceania'];
