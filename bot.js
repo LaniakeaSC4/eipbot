@@ -64,9 +64,10 @@ var memberdetails = [];
 
 
 
-teams = teams.filter(checkteam);
-console.log(member.displayName + "'s teams is: " + teams);
-		
+teampick = teams.filter(checkteam);
+memberdetails.splice(membuildcount,0, teampick);		
+console.log(member.displayName + "'s teams is: " + teampick);
+console.log(memberdetails);		
 		
 		
 		
