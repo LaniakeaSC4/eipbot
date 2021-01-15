@@ -43,28 +43,48 @@ var memberdetails = [];
 		//first lets get all thier roles into a string
 		userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
 	  	
-		//Now we need to build memberdetails and store it in member arrary
-		var found = 0;
-		var tm
-		for (tm = 0; tm < teams.length;tm++){
-	  	
-	  		if (userroles.includes(teams[tm])) {
-	  		console.log("Team matched :" + teams[tm]);
-			found = 1;
-			membuildcount = membuildcount + 1;
-			}
-		}		
+//var arr = ['banana', 'monkey banana', 'apple', 'kiwi', 'orange'];
+
+function checkteam(value) {
+  //var prohibited = ['banana', 'apple'];
+
+  for (var i = 0; i < teams.length; i++) {
+    if (value.indexOf(teams[i]) > -1) {
+      return false;
+    }
+  }
+  return true;
+}
+
+thisteam = teams.filter(checkteam);
+console.log(member.displayName + "'s teams is: " + thisteam);
 		
-		if(found = 0){ for (tm = 0; tm < teams.length;tm++){
+		
+		
+		
+		
+		//Now we need to build memberdetails and store it in member arrary
+		//var found = 0;
+		//var tm
+		//for (tm = 0; tm < teams.length;tm++){
 	  	
-	  		if (!userroles.includes(teams[tm]); && found = 0) {
-	  		console.log("No Match");
-			membuildcount = membuildcount + 1;
-			found = 1;
-			}
-		}
-			     }
-		found = 0;
+	  	//	if (userroles.includes(teams[tm])) {
+	  	//	console.log("Team matched :" + teams[tm]);
+		//	found = 1;
+		//	membuildcount = membuildcount + 1;
+		//	}
+		//}		
+		
+		//if(found = 0){ for (tm = 0; tm < teams.length;tm++){
+	  	
+	  	//	if (!userroles.includes(teams[tm]); && found = 0) {
+	  	//	console.log("No Match");
+		//	membuildcount = membuildcount + 1;
+		//	found = 1;
+		//	}
+		//}
+		//	     }
+		//found = 0;
 		
 		//var eb
 		//for (eb = 0; eb < eggbonus.length;eb++){
