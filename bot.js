@@ -65,7 +65,7 @@ var memberdetails = [];
 
 
 teams = teams.filter(checkteam);
-console.log(member.displayName + "'s teams is: " + teams[0]);
+console.log(member.displayName + "'s teams is: " + teams);
 		
 		
 		
