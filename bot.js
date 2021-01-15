@@ -50,7 +50,7 @@ function checkteam(value) {
 	
  // for (var i = 0; i < teams.length; i++) {
 	  
-    if (userroles.some(r=> teams.indexOf(r) >= 0)) {
+    if (value.some(r=> teams.indexOf(r) >= 0)) {
       return true;
     }
  // }
