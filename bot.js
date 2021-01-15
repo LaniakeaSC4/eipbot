@@ -44,7 +44,7 @@ var memberdetails = [];
 		userroles = member.roles.cache.map(r => '`'+r.name+'`').join(' - ');
 	  	
 		//Now we need to build memberdetails and store it in member arrary
-		
+		var found = 0;
 		var tm
 		for (tm = 0; tm < teams.length;tm++){
 	  	
