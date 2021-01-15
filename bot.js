@@ -45,6 +45,16 @@ permitstatus = ['Pro Permit', 'Standard Permit'];
   		return false;
 		}
 
+	//check permit function
+	function checkpermit(value) {
+		for (var i = 0; i < userroles.length; i++) {
+    		if (value.indexOf(userroles[i]) > -1) {
+      		return true;
+    			}
+  		}
+  		return false;
+		}
+
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
 var memberdetails = [];
 
@@ -83,13 +93,14 @@ memberdetails.splice(membuildcount,0, teampick);
 membuildcount = membuildcount + 1;
 
 //Add egg bonus
-bonuspick = teams.filter(checkbonus);
+bonuspick = eggbonus.filter(checkbonus);
 memberdetails.splice(membuildcount,0, bonuspick);		
 membuildcount = membuildcount + 1;
-		
-//console.log(userroles);
-		
 
+//Add permit status
+permitpick = permitstatus.filter(checkpermit);
+memberdetails.splice(membuildcount,0, permitpick);		
+membuildcount = membuildcount + 1;
 		
 	}//end for (let member of members) - every member on the server
 
