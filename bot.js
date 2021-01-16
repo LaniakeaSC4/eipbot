@@ -93,7 +93,7 @@ let members = message.guild.members.cache.array();
 		teampick = teams.filter(checkteam);
 		if (teampick.length == 0)
 			{memberdetails.splice(membuildcount,0, "No Team");}
-				else {memberdetails.splice(membuildcount,0, String(teampick);}
+				else {memberdetails.splice(membuildcount,0, String(teampick));}
 		membuildcount = membuildcount + 1;
 
 //Add egg bonus
