@@ -121,7 +121,17 @@ memberdetails = [];
 	}//end for (let member of members) - every member on the server
 
 //}// end loop for each team
-} //end !egg trigger block
+
+var eggstremearr = [];
+for (var i = 0; i < memberlist.length; i++) {
+  //if (memberlist[i](memberdetails[2])) 
+  console.log(memberlist[i](memberdetails[2]))
+}
+
+
+
+
+} //end !update trigger block
 }); //end 'on message'
 
 
