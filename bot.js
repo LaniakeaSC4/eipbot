@@ -144,13 +144,13 @@ client.on('message', async message => {
 if (message.content.startsWith("!eggstreme")) {
   
 const exampleEmbed = new Discord.MessageEmbed()
-	.setColor('#0099ff')
+	.setColor('#B16DD0')
 	.setTitle('Egg-streme')
 	.setDescription('Some description here') 
 for (var i = 0; i < eggstremearr.length; i++) {
 
 	exampleEmbed.addFields(
-		{ name: eggstremearr[i][0], value: eggstremearr[i][3] + '\n' + eggstremearr[i][1] + '\n' + eggstremearr[i][4], inline: true},
+		{ name: eggstremearr[i][0], value: 'Rank:' + eggstremearr[i][3] + '\n' + 'Time Zone:' + eggstremearr[i][1] + '\n' + 'Permit:' + eggstremearr[i][4], inline: true},
 	);
 } 
 message.channel.send(exampleEmbed);
