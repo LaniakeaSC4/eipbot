@@ -71,7 +71,7 @@ if (message.content.startsWith("!update")) {
 		var memlistcount = 0;
 		var memberdetails = [];
 var memberlist = [];
-var eggstremearr = [];
+
 	
 //load up the members 
 let members = message.guild.members.cache.array();
@@ -144,7 +144,7 @@ client.on('message', async message => {
 
 //look for !eggstreme trigger
 if (message.content.startsWith("!eggstreme")) {
-  
+var eggstremearr = [];
 const exampleEmbed = new Discord.MessageEmbed()
 	.setColor('#B16DD0')
 	.setTitle('Egg-streme')
