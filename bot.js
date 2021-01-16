@@ -71,6 +71,7 @@ if (message.content.startsWith("!update")) {
 		var memlistcount = 0;
 		var memberdetails = [];
 var memberlist = [];
+var eggstremearr = [];
 	
 //load up the members 
 let members = message.guild.members.cache.array();
