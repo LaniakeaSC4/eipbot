@@ -69,9 +69,9 @@ if (message.content.startsWith("!update")) {
 		//we are going to need a counter incremented for each match below so that we can order things into the array
 		var membuildcount = 0;
 		var memlistcount = 0;
-		var memberdetails = [];
+//		var memberdetails = [];
 var memberlist = [];
-
+memberdetails.splice(0,memberdetails.length); 
 	
 //load up the members 
 let members = message.guild.members.cache.array();
@@ -120,13 +120,14 @@ membuildcount = membuildcount + 1;
 memberlist.splice(memlistcount,0, memberdetails);
 memlistcount = membuildcount + 1;
 membuildcount = 0;
-//reset memberdetails now we are done with it
-memberdetails.splice(0,memberdetails.length);
+
+
 
 	}//end for (let member of members) - every member on the server
 
 //}// end loop for each team
 
+//build egg-streme arrary for output
 //clear array before start
 eggstremearr.splice(0,eggstremearr.length);
 
@@ -136,7 +137,7 @@ for (var i = 0; i < memberlist.length; i++) {
 }
 } 
 
-//console.log(eggstremearr);
+
 
 } //end !update trigger block
 }); //end 'on message'
