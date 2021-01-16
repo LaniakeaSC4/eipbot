@@ -146,7 +146,7 @@ if (message.content.startsWith("!eggstreme")) {
 const exampleEmbed = new Discord.MessageEmbed()
 	.setColor('#B16DD0')
 	.setTitle('Egg-streme')
-	.setDescription('Some description here') 
+	.setDescription('Here are the team members in Team Egg-streme!') 
 for (var i = 0; i < eggstremearr.length; i++) {
 
 	exampleEmbed.addFields(
