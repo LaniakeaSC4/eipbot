@@ -58,7 +58,6 @@ var eggstremearr = [];
 		}
 
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
-var memberdetails = [];
 var memberlist = [];
 
 //start update
@@ -70,6 +69,8 @@ if (message.content.startsWith("!update")) {
 		//we are going to need a counter incremented for each match below so that we can order things into the array
 		var membuildcount = 0;
 		var memlistcount = 0;
+		var memberdetails = [];
+var memberlist = [];
 	
 //load up the members 
 let members = message.guild.members.cache.array();
@@ -140,7 +141,7 @@ for (var i = 0; i < memberlist.length; i++) {
 //start print to log
 client.on('message', async message => {
 
-//look for !egg trigger
+//look for !eggstreme trigger
 if (message.content.startsWith("!eggstreme")) {
   
 const exampleEmbed = new Discord.MessageEmbed()
