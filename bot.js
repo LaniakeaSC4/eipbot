@@ -57,6 +57,7 @@ permitstatus = ['Pro Permit', 'Standard Permit'];
 
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
 var memberdetails = [];
+var memberlist = [];
 
 //start update
 client.on('message', async message => {
@@ -66,6 +67,7 @@ if (message.content.startsWith("!update")) {
 	
 		//we are going to need a counter incremented for each match below so that we can order things into the array
 		var membuildcount = 0;
+		var memlistcount = 0;
 	
 //load up the members 
 let members = message.guild.members.cache.array();
@@ -110,6 +112,11 @@ if (permitstatus.length == 0)
 				else {memberdetails.splice(membuildcount,0, String(permitpick));}
 membuildcount = membuildcount + 1;
 		
+
+memberlist.splice(memlistcount,0, memberdetails);
+memlistcount = membuildcount + 1;
+membuildcount = 0;
+
 	}//end for (let member of members) - every member on the server
 
 //}// end loop for each team
