@@ -116,6 +116,7 @@ membuildcount = membuildcount + 1;
 memberlist.splice(memlistcount,0, memberdetails);
 memlistcount = membuildcount + 1;
 membuildcount = 0;
+memberdetails = [];
 
 	}//end for (let member of members) - every member on the server
 
