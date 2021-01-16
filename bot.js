@@ -124,7 +124,7 @@ memberdetails = [];
 
 var eggstremearr = [];
 for (var i = 0; i < memberlist.length; i++) {
-  if (memberlist[i][2] = "egg-streme") {
+  if (memberlist[i][2] == "egg-streme") {
   eggstremearr.splice(i,0,memberlist[i]);
 }
 } 
