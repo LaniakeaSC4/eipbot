@@ -107,7 +107,7 @@ membuildcount = membuildcount + 1;
 
 //Add permit status
 permitpick = permitstatus.filter(checkpermit);
-if (permitstatus.length == 0)
+if (permitpick.length == 0)
 {memberdetails.splice(membuildcount,0, "No Permit Status");}
 				else {memberdetails.splice(membuildcount,0, String(permitpick));}
 membuildcount = membuildcount + 1;
