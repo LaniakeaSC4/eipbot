@@ -82,19 +82,19 @@ let members = message.guild.members.cache.array();
 		//first lets get all thier roles into a string
 		userroles = member.roles.cache.map(r => r.name);
 
-//Add timezone
-timepick = timezone.filter(checktime);
-console.log(timepick.length);
+		//Add timezone
+		timepick = timezone.filter(checktime);
+		if (timepick.length == 0)
+			{memberdetails.splice(membuildcount,0, "No Timezone")} 
+				else {memberdetails.splice(membuildcount,0, String(timepick))}		
+		membuildcount = membuildcount + 1;
 		
-if (timepick.length == 0)
-	{memberdetails.splice(membuildcount,0, "No Timezone")} 
-		else {memberdetails.splice(membuildcount,0, String(timepick))}		
-membuildcount = membuildcount + 1;
-		
-//Add team
-teampick = teams.filter(checkteam);
-memberdetails.splice(membuildcount,0, teampick);		
-membuildcount = membuildcount + 1;
+		//Add team
+		teampick = teams.filter(checkteam);
+		if (teampick.length == 0)
+			{memberdetails.splice(membuildcount,0, "No Team");}
+				else {memberdetails.splice(membuildcount,0, String(teampick);}
+		membuildcount = membuildcount + 1;
 
 //Add egg bonus
 bonuspick = eggbonus.filter(checkbonus);
