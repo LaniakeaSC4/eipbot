@@ -14,6 +14,8 @@ timezone = ['Europe', 'US WC', 'US EC', 'South America', 'Oceania'];
 eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger'];
 permitstatus = ['Pro Permit', 'Standard Permit'];
 
+var eggstremearr = [];
+
 //functions
 	//check team function
 	function checkteam(value) {
@@ -122,7 +124,7 @@ memberdetails = [];
 
 //}// end loop for each team
 
-var eggstremearr = [];
+
 for (var i = 0; i < memberlist.length; i++) {
   if (memberlist[i][2] == "egg-streme") {
   eggstremearr.splice(i,0,memberlist[i]);
