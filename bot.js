@@ -98,12 +98,16 @@ let members = message.guild.members.cache.array();
 
 //Add egg bonus
 bonuspick = eggbonus.filter(checkbonus);
-memberdetails.splice(membuildcount,0, bonuspick);		
+if (bonuspick.length == 0)
+{memberdetails.splice(membuildcount,0, "No Bonus");}
+				else {memberdetails.splice(membuildcount,0, String(bonuspick));}
 membuildcount = membuildcount + 1;
 
 //Add permit status
 permitpick = permitstatus.filter(checkpermit);
-memberdetails.splice(membuildcount,0, permitpick);		
+if (permitstatus.length == 0)
+{memberdetails.splice(membuildcount,0, "No Permit Status");}
+				else {memberdetails.splice(membuildcount,0, String(permitpick));}
 membuildcount = membuildcount + 1;
 		
 	}//end for (let member of members) - every member on the server
