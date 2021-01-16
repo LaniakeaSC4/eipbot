@@ -129,7 +129,7 @@ for (var i = 0; i < memberlist.length; i++) {
 }
 } 
 
-console.log(eggstremearr);
+//console.log(eggstremearr);
 
 } //end !update trigger block
 }); //end 'on message'
@@ -139,12 +139,27 @@ console.log(eggstremearr);
 client.on('message', async message => {
 
 //look for !egg trigger
-if (message.content.startsWith("!print")) {
+if (message.content.startsWith("!eggstreme")) {
+  
+const exampleEmbed = new Discord.MessageEmbed()
+	.setColor('#0099ff')
+	.setTitle('Egg-streme')
+	.setDescription('Some description here') 
+for (var i = 0; i < eggstremearr.length; i++) {
+
+	exampleEmbed.addFields(
+		{ name: 'Test', value: '${eggstremearr[i][0]}' },
+	);
+} 
+message.channel.send(exampleEmbed);
 	
-	console.log(memberlist[0]);
-	console.log(memberlist[1]);
-	console.log(memberlist[2]);
-	console.log(memberlist[3]);
+	
+	
+	
+	//console.log(memberlist[0]);
+//	console.log(memberlist[1]);
+//	console.log(memberlist[2]);
+//	console.log(memberlist[3]);
 	//console.log(memberdetails[4]);
 	//console.log(memberdetails[5]);
 	//console.log(memberdetails[6]);
