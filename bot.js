@@ -150,7 +150,7 @@ const exampleEmbed = new Discord.MessageEmbed()
 for (var i = 0; i < eggstremearr.length; i++) {
 
 	exampleEmbed.addFields(
-		{ name: eggstremearr[i][0], value: String(eggstremearr[i][3])/String(eggstremearr[i][1]) /String(eggstremearr[i][4])},
+		{ name: eggstremearr[i][0], value: eggstremearr[i][3] + '\n' + eggstremearr[i][1] + '\n' + eggstremearr[i][4]},
 	);
 } 
 message.channel.send(exampleEmbed);
