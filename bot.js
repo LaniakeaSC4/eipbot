@@ -150,7 +150,7 @@ const exampleEmbed = new Discord.MessageEmbed()
 for (var i = 0; i < eggstremearr.length; i++) {
 
 	exampleEmbed.addFields(
-		{ name: eggstremearr[i][0], value: 'Rank:' + eggstremearr[i][3] + '\n' + 'Time Zone:' + eggstremearr[i][1] + '\n' + 'Permit:' + eggstremearr[i][4], inline: true},
+		{ name: eggstremearr[i][0], value: 'Rank: ' + eggstremearr[i][3] + '\n' + 'Time Zone: ' + eggstremearr[i][1] + '\n' + 'Permit: ' + eggstremearr[i][4], inline: true},
 	);
 } 
 message.channel.send(exampleEmbed);
