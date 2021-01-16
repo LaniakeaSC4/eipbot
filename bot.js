@@ -125,7 +125,7 @@ memberdetails = [];
 var eggstremearr = [];
 for (var i = 0; i < memberlist.length; i++) {
   //if (memberlist[i](memberdetails[2])) 
-  console.log(memberlist[i](memberdetails[2]))
+  console.log(memberlist[i][2])
 }
 
 
