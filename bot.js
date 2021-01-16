@@ -57,6 +57,19 @@ var eggstremearr = [];
   		return false;
 		}
 
+function buildeggstreme() {
+  
+  //build egg-streme arrary for output
+//clear array before start
+eggstremearr.splice(0,eggstremearr.length);
+
+for (var i = 0; i < memberlist.length; i++) {
+  if (memberlist[i][2] == "egg-streme") {
+  eggstremearr.splice(i,0,memberlist[i]);
+}
+}  
+}
+
 //for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
 var memberlist = [];
 
@@ -69,7 +82,7 @@ if (message.content.startsWith("!update")) {
 		//we are going to need a counter incremented for each match below so that we can order things into the array
 		var membuildcount = 0;
 		var memlistcount = 0;
-//		var memberdetails = [];
+var memberdetails = [];
 var memberlist = [];
 	
 //load up the members 
@@ -128,15 +141,15 @@ membuildcount = 0;
 
 //build egg-streme arrary for output
 //clear array before start
-eggstremearr.splice(0,eggstremearr.length);
+//eggstremearr.splice(0,eggstremearr.length);
 
-for (var i = 0; i < memberlist.length; i++) {
-  if (memberlist[i][2] == "egg-streme") {
-  eggstremearr.splice(i,0,memberlist[i]);
-}
-} 
+//for (var i = 0; i < memberlist.length; i++) {
+ // if (memberlist[i][2] == "egg-streme") {
+ // eggstremearr.splice(i,0,memberlist[i]);
+//}
+//} 
 
-
+buildeggstreme();
 
 } //end !update trigger block
 }); //end 'on message'
