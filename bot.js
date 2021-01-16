@@ -126,7 +126,7 @@ memberdetails = [];
 
 //}// end loop for each team
 
-
+var eggstremearr = [];
 for (var i = 0; i < memberlist.length; i++) {
   if (memberlist[i][2] == "egg-streme") {
   eggstremearr.splice(i,0,memberlist[i]);
@@ -144,7 +144,7 @@ client.on('message', async message => {
 
 //look for !eggstreme trigger
 if (message.content.startsWith("!eggstreme")) {
-var eggstremearr = [];
+
 const exampleEmbed = new Discord.MessageEmbed()
 	.setColor('#B16DD0')
 	.setTitle('Egg-streme')
