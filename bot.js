@@ -124,12 +124,12 @@ memberdetails = [];
 
 var eggstremearr = [];
 for (var i = 0; i < memberlist.length; i++) {
-  //if (memberlist[i](memberdetails[2])) 
-  console.log(memberlist[i][2])
+  if (memberlist[i][2] = "egg-streme") {
+  eggstremearr.splice(i,0,memberlist[i]);
 }
+} 
 
-
-
+console.log(eggstremearr);
 
 } //end !update trigger block
 }); //end 'on message'
