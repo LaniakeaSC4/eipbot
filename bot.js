@@ -6,15 +6,17 @@ client.on('ready', () => {
 	console.log('I am ready!');
 });
 
-var userroles = [];
-
 //Define the things we are going to want to sort by
 teams = ['egg-streme', 'yolksters','sunny-side','fowl-play','hard-boiled','over-easy'];
 timezone = ['Europe', 'US WC', 'US EC', 'South America', 'Oceania'];
 eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger'];
 permitstatus = ['Pro Permit', 'Standard Permit'];
 
+//initiate some arrarys (so they will be global var)
+var userroles = [];
+var memberlist = [];
 var eggstremearr = [];
+
 
 //functions
 	//check team function
@@ -56,9 +58,6 @@ var eggstremearr = [];
   		}
   		return false;
 		}
-
-//for each memberarray we will have another arrary containing the members details. Timezone, EB, Permit
-var memberlist = [];
 
 //start update
 client.on('message', async message => {
@@ -158,44 +157,7 @@ for (var i = 0; i < eggstremearr.length; i++) {
 	);
 } 
 message.channel.send(exampleEmbed);
-	
-	
-	
-	
-	//console.log(memberlist[0]);
-//	console.log(memberlist[1]);
-//	console.log(memberlist[2]);
-//	console.log(memberlist[3]);
-	//console.log(memberdetails[4]);
-	//console.log(memberdetails[5]);
-	//console.log(memberdetails[6]);
-	//console.log(memberdetails[7]);
-//	console.log(memberdetails[8]);
-//	console.log(memberdetails[9]);
-//	console.log(memberdetails[10]);
-//	console.log(memberdetails[11]);
-//	console.log(memberdetails[12]);
-//	console.log(memberdetails[13]);
-//	console.log(memberdetails[14]);
-//	console.log(memberdetails[15]);
-//	console.log(memberdetails[16]);
-//	console.log(memberdetails[17]);
-//	console.log(memberdetails[18]);
-//	console.log(memberdetails[19]);
-//	console.log(memberdetails[20]);
-//	console.log(memberdetails[21]);
-//	console.log(memberdetails[22]);
-//	console.log(memberdetails[23]);
-//	console.log(memberdetails[24]);
-	//console.log(memberdetails[25]);
-	//console.log(memberdetails[26]);
-//	console.log(memberdetails[27]);
-//	console.log(memberdetails[28]);
-//	console.log(memberdetails[29]);
-//	console.log(memberdetails[30]);
-//console.log(memberdetails[31]);
-//console.log(memberdetails[32]);
-//	console.log(memberdetails[33]);
+
 }
 }); //end 'on message'
 
