@@ -194,6 +194,8 @@ client.on('message', async message => {
 //look for !eggstreme trigger
 if (message.content.startsWith("!eggstreme")) {
 
+update(message);
+
 const exampleEmbed = new Discord.MessageEmbed()
 	.setColor('#B16DD0')
 	.setTitle('Egg-streme')
