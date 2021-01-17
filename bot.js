@@ -126,7 +126,9 @@ memberdetails = [];
 
 //}// end loop for each team
 
-var eggstremearr = [];
+//clear array before start
+eggstremearr.splice(0,eggstremearr.length);
+
 for (var i = 0; i < memberlist.length; i++) {
   if (memberlist[i][2] == "egg-streme") {
   eggstremearr.splice(i,0,memberlist[i]);
@@ -202,4 +204,4 @@ message.channel.send(exampleEmbed);
 
 client.login(process.env.BOT_TOKEN);
 
-//BOT_TOKEN is the Client Secret
+//BOT_TOKEN is the Client Secret 
