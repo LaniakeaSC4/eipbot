@@ -191,9 +191,6 @@ if (message.content.startsWith("!update")) {
 update(message);
   
 } //end !update trigger block
-//}); //end 'on message'
-
-//client.on('message', async message => {
 
 //look for !yolksters trigger
 if (message.content.startsWith("!yolksters")) {
