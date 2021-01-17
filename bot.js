@@ -226,7 +226,7 @@ message.delete();
 }
 
 //look for !hardboiled trigger
-if (message.content.startsWith(toLowerCase("!hardboiled"))) {
+if (message.content.startsWith("!hardboiled")) {
 
 update(message);
 message.channel.send(prepupdate('#5C90E1' , 'Hard Boiled', 'Here are the team members in team Hard Boiled!', hardboiledarr));
