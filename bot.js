@@ -189,7 +189,8 @@ if (message.content.startsWith("!update")) {
 
 //updates all the arrays, passing message details to the function. 
 update(message);
-  
+message.channel.send("Teams updated");
+message.delete();
 } //end !update trigger block
 
 //look for !yolksters trigger
@@ -197,6 +198,7 @@ if (message.content.startsWith("!yolksters")) {
 
 update(message);
 message.channel.send(prepupdate('#F0BA05' , 'Yolksters', 'Here are the team members in team Yolksters!', yolkstersarr));
+message.delete();
 }
 
 //look for !eggstreme trigger
@@ -212,6 +214,7 @@ if (message.content.startsWith("!sunnyside")) {
 
 update(message);
 message.channel.send(prepupdate('#DFD370' , 'Sunny-side', 'Here are the team members in team Sunny-side!', sunnysidearr));
+message.delete();
 }
 
 //look for !fowlplay trigger
@@ -219,6 +222,7 @@ if (message.content.startsWith("!fowlplay")) {
 
 update(message);
 message.channel.send(prepupdate('#1865F5' , 'Fowl-play', 'Here are the team members in team Fowl-play!', fowlplayarr));
+message.delete();
 }
 
 //look for !hardboiled trigger
@@ -226,6 +230,7 @@ if (message.content.startsWith("!hardboiled")) {
 
 update(message);
 message.channel.send(prepupdate('#5C90E1' , 'Hard Boiled', 'Here are the team members in team Hard Boiled!', hardboiledarr));
+message.delete();
 } 
 
 //look for !overeasy trigger
@@ -233,6 +238,7 @@ if (message.content.startsWith("!overeasy")) {
 
 update(message);
 message.channel.send(prepupdate('#A822BD' , 'Over Easy', 'Here are the team members in team Over Easy!', overeasyarr));
+message.delete();
 } 
 
 }); //end 'on message'
