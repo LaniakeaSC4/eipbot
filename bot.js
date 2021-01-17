@@ -155,6 +155,7 @@ buildteam(fowlplayarr, "fowl-play");
 buildteam(hardboiledarr, "hard-boiled");
 buildteam(overeasyarr, "over-easy");
 
+//end update function
 }
 
 //this function builds and returns the discord embed
@@ -164,7 +165,7 @@ function prepupdate(color, title, description, array){
 	.setColor(String(color))
 	.setTitle(String(title))
 	.setDescription(String(description));
-	
+} 	
 	//loop to add the team members to the rich embed. Team specific array contains object for each member, so we loop through them to ad fields to the embed. 
 for (var i = 0; i < array.length; i++) {
 
@@ -189,9 +190,9 @@ if (message.content.startsWith("!update")) {
 update(message);
   
 } //end !update trigger block
-//}); //end 'on message'
+}); //end 'on message'
 
-//client.on('message', async message => {
+client.on('message', async message => {
 
 //look for !yolksters trigger
 if (message.content.startsWith("!yolksters")) {
