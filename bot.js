@@ -71,7 +71,6 @@ if (message.content.startsWith("!update")) {
 		
 		//clear arrays on start
 		memberdetails.splice(0,memberdetails.length);
-//var memberlist = [];
 memberlist.splice(0,memberlist.length);
 	
 //load up the members 
@@ -121,7 +120,7 @@ membuildcount = membuildcount + 1;
 memberlist.splice(memlistcount,0, memberdetails);
 memlistcount = membuildcount + 1;
 membuildcount = 0;
-memberdetails = [];
+memberdetails.splice(0,memberdetails.length);
 
 	}//end for (let member of members) - every member on the server
 
