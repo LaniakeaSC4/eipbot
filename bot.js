@@ -16,7 +16,7 @@ permitstatus = ['Pro Permit', 'Standard Permit'];
 var userroles = [];
 var memberlist = [];
 var eggstremearr = [];
-
+var memberdetails = [];
 
 //functions
 	//check team function
@@ -68,7 +68,7 @@ if (message.content.startsWith("!update")) {
 		//we are going to need a counter incremented for each match below so that we can order things into the array
 		var membuildcount = 0;
 		var memlistcount = 0;
-		var memberdetails = [];
+		memberdetails.splice(0,memberdetails.length);
 var memberlist = [];
 
 	
