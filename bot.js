@@ -81,7 +81,7 @@ for (var i = 0; i < memberlist.length; i++) {
 } 
 }
 
-function update(mesage){
+function update(message){
   
   	
 		//we are going to need a counter incremented for each match below so that we can order things into the array
