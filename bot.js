@@ -173,7 +173,7 @@ buildteam(overeasyarr, "over-easy");
 
 
 //update complete message
-message.channel.send("Update Complete");
+//message.channel.send("Update Complete");
 
   
   
