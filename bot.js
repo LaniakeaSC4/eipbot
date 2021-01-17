@@ -153,7 +153,7 @@ memberdetails = [];
 //}
 //} 
 
-buildeggstreme(eggstremearr, egg-streme);
+buildeggstreme(eggstremearr, "egg-streme");
 
 
 
