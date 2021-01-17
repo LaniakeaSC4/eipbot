@@ -59,6 +59,19 @@ var memberdetails = [];
   		return false;
 		}
 
+function buildeggstreme(){
+  
+//build arrary specific for team-Egg-streme ready for output
+//clear array before start
+eggstremearr.splice(0,eggstremearr.length);
+
+for (var i = 0; i < memberlist.length; i++) {
+  if (memberlist[i][2] == "egg-streme") {
+  eggstremearr.splice(i,0,memberlist[i]);
+}
+} 
+}
+
 //start update
 client.on('message', async message => {
 
@@ -127,14 +140,24 @@ memberdetails = [];
 
 //}// end loop for each team
 
-//clear array before start
-eggstremearr.splice(0,eggstremearr.length);
 
-for (var i = 0; i < memberlist.length; i++) {
-  if (memberlist[i][2] == "egg-streme") {
-  eggstremearr.splice(i,0,memberlist[i]);
-}
-} 
+
+
+//build arrary specific for team-Egg-streme ready for output
+//clear array before start
+//eggstremearr.splice(0,eggstremearr.length);
+
+//for (var i = 0; i < memberlist.length; i++) {
+ // if (memberlist[i][2] == "egg-streme") {
+//  eggstremearr.splice(i,0,memberlist[i]);
+//}
+//} 
+
+buildeggstreme();
+
+
+
+
 
 //update complete message
 message.channel.send("Update Complete");
