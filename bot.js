@@ -162,11 +162,11 @@ memberdetails = [];
 //}
 //} 
 
-for (var i = 0;i < allteamsarr.length;i++){
-buildteam(String(allteamsarr[i]),String(teams[i]))
-}
+//for (var i = 0;i < allteamsarr.length;i++){
+//buildteam(String(allteamsarr[i]),String(teams[i]))
+//}
 
-//buildteam(eggstremearr, "egg-streme");
+buildteam(eggstremearr, "egg-streme");
 
 
 
