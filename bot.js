@@ -81,7 +81,7 @@ for (var i = 0; i < memberlist.length; i++) {
 } 
 }
 
-function update(){
+function update(mesage){
   
   	
 		//we are going to need a counter incremented for each match below so that we can order things into the array
@@ -182,7 +182,7 @@ client.on('message', async message => {
 //look for !egg trigger
 if (message.content.startsWith("!update")) {
 
-update();
+update(message);
   
 } //end !update trigger block
 }); //end 'on message'
