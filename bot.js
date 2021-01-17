@@ -245,10 +245,10 @@ client.on('message', async message => {
 console.log(coopname);
   
   
-  } 
+  };
   
 
-} //end client on message
+}) ;//end client on message
 
 
 // THIS  MUST  BE  THIS  WAY
