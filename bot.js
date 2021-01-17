@@ -172,9 +172,10 @@ for (var i = 0; i < array.length; i++) {
 	exampleEmbed.addFields(
 		{ name: array[i][0], value: 'Rank: ' + array[i][3] + '\n' + 'Time Zone: ' + array[i][1] + '\n' + 'Permit: ' + array[i][4], inline: true},
 	);
+} 
 //return embed back to caller
 return exampleEmbed;
-}
+
 } 
 //end of functions
 
