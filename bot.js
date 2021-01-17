@@ -204,6 +204,7 @@ if (message.content.startsWith("!eggstreme")) {
 
 update(message);
 message.channel.send(prepupdate('#B16DD0' , 'Egg-streme', 'Here are the team members in team Egg-streme!', eggstremearr));
+message.delete();
 }
 
 //look for !sunnyside trigger
