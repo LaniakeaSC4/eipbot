@@ -187,7 +187,7 @@ if (message.content.startsWith("!eggstreme")) {
 const exampleEmbed = new Discord.MessageEmbed()
 	.setColor('#B16DD0')
 	.setTitle('Egg-streme')
-	.setDescription('Here are the team members in Team Egg-streme!') 
+	.setDescription('Here are the team members in Team Egg-streme!');
 for (var i = 0; i < eggstremearr.length; i++) {
 
 	exampleEmbed.addFields(
@@ -197,6 +197,25 @@ for (var i = 0; i < eggstremearr.length; i++) {
 message.channel.send(exampleEmbed);
 
 }
+
+//look for !yolksters trigger
+if (message.content.startsWith("!yolksters")) {
+
+const exampleEmbed = new Discord.MessageEmbed()
+	.setColor('#B16DD0')
+	.setTitle('Yolksters')
+	.setDescription('Here are the team members in Yolksters!');
+for (var j = 0; j < yolkstersarr.length; j++) {
+
+	exampleEmbed.addFields(
+		{ name: yolkstersarr[j][0], value: 'Rank: ' + yolkstersarr[j][3] + '\n' + 'Time Zone: ' + yolkstersarr[j][1] + '\n' + 'Permit: ' + yolkstersarr[j][4], inline: true},
+	);
+} 
+message.channel.send(exampleEmbed);
+
+}
+
+
 }); //end 'on message'
 
 
