@@ -24,10 +24,10 @@ var sunnysidearr = [];
 var fowlplayarr = [];
 var hardboiledarr = [];
 var overeasyarr = [];
-//this one holds the names of the other arrays so we can loop through them
-const allteamsarr = ['eggstremearr', 'yolkstersarr', 'sunnysidearr', 'fowlplayarr', 'hardboiledarr', 'overeasyarr'];
 
 //functions
+//check functions: When looping through each member in update function, these functions look through the users roles (userroles) and return true for the role which matches. 
+
 	//check team function
 	function checkteam(value) {
 		for (var i = 0; i < userroles.length; i++) {
@@ -68,9 +68,9 @@ const allteamsarr = ['eggstremearr', 'yolkstersarr', 'sunnysidearr', 'fowlplayar
   		return false;
 		}
 
+//member details are first stored in memberdetails, then stored in 2 dimension memberlist. Buildteam function adds the member objects from memberlist (containing member details) to a team specific array ready for processing to output.
 function buildteam(teamarray, teamfilter){
-  
-//build arrary specific for team-Egg-streme ready for output
+ 
 //clear array before start
 teamarray.splice(0,teamarray.length);
 
@@ -100,69 +100,54 @@ let members = message.guild.members.cache.array();
 	
 
 	
-		//start member details with display name. Splice it into the arrary at position of this loop.
+		//start member details with display name. Splice it into the arrary at position membuildcount (0) counter then increment membuildcount so next object goes in next position. .
 		memberdetails.splice(membuildcount,0, member.displayName);
 		membuildcount = membuildcount + 1;
 		
-		//first lets get all thier roles into a string
+		//now lets get all thier roles into a string
 		userroles = member.roles.cache.map(r => r.name);
 
-		//Add timezone
+		//Add timezone using checktime function.
+		//fill timepick with objects from the timezone list which pass checktime as true (should just be one match). Splice it into the next location of memberdetails then increment build count.
 		timepick = timezone.filter(checktime);
 		if (timepick.length == 0)
 			{memberdetails.splice(membuildcount,0, "No Timezone")} 
 				else {memberdetails.splice(membuildcount,0, String(timepick))}		
 		membuildcount = membuildcount + 1;
 		
-		//Add team
+		//Add team with checkteam function (see timepick)
 		teampick = teams.filter(checkteam);
 		if (teampick.length == 0)
 			{memberdetails.splice(membuildcount,0, "No Team");}
 				else {memberdetails.splice(membuildcount,0, String(teampick));}
 		membuildcount = membuildcount + 1;
 
-//Add egg bonus
+//Add egg bonus with checkbonus function (see timepick)
 bonuspick = eggbonus.filter(checkbonus);
 if (bonuspick.length == 0)
 {memberdetails.splice(membuildcount,0, "No Bonus");}
 				else {memberdetails.splice(membuildcount,0, String(bonuspick));}
 membuildcount = membuildcount + 1;
 
-//Add permit status
+//Add permit status with checkpermit function (see timepick)
 permitpick = permitstatus.filter(checkpermit);
 if (permitpick.length == 0)
 {memberdetails.splice(membuildcount,0, "No Permit Status");}
 				else {memberdetails.splice(membuildcount,0, String(permitpick));}
 membuildcount = membuildcount + 1;
 		
-
+//now we have all user details in memberdetails [0] to [4], splice all that as one object into memberlist. 
 memberlist.splice(memlistcount,0, memberdetails);
+//increment memlistcount ready for next loop/user
 memlistcount = membuildcount + 1;
+//reset membuild count
 membuildcount = 0;
+//this may not be needed. Try take it out? 
 memberdetails = [];
-//memberdetails.splice(0,memberdetails.length);
 
 	}//end for (let member of members) - every member on the server
 
-//}// end loop for each team
-
-
-
-
-//build arrary specific for team-Egg-streme ready for output
-//clear array before start
-//eggstremearr.splice(0,eggstremearr.length);
-
-//for (var i = 0; i < memberlist.length; i++) {
- // if (memberlist[i][2] == "egg-streme") {
-//  eggstremearr.splice(i,0,memberlist[i]);
-//}
-//} 
-
-//for (var i = 0;i < allteamsarr.length;i++){
-//buildteam(String(allteamsarr[i]),String(teams[i]))
-//}
-
+//build the team specific arrays
 buildteam(eggstremearr, "egg-streme");
 buildteam(yolkstersarr, "yolksters");
 buildteam(sunnysidearr, "sunny-side");
@@ -170,43 +155,43 @@ buildteam(fowlplayarr, "fowl-play");
 buildteam(hardboiledarr, "hard-boiled");
 buildteam(overeasyarr, "over-easy");
 
-
-
-//update complete message
-//message.channel.send("Update Complete");
-
-  
-  
 }
 
+//this function builds and returns the discord embed
 function prepupdate(color, title, description, array){
   
   const exampleEmbed = new Discord.MessageEmbed()
 	.setColor(String(color))
 	.setTitle(String(title))
 	.setDescription(String(description));
+	
+	//loop to add the team members to the rich embed. Team specific array contains object for each member, so we loop through them to ad fields to the embed. 
 for (var i = 0; i < array.length; i++) {
 
 	exampleEmbed.addFields(
 		{ name: array[i][0], value: 'Rank: ' + array[i][3] + '\n' + 'Time Zone: ' + array[i][1] + '\n' + 'Permit: ' + array[i][4], inline: true},
 	);
-}
+//return embed back to caller
 return exampleEmbed;
 }
-//start update
+
+//end of functions
+
+//======================================
+
+//look for messages, when one is sent do
 client.on('message', async message => {
 
-//look for !egg trigger
+//look for !update trigger. Allows manual update. Not needed with team outputs as update function is called first in those anyway.
 if (message.content.startsWith("!update")) {
 
+//updates all the arrays, passing message details to the function. 
 update(message);
   
 } //end !update trigger block
-}); //end 'on message'
+//}); //end 'on message'
 
-
-//start print to log
-client.on('message', async message => {
+//client.on('message', async message => {
 
 //look for !yolksters trigger
 if (message.content.startsWith("!yolksters")) {
