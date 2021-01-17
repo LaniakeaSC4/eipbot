@@ -248,7 +248,7 @@ message.channel.send(exampleEmbed);
 if (message.content.startsWith("!2")) {
 
 update(message);
-message.channel.send(prepupdate('#B106DD0' , 'Egg-streme', 'egg-streme members are', eggstremearr));
+message.channel.send(prepupdate('#B16DD0' , 'Egg-streme', 'egg-streme members are', eggstremearr));
 
 }
 
