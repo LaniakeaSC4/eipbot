@@ -59,15 +59,15 @@ var memberdetails = [];
   		return false;
 		}
 
-function buildeggstreme(){
+function buildeggstreme(teamarray, teamfilter){
   
 //build arrary specific for team-Egg-streme ready for output
 //clear array before start
-eggstremearr.splice(0,eggstremearr.length);
+teamarray.splice(0,teamarray.length);
 
 for (var i = 0; i < memberlist.length; i++) {
-  if (memberlist[i][2] == "egg-streme") {
-  eggstremearr.splice(i,0,memberlist[i]);
+  if (memberlist[i][2] == teamfilter) {
+  teamarray.splice(i,0,memberlist[i]);
 }
 } 
 }
@@ -153,7 +153,7 @@ memberdetails = [];
 //}
 //} 
 
-buildeggstreme();
+buildeggstreme(eggstremearr, egg-streme);
 
 
 
