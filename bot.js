@@ -213,6 +213,8 @@ message.channel.send(exampleEmbed);
 //look for !yolksters trigger
 if (message.content.startsWith("!yolksters")) {
 
+update(message);
+
 const exampleEmbed = new Discord.MessageEmbed()
 	.setColor('F0BA05')
 	.setTitle('Yolksters')
