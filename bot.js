@@ -166,7 +166,9 @@ memberdetails = [];
 buildteam(eggstremearr, "egg-streme");
 buildteam(yolkstersarr, "yolksters");
 buildteam(sunnysidearr, "sunny-side");
-buildteam(fowlplayarr, "fowl-play")
+buildteam(fowlplayarr, "fowl-play");
+buildteam(hardboiledarr, "hard-boiled");
+buildteam(overeasyarr, "over-easy");
 
 
 
@@ -213,7 +215,6 @@ update(message);
 message.channel.send(prepupdate('#F0BA05' , 'Yolksters', 'Here are the team members in team Yolksters!', yolkstersarr));
 }
 
-
 //look for !eggstreme trigger
 if (message.content.startsWith("!eggstreme")) {
 
@@ -221,7 +222,7 @@ update(message);
 message.channel.send(prepupdate('#B16DD0' , 'Egg-streme', 'Here are the team members in team Egg-streme!', eggstremearr));
 }
 
-//look for !suunnyside trigger
+//look for !sunnyside trigger
 if (message.content.startsWith("!sunnyside")) {
 
 update(message);
@@ -234,6 +235,20 @@ if (message.content.startsWith("!fowlplay")) {
 update(message);
 message.channel.send(prepupdate('#1865F5' , 'Fowl-play', 'Here are the team members in team Fowl-play!', fowlplayarr));
 }
+
+//look for !hardboiled trigger
+if (message.content.startsWith("!hardboiled")) {
+
+update(message);
+message.channel.send(prepupdate('#5C90E1' , 'Hard Boiled', 'Here are the team members in team Hard Boiled!', hardboiledarr));
+} 
+
+//look for !overeasy trigger
+if (message.content.startsWith("!overeasy")) {
+
+update(message);
+message.channel.send(prepupdate('#A822BD' , 'Over Easy', 'Here are the team members in team Over Easy!', overeasyarr));
+} 
 
 }); //end 'on message'
 
