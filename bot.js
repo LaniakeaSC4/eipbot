@@ -165,7 +165,7 @@ memberdetails = [];
 
 buildteam(eggstremearr, "egg-streme");
 buildteam(yolkstersarr, "yolksters");
-Buildteam(sunnysidearr, "sunny-side")
+buildteam(sunnysidearr, "sunny-side")
 
 
 
