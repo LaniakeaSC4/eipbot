@@ -176,6 +176,20 @@ message.channel.send("Update Complete");
   
 }
 
+function prepupdate(color, title, description, array){
+  
+  const exampleEmbed = new Discord.MessageEmbed()
+	.setColor('$color')
+	.setTitle('$title')
+	.setDescription('$description');
+for (var i = 0; i < array.length; i++) {
+
+	exampleEmbed.addFields(
+		{ name: array[i][0], value: 'Rank: ' + array[i][3] + '\n' + 'Time Zone: ' + array[i][1] + '\n' + 'Permit: ' + array[i][4], inline: true},
+	);
+}
+return exampleEmbed;
+}
 //start update
 client.on('message', async message => {
 
@@ -228,6 +242,17 @@ for (var j = 0; j < yolkstersarr.length; j++) {
 message.channel.send(exampleEmbed);
 
 }
+
+
+//look for !eggstreme2 trigger
+if (message.content.startsWith("!eggstreme2")) {
+
+update(message);
+message.channel.send(prepupdate('#B106DD0' , 'Egg-streme', 'egg-streme members are', eggstremearr));
+
+}
+
+
 
 
 }); //end 'on message'
