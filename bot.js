@@ -68,9 +68,11 @@ if (message.content.startsWith("!update")) {
 		//we are going to need a counter incremented for each match below so that we can order things into the array
 		var membuildcount = 0;
 		var memlistcount = 0;
+		
+		//clear arrays on start
 		memberdetails.splice(0,memberdetails.length);
-var memberlist = [];
-
+//var memberlist = [];
+memberlist.splice(0,memberlist.length);
 	
 //load up the members 
 let members = message.guild.members.cache.array();
@@ -134,8 +136,8 @@ for (var i = 0; i < memberlist.length; i++) {
 }
 } 
 
-//console.log(eggstremearr);
-
+//update complete message
+message.channel.send("Update Complete");
 } //end !update trigger block
 }); //end 'on message'
 
