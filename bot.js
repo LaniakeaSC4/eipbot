@@ -202,7 +202,7 @@ message.channel.send(exampleEmbed);
 if (message.content.startsWith("!yolksters")) {
 
 const exampleEmbed = new Discord.MessageEmbed()
-	.setColor('#B16DD0')
+	.setColor('F0BA05')
 	.setTitle('Yolksters')
 	.setDescription('Here are the team members in Yolksters!');
 for (var j = 0; j < yolkstersarr.length; j++) {
