@@ -179,9 +179,9 @@ message.channel.send("Update Complete");
 function prepupdate(color, title, description, array){
   
   const exampleEmbed = new Discord.MessageEmbed()
-	.setColor('$color')
-	.setTitle('$title')
-	.setDescription('$description');
+	.setColor(color)
+	.setTitle($title)
+	.setDescription(description);
 for (var i = 0; i < array.length; i++) {
 
 	exampleEmbed.addFields(
@@ -244,8 +244,8 @@ message.channel.send(exampleEmbed);
 }
 
 
-//look for !eggstreme2 trigger
-if (message.content.startsWith("!eggstreme2")) {
+//look for !2 trigger
+if (message.content.startsWith("!2")) {
 
 update(message);
 message.channel.send(prepupdate('#B106DD0' , 'Egg-streme', 'egg-streme members are', eggstremearr));
