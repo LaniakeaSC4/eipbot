@@ -180,7 +180,7 @@ function prepupdate(color, title, description, array){
   
   const exampleEmbed = new Discord.MessageEmbed()
 	.setColor(color)
-	.setTitle($title)
+	.setTitle(title)
 	.setDescription(description);
 for (var i = 0; i < array.length; i++) {
 
