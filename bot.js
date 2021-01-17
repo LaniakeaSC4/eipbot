@@ -179,9 +179,9 @@ message.channel.send("Update Complete");
 function prepupdate(color, title, description, array){
   
   const exampleEmbed = new Discord.MessageEmbed()
-	.setColor(color)
-	.setTitle(title)
-	.setDescription(description);
+	.setColor(String(color))
+	.setTitle(String(title))
+	.setDescription(String(description));
 for (var i = 0; i < array.length; i++) {
 
 	exampleEmbed.addFields(
