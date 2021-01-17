@@ -237,6 +237,19 @@ message.channel.send(prepupdate('#A822BD' , 'Over Easy', 'Here are the team memb
 
 }); //end 'on message'
 
+//======================================
+client.on('message', async message => {
+  if (message.content.startsWith("!coop")){
+  let msg = message.content;
+  let coopname = msg.substr( msg.indexOf(' ') + 1 );
+console.log(coopname);
+  
+  
+  } 
+  
+
+} //end client on message
+
 
 // THIS  MUST  BE  THIS  WAY
 
