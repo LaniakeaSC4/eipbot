@@ -165,7 +165,7 @@ function prepupdate(color, title, description, array){
 	.setColor(String(color))
 	.setTitle(String(title))
 	.setDescription(String(description));
-} 	
+
 	//loop to add the team members to the rich embed. Team specific array contains object for each member, so we loop through them to ad fields to the embed. 
 for (var i = 0; i < array.length; i++) {
 
@@ -175,7 +175,7 @@ for (var i = 0; i < array.length; i++) {
 //return embed back to caller
 return exampleEmbed;
 }
-
+} 
 //end of functions
 
 //======================================
