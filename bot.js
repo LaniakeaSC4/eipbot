@@ -165,7 +165,8 @@ memberdetails = [];
 
 buildteam(eggstremearr, "egg-streme");
 buildteam(yolkstersarr, "yolksters");
-buildteam(sunnysidearr, "sunny-side")
+buildteam(sunnysidearr, "sunny-side");
+buildteam(fowlplayarr, "fowl-play")
 
 
 
@@ -209,7 +210,7 @@ client.on('message', async message => {
 if (message.content.startsWith("!yolksters")) {
 
 update(message);
-message.channel.send(prepupdate('#F0BA05' , 'Yolksters', 'Here are the team members in Yolksters!', yolkstersarr));
+message.channel.send(prepupdate('#F0BA05' , 'Yolksters', 'Here are the team members in team Yolksters!', yolkstersarr));
 }
 
 
@@ -217,16 +218,22 @@ message.channel.send(prepupdate('#F0BA05' , 'Yolksters', 'Here are the team memb
 if (message.content.startsWith("!eggstreme")) {
 
 update(message);
-message.channel.send(prepupdate('#B16DD0' , 'Egg-streme', 'Here are the team members in Egg-streme!', eggstremearr));
+message.channel.send(prepupdate('#B16DD0' , 'Egg-streme', 'Here are the team members in team Egg-streme!', eggstremearr));
 }
 
 //look for !suunnyside trigger
 if (message.content.startsWith("!sunnyside")) {
 
 update(message);
-message.channel.send(prepupdate('#DFD370' , 'Sunny-side', 'Here are the team members in Sunng-side!', sunnysidearr));
+message.channel.send(prepupdate('#DFD370' , 'Sunny-side', 'Here are the team members in team Sunny-side!', sunnysidearr));
 }
 
+//look for !fowlplay trigger
+if (message.content.startsWith("!fowlplay")) {
+
+update(message);
+message.channel.send(prepupdate('#1865F5' , 'Fowl-play', 'Here are the team members in team Fowl-play!', fowlplayarr));
+}
 
 }); //end 'on message'
 
