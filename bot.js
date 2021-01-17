@@ -205,51 +205,19 @@ update(message);
 //start print to log
 client.on('message', async message => {
 
-//look for !eggstreme trigger
-if (message.content.startsWith("!eggstreme")) {
-
-update(message);
-
-const exampleEmbed = new Discord.MessageEmbed()
-	.setColor('#B16DD0')
-	.setTitle('Egg-streme')
-	.setDescription('Here are the team members in Team Egg-streme!');
-for (var i = 0; i < eggstremearr.length; i++) {
-
-	exampleEmbed.addFields(
-		{ name: eggstremearr[i][0], value: 'Rank: ' + eggstremearr[i][3] + '\n' + 'Time Zone: ' + eggstremearr[i][1] + '\n' + 'Permit: ' + eggstremearr[i][4], inline: true},
-	);
-} 
-message.channel.send(exampleEmbed);
-
-}
-
 //look for !yolksters trigger
 if (message.content.startsWith("!yolksters")) {
 
 update(message);
-
-const exampleEmbed = new Discord.MessageEmbed()
-	.setColor('F0BA05')
-	.setTitle('Yolksters')
-	.setDescription('Here are the team members in Yolksters!');
-for (var j = 0; j < yolkstersarr.length; j++) {
-
-	exampleEmbed.addFields(
-		{ name: yolkstersarr[j][0], value: 'Rank: ' + yolkstersarr[j][3] + '\n' + 'Time Zone: ' + yolkstersarr[j][1] + '\n' + 'Permit: ' + yolkstersarr[j][4], inline: true},
-	);
-} 
-message.channel.send(exampleEmbed);
-
+message.channel.send(prepupdate('#F0BA05' , 'Yolksters', 'Here are the team members in Yolksters!', eggstremearr));
 }
 
 
-//look for !2 trigger
-if (message.content.startsWith("!2")) {
+//look for !eggstreme trigger
+if (message.content.startsWith("!eggstreme")) {
 
 update(message);
-message.channel.send(prepupdate('#B16DD0' , 'Egg-streme', 'egg-streme members are', eggstremearr));
-
+message.channel.send(prepupdate('#B16DD0' , 'Egg-streme', 'Here are the team members in Egg-streme!', eggstremearr));
 }
 
 
