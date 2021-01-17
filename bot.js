@@ -15,8 +15,17 @@ permitstatus = ['Pro Permit', 'Standard Permit'];
 //initiate some arrarys (so they will be global var)
 var userroles = [];
 var memberlist = [];
-var eggstremearr = [];
 var memberdetails = [];
+
+//arrays to build outputs into
+var eggstremearr = [];
+var yolkstersarr = [];
+var sunnysidearr = [];
+var fowlplayarr = [];
+var hardboiledarr = [];
+var overeasyarr = [];
+//this one holds the names of the other arrays so we can loop through them
+const allteamsarr = ['eggstremearr', 'yolkstersarr', 'sunnysidearr', 'fowlplayarr', 'hardboiledarr', 'overeasyarr'];
 
 //functions
 	//check team function
@@ -59,7 +68,7 @@ var memberdetails = [];
   		return false;
 		}
 
-function buildeggstreme(teamarray, teamfilter){
+function buildteam(teamarray, teamfilter){
   
 //build arrary specific for team-Egg-streme ready for output
 //clear array before start
@@ -153,7 +162,11 @@ memberdetails = [];
 //}
 //} 
 
-buildeggstreme(eggstremearr, "egg-streme");
+for (var i = 0;i < allteamsarr.length;i++){
+buildteam(String(allteamsarr[i]),String(teams[i]))
+}
+
+//buildteam(eggstremearr, "egg-streme");
 
 
 
