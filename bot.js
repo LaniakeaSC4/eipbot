@@ -165,7 +165,7 @@ memberdetails = [];
 
 buildteam(eggstremearr, "egg-streme");
 buildteam(yolkstersarr, "yolksters");
-
+Buildteam(sunnysidearr, "sunny-side")
 
 
 
@@ -220,7 +220,12 @@ update(message);
 message.channel.send(prepupdate('#B16DD0' , 'Egg-streme', 'Here are the team members in Egg-streme!', eggstremearr));
 }
 
+//look for !suunnyside trigger
+if (message.content.startsWith("!sunnyside")) {
 
+update(message);
+message.channel.send(prepupdate('#DFD370' , 'Sunny-side', 'Here are the team members in Sunng-side!', sunnysidearr));
+}
 
 
 }); //end 'on message'
