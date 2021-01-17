@@ -209,7 +209,7 @@ client.on('message', async message => {
 if (message.content.startsWith("!yolksters")) {
 
 update(message);
-message.channel.send(prepupdate('#F0BA05' , 'Yolksters', 'Here are the team members in Yolksters!', eggstremearr));
+message.channel.send(prepupdate('#F0BA05' , 'Yolksters', 'Here are the team members in Yolksters!', yolkstersarr));
 }
 
 
