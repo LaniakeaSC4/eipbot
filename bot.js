@@ -232,7 +232,7 @@ var coopname = "";
 	.setColor(String(color))
 	.setTitle(String(title))
 	.setDescription(String(description));
-Coopembed.addFields(
+coopembed.addFields(
 			{ name: coopname, value: 'Player', inline: true}
 		);//end addfields
 }; //end Coopembed function
