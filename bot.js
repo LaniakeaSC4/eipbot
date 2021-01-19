@@ -232,11 +232,12 @@ var coopname = "";
 	coopembed.setColor(String(color))
 	coopembed.setTitle(String(title))
 	coopembed.setDescription(String(description));
-coopembed.addFields(
-			{ name: coopname, value: 'Player', inline: true}
+	coopembed.addFields(
+		{ name: coopname, value: 'Player', inline: true}
 		);//end addfields
-		coopembed.addField('Coop ID: ', String(coopid)); 
-		return coopembed;
+	coopembed.addField('Message ID: ', String(coopid));
+	coopembed.addField('Status: ','Active');
+	return coopembed;
 }; //end Coopembed function
 
 //!coop
@@ -269,9 +270,14 @@ client.on('message', async message => {
 			});//end the .then part
 		};//end the if "start" block
   		
+		//need to search channel (only channel) for an active coop. If searching by name works...do we need the post ID added to the post
+		//!coop farming coop-name
 		if (eggcommand1 = "farming" && String(eggcommand2) !== "undefined"){
+			//look for embeded message fields matching the matching coop name
+			
+			//add the person who send it to the post
 		    
-		    };//end if farming block
+		};//end if farming block
 	
 	};//end if !coop block
   
