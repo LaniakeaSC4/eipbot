@@ -157,7 +157,7 @@ var overeasyarr = [];
 
 	//loop to add the team members to the rich embed. Team specific array contains object for each member, so we loop through them to ad fields to the embed. 
 	for (var i = 0; i < array.length; i++) {
-		exampleEmbed.addFields(
+		TeamEmbed.addFields(
 			{ name: array[i][0], value: 'Rank: ' + array[i][3] + '\n' + 'Time Zone: ' + array[i][1] + '\n' + 'Permit: ' + array[i][4], inline: true},
 		);//end addfields
 		}//end for
