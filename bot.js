@@ -271,7 +271,7 @@ client.on('message', async message => {
   		
 		if (eggcommand1 = "farming" && eggcommand2 !== "Undefined"){
 		    
-		    });//end if farming block
+		    };//end if farming block
 	
 	};//end if !coop block
   
