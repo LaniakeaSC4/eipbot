@@ -239,26 +239,41 @@ coopembed.addFields(
 		return coopembed;
 }; //end Coopembed function
 
-//Starting a coop !coop
+//!coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
+		
+		//first lets split up commands
+		//transfer message contents into msg
 		let msg = message.content;
+		//make substring from first space onwards
 		let argString = msg.substr(msg.indexOf(' ') + 1 );
+		//split into multiple parts and store in array - might get errors if more then 3 parts?
 		let argArr = argString.split(' ');
+		//for each element in array, make into variable
 		let [eggcommand1, eggcommand2, eggcommand3] = argArr;
 		
 		console.log('commmand 1 is: ' + eggcommand1);
 		console.log('commmand 2 is: ' + eggcommand2);
 		console.log('commmand 3 is: ' + eggcommand3);
 		
-		if (eggcommand1 = 'start'){
-		message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(sent => {
-		  let id = sent.id;
-		  console.log('Message id is:' + id);
-		sent.edit(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, id));
-		});
-};
-  	};//end if !newcoop
+		//start a coop
+		//if first thing after !coop is "start" take 2nd thing as coop name
+		if (eggcommand1 = 'start' && eggcommand2 !== "Undefined"){
+			//post the inital coop embed post then edit it to add the message ID (might not need the ID?)
+			message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(sent => {
+		  	let id = sent.id;
+		  	console.log('Message id is:' + id);
+			//edit the post to add ID
+			sent.edit(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, id));
+			});//end the .then part
+		};//end the if "start" block
+  		
+		if (eggcommand1 = "farming" && eggcommand2 !== 'Undefined"){
+		    
+		    });//end if farming block
+	
+	};//end if !coop block
   
 //add and pin post (use function to make post).
 
