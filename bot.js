@@ -220,15 +220,22 @@ client.on('message', async message => {
 //		Coop bot		|
 //=======================================
 
+//idea: !newcoop [name] starts the coop and bot sends and pins a post. As people type !farming [name] bot edits the coop post and adds them to list. As we type !placed [user] the pinned post would be updated with [user] (placed). Post could display users in teams
+//limit everything to a channel and perhaps add a "Status: Open" to the post which can be closed with !endcoop [name]
+//use the post as a data storage....cant trust arrays etc. Will be a lot of post scraping.... but should be possible
+
+//add function to generate coop embed
+
+//Starting a coop
 client.on('message', async message => {
-  if (message.content.startsWith("!coop")){
-  let msg = message.content;
-  let coopname = msg.substr( msg.indexOf(' ') + 1 );
-console.log(coopname);
+	if (message.content.startsWith("!newcoop")){
+		let msg = message.content;
+		let coopname = msg.substr(msg.indexOf(' ') + 1 );
+		console.log(coopname);
+  	};//end if !newcoop
   
-  
-  };
-  
+//add and pin post (use function to make post).
+
 
 }) ;//end client on message
 
