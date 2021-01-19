@@ -227,7 +227,7 @@ client.on('message', async message => {
 var coopname = "";
 
 //add function to generate coop embed
-	function coopembed(color, title, description, coopname){
+	function newcoopembed(color, title, description, coopname){
 	const coopembed = new Discord.MessageEmbed()
 	.setColor(String(color))
 	.setTitle(String(title))
@@ -244,7 +244,7 @@ client.on('message', async message => {
 		let coopname = msg.substr(msg.indexOf(' ') + 1 );
 		console.log(coopname);
 		
-		message.channel.send(coopembed('#A822BD' , coopname, 'New coop', coopname));
+		message.channel.send(newcoopembed('#A822BD' , coopname, 'New coop', coopname));
   	};//end if !newcoop
   
 //add and pin post (use function to make post).
