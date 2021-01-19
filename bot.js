@@ -275,7 +275,7 @@ client.on('message', async message => {
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop name
 message.channel.messages.fetch().then(messages => {
-        const themessage = messages.filter(message.embed.title.includes(String(eggcommand2));
+        const themessage = messages.filter(message.embed.title.includes(String(eggcommand2))) ;
         let matchid = themessage.id;
         console.log('message id match:' + matchid);
 			//add the person who send it to the post
