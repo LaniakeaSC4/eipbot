@@ -260,7 +260,7 @@ client.on('message', async message => {
 		
 		//start a coop
 		//if first thing after !coop is "start" take 2nd thing as coop name
-		if (eggcommand1 = 'start' && String(eggcommand2) !== "undefined"){
+		if (eggcommand1 == 'start' && String(eggcommand2) !== "undefined"){
 			//post the inital coop embed post then edit it to add the message ID (might not need the ID?)
 			message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(sent => {
 		  	let id = sent.id;
@@ -272,7 +272,7 @@ client.on('message', async message => {
   		
 		//need to search channel (only channel) for an active coop. If searching by name works...do we need the post ID added to the post
 		//!coop farming coop-name
-		if (eggcommand1 = "farming" && String(eggcommand2) !== "undefined"){
+		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop name
 message.channel.fetchMessages().then(messages => {
         const themessage = messages.filter(embed.title.includes(eggcommand2));
