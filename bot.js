@@ -225,15 +225,15 @@ client.on('message', async message => {
 //use the post as a data storage....cant trust arrays etc. Will be a lot of post scraping.... but should be possible
 
 //add function to generate coop embed
-	function CoopEmbed(color, title, description, coopname){
-	const CoopEmbed = new Discord.MessageEmbed()
+	function coopembed(color, title, description, coopname){
+	const coopembed = new Discord.MessageEmbed()
 	.setColor(String(color))
 	.setTitle(String(title))
 	.setDescription(String(description));
-CoopEmbed.addFields(
+Coopembed.addFields(
 			{ name: coopname, value: 'Player', inline: true}
 		);//end addfields
-} //end Coopembed function
+}; //end Coopembed function
 
 //Starting a coop
 client.on('message', async message => {
@@ -244,7 +244,7 @@ client.on('message', async message => {
   	};//end if !newcoop
   
 //add and pin post (use function to make post).
-message.channel.send(CoopEmbed('#A822BD' , coopname, 'New coop', coopname));
+message.channel.send(coopembed('#A822BD' , coopname, 'New coop', coopname));
 
 }) ;//end client on message
 
