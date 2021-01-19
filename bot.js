@@ -239,17 +239,24 @@ coopembed.addFields(
 		return coopembed;
 }; //end Coopembed function
 
-//Starting a coop
+//Starting a coop !coop
 client.on('message', async message => {
-	if (message.content.startsWith("!newcoop")){
+	if (message.content.startsWith("!coop")){
 		let msg = message.content;
-		let coopname = msg.substr(msg.indexOf(' ') + 1 );
-		console.log('coopname is:' + coopname);
+		let argString = msg.substr(msg.indexOf(' ') + 1 );
+		let argArr = argString.split(' ');
+		let [eggcommand1, eggcommand2, eggcommand3] = argArr;
 		
-		message.channel.send(makecoopembed('#A822BD' , coopname, 'New coop', coopname, 'No ID' )).then(sent => {
+		console.log('commmand 1 is: ' + eggcommand1);
+		console.log('commmand 2 is: ' + eggcommand2);
+		console.log('commmand 3 is: ' + eggcommand3);
+		
+		if (eggcommand1 = 'start'){
+		message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(sent => {
 		  let id = sent.id;
 		  console.log('Message id is:' + id);
-		sent.edit(makecoopembed('#A822BD' , coopname, 'New coop', coopname, id));
+		sent.edit(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, id));
+		};
 });
   	};//end if !newcoop
   
