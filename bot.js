@@ -150,7 +150,7 @@ var overeasyarr = [];
 
 	//this function builds and returns the discord embed
 	function prepupdate(color, title, description, array){
-	const exampleEmbed = new Discord.MessageEmbed()
+	const TeamEmbed = new Discord.MessageEmbed()
 	.setColor(String(color))
 	.setTitle(String(title))
 	.setDescription(String(description));
@@ -161,7 +161,7 @@ var overeasyarr = [];
 			{ name: array[i][0], value: 'Rank: ' + array[i][3] + '\n' + 'Time Zone: ' + array[i][1] + '\n' + 'Permit: ' + array[i][4], inline: true},
 		);//end addfields
 		}//end for
-	return exampleEmbed;//return embed back to caller
+	return TeamEmbed;//return embed back to caller
 	} //end fucntion
 //end of functions
 
