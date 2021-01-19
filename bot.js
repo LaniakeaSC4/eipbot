@@ -227,7 +227,7 @@ client.on('message', async message => {
 var coopname = "";
 
 //add function to generate coop embed
-	function newcoopembed(color, title, description, coopname, coopid){
+	function makecoopembed(color, title, description, coopname, coopid){
 	const coopembed = new Discord.MessageEmbed()
 	coopembed.setColor(String(color))
 	coopembed.setTitle(String(title))
@@ -246,10 +246,10 @@ client.on('message', async message => {
 		let coopname = msg.substr(msg.indexOf(' ') + 1 );
 		console.log('coopname is:' + coopname);
 		
-		message.channel.send(newcoopembed('#A822BD' , coopname, 'New coop', coopname, 'No ID' )).then(sent => {
+		message.channel.send(makecoopembed('#A822BD' , coopname, 'New coop', coopname, 'No ID' )).then(sent => {
 		  let id = sent.id;
 		  console.log('Message id is:' + id);
-		sent.edit(newcoopembed('#A822BD' , coopname, 'New coop', coopname, id));
+		sent.edit(makecoopembed('#A822BD' , coopname, 'New coop', coopname, id));
 });
   	};//end if !newcoop
   
