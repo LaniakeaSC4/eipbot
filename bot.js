@@ -243,12 +243,12 @@ client.on('message', async message => {
 	if (message.content.startsWith("!newcoop")){
 		let msg = message.content;
 		let coopname = msg.substr(msg.indexOf(' ') + 1 );
-		console.log(coopname);
+		console.log('coopname is:' + coopname);
 		
 		message.channel.send(newcoopembed('#A822BD' , coopname, 'New coop', coopname)).then(sent => {
 		  let id = sent.id;
-		  console.log(id);
-		
+		  console.log('Message id is:' + id);
+		sent.edit('Edited');
 });
   	};//end if !newcoop
   
