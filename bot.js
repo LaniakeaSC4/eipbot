@@ -224,6 +224,8 @@ client.on('message', async message => {
 //limit everything to a channel and perhaps add a "Status: Open" to the post which can be closed with !endcoop [name]
 //use the post as a data storage....cant trust arrays etc. Will be a lot of post scraping.... but should be possible
 
+var coopname = "";
+
 //add function to generate coop embed
 	function coopembed(color, title, description, coopname){
 	const coopembed = new Discord.MessageEmbed()
