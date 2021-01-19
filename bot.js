@@ -229,13 +229,13 @@ var coopname = "";
 //add function to generate coop embed
 	function newcoopembed(color, title, description, coopname, footer){
 	const coopembed = new Discord.MessageEmbed()
-	.setColor(String(color))
-	.setTitle(String(title))
-	.setDescription(String(description));
-	.setFooter(String(footer));
+	coopembed.setColor(String(color))
+	coopembed.setTitle(String(title))
+	coopembed.setDescription(String(description));
 coopembed.addFields(
 			{ name: coopname, value: 'Player', inline: true}
 		);//end addfields
+		coopembed.setFooter(String(footer), 'test'); 
 		return coopembed;
 }; //end Coopembed function
 
