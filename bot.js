@@ -243,10 +243,12 @@ client.on('message', async message => {
 		let msg = message.content;
 		let coopname = msg.substr(msg.indexOf(' ') + 1 );
 		console.log(coopname);
+		
+		message.channel.send(coopembed('#A822BD' , coopname, 'New coop', coopname));
   	};//end if !newcoop
   
 //add and pin post (use function to make post).
-message.channel.send(coopembed('#A822BD' , coopname, 'New coop', coopname));
+
 
 }) ;//end client on message
 
