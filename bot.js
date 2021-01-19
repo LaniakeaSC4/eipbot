@@ -235,6 +235,7 @@ var coopname = "";
 coopembed.addFields(
 			{ name: coopname, value: 'Player', inline: true}
 		);//end addfields
+		return coopembed;
 }; //end Coopembed function
 
 //Starting a coop
