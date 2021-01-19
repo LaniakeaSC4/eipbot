@@ -269,7 +269,7 @@ client.on('message', async message => {
 			});//end the .then part
 		};//end the if "start" block
   		
-		if (eggcommand1 = "farming" && eggcommand2 !== 'Undefined"){
+		if (eggcommand1 = "farming" && eggcommand2 !== "Undefined"){
 		    
 		    });//end if farming block
 	
