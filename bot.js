@@ -259,7 +259,7 @@ client.on('message', async message => {
 		
 		//start a coop
 		//if first thing after !coop is "start" take 2nd thing as coop name
-		if (eggcommand1 = 'start' && eggcommand2 !== "Undefined"){
+		if (eggcommand1 = 'start' && eggcommand2 !== "undefined"){
 			//post the inital coop embed post then edit it to add the message ID (might not need the ID?)
 			message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(sent => {
 		  	let id = sent.id;
@@ -269,7 +269,7 @@ client.on('message', async message => {
 			});//end the .then part
 		};//end the if "start" block
   		
-		if (eggcommand1 = "farming" && eggcommand2 !== "Undefined"){
+		if (eggcommand1 = "farming" && eggcommand2 !== "undefined"){
 		    
 		    };//end if farming block
 	
