@@ -227,11 +227,12 @@ client.on('message', async message => {
 var coopname = "";
 
 //add function to generate coop embed
-	function newcoopembed(color, title, description, coopname){
+	function newcoopembed(color, title, description, coopname, footer){
 	const coopembed = new Discord.MessageEmbed()
 	.setColor(String(color))
 	.setTitle(String(title))
 	.setDescription(String(description));
+	.setFooter(String(footer));
 coopembed.addFields(
 			{ name: coopname, value: 'Player', inline: true}
 		);//end addfields
@@ -245,10 +246,10 @@ client.on('message', async message => {
 		let coopname = msg.substr(msg.indexOf(' ') + 1 );
 		console.log('coopname is:' + coopname);
 		
-		message.channel.send(newcoopembed('#A822BD' , coopname, 'New coop', coopname)).then(sent => {
+		message.channel.send(newcoopembed('#A822BD' , coopname, 'New coop', coopname, 'No Footer' )).then(sent => {
 		  let id = sent.id;
 		  console.log('Message id is:' + id);
-		sent.edit('Edited');
+		sent.edit(newcoopembed('#A822BD' , coopname, 'New coop', coopname, id));
 });
   	};//end if !newcoop
   
