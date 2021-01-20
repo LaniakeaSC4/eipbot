@@ -279,7 +279,7 @@ client.on('message', async message => {
        
         for (let message of messages){
           
-    if(message.embeds[i].title.includes(String(eggcommand2))) {console.log('found the badger')
+    if(message.embeds.title.includes(String(eggcommand2))) {console.log('found the badger')
         
           } 
         } 
