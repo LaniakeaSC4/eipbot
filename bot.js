@@ -277,8 +277,9 @@ client.on('message', async message => {
 			let messages = message.channel.messages.fetch().then(messages => {
        
         for (let message of messages){
-          console.log(message);
-    if(message.embeds.length !== 0 && message.embeds[0].Title.content.includes(String(eggcommand2))) {console.log('found the badger')} 
+          thisembed = message.embeds;
+		console.log(thisembed);
+  //  if(message.embeds.length !== 0 && message.embeds[0].Title.content.includes(String(eggcommand2))) {console.log('found the badger')} 
           } 
         }) 
        // const themessage = messages.filter(message.embed.Title.includes(String(eggcommand2))) ;
