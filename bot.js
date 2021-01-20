@@ -275,10 +275,7 @@ client.on('message', async message => {
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop 
 			let messages = message.channel.messages.fetch().then(messages => {
-       
-        for (let message of messages){
-  		console.log(message.embeds[0]);
-		//console.log(message.content.embeds);
+       console.log(messages.length);
           } 
         }) 
        // const themessage = messages.filter(message.embed.Title.includes(String(eggcommand2))) ;
