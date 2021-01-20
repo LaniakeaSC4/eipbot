@@ -273,9 +273,10 @@ client.on('message', async message => {
 		//need to search channel (only channel) for an active coop. If searching by name works...do we need the post ID added to the post
 		//!coop farming coop-name
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
-			//look for embeded message fields matching the matching coop name
-message.channel.messages.fetch()
+			//look for embeded message fields matching the matching coop 
+			let messages = message.channel.messages.fetch()
 //.then(messages => {
+       
         for (let message of messages){
           
           for(var i = 0; i < message.embeds.length; i++) {
