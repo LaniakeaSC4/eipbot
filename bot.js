@@ -278,7 +278,7 @@ client.on('message', async message => {
        
         for (let message of messages){
   		//console.log(message.embeds[0]);
-		console.log(message.embeds);
+		console.log(message.content.embeds);
           } 
         }) 
        // const themessage = messages.filter(message.embed.Title.includes(String(eggcommand2))) ;
