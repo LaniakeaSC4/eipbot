@@ -281,7 +281,7 @@ client.on('message', async message => {
     if(message.embeds.title.includes(String(eggcommand2))) {console.log('found the badger')
     } 
           } 
-        } 
+        }) 
        // const themessage = messages.filter(message.embed.Title.includes(String(eggcommand2))) ;
        // let matchid = themessage.id;
       //  console.log('message id match:' + matchid);
