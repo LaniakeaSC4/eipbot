@@ -276,7 +276,7 @@ client.on('message', async message => {
 			//look for embeded message fields matching the matching coop 
 			let messages = message.channel.messages.fetch().then(messages => {
        console.log(messages.length);
-          } 
+
         }) 
        // const themessage = messages.filter(message.embed.Title.includes(String(eggcommand2))) ;
        // let matchid = themessage.id;
