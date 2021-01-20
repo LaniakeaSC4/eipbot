@@ -275,7 +275,7 @@ client.on('message', async message => {
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop 
 			let messages = message.channel.messages.fetch().then((messages) => {messages.forEach(element => {element.embeds.forEach(element => {
-        msg.channel.send(element.fields.Title()) ; //send a message containing the ID mentioned in 'args[0]' that was taken form the message
+        message.channel.send(element.fields.Title()) ; //send a message containing the ID mentioned in 'args[0]' that was taken form the message
                 
 			}) 
 			})
