@@ -278,7 +278,7 @@ client.on('message', async message => {
        
         for (let message of messages){
           console.log(message);
-    if(message.embeds.length !== 0 && message.embed.Title.content.includes(String(eggcommand2))) {console.log('found the badger')
+    //if(message.embeds.length !== 0 && message.embed.Title.content.includes(String(eggcommand2))) {console.log('found the badger')
     } 
           } 
         }) 
