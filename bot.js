@@ -275,9 +275,16 @@ client.on('message', async message => {
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop name
 message.channel.messages.fetch().then(messages => {
-        const themessage = messages.filter(message.embed.Title.includes(String(eggcommand2))) ;
-        let matchid = themessage.id;
-        console.log('message id match:' + matchid);
+        for (let message of messages){
+          
+          for(var i = 0; i < message.embeds.length; i++) {
+    if(message.embeds[i].title.includes(String(eggcommand2))) {console.log('found the badger')
+        }
+          } 
+        } 
+       // const themessage = messages.filter(message.embed.Title.includes(String(eggcommand2))) ;
+       // let matchid = themessage.id;
+      //  console.log('message id match:' + matchid);
 			//add the person who send it to the post
 }) 
 		} ;//end if farming block
