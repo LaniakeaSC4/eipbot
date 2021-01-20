@@ -274,13 +274,12 @@ client.on('message', async message => {
 		//!coop farming coop-name
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop 
-			let messages = message.channel.messages.fetch()
-//.then(messages => {
+			let messages = message.channel.messages.fetch().then(messages => {
        
         for (let message of messages){
           
     if(message.embeds.title.includes(String(eggcommand2))) {console.log('found the badger')
-        
+    } 
           } 
         } 
        // const themessage = messages.filter(message.embed.Title.includes(String(eggcommand2))) ;
