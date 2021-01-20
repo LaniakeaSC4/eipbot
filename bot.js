@@ -274,8 +274,9 @@ client.on('message', async message => {
 		//!coop farming coop-name
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop 
-			let messages = message.channel.messages.fetch().then((messages) => {messages.forEach(element => {element.embeds.forEach(element => {
-        message.channel.send(element.fields.find(Title => Title.value == eggcommand2)) ; //send a message containing the ID mentioned in 'args[0]' that was taken form the message
+			let messages = message.channel.messages.fetch().then((messages) => {messages.forEach(element => {element.embeds.forEach(element => {console.log(element.fields.find(Title => Title.value == eggcommand2)); 
+			  
+        //message.channel.send(element.fields.find(Title => Title.value == eggcommand2)) ; //send a message containing the ID mentioned in 'args[0]' that was taken form the message
                 
 			}) 
 			})
