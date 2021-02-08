@@ -280,6 +280,14 @@ client.on('message', async message => {
     const pinned = fetched.filter(fetchedMsg => fetchedMsg.pinned);
     
 console.log(pinned);
+
+const newEmbed = new Discord.MessageEmbed()
+        .setDescription("This is updated")
+
+    // Edit Part Below
+    //var Msg = await message.channel.send(Embed); // sends message
+    pinned.edit(newEmbed) // edits message with newembed
+
     
   });
 			  
