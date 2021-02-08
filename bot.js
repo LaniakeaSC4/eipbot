@@ -277,9 +277,9 @@ client.on('message', async message => {
 			//look for embeded message fields matching the matching coop 
 			message.channel.messages.fetch({ limit: 100 })
   .then(fetched => {
-    const cooppin = fetched.filter(fetchedMsg => fetchedMsg.pinned)
+    const message = fetched.filter(fetchedMsg => fetchedMsg.pinned)
 
-    cooppin.edit(makecoopembed('#A822BD' , eggcommand2, 'edited coop', eggcommand2, "Id fixed")); // edits message with newembed
+    message.edit(makecoopembed('#A822BD' , eggcommand2, 'edited coop', eggcommand2, "Id fixed")); // edits message with newembed
    
   
 
