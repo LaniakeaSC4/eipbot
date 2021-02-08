@@ -267,6 +267,7 @@ client.on('message', async message => {
 		  	console.log('Message id is:' + id);
 			//edit the post to add ID
 			sent.edit(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, id));
+			sent.pin();
 			});//end the .then part
 		};//end the if "start" block
   		
