@@ -277,16 +277,17 @@ client.on('message', async message => {
 			//look for embeded message fields matching the matching coop 
 			message.channel.messages.fetch({ limit: 100 })
   .then(fetched => {
-    const pinned = fetched.filter(fetchedMsg => fetchedMsg.pinned);
-    
-console.log(pinned);
+    const pinned = fetched.filter(fetchedMsg => fetchedMsg.pinned).then(updated => {
 
-const newEmbed = new Discord.MessageEmbed()
+newEmbed = new Discord.MessageEmbed();
         .setDescription("This is updated")
 
     // Edit Part Below
     //var Msg = await message.channel.send(Embed); // sends message
-    message.edit(newEmbed) // edits message with newembed
+    fetchedMsg.edit(newEmbed); // edits message with newembed
+    } 
+   );
+
 
     
   });
