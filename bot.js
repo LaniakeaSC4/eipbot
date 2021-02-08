@@ -279,7 +279,7 @@ client.on('message', async message => {
   .then(fetched => {
     const pinned = fetched.filter(fetchedMsg => fetchedMsg.pinned).then(updated => {
 
-    fetchedMsg.edit(makecoopembed('#A822BD' , eggcommand2, 'edited coop', eggcommand2, id)); // edits message with newembed
+    updated.edit(makecoopembed('#A822BD' , eggcommand2, 'edited coop', eggcommand2, id)); // edits message with newembed
     } 
    );
 
