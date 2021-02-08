@@ -277,8 +277,8 @@ client.on('message', async message => {
 			//look for embeded message fields matching the matching coop 
 			message.channel.fetchMessages({ limit: 100 })
   .then(fetched => {
-    const pinned = fetched.filter(fetchedMsg => fetchedMsg.pinned); }) ;
-			  console.log(fetchedMsg);
+    const pinned = fetched.filter(fetchedMsg => fetchedMsg.pinned); console.log(fetchedMsg);}) ;
+			  
         //message.channel.send(element.fields.find(Title => Title.value == eggcommand2)) ; //send a message containing the ID mentioned in 'args[0]' that was taken form the message
                 
        // const themessage = messages.filter(message.embed.Title.includes(String(eggcommand2))) ;
