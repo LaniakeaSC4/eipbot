@@ -286,7 +286,7 @@ const newEmbed = new Discord.MessageEmbed()
 
     // Edit Part Below
     //var Msg = await message.channel.send(Embed); // sends message
-    pinned.edit(newEmbed) // edits message with newembed
+    message.edit(newEmbed) // edits message with newembed
 
     
   });
