@@ -279,12 +279,7 @@ client.on('message', async message => {
   .then(fetched => {
     const pinned = fetched.filter(fetchedMsg => fetchedMsg.pinned).then(updated => {
 
-newEmbed = new Discord.MessageEmbed();
-        .setDescription("This is updated")
-
-    // Edit Part Below
-    //var Msg = await message.channel.send(Embed); // sends message
-    fetchedMsg.edit(newEmbed); // edits message with newembed
+    fetchedMsg.edit(makecoopembed('#A822BD' , eggcommand2, 'edited coop', eggcommand2, id)); // edits message with newembed
     } 
    );
 
