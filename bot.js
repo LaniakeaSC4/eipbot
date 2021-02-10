@@ -275,6 +275,7 @@ client.on('message', async message => {
 		//!coop farming coop-name
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop 
+	var pinnedmsg;
 	let pinnedmsg = message.channel.messages.fetchPinned().array
 	
 	console.log(pinnedmsg)
