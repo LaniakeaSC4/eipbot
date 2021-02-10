@@ -275,17 +275,10 @@ client.on('message', async message => {
 		//!coop farming coop-name
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop 
-			message.channel.messages.fetch({ limit: 100 })
-  .then(fetched => {
-    const message = fetched.filter(fetchedMsg => fetchedMsg.pinned)
-
-    message.edit(makecoopembed('#A822BD' , eggcommand2, 'edited coop', eggcommand2, "Id fixed")); // edits message with newembed
-   
+			cooppost = message.channel.messages.fetchPinned();
+			
+   console.log(cooppost)
   
-
-
-    
-  });
 			  
 			   
 			  
