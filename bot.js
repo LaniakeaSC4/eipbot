@@ -277,7 +277,7 @@ client.on('message', async message => {
 			//look for embeded message fields matching the matching coop 
 	message.channel.messages.fetchPinned().then(pinned => {
 	  
-	  let oldembed = message.embeds();
+	  let oldembed = pinned.embeds();
 	  console.log(oldembed);
 	 });
 	
