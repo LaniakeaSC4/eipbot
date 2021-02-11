@@ -276,12 +276,16 @@ client.on('message', async message => {
 
 if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 		  
-		  
-		  //unpin all messages
-		  message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})}); 
-		  
-			//post the inital coop embed post then edit it to add the message ID (might not need the ID?)
-			message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(async msg => {
+		  let embed = new Discord.MessageEmbed()
+  .setTitle(args.join(' '))
+  .setDescription('Poll created by ' + message.author.tag)
+  .addField('Status', 'Voting is currently open.')
+  .setColor('#ffd700')
+  .attachFiles(new Discord.MessageAttachment('https://i.imgur.com/QUmbq9o.png', 'thumbnail.png'))
+  .setThumbnail('attachment://thumbnail.png')
+  .setFooter('Bot created by James (Rock)₇₇₇');
+
+message.channel.send(embed).then(async msg => {
   await msg.react('👍');
   await msg.react('👎');
   await msg.react('🤷');
