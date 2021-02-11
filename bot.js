@@ -261,6 +261,11 @@ client.on('message', async message => {
 		//start a coop
 		//if first thing after !coop is "start" take 2nd thing as coop name
 		if (eggcommand1 == 'start' && String(eggcommand2) !== "undefined"){
+		  
+		  
+		  //unpin all messages
+		  message.channel.messages.fetchPinned().then(messages => {messages.forEach(message.unpin)}); 
+		  
 			//post the inital coop embed post then edit it to add the message ID (might not need the ID?)
 			message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(sent => {
 		  	let id = sent.id;
