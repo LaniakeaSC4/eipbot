@@ -264,7 +264,7 @@ client.on('message', async message => {
 		  
 		  
 		  //unpin all messages
-		  message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => message.unpin()}); 
+		  message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})}); 
 		  
 			//post the inital coop embed post then edit it to add the message ID (might not need the ID?)
 			message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(sent => {
