@@ -280,11 +280,11 @@ client.on('message', async message => {
   messages.forEach(message => {
     
     console.log(message.id);
-    console.log(message.fields);
 
-//let embed = new Discord.MessageEmbed()
- //       .setDescription(`this was edited`)
- //   message.edit(embed)
+let embed = new Discord.MessageEmbed()
+     .setDescription(`this was edited`)
+     embed.addFields(message.fields) 
+  message.edit(embed)
     
   }) 
 });
