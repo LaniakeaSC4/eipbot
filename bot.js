@@ -283,7 +283,7 @@ client.on('message', async message => {
     
 let embed = new Discord.MessageEmbed()
         .setDescription(`this was edited`)
-    msg.edit(embed)
+    message.edit(embed)
     
   }) 
 });
