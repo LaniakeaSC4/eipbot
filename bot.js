@@ -220,10 +220,6 @@ client.on('message', async message => {
 //		Coop bot		|
 //=======================================
 
-//idea: !newcoop [name] starts the coop and bot sends and pins a post. As people type !farming [name] bot edits the coop post and adds them to list. As we type !placed [user] the pinned post would be updated with [user] (placed). Post could display users in teams
-//limit everything to a channel and perhaps add a "Status: Open" to the post which can be closed with !endcoop [name]
-//use the post as a data storage....cant trust arrays etc. Will be a lot of post scraping.... but should be possible
-
 var coopname = "";
 
 //add function to generate coop embed
@@ -276,7 +272,103 @@ client.on('message', async message => {
 			});//end the .then part
 		};//end the if "start" block
   		
-		//need to search channel (only channel) for an active coop. If searching by name works...do we need the post ID added to the post
+//=========
+
+if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
+		  
+		  
+		  //unpin all messages
+		  message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})}); 
+		  
+			//post the inital coop embed post then edit it to add the message ID (might not need the ID?)
+			message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(async msg => {
+  await msg.react('👍');
+  await msg.react('👎');
+  await msg.react('🤷');
+  await msg.react('🗑️');
+
+  const threshold = 1;
+
+  async function stop(result) {
+    collector.stop();
+
+    const newEmbed = new Discord.MessageEmbed(msg.embeds[0]);
+
+    newEmbed.title = newEmbed.title + ' [CLOSED]';
+    newEmbed.fields[0] = { name: 'Status', value: 'Voting is now closed.\n' + result };
+    newEmbed.setThumbnail('attachment://thumbnail.png');
+    await msg.edit(newEmbed);
+
+    msg.reactions.removeAll();
+  }
+
+  async function update() {
+    const newEmbed = new Discord.MessageEmbed(embed);
+
+    const userYes = (votes['👍'].size === 0)? '-' : [...votes['👍']];
+    const userNo = (votes['👎'].size === 0)? '-' : [...votes['👎']];
+    const userUnsure = (votes['🤷'].size === 0)? '-' : [...votes['🤷']];
+
+    newEmbed.addFields(
+      { name: `User Yes (${votes['👍'].size}/${threshold})`, value: userYes, inline: true },
+      { name: `User No (${votes['👎'].size}/${threshold})`, value: userNo, inline: true },
+      { name: 'User Unsure', value: userUnsure, inline: true }
+    );
+
+    await msg.edit(newEmbed);
+
+    if (votes['👍'].size >= threshold) {
+      await stop('This answer is good enough to get accepted and an upvote.');
+      // do something
+    } else if (votes['👎'].size >= threshold) {
+      await stop('This answer is not good enough to get accepted and an upvote.');
+      // do something
+    }
+  }
+
+  const votes = {
+    '👍': new Set(),
+    '👎': new Set(),
+    '🤷': new Set(),
+    '🗑️': new Set()
+  };
+
+  update();
+
+  const collector = msg.createReactionCollector((reaction, user) => !user.bot , { dispose: true });
+
+  collector.on('collect', async (reaction, user) => {
+    if (['👍', '👎', '🤷', '🗑️'].includes(reaction.emoji.name)) {
+      const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+      for (const userReaction of userReactions.values()) {
+        if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+          userReaction.users.remove(user.id);
+          votes[userReaction.emoji.name].delete(user);
+        }
+      }
+
+      votes[reaction.emoji.name].add(user);
+    } else {
+      reaction.remove();
+    }
+
+    update();
+  });
+
+  collector.on('remove', (reaction, user) => {
+    votes[reaction.emoji.name].delete(user);
+
+    update();
+  });
+			  
+			  
+			  
+			  
+			});//end the .then part
+		};//end the if "open" block
+
+//=========
 		//!coop farming coop-name
 		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop 
