@@ -277,7 +277,7 @@ client.on('message', async message => {
 			//look for embeded message fields matching the matching coop 
 	message.channel.messages.fetchPinned().then(messages => {console.log(`Received ${messages.size} messages`);
   //Iterate through the messages here with the variable "messages".
-  messages.forEach(message => console.log(message.content))
+  messages.forEach(message => console.log(message.id))
 });
 			  
 			   
