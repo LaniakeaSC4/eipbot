@@ -279,11 +279,12 @@ client.on('message', async message => {
   //Iterate through the messages here with the variable "messages".
   messages.forEach(message => {
     
-    console.log(message.id)
-    
-let embed = new Discord.MessageEmbed()
-        .setDescription(`this was edited`)
-    message.edit(embed)
+    console.log(message.id);
+    console.log(message.fields);
+
+//let embed = new Discord.MessageEmbed()
+ //       .setDescription(`this was edited`)
+ //   message.edit(embed)
     
   }) 
 });
