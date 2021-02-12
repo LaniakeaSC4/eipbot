@@ -289,7 +289,7 @@ message.channel.send(embed).then(async msg => {
   await msg.react('🥚');
   await msg.react('🗑️');
 
-  const threshold = 2;
+  const threshold = 30;
 
   async function stop(result) {
     collector.stop();
