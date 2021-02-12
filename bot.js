@@ -281,8 +281,6 @@ let embed = new Discord.MessageEmbed()
   .setDescription('Poll created by ' + message.author.tag)
   .addField('Status', 'Voting is currently open.')
   .setColor('#ffd700')
-  .attachFiles(new Discord.MessageAttachment('https://i.imgur.com/QUmbq9o.png', 'thumbnail.png'))
-  .setThumbnail('attachment://thumbnail.png')
   .setFooter('Bot created by James (Rock)₇₇₇');
 
 message.channel.send(embed).then(async msg => {
@@ -291,7 +289,7 @@ message.channel.send(embed).then(async msg => {
   await msg.react('🤷');
   await msg.react('🗑️');
 
-  const threshold = 1;
+  const threshold = 2;
 
   async function stop(result) {
     collector.stop();
