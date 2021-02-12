@@ -276,8 +276,8 @@ client.on('message', async message => {
 
 if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 		  
-		  let embed = new Discord.MessageEmbed()
-  .setTitle(args.join(' '))
+let embed = new Discord.MessageEmbed()
+  .setTitle('starting title')
   .setDescription('Poll created by ' + message.author.tag)
   .addField('Status', 'Voting is currently open.')
   .setColor('#ffd700')
