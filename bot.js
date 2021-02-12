@@ -275,22 +275,28 @@ client.on('message', async message => {
 //=========
 
 if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
-		  
+
+//build initial message
 let embed = new Discord.MessageEmbed()
   .setTitle('Contract Title Will go here')
   .setDescription('Contract Details will go here')
-  .addField('Status', 'Voting is currently open.')
+  .addField('Status', 'Coop\'s not started.')
   .setColor('#ffd700')
   .setFooter('Bot created by LaniakeaSC');
 
+//send initial message
 message.channel.send(embed).then(async msg => {
-  await msg.react('👍');
-  await msg.react('👎');
-  await msg.react('🥚');
-  await msg.react('🗑️');
+ 
+//add reactions for clicking
+await msg.react('👍');
+await msg.react('👎');
+await msg.react('🥚');
+await msg.react('🗑️');
 
-  const threshold = 30;
+//set limit - want to remove this part
+const threshold = 30;
 
+//this seems to be the stop fuction. See where it is called and take it out?
   async function stop(result) {
     collector.stop();
 
@@ -312,20 +318,21 @@ message.channel.send(embed).then(async msg => {
     const userStarter = (votes['🥚'].size === 0)? '-' : [...votes['🥚']];
 
     newEmbed.addFields(
-      { name: `Farming (${votes['👍'].size}/${threshold})`, value: userYes, inline: true },
-      { name: `Not Farming (${votes['👎'].size}/${threshold})`, value: userNo, inline: true },
-      { name: 'Starter', value: userStarter, inline: true }
+      { name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
+      { name: `Not Farming (${votes['👎'].size}})`, value: userNo, inline: true },
+      { name: `Starter (${votes['🥚'].size}})`, value: userStarter, inline: true }
     );
 
     await msg.edit(newEmbed);
 
-    if (votes['👍'].size >= threshold) {
-      await stop('This answer is good enough to get accepted and an upvote.');
+	  //lets comment out the [closed] stuff
+    //if (votes['👍'].size >= threshold) {
+      //await stop('This answer is good enough to get accepted and an upvote.');
       // do something
-    } else if (votes['👎'].size >= threshold) {
-      await stop('This answer is not good enough to get accepted and an upvote.');
+    //} else if (votes['👎'].size >= threshold) {
+      //await stop('This answer is not good enough to get accepted and an upvote.');
       // do something
-    }
+    //}
   }
 
   const votes = {
