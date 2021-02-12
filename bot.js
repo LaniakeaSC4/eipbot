@@ -277,16 +277,16 @@ client.on('message', async message => {
 if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 		  
 let embed = new Discord.MessageEmbed()
-  .setTitle('starting title')
-  .setDescription('Poll created by ' + message.author.tag)
+  .setTitle('Contract Title Will go here')
+  .setDescription('Contract Details will go here')
   .addField('Status', 'Voting is currently open.')
   .setColor('#ffd700')
-  .setFooter('Bot created by James (Rock)₇₇₇');
+  .setFooter('Bot created by LaniakeaSC');
 
 message.channel.send(embed).then(async msg => {
   await msg.react('👍');
   await msg.react('👎');
-  await msg.react('🤷');
+  await msg.react('🥚');
   await msg.react('🗑️');
 
   const threshold = 2;
@@ -309,12 +309,12 @@ message.channel.send(embed).then(async msg => {
 
     const userYes = (votes['👍'].size === 0)? '-' : [...votes['👍']];
     const userNo = (votes['👎'].size === 0)? '-' : [...votes['👎']];
-    const userUnsure = (votes['🤷'].size === 0)? '-' : [...votes['🤷']];
+    const userStarter = (votes['🥚'].size === 0)? '-' : [...votes['🥚']];
 
     newEmbed.addFields(
-      { name: `User Yes (${votes['👍'].size}/${threshold})`, value: userYes, inline: true },
-      { name: `User No (${votes['👎'].size}/${threshold})`, value: userNo, inline: true },
-      { name: 'User Unsure', value: userUnsure, inline: true }
+      { name: `Farming (${votes['👍'].size}/${threshold})`, value: userYes, inline: true },
+      { name: `Not Farming (${votes['👎'].size}/${threshold})`, value: userNo, inline: true },
+      { name: 'Starter', value: userStarter, inline: true }
     );
 
     await msg.edit(newEmbed);
@@ -331,7 +331,7 @@ message.channel.send(embed).then(async msg => {
   const votes = {
     '👍': new Set(),
     '👎': new Set(),
-    '🤷': new Set(),
+    '🥚': new Set(),
     '🗑️': new Set()
   };
 
@@ -340,7 +340,7 @@ message.channel.send(embed).then(async msg => {
   const collector = msg.createReactionCollector((reaction, user) => !user.bot , { dispose: true });
 
   collector.on('collect', async (reaction, user) => {
-    if (['👍', '👎', '🤷', '🗑️'].includes(reaction.emoji.name)) {
+    if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
       const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
 
       for (const userReaction of userReactions.values()) {
