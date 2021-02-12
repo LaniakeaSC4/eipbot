@@ -293,23 +293,6 @@ await msg.react('👎');
 await msg.react('🥚');
 await msg.react('🗑️');
 
-//set limit - want to remove this part
-const threshold = 30;
-
-//this seems to be the stop fuction. See where it is called and take it out?
-  async function stop(result) {
-    collector.stop();
-
-    const newEmbed = new Discord.MessageEmbed(msg.embeds[0]);
-
-    newEmbed.title = newEmbed.title + ' [CLOSED]';
-    newEmbed.fields[0] = { name: 'Status', value: 'Voting is now closed.\n' + result };
-    newEmbed.setThumbnail('attachment://thumbnail.png');
-    await msg.edit(newEmbed);
-
-    msg.reactions.removeAll();
-  }
-
   async function update() {
     const newEmbed = new Discord.MessageEmbed(embed);
 
