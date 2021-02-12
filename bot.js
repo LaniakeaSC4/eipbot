@@ -293,30 +293,22 @@ await msg.react('👎');
 await msg.react('🥚');
 await msg.react('🗑️');
 
-  async function update() {
-    const newEmbed = new Discord.MessageEmbed(embed);
+async function update() {
+const newEmbed = new Discord.MessageEmbed(embed);
 
-    const userYes = (votes['👍'].size === 0)? '-' : [...votes['👍']];
-    const userNo = (votes['👎'].size === 0)? '-' : [...votes['👎']];
-    const userStarter = (votes['🥚'].size === 0)? '-' : [...votes['🥚']];
+const userYes = (votes['👍'].size === 0)? '-' : [...votes['👍']];
+const userNo = (votes['👎'].size === 0)? '-' : [...votes['👎']];
+const userStarter = (votes['🥚'].size === 0)? '-' : [...votes['🥚']];
 
-    newEmbed.addFields(
-      { name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
-      { name: `Not Farming (${votes['👎'].size}})`, value: userNo, inline: true },
-      { name: `Starter (${votes['🥚'].size}})`, value: userStarter, inline: true }
-    );
+newEmbed.addFields(
+	{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
+	{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
+	{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
+);
 
-    await msg.edit(newEmbed);
+await msg.edit(newEmbed);
 
-	  //lets comment out the [closed] stuff
-    //if (votes['👍'].size >= threshold) {
-      //await stop('This answer is good enough to get accepted and an upvote.');
-      // do something
-    //} else if (votes['👎'].size >= threshold) {
-      //await stop('This answer is not good enough to get accepted and an upvote.');
-      // do something
-    //}
-  }
+}
 
   const votes = {
     '👍': new Set(),
