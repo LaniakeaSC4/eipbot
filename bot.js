@@ -276,6 +276,9 @@ client.on('message', async message => {
 
 if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
+//unpin all messages
+message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})}); 
+
 //build initial message
 let embed = new Discord.MessageEmbed()
   .setTitle('Contract Title Will go here')
@@ -286,7 +289,9 @@ let embed = new Discord.MessageEmbed()
 
 //send initial message
 message.channel.send(embed).then(async msg => {
- 
+
+msg.pin();
+
 //add reactions for clicking
 await msg.react('👍');
 await msg.react('👎');
