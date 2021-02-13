@@ -365,10 +365,11 @@ await msg.edit(newEmbed);
   //Iterate through the messages here with the variable "messages".
   messages.forEach(message => {
     
-    console.log(message.id);
+    console.log('message ID:' + message.id);
 
+console.log('eggcommand2:' + eggcommand2);
 let user = client.users.cache.find(user => user.username == eggcommand2);
-console.log(user);
+console.log('user:' + user);
 let id = user.id;
 
 message.reactions.resolve('👍').users.remove(id);
