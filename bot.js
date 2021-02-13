@@ -380,7 +380,7 @@ console.log('message: ' + message);
 //message.channel.messages.fetch(message).then(msg => {msg.reactions.resolve('👍').users.remove(thisid);}); 
 
 let messageEmbed = message.channel.messages.fetch (message)
-messageEmbed.reactions.cache.find(r => r.emoji.name == 👍).users.remove(thisid);
+messageEmbed.reactions.cache.find(r => r.emoji.name == '👍').users.remove(thisid);
 
 
 
