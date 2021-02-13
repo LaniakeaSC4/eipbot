@@ -368,11 +368,14 @@ await msg.edit(newEmbed);
     console.log('message ID:' + message.id);
 
 console.log('eggcommand2:' + eggcommand2);
-let user = client.users.cache.find(user => user.username == eggcommand2);
-console.log('user:' + user);
-let id = user.id;
 
-message.reactions.resolve('👍').users.remove(id);
+var thisid = eggcommand2.substring(
+    eggcommand2.lastIndexOf("@") + 1, 
+    eggcommand2.lastIndexOf(">")
+); 
+
+console.log(thisid);
+message.reactions.resolve('👍').users.remove(thisid);
     
   }) 
 });
