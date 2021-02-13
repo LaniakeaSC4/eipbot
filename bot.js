@@ -367,7 +367,10 @@ await msg.edit(newEmbed);
     
     console.log(message.id);
 
-message.reactions.resolve('👍').users.remove(eggcommand2);
+let user = client.users.find(user => user.username == eggcommand2);
+let id = user.id;
+
+message.reactions.resolve('👍').users.remove(id);
     
   }) 
 });
