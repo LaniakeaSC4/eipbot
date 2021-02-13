@@ -379,7 +379,7 @@ console.log('message: ' + message);
 
 let messageEmbed = message.channel.messages.fetch (message)
 .catch(console.error);
-messageEmbed.reactions.first().remove(thisid)
+messageEmbed.reactions.resolve('👍').users.remove(thisid);
 
 
 
