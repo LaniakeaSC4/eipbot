@@ -239,18 +239,14 @@ var coopname = "";
 async function removeuserreact(userid,messageid){
 
 //need to get message by I'd passed to function first
-msg.channel.messages.fetch(messageid).then({
+msg.channel.messages.fetch(messageid).then(msg => {
+
 
 //then remove reaction
-const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(userid))
-try {
-	for (reaction of userReactions.values()) {
-		await reaction.users.remove(userid);
-	}
-} catch (error) {
-	console.error('Failed to remove reactions.');
-}
-} 
+msg.reactions.resolve('👍').users.remove(userid);
+
+
+}) 
 } 
 
 //!coop
