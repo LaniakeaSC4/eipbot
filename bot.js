@@ -381,7 +381,21 @@ console.log('message: ' + message.id);
 
 message.channel.messages.fetch(message.id).then(msg => {
   console.log(msg);
-  reactions.cache.find(r => r.emoji.name == '👍' ).users.remove(msg.author);
+  
+  //try fix this up
+  
+  const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(thisid));
+  
+  for (const userReaction of userReactions.values()) {
+        if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '👍' ) {
+          userReaction.users.remove(thisid);
+          votes[userReaction.emoji.name].delete(user);
+        }
+      } 
+  
+ // reactions.cache.find(r => r.emoji.name == '👍' ).users.remove(msg.author);
+  
+  
   }); 
 
 
