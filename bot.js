@@ -236,6 +236,23 @@ var coopname = "";
 	return coopembed;
 }; //end Coopembed function
 
+async function removeuserreact(userid,messageid){
+
+//need to get message by I'd passed to function first
+const msg = await channel.messages.fetch(messageid);
+
+//then remove reaction
+const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(userid));
+try {
+	for (const reaction of userReactions.values()) {
+		await reaction.users.remove(userid);
+	}
+} catch (error) {
+	console.error('Failed to remove reactions.');
+}
+} 
+  
+
 //!coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
@@ -365,43 +382,20 @@ await msg.edit(newEmbed);
   //Iterate through the messages here with the variable "messages".
   messages.forEach(message => {
     
-    console.log('message ID:' + message.id);
-
+console.log('message ID:' + message.id);
 console.log('eggcommand2:' + eggcommand2);
 
-var thisid = eggcommand2.substring(
+//get user Id of who was @mentioned
+var thisuserid = eggcommand2.substring(
     eggcommand2.lastIndexOf("@") + 1, 
     eggcommand2.lastIndexOf(">")
 ); 
 
-console.log('thisid: ' + thisid);
+console.log('thisid: ' + thisuserid);
 console.log('message: ' + message.id);
 
-//message.channel.messages.fetch(message).then(msg => {msg.reactions.resolve('👍').users.remove(thisid);}); 
+removeuserreact(thisuserid,message.id);
 
-message.channel.messages.fetch(message.id).then(msg => {
-  console.log(msg);
-  
-  //try fix this up
-  
-  const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(thisid));
-  
-  console.log(userReactions);
-  
- msg.reactions.get('👍').remove(thisid);
-  
- // reactions.cache.find(r => r.emoji.name == '👍' ).users.remove(msg.author);
-  
-  
-  }); 
-
-
-
-//msg.channel.messages.fetchMessage(toString(message)).then(msg => {console.log('msg:' + msg);
- //msg.reactions.resolve('👍').users.remove(thisid);});
-
-
-    
   }) 
 });
 			  
