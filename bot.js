@@ -242,9 +242,9 @@ async function removeuserreact(userid,messageid){
 msg.channel.messages.fetch(messageid).then({
 
 //then remove reaction
-const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(userid));
+const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(userid))
 try {
-	for (const reaction of userReactions.values()) {
+	for (reaction of userReactions.values()) {
 		await reaction.users.remove(userid);
 	}
 } catch (error) {
