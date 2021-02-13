@@ -377,10 +377,10 @@ var thisid = eggcommand2.substring(
 console.log('thisid: ' + thisid);
 console.log('message: ' + message);
 
-$: msg = msg.channel.fetchMessage(toString(message));
+msg.channel.fetchMessage(toString(message)).then(msg => {console.log('msg:' + msg);
+ msg.reactions.resolve('👍').users.remove(thisid);});
 
-console.log('msg:' + msg);
- msg.reactions.resolve('👍').users.remove(thisid);
+
     
   }) 
 });
