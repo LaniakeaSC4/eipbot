@@ -239,7 +239,7 @@ var coopname = "";
 async function removeuserreact(userid,messageid){
 
 //need to get message by I'd passed to function first
-const msg = await channel.messages.fetch(messageid);
+msg.channel.messages.fetch(messageid).then({
 
 //then remove reaction
 const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(userid));
@@ -251,7 +251,7 @@ try {
 	console.error('Failed to remove reactions.');
 }
 } 
-  
+} 
 
 //!coop
 client.on('message', async message => {
