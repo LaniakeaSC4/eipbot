@@ -375,11 +375,11 @@ var thisid = eggcommand2.substring(
 ); 
 
 console.log('thisid: ' + thisid);
-console.log('message: ' + message);
+console.log('message: ' + message.id);
 
 //message.channel.messages.fetch(message).then(msg => {msg.reactions.resolve('👍').users.remove(thisid);}); 
 
-message.channel.messages.fetch(message).then(msg => {msg.reactions.cache.find(r => r.emoji.name == '👍').users.remove(thisid);}); 
+message.channel.messages.fetch(message.id).then(msg => {msg.reactions.cache.find(r => r.emoji.name == '👍').users.remove(thisid);}); 
 
 
 
