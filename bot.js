@@ -390,11 +390,11 @@ var thisuserid = eggcommand2.substring(
 console.log('thisid: ' + thisuserid);
 console.log('message: ' + message.id);
 
-messages.fetch(messageid).then(msg => {
+messages.fetch(message.id).then(msg => {
 
 
 //then remove reaction
-msg.reactions.resolve('👍').users.remove(userid);
+msg.reactions.resolve('👍').users.remove(thisuserid);
 
 
 })  
