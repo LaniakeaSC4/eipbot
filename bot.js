@@ -358,8 +358,8 @@ await msg.edit(newEmbed);
 		};//end the if "open" block
 
 //=========
-		//!coop farming coop-name
-		if (eggcommand1 == "farming" && String(eggcommand2) !== "undefined"){
+		//!coop placed @user
+		if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop 
 	message.channel.messages.fetchPinned().then(messages => {console.log(`Received ${messages.size} messages`);
   //Iterate through the messages here with the variable "messages".
@@ -367,10 +367,7 @@ await msg.edit(newEmbed);
     
     console.log(message.id);
 
-let embed = new Discord.MessageEmbed()
-     .setDescription(`this was edited`)
-     embed.addFields(message.fields) 
-  message.edit(embed)
+message.reactions.resolve('👍').users.remove(eggcommand2);
     
   }) 
 });
