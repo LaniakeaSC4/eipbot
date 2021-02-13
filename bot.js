@@ -281,8 +281,8 @@ message.channel.messages.fetchPinned().then(messages => {messages.forEach(messag
 
 //build initial message
 let embed = new Discord.MessageEmbed()
-  .setTitle('Contract Title Will go here')
-  .setDescription('Contract Details will go here')
+  .setTitle(eggcommand2)
+  .setDescription('Please vote 👍 if you are farming this contract, 👎 if you are not or 🥚 if you would like to be a starter. Clicking 🗑 clears your choice.')
   .addField('Status', 'Coop\'s not started.')
   .setColor('#ffd700')
   .setFooter('Bot created by LaniakeaSC');
