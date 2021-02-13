@@ -381,7 +381,7 @@ console.log('message: ' + message.id);
 
 message.channel.messages.fetch(message.id).then(msg => {
   console.log(msg);
-  reaction.users.remove(thisid);
+  reactions.cache.find(r => r.emoji.name == '👍' ).users.remove(msg.author);
   }); 
 
 
