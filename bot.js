@@ -381,7 +381,7 @@ console.log('message: ' + message.id);
 
 message.channel.messages.fetch(message.id).then(msg => {
   console.log(msg);
-  msg.reaction.users.remove(thisid);
+  reaction.users.remove(thisid);
   }); 
 
 
