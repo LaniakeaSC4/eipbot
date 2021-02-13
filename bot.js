@@ -390,7 +390,16 @@ var thisuserid = eggcommand2.substring(
 console.log('thisid: ' + thisuserid);
 console.log('message: ' + message.id);
 
-removeuserreact(thisuserid,message.id);
+messages.fetch(messageid).then(msg => {
+
+
+//then remove reaction
+msg.reactions.resolve('👍').users.remove(userid);
+
+
+})  
+
+//removeuserreact(thisuserid,message.id);
 
   }) 
 });
