@@ -374,8 +374,9 @@ var thisid = eggcommand2.substring(
     eggcommand2.lastIndexOf(">")
 ); 
 
-console.log(thisid);
-message.reactions.resolve('👍').users.remove(thisid);
+console.log('thisid: ' + thisid);
+console.log('message: ' + message)
+ message.reactions.resolve('👍').users.remove(thisid);
     
   }) 
 });
