@@ -379,7 +379,10 @@ console.log('message: ' + message.id);
 
 //message.channel.messages.fetch(message).then(msg => {msg.reactions.resolve('👍').users.remove(thisid);}); 
 
-message.channel.messages.fetch(message.id).then(msg => {msg.reactions.resolve('👍').users.remove(thisid);}); 
+message.channel.messages.fetch(message.id).then(msg => {
+  console.log(msg);
+  msg.reactions.resolve('👍').users.remove(thisid);
+  }); 
 
 
 
