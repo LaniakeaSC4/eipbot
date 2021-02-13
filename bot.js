@@ -239,7 +239,7 @@ var coopname = "";
 async function removeuserreact(userid,messageid){
 
 //need to get message by I'd passed to function first
-msg.channel.messages.fetch(messageid).then(msg => {
+message.channel.messages.fetch(messageid).then(msg => {
 
 
 //then remove reaction
