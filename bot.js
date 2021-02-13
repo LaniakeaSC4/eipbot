@@ -374,10 +374,11 @@ var thisid = eggcommand2.substring(
     eggcommand2.lastIndexOf(">")
 ); 
 
-const msg = await channel.messages.fetch(toString(message));
+const msg = channel.messages.fetch(toString(message));
 
 console.log('thisid: ' + thisid);
 console.log('message: ' + message)
+console.log('msg:' + msg)
  msg.reactions.resolve('👍').users.remove(thisid);
     
   }) 
