@@ -374,7 +374,7 @@ var thisid = eggcommand2.substring(
     eggcommand2.lastIndexOf(">")
 ); 
 
-const msg = channel.messages.fetch(toString(message));
+const msg = msg.channel.fetchMessage(toString(message));
 
 console.log('thisid: ' + thisid);
 console.log('message: ' + message)
