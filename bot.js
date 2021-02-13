@@ -374,9 +374,11 @@ var thisid = eggcommand2.substring(
     eggcommand2.lastIndexOf(">")
 ); 
 
+const msg = await channel.messages.fetch(toString(message));
+
 console.log('thisid: ' + thisid);
 console.log('message: ' + message)
- message.reactions.resolve('👍').users.remove(thisid);
+ msg.reactions.resolve('👍').users.remove(thisid);
     
   }) 
 });
