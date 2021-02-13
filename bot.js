@@ -386,12 +386,9 @@ message.channel.messages.fetch(message.id).then(msg => {
   
   const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(thisid));
   
-  for (const userReaction of userReactions.values()) {
-        if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '👍' ) {
-          userReaction.users.remove(thisid);
-          votes[userReaction.emoji.name].delete(user);
-        }
-      } 
+  console.log(userReactions);
+  
+ msg.reactions.get('👍').remove(thisid);
   
  // reactions.cache.find(r => r.emoji.name == '👍' ).users.remove(msg.author);
   
