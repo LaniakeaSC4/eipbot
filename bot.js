@@ -399,7 +399,7 @@ console.log('message: ' + message.id);
 
 //then remove reaction
 const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(thisuserid));
-console.log(userReactions.values);
+console.log(userReactions.values());
 	for (const reaction of userReactions.values()) {
 	 reaction.users.remove(thisuserid);
 	}
