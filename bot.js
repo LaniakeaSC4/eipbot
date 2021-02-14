@@ -394,24 +394,14 @@ var thisuserid = eggcommand2.substring(
 console.log('thisid: ' + thisuserid);
 console.log('message: ' + message.id);
 
-//message.channel.messages.fetch(message.id).then(msg => {
 
 
-//then remove reaction
-//const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(thisuserid));
-//console.log(message);
-//	for (const reaction of userReactions.values()) {
-	  //console.log('aloop');
-	// reaction.users.remove(thisuserid);
-//	}
+    reaction.message.reactions.cache.forEach((reaction) => {
+      reaction.message.reactions.cache.first() 
+  .users.remove(thisuserid); // remove the user
+    });
+//message.reactions.removeAll();
 
-message.reactions.removeAll();
-//message.reactions.resolve("👍").users.remove(thisuserid);
-
-
-//})  
-
-//removeuserreact(thisuserid,message.id);
 
   }) 
 });
