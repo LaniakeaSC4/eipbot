@@ -396,10 +396,11 @@ console.log('message: ' + message.id);
 
 
 
-    reaction.message.reactions.cache.forEach((reaction) => {
-      reaction.message.reactions.cache.first() 
-  .users.remove(thisuserid); // remove the user
+reaction.message.reactions.cache.forEach((reaction) => {
+      reaction.message.reactions.cache.first().users.remove(thisuserid); // remove the user
     });
+
+
 //message.reactions.removeAll();
 
 
