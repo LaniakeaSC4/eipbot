@@ -394,7 +394,9 @@ var thisuserid = eggcommand2.substring(
 console.log('thisid: ' + thisuserid);
 console.log('message: ' + message.id);
 
-reaction.remove(thisuserid);
+const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id)); 
+userReaction.users.remove(user.id);
+update();
 
 
 //message.reactions.removeAll();
