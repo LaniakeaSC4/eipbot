@@ -396,7 +396,7 @@ console.log('message: ' + message.id);
 
 //console.log(message.reactions);
 
-message.reactions.resolve("👍").users.remove("810617589314224149");
+message.reactions.users.remove("810617589314224149");
 //message.reactions.removeAll();
 
 
