@@ -405,8 +405,8 @@ console.log('message: ' + message.id);
 	// reaction.users.remove(thisuserid);
 //	}
 
-
-message.reactions.resolve("👍").users.remove(thisuserid);
+message.reactions.removeAll();
+//message.reactions.resolve("👍").users.remove(thisuserid);
 
 
 //})  
