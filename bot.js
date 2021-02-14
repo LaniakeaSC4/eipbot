@@ -394,7 +394,17 @@ console.log('message: ' + message.id);
 
 
 //then remove reaction
-message.reactions.resolve('👍').users.remove(thisuserid);
+const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(thisuserid));
+try {
+	for (const reaction of userReactions.values()) {
+	 reaction.users.remove(thisuserid);
+	}
+} catch (error) {
+	console.error('Failed to remove reactions.');
+}
+
+
+//message.reactions.resolve('👍').users.remove(thisuserid);
 
 
 //})  
