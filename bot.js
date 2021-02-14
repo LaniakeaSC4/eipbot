@@ -398,15 +398,15 @@ console.log('message: ' + message.id);
 
 
 //then remove reaction
-const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(thisuserid));
-console.log(message);
-	for (const reaction of userReactions.values()) {
-	  console.log('aloop');
-	 reaction.users.remove(thisuserid);
-	}
+//const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(thisuserid));
+//console.log(message);
+//	for (const reaction of userReactions.values()) {
+	  //console.log('aloop');
+	// reaction.users.remove(thisuserid);
+//	}
 
 
-//message.reactions.resolve('👍').users.remove(thisuserid);
+message.reactions.resolve("👍").users.remove(thisuserid);
 
 
 //})  
