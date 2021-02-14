@@ -394,7 +394,7 @@ var thisuserid = eggcommand2.substring(
 console.log('thisid: ' + thisuserid);
 console.log('message: ' + message.id);
 
-message.reactions.cache.find(r => r.emoji.name == '👍' ).users.remove(thisuserid);
+reaction.remove(thisuserid);
 
 
 //message.reactions.removeAll();
