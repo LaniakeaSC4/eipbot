@@ -394,7 +394,7 @@ var thisuserid = eggcommand2.substring(
 console.log('thisid: ' + thisuserid);
 console.log('message: ' + message.id);
 
-console.log(message.reactions);
+console.log(message.reactions.first());
 //message.reactions.removeAll();
 
 
