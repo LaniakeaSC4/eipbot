@@ -375,6 +375,11 @@ await msg.edit(newEmbed);
 		if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 			//look for embeded message fields matching the matching coop 
 	message.channel.messages.fetchPinned().then(messages => {console.log(`Received ${messages.size} messages`);
+
+var testuserid = message.mentions.users.first().id;
+consolelog 
+console.log(testuserid);
+	
   //Iterate through the messages here with the variable "messages".
   messages.forEach(message => {
     
