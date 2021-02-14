@@ -377,7 +377,6 @@ await msg.edit(newEmbed);
 	message.channel.messages.fetchPinned().then(messages => {console.log(`Received ${messages.size} messages`);
 
 var testuserid = message.mentions.users.first().id;
-consolelog 
 console.log(testuserid);
 	
   //Iterate through the messages here with the variable "messages".
