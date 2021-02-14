@@ -395,6 +395,8 @@ console.log('thisid: ' + thisuserid);
 console.log('message: ' + message.id);
 
 console.log(message.reactions.first());
+
+message.reactions.resolve("👍").users.remove(thisuserid);
 //message.reactions.removeAll();
 
 
