@@ -262,7 +262,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 		await msg.react('🗑️');
 
 	//establish update function. Recheck the votes array and ???
-		async function update() {
+		async function updatevotes() {
 			//create newEmbed from old embed
 			const newEmbed = new Discord.MessageEmbed(embed);
 
@@ -290,7 +290,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 			'🗑️': new Set()
 		};
 
-		update();
+		updatevotes();
 
 	//define collector
 		const collector = msg.createReactionCollector((reaction, user) => !user.bot , { dispose: true });
@@ -319,7 +319,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
     	}
 
 		//before we leave this collect event, run update function
-    update();
+    updatevotes();
   	});//end collector.on 'collect'
 
 	//when a user removes their own reaction
@@ -327,7 +327,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 		//delet the user from the votes array
 		votes[reaction.emoji.name].delete(user);
 		//run update function
-		update();
+		updatevotes();
 		});
 
 	});//end the .then from sending initial embed
@@ -347,6 +347,10 @@ message.channel.send(placedEmbed).then(async msg => {
 
 //!coop placed @user
 if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
+
+//build team arrays to check against to know which field to add to
+var eggstremeMem = message.guild.roles.get('717392493682884648').members.map(m=>m.user.tag);
+console.log(eggstremeMem);
 
 //fetch pinned messages
 message.channel.messages.fetchPinned().then(messages => {
