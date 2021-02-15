@@ -395,7 +395,7 @@ console.log('thisid: ' + thisuserid);
 console.log('message: ' + message.id);
 
 //console.log(message.reactions);
-message.reactions.cache.forEach(reaction => reaction.remove("810617589314224149")) ;
+message.reactions.cache.forEach(reaction => reaction.remove("684896787655557216")) ;
 //message.reactions.removeAll();
 
 
