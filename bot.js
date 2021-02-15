@@ -332,6 +332,19 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 		});
 
 	});//end the .then from sending initial embed
+
+//send another message to act as the holder for placed users
+let placedEmbed = new Discord.MessageEmbed()
+	.setTitle("Users placed in coop")
+	.setDescription('Once users are placed, they will be shown here')
+	.addField('Status', 'Coop\'s not started.')
+	.setColor('#ffd700')
+	.setFooter('Bot created by LaniakeaSC');
+
+message.channel.send(placedEmbed).then(async msg => {
+	msg.pin();
+}
+
 };//end the if "open" block
 
 //!coop placed @user
