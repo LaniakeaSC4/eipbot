@@ -362,8 +362,6 @@ message.channel.messages.fetchPinned().then(messages => {
 		message.edit(updatedEmbed);
 
 	})
-};
-
 };//end placed block
 };//end if !coop block
 
