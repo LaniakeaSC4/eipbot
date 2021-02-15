@@ -339,7 +339,7 @@ await msg.edit(newEmbed);
 
   //const collector = msg.createReactionCollector((reaction, user) => !user.bot , { dispose: true });
 
-  const collector = msg.createReactionCollector((reaction, user), { dispose: true });
+  const collector = msg.createReactionCollector((reaction, user));
 	
   collector.on('collect', async (reaction, user) => {
     if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
