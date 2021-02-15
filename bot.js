@@ -352,7 +352,7 @@ if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 message.channel.messages.fetchPinned().then(messages => {
 	console.log(`Received ${messages.size} messages`);
 
-	var recievedEmbed = message.embeds[0];
+	var receivedEmbed = message.embeds[0];
 	var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
 
 		updatedEmbed.addfields(
