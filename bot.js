@@ -361,8 +361,10 @@ message.channel.messages.fetchPinned().then(messages => {
 
 		//for each pinned message
 		messages.forEach(message => {
+		  if (message.embeds[0].footer === "Bot created by LaniakeaSC") {
 			//update the embed
 			message.edit(updatedEmbed);
+		  }; //end if
 		})//end message.forEach
 		
 	})//end .then after fetchPinned
