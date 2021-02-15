@@ -364,7 +364,7 @@ message.channel.messages.fetchPinned().then(messages => {
 		  console.log("foreach message");
 		  message.embeds.forEach((embed) => {
 		  console.log("foreach embed");
-		  if (embed.footer.includes("Bot created by LaniakeaSC")){
+		  if (footer.includes("Bot created by LaniakeaSC")){
 			console.log("footer matched");
 			//update the embed
 			message.edit(updatedEmbed);
