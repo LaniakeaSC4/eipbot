@@ -368,7 +368,7 @@ await msg.edit(newEmbed);
 		  console.log("seen an egg command!");
 		  votes['👍'].delete(message.mentions.users.first().id);
 		  update();
-	  })
+	  }
 	  //-=--=-=-=-=-=-=
   });
 			  
