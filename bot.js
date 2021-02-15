@@ -337,10 +337,8 @@ await msg.edit(newEmbed);
 
   update();
 
-  //const collector = msg.createReactionCollector((reaction, user) => !user.bot , { dispose: true });
+  const collector = msg.createReactionCollector((reaction, user) => !user.bot , { dispose: true });
 
-  const collector = msg.createReactionCollector((reaction, user) => user.bot , { dispose: true });
-	
   collector.on('collect', async (reaction, user) => {
     if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
       const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
@@ -364,6 +362,14 @@ await msg.edit(newEmbed);
     votes[reaction.emoji.name].delete(user);
 
     update();
+
+	  //=--=--=-=-=-
+	  if (eggcommand1 == "egg" && String(eggcommand2) !== "undefined"){
+		  console.log("seen an egg command!");
+		  votes['👍'].delete(message.mentions.users.first().id);
+		  update();
+	  })
+	  //-=--=-=-=-=-=-=
   });
 			  
 			  
@@ -399,9 +405,8 @@ console.log('message: ' + message.id);
 //console.log(message.reactions);
 //message.reactions.cache.forEach(reaction => reaction.remove("684896787655557216")) ;
 //message.reactions.resolve("👍").users.remove(reaction.users.cache.has(thisuserid));
-
-message.reactions.removeAll();
-
+//message.reactions.removeAll();
+votes[userReaction.emoji.name].delete(user);
 
   }) 
 });
