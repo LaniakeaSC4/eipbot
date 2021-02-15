@@ -362,8 +362,8 @@ message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message
 		messages.forEach(message => {
 		  let embed = message.embeds[0];
-		  console.log(embed.footer);
-      if (embed && embed.footer.includes('LaniakeaSC')) {
+		  console.log(embed.footer.text);
+      if (embed && embed.footer.text.includes('LaniakeaSC')) {
         console.log('matched footer');
    message.edit(updatedEmbed); 
   }//end if
