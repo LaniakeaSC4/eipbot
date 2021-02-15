@@ -2,8 +2,6 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.on('ready', () => {console.log('I am ready!');});
 
-//test edit
-
 //===============================
 //	team update bot		|
 //===============================
@@ -222,36 +220,7 @@ client.on('message', async message => {
 //		Coop bot		|
 //=======================================
 
-var coopname = "";
-
-//add function to generate coop embed
-	function makecoopembed(color, title, description, coopname, coopid){
-	const coopembed = new Discord.MessageEmbed()
-	coopembed.setColor(String(color))
-	coopembed.setTitle(String(title))
-	coopembed.setDescription(String(description));
-	coopembed.addFields(
-		{ name: coopname, value: 'Player', inline: true}
-		);//end addfields
-	coopembed.addField('Message ID: ', String(coopid));
-	coopembed.addField('Status: ','Active');
-	return coopembed;
-}; //end Coopembed function
-
-async function removeuserreact(userid,messageid){
-
-//need to get message by I'd passed to function first
-messages.fetch(messageid).then(msg => {
-
-
-//then remove reaction
-msg.reactions.resolve('👍').users.remove(userid);
-
-
-})
-}
-
-//!coop
+//!coop - all commands start with coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
 
@@ -269,163 +238,137 @@ client.on('message', async message => {
 		console.log('commmand 2 is: ' + eggcommand2);
 		console.log('commmand 3 is: ' + eggcommand3);
 
-		//start a coop
-		//if first thing after !coop is "start" take 2nd thing as coop name
-		if (eggcommand1 == 'start' && String(eggcommand2) !== "undefined"){
-
-
-		  //unpin all messages
-		  message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})});
-
-			//post the inital coop embed post then edit it to add the message ID (might not need the ID?)
-			message.channel.send(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, 'No ID' )).then(sent => {
-		  	let id = sent.id;
-		  	console.log('Message id is:' + id);
-			//edit the post to add ID
-			sent.edit(makecoopembed('#A822BD' , eggcommand2, 'New coop', eggcommand2, id));
-			sent.pin();
-			});//end the .then part
-		};//end the if "start" block
-
-//=========
-
+//open a new coop
 if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
-//unpin all messages
-message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})});
+	//unpin all messages
+	message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})});
 
-//build initial message
-let embed = new Discord.MessageEmbed()
-  .setTitle(eggcommand2)
-  .setDescription('Please vote 👍 if you are farming this contract, 👎 if you are not or 🥚 if you would like to be a starter. Clicking 🗑 clears your choice.')
-  .addField('Status', 'Coop\'s not started.')
-  .setColor('#ffd700')
-  .setFooter('Bot created by LaniakeaSC');
+	//build initial message and embed
+	let embed = new Discord.MessageEmbed()
+	  .setTitle(eggcommand2)
+	  .setDescription('Please vote 👍 if you are farming this contract, 👎 if you are not or 🥚 if you would like to be a starter. Clicking 🗑 clears your choice.')
+	  .addField('Status', 'Coop\'s not started.')
+	  .setColor('#ffd700')
+	  .setFooter('Bot created by LaniakeaSC');
 
-//send initial message
-message.channel.send(embed).then(async msg => {
+	//send initial message with embed and pin it
+	message.channel.send(embed).then(async msg => {
+		msg.pin();
 
-msg.pin();
+	//add reactions for clicking
+		await msg.react('👍');
+		await msg.react('👎');
+		await msg.react('🥚');
+		await msg.react('🗑️');
 
-//add reactions for clicking
-await msg.react('👍');
-await msg.react('👎');
-await msg.react('🥚');
-await msg.react('🗑️');
+	//establish update function. Recheck the votes array and ???
+		async function update() {
+			//create newEmbed from old embed
+			const newEmbed = new Discord.MessageEmbed(embed);
 
-async function update() {
-const newEmbed = new Discord.MessageEmbed(embed);
+			//set each votes equal to 0 then.....??????
+			const userYes = (votes['👍'].size === 0)? '-' : [...votes['👍']];
+			const userNo = (votes['👎'].size === 0)? '-' : [...votes['👎']];
+			const userStarter = (votes['🥚'].size === 0)? '-' : [...votes['🥚']];
 
-const userYes = (votes['👍'].size === 0)? '-' : [...votes['👍']];
-const userNo = (votes['👎'].size === 0)? '-' : [...votes['👎']];
-const userStarter = (votes['🥚'].size === 0)? '-' : [...votes['🥚']];
+			//add votes values to embed fiels?
+			newEmbed.addFields(
+				{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
+				{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
+				{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
+			);
 
-newEmbed.addFields(
-	{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
-	{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
-	{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
-);
+			//edit message with newEmbed to update it
+			await msg.edit(newEmbed);
+		}
 
-await msg.edit(newEmbed);
+	//make votes unique???
+		const votes = {
+			'👍': new Set(),
+			'👎': new Set(),
+			'🥚': new Set(),
+			'🗑️': new Set()
+		};
 
-}
+		update();
 
-  const votes = {
-    '👍': new Set(),
-    '👎': new Set(),
-    '🥚': new Set(),
-    '🗑️': new Set()
-  };
+	//define collector
+		const collector = msg.createReactionCollector((reaction, user) => !user.bot , { dispose: true });
 
-  update();
+	//when a reaction is collected (clicked)
+		collector.on('collect', async (reaction, user) => {
 
-  const collector = msg.createReactionCollector((reaction, user) => !user.bot , { dispose: true });
-
-  collector.on('collect', async (reaction, user) => {
+		//check it is one of the allowed reactions, else remove it
     if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
-      const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
 
-      for (const userReaction of userReactions.values()) {
-        if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
-          userReaction.users.remove(user.id);
-          votes[userReaction.emoji.name].delete(user);
+		//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+    const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+		//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+    for (const userReaction of userReactions.values()) {
+      if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+        userReaction.users.remove(user.id);
+        votes[userReaction.emoji.name].delete(user);
         }
       }
 
+			//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
       votes[reaction.emoji.name].add(user);
     } else {
-      reaction.remove();
-    }
+      reaction.remove();//was not an allowed reaction
+    	}
 
+		//before we leave this collect event, run update function
     update();
-  });
+  	});//end collector.on 'collect'
 
-  collector.on('remove', (reaction, user) => {
-    votes[reaction.emoji.name].delete(user);
+	//when a user removes their own reaction
+		collector.on('remove', (reaction, user) => {
+		//delet the user from the votes array
+		votes[reaction.emoji.name].delete(user);
+		//run update function
+		update();
+		});
 
-    update();
+	});//end the .then from sending initial embed
+};//end the if "open" block
 
-	  //=--=--=-=-=-
-	  if (eggcommand1 == "egg" && String(eggcommand2) !== "undefined"){
-		  console.log("seen an egg command!");
-		  votes['👍'].delete(message.mentions.users.first().id);
-		  update();
-	  }
-	  //-=--=-=-=-=-=-=
-  });
+//!coop placed @user
+if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 
+//fetch pinned messages
+message.channel.messages.fetchPinned().then(messages => {
+	console.log(`Received ${messages.size} messages`);
+	var testuserid = message.mentions.users.first().id;
+	console.log(testuserid);
 
+	//Iterate through the messages here with the variable "messages".
+	messages.forEach(message => {
+		console.log('message ID:' + message.id);
+		console.log('eggcommand2:' + eggcommand2);
 
+		//get user Id of who was @mentioned
+		var thisuserid = eggcommand2.substring(
+		eggcommand2.lastIndexOf("@") + 1,
+		eggcommand2.lastIndexOf(">")
+		);
 
-			});//end the .then part
-		};//end the if "open" block
+		console.log('thisid: ' + thisuserid);
+		console.log('message: ' + message.id);
 
-//=========
-		//!coop placed @user
-		if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
-			//look for embeded message fields matching the matching coop
-	message.channel.messages.fetchPinned().then(messages => {console.log(`Received ${messages.size} messages`);
+		//make a second post/emmed for placed users...or edit the first embed with a new field. How about a second post/embed with fields for each team?
 
-var testuserid = message.mentions.users.first().id;
-console.log(testuserid);
-
-  //Iterate through the messages here with the variable "messages".
-  messages.forEach(message => {
-
-console.log('message ID:' + message.id);
-console.log('eggcommand2:' + eggcommand2);
-
-//get user Id of who was @mentioned
-var thisuserid = eggcommand2.substring(
-    eggcommand2.lastIndexOf("@") + 1,
-    eggcommand2.lastIndexOf(">")
-);
-
-console.log('thisid: ' + thisuserid);
-console.log('message: ' + message.id);
-
-//console.log(message.reactions);
-//message.reactions.cache.forEach(reaction => reaction.remove("684896787655557216")) ;
-//message.reactions.resolve("👍").users.remove(reaction.users.cache.has(thisuserid));
-//message.reactions.removeAll();
-votes[userReaction.emoji.name].delete(user);
-
-  })
+	})
 });
 
-};//end if farming block
-	} ;//end if !coop block
-
-//add and pin post (use function to make post).
-
+};//end placed block
+};//end if !coop block
 
 }) ;//end client on message
-
 
 // THIS  MUST  BE  THIS  WAY
 
 client.login(process.env.BOT_TOKEN);
 
 //BOT_TOKEN is the Client Secret
-
-//&& message.embeds[0].Title.content.includes(String(eggcommand2))
