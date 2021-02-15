@@ -349,7 +349,7 @@ message.channel.send(placedEmbed).then(async msg => {
 if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 
 //build team arrays to check against to know which field to add to
-var eggstremeMem = message.guild.roles.get('717392493682884648').members.map(m=>m.user.tag);
+var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.tag);
 console.log(eggstremeMem);
 
 //fetch pinned messages
