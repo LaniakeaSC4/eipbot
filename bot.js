@@ -359,9 +359,13 @@ message.channel.messages.fetchPinned().then(messages => {
 				{ name: `Placed`, value: message.mentions.users.first().id, inline: true }
 		);
 
-		message.edit(updatedEmbed);
-
-	})
+		//for each pinned message
+		messages.forEach(message => {
+			//update the embed
+			message.edit(updatedEmbed);
+		})//end message.forEach
+		
+	})//end .then after fetchPinned
 };//end placed block
 };//end if !coop block
 
