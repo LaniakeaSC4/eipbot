@@ -336,7 +336,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 let placedEmbed = new Discord.MessageEmbed()
 	.setTitle("Users placed in coop")
 	.setDescription('Once users are placed, they will be shown here')
-	.setColor('#ffd700')
+	.setColor('##00FF00')
 	.setFooter('Bot created by LaniakeaSC');
 
 message.channel.send(placedEmbed).then(async msg => {
@@ -351,24 +351,15 @@ if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 //fetch pinned messages
 message.channel.messages.fetchPinned().then(messages => {
 	console.log(`Received ${messages.size} messages`);
-	var testuserid = message.mentions.users.first().id;
-	console.log(testuserid);
 
-	//Iterate through the messages here with the variable "messages".
-	messages.forEach(message => {
-		console.log('message ID:' + message.id);
-		console.log('eggcommand2:' + eggcommand2);
+	const recievedEmbed = message.embeds[0];
+	const updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
 
-		//get user Id of who was @mentioned
-		var thisuserid = eggcommand2.substring(
-		eggcommand2.lastIndexOf("@") + 1,
-		eggcommand2.lastIndexOf(">")
+		updatedEmbed.addfields(
+				{ name: `Placed`, value: message.mentions.users.first().id, inline: true }
 		);
 
-		console.log('thisid: ' + thisuserid);
-		console.log('message: ' + message.id);
-
-		//make a second post/emmed for placed users...or edit the first embed with a new field. How about a second post/embed with fields for each team?
+		message.edit(updatedEmbed);
 
 	})
 });
