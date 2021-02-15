@@ -355,7 +355,7 @@ message.channel.messages.fetchPinned().then(messages => {
 	var receivedEmbed = message.embeds[0];
 	var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
 
-		updatedEmbed.addfields(
+		updatedEmbed.addFields(
 				{ name: `Placed`, value: message.mentions.users.first().id, inline: true }
 		);
 
