@@ -343,7 +343,7 @@ let placedEmbed = new Discord.MessageEmbed()
 
 message.channel.send(placedEmbed).then(async msg => {
 	msg.pin();
-}
+})
 
 };//end the if "open" block
 
