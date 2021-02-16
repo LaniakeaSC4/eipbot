@@ -247,9 +247,10 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 	//build initial message and embed
 	let embed = new Discord.MessageEmbed()
 	  .setTitle(eggcommand2)
-	  .setDescription('Please vote 👍 if you are farming this contract, 👎 if you are not or 🥚 if you would like to be a starter. Clicking 🗑 clears your choice.')
+	  .setDescription('Please click 👍 if you are farming this contract./nPlease click 👎 if you are not./nPlease click 🥚 if you would like to be a starter./nClicking 🗑 clears your choice.')
 	  .addField('Status', 'Coop\'s not started.')
 	  .setColor('#ffd700')
+		.setFooter('⬇ Please add a reaction below ⬇')
 
 	//send initial message with embed and pin it
 	message.channel.send(embed).then(async msg => {
@@ -336,7 +337,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 let placedEmbed = new Discord.MessageEmbed()
 	.setTitle("Users placed in coop")
 	.setDescription('Once users are placed, they will be shown here')
-	.setColor('##00FF00')
+	.setColor('#00FF00')
 	.setFooter('Bot created by LaniakeaSC');
 
 message.channel.send(placedEmbed).then(async msg => {
