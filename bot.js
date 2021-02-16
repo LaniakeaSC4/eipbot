@@ -247,10 +247,10 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 	//build initial message and embed
 	let embed = new Discord.MessageEmbed()
 	  .setTitle(eggcommand2)
-	  .setDescription('Please click 👍 if you are farming this contract./nPlease click 👎 if you are not./nPlease click 🥚 if you would like to be a starter./nClicking 🗑 clears your choice.')
+	  .setDescription('Please click 👍 if you are farming this contract.\nPlease click 👎 if you are not.\nPlease click 🥚 if you would like to be a starter.\nClicking 🗑 clears your choice.')
 	  .addField('Status', 'Coop\'s not started.')
 	  .setColor('#ffd700')
-		.setFooter('⬇ Please add a reaction below ⬇')
+		.setFooter('⬇️ Please add a reaction below ⬇️')
 
 	//send initial message with embed and pin it
 	message.channel.send(embed).then(async msg => {
