@@ -357,7 +357,7 @@ var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.ma
 var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.tag).join("\n");
 
 //what user was mentioned?
-var mentioneduser = message.mentions.users.first().id;
+var mentioneduser = message.mentions.users.first().tag;
 
 //fetch pinned messages
 message.channel.messages.fetchPinned().then(messages => {
@@ -382,6 +382,8 @@ message.channel.messages.fetchPinned().then(messages => {
         console.log('matched footer');
    message.edit(updatedEmbed);
   }//end if
+
+catch (error) {console.log(error)};
 
 		})//end message.forEach
 
