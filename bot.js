@@ -384,7 +384,7 @@ try {
    message.edit(updatedEmbed);
   }//end if
 }
-catch (error) {console.log(error)};
+catch (error) {console.log("Seen an error: " + error)};
 
 		})//end message.forEach
 
