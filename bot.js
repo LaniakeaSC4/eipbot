@@ -356,6 +356,9 @@ var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.m
 var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.tag).join("\n");
 var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.tag).join("\n");
 
+//what user was mentioned?
+var mentioneduser = message.mentions.users.first().id;
+
 //fetch pinned messages
 message.channel.messages.fetchPinned().then(messages => {
 	console.log(`Received ${messages.size} messages`);
@@ -373,7 +376,7 @@ message.channel.messages.fetchPinned().then(messages => {
 			console.log(updatedEmbed);
 
 					updatedEmbed.addFields(
-							{ name: `Placed`, value: message.mentions.users.first().id, inline: true }
+							{ name: `Placed`, value: mentioneduser, inline: true }
 					);
 
         console.log('matched footer');
