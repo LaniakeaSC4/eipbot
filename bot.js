@@ -349,8 +349,12 @@ message.channel.send(placedEmbed).then(async msg => {
 if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 
 //build team arrays to check against to know which field to add to
-var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.tag);
-console.log(eggstremeMem);
+var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.tag).join("\n");
+var overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.tag).join("\n");
+var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.tag).join("\n");
+var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.tag).join("\n");
+var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.tag).join("\n");
+var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.tag).join("\n");
 
 //fetch pinned messages
 message.channel.messages.fetchPinned().then(messages => {
@@ -358,6 +362,10 @@ message.channel.messages.fetchPinned().then(messages => {
 
 	var receivedEmbed = message.embeds[0];
 	var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
+
+console.log(message.embeds[0]);
+console.log(receivedEmbed);
+console.log(updatedEmbed);
 
 		updatedEmbed.addFields(
 				{ name: `Placed`, value: message.mentions.users.first().id, inline: true }
@@ -369,11 +377,11 @@ message.channel.messages.fetchPinned().then(messages => {
 		  console.log(embed.footer.text);
       if (embed && embed.footer.text.includes('LaniakeaSC')) {
         console.log('matched footer');
-   message.edit(updatedEmbed); 
+   message.edit(updatedEmbed);
   }//end if
-		  
+
 		})//end message.forEach
-		
+
 	})//end .then after fetchPinned
 };//end placed block
 };//end if !coop block
