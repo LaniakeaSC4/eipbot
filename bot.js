@@ -362,7 +362,7 @@ message.channel.messages.fetchPinned().then(messages => {
 
 		//for each pinned message
 		messages.forEach(message => {
-		  //let embed = message.embeds[0];
+		  let embed = message.embeds[0];
 
       if (embed && embed.footer.text.includes('LaniakeaSC')) {
 				var receivedEmbed = message.embeds[0];
@@ -375,7 +375,7 @@ message.channel.messages.fetchPinned().then(messages => {
 					updatedEmbed.addFields(
 							{ name: `Placed`, value: message.mentions.users.first().id, inline: true }
 					);
-				
+
         console.log('matched footer');
    message.edit(updatedEmbed);
   }//end if
