@@ -367,7 +367,7 @@ message.channel.messages.fetchPinned().then(messages => {
 		messages.forEach(message => {
 		  let embed = message.embeds[0];
 
-      if (embed && embed.footer.text.includes('LaniakeaSC')) {
+      if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
 				var receivedEmbed = message.embeds[0];
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
 
