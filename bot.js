@@ -368,20 +368,20 @@ message.channel.messages.fetchPinned().then(messages => {
 		  let embed = message.embeds[0];
 
 try {
-      if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
-				var receivedEmbed = message.embeds[0];
-				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
+  if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+		var receivedEmbed = message.embeds[0];
+		var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
 
-			console.log(message.embeds[0]);
-			console.log(receivedEmbed);
-			console.log(updatedEmbed);
+		//console.log(message.embeds[0]);
+		//console.log(receivedEmbed);
+		//console.log(updatedEmbed);
 
-					updatedEmbed.addFields(
-							{ name: `Placed`, value: mentioneduser, inline: true }
-					);
+		updatedEmbed.addFields(
+			{ name: `Placed`, value: mentioneduser, inline: true }
+		);
 
-        console.log('matched footer');
-   message.edit(updatedEmbed);
+		//send the updated embed
+		message.edit(updatedEmbed);
   }//end if
 }
 catch (error) {console.log("Seen an error: " + error)};
