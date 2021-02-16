@@ -367,6 +367,7 @@ message.channel.messages.fetchPinned().then(messages => {
 		messages.forEach(message => {
 		  let embed = message.embeds[0];
 
+try {
       if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
 				var receivedEmbed = message.embeds[0];
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
@@ -382,7 +383,7 @@ message.channel.messages.fetchPinned().then(messages => {
         console.log('matched footer');
    message.edit(updatedEmbed);
   }//end if
-
+}
 catch (error) {console.log(error)};
 
 		})//end message.forEach
