@@ -360,22 +360,22 @@ var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.
 message.channel.messages.fetchPinned().then(messages => {
 	console.log(`Received ${messages.size} messages`);
 
-	var receivedEmbed = message.embeds[0];
-	var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
-
-console.log(message.embeds[0]);
-console.log(receivedEmbed);
-console.log(updatedEmbed);
-
-		updatedEmbed.addFields(
-				{ name: `Placed`, value: message.mentions.users.first().id, inline: true }
-		);
-
 		//for each pinned message
 		messages.forEach(message => {
-		  let embed = message.embeds[0];
-		  console.log(embed.footer.text);
+		  //let embed = message.embeds[0];
+
       if (embed && embed.footer.text.includes('LaniakeaSC')) {
+				var receivedEmbed = message.embeds[0];
+				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
+
+			console.log(message.embeds[0]);
+			console.log(receivedEmbed);
+			console.log(updatedEmbed);
+
+					updatedEmbed.addFields(
+							{ name: `Placed`, value: message.mentions.users.first().id, inline: true }
+					);
+				
         console.log('matched footer');
    message.edit(updatedEmbed);
   }//end if
