@@ -251,17 +251,13 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
 	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
 
-console.log(eggstremeMem);
 	//add red squares
-	for(var i=0;i<eggstremeMem.length;i++){
-		console.log(eggstremeMem[i]);
-		eggstremeMem[i]="🟥"+eggstremeMem[i];
-	}
-	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥"+overeasyMem[i]+"\n";}
-	for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥"+yolkstersMem[i]+"\n";}
-	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥"+sunnysideMem[i]+"\n";}
-	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥"+fowlplayMem[i]+"\n";}
-	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥"+hardboiledMem[i]+"\n";}
+	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥 "+eggstremeMem[i];}
+	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥 "+overeasyMem[i];}
+	for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥 "+yolkstersMem[i];}
+	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥 "+sunnysideMem[i];}
+	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
+	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
 
 	//unpin all messages
 	message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})});
