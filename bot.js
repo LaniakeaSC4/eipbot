@@ -355,7 +355,7 @@ funcion addsquares () {
 
 	});//end the .then from sending initial embed
 
-initalisefarmers().then(addsquares()
+initalisefarmers().then(addsquares());
 //send another message to act as the holder for placed users
 let placedEmbed = new Discord.MessageEmbed()
 	.setTitle("Users placed in coop")
