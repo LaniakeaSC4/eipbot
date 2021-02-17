@@ -351,7 +351,7 @@ let placedEmbed = new Discord.MessageEmbed()
 	.setFooter('Bot created by LaniakeaSC')
 	.addFields(
 		{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
-		{ name: `Team Over-easy`, value: overeasyMemr, inline: true },
+		{ name: `Team Over-easy`, value: overeasyMem, inline: true },
 		{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
 		{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
 		{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
