@@ -253,7 +253,7 @@ async function initalisefarmers() {
 	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username).join("\n");
 };
 
-funcion addsq() {
+function addsq() {
 	//add red squares
 	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥"+eggstremeMem[i];}
 	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥"+overeasyMem[i];}
