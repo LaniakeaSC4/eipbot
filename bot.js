@@ -254,10 +254,18 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username).join("\n");
 	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username).join("\n");
 
+	//add red squares
+	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥"+eggstremeMem[i];}
+	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥"+overeasyMem[i];}
+	for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥"+yolkstersMem[i];}
+	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥"+sunnysideMem[i];}
+	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥"+fowlplayMem[i];}
+	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥"+hardboiledMem[i];}
+
 	//build initial message and embed
 	let embed = new Discord.MessageEmbed()
 	  .setTitle(eggcommand2)
-	  .setDescription('Please click 👍 if you are farming this contract.\nPlease click 👎 if you are not.\nPlease click 🥚 if you would like to be a starter.\nClicking 🗑 clears your choice.')
+	  .setDescription('Please click 👍 if you are farming this contract.\n\nPlease click 👎 if you are not.\n\nPlease click 🥚 if you would like to be a starter.\n\nClicking 🗑 clears your choice.')
 	  .addField('Status', 'Coop\'s not started.')
 	  .setColor('#ffd700')
 		.setFooter('⬇️ Please add a reaction below ⬇️')
