@@ -220,6 +220,16 @@ client.on('message', async message => {
 //		Coop bot		|
 //=======================================
 
+//build initial team arrays on bot startup. These arrarys will be looped through and updated when we place a member in a coop
+//we are building them here becuase we dont want to rebuild the arrary on each command/message. Could make this into a functin to allow manual updating, but should be ok for now
+//If we update these master arrary...it might mess up if we have multiple coops. We may want to copy them into the context of the message/channel or whatever before editing
+var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.tag).join("\n");
+var overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.tag).join("\n");
+var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.tag).join("\n");
+var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.tag).join("\n");
+var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.tag).join("\n");
+var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.tag).join("\n");
+
 //!coop - all commands start with coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
@@ -339,6 +349,13 @@ let placedEmbed = new Discord.MessageEmbed()
 	.setDescription('Once users are placed, they will be shown here')
 	.setColor('#00FF00')
 	.setFooter('Bot created by LaniakeaSC');
+	.addFields(
+		{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
+		{ name: `Team Over-easy`, value: overeasyMemr, inline: true },
+		{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
+		{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
+		{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
+	);
 
 message.channel.send(placedEmbed).then(async msg => {
 	msg.pin();
@@ -349,13 +366,6 @@ message.channel.send(placedEmbed).then(async msg => {
 //!coop placed @user
 if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 
-//build team arrays to check against to know which field to add to
-var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.tag).join("\n");
-var overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.tag).join("\n");
-var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.tag).join("\n");
-var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.tag).join("\n");
-var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.tag).join("\n");
-var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.tag).join("\n");
 
 //what user was mentioned?
 var mentioneduser = message.mentions.users.first().tag;
@@ -376,10 +386,6 @@ try {
 		//console.log(message.embeds[0]);
 		//console.log(receivedEmbed);
 		//console.log(updatedEmbed);
-
-		updatedEmbed.addFields(
-			{ name: `Placed`, value: mentioneduser, inline: true }
-		);
 
 		//send the updated embed
 		message.edit(updatedEmbed);
