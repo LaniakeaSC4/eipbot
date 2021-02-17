@@ -253,13 +253,15 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
 console.log(eggstremeMem);
 	//add red squares
-	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥"+eggstremeMem[i];}
+	for(var i=0;i<eggstremeMem.length;i++){
+		console.log(eggstremeMem[i]);
+		eggstremeMem[i]="🟥"+eggstremeMem[i];
+	}
 	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥"+overeasyMem[i];}
 	for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥"+yolkstersMem[i];}
 	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥"+sunnysideMem[i];}
 	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥"+fowlplayMem[i];}
 	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥"+hardboiledMem[i];}
-console.log(eggstremeMem);
 
 	//unpin all messages
 	message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})});
