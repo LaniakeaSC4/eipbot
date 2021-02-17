@@ -241,7 +241,7 @@ client.on('message', async message => {
 //open a new coop
 if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
-async function initalisefarmers () {
+async function initalisefarmers() {
 	//build initial team arrays. These arrarys will be looped through and updated when we place a member in a coop
 	//we are building them here becuase we dont want to rebuild the arrary on each command/message. Could make this into a functin to allow manual updating, but should be ok for now
 	//If we update these master arrary...it might mess up if we have multiple coops. We may want to copy them into the context of the message/channel or whatever before editing
@@ -251,9 +251,9 @@ async function initalisefarmers () {
 	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username).join("\n");
 	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username).join("\n");
 	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username).join("\n");
-}
+};
 
-funcion addsquares () {
+funcion addsq() {
 	//add red squares
 	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥"+eggstremeMem[i];}
 	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥"+overeasyMem[i];}
@@ -261,7 +261,7 @@ funcion addsquares () {
 	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥"+sunnysideMem[i];}
 	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥"+fowlplayMem[i];}
 	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥"+hardboiledMem[i];}
-}
+};
 
 	//unpin all messages
 	message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})});
@@ -355,7 +355,7 @@ funcion addsquares () {
 
 	});//end the .then from sending initial embed
 
-initalisefarmers().then(addsquares());
+initalisefarmers().then(addsq());
 //send another message to act as the holder for placed users
 let placedEmbed = new Discord.MessageEmbed()
 	.setTitle("Users placed in coop")
