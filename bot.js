@@ -247,12 +247,12 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 	//build initial team arrays. These arrarys will be looped through and updated when we place a member in a coop
 	//we are building them here becuase we dont want to rebuild the arrary on each command/message. Could make this into a functin to allow manual updating, but should be ok for now
 	//If we update these master arrary...it might mess up if we have multiple coops. We may want to copy them into the context of the message/channel or whatever before editing
-	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.tag).join("\n");
-	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.tag).join("\n");
-	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.tag).join("\n");
-	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.tag).join("\n");
-	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.tag).join("\n");
-	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.tag).join("\n");
+	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username).join("\n");
+	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username).join("\n");
+	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username).join("\n");
+	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username).join("\n");
+	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username).join("\n");
+	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username).join("\n");
 
 	//build initial message and embed
 	let embed = new Discord.MessageEmbed()
