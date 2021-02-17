@@ -348,7 +348,7 @@ let placedEmbed = new Discord.MessageEmbed()
 	.setTitle("Users placed in coop")
 	.setDescription('Once users are placed, they will be shown here')
 	.setColor('#00FF00')
-	.setFooter('Bot created by LaniakeaSC');
+	.setFooter('Bot created by LaniakeaSC')
 	.addFields(
 		{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
 		{ name: `Team Over-easy`, value: overeasyMemr, inline: true },
