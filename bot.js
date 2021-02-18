@@ -219,6 +219,14 @@ client.on('message', async message => {
 //		Coop bot		|
 //=======================================
 
+//define team/role arrarys outside command
+	var eggstremeMem = new array();
+	var overeasyMem =  new array();
+	var yolkstersMem = new array();
+	var sunnysideMem = new array();
+	var fowlplayMem = new array();
+	var hardboiledMem = new array();
+
 //!coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
