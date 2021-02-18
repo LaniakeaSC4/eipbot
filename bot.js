@@ -408,9 +408,10 @@ console.log(eggstremeMem);
 // CODE GOES HERE FOR GRABBING EMBEDS AND TURNING SQUARES ORANGE
 for (var i=0;i<eggstremeMem.length;i++){
 	if (eggstremeMem[i].includes(mentioneduser)) {console.log("found in eggstreme");
-	  console.log(eggstremeMem[i]);
+	  console.log('origional is:' + eggstremeMem[i]);
 	  let memstring = eggstremeMem[i];
-	  console.log(memstring)
+	  console.log('memstring is:' + memstring);
+	  console.log('substr is:' + memstring.substr(1));
 	  eggstremeMem[i] = "🟧"+memstring.substr(1);
 	  console.log(eggstremeMem[i]);
 		}} 
