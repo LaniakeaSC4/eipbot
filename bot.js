@@ -407,7 +407,7 @@ console.log(eggstremeMem);
 
 // CODE GOES HERE FOR GRABBING EMBEDS AND TURNING SQUARES ORANGE
 for (var i=0;i<eggstremeMem.length;i++){
-	if (eggstremeMem[i] == mentioneduser) {console.log("found in eggstreme")
+	if (toLowerCase(eggstremeMem[i]).includes(toLowerCase(mentioneduser))) {console.log("found in eggstreme")
 		} else {
 			for(var i=0;i<overeasyMem.length;i++){
 				if (overeasyMem[i] == mentioneduser) {console.log("found in over-easy")
