@@ -220,12 +220,12 @@ client.on('message', async message => {
 //=======================================
 
 //define team/role arrarys outside command
-	var eggstremeMem = new Array();
-	var overeasyMem =  new Array();
-	var yolkstersMem = new Array();
-	var sunnysideMem = new Array();
-	var fowlplayMem = new Array();
-	var hardboiledMem = new Array();
+	const eggstremeMem = new Array();
+	const overeasyMem =  new Array();
+	const yolkstersMem = new Array();
+	const sunnysideMem = new Array();
+	const fowlplayMem = new Array();
+	const hardboiledMem = new Array();
 
 //!coop
 client.on('message', async message => {
