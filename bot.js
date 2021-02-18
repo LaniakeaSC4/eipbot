@@ -6,28 +6,97 @@ client.on('ready', () => {console.log('I am ready!');});
 //	team update bot		|
 //===============================
 
-//Define the things we are going to want to sort by
-teams = ['egg-streme', 'yolksters','sunny-side','fowl-play','hard-boiled','over-easy'];
-timezone = ['Europe', 'US WC', 'US EC', 'South America', 'Oceania'];
-eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger'];
-permitstatus = ['Pro Permit', 'Standard Permit'];
+//initiate some variables for global use
+	//Define the things we are going to want to sort by
+	teams = ['egg-streme', 'yolksters','sunny-side','fowl-play','hard-boiled','over-easy'];
+	timezone = ['Europe', 'US WC', 'US EC', 'South America', 'Oceania'];
+	eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger'];
+	permitstatus = ['Pro Permit', 'Standard Permit'];
 
-//initiate some arrarys (so they will be global var)
-var userroles = [];
-var memberlist = [];
-var memberdetails = [];
+	//initiate some arrarys (so they will be global var)
+	var userroles = [];
+	var memberlist = [];
+	var memberdetails = [];
 
-//arrays to build outputs into
-var eggstremearr = [];
-var yolkstersarr = [];
-var sunnysidearr = [];
-var fowlplayarr = [];
-var hardboiledarr = [];
-var overeasyarr = [];
+	//arrays to build outputs into
+	var eggstremearr = [];
+	var yolkstersarr = [];
+	var sunnysidearr = [];
+	var fowlplayarr = [];
+	var hardboiledarr = [];
+	var overeasyarr = [];
 
 //functions
-//check functions: When looping through each member in update function, these functions look through the users roles (userroles) and return true for the role which matches.
+function update(message){
 
+	//we are going to need a counter incremented for each match below so that we can order things into the array
+	var membuildcount = 0;
+	var memlistcount = 0;
+
+	//clear arrays on start
+	memberdetails.splice(0,memberdetails.length);
+	memberlist.splice(0,memberlist.length);
+
+	//load up the members
+	let members = message.guild.members.cache.array();
+
+	//for every member on the server
+	for(let member of members) {
+
+		//start member details with display name. Splice it into the arrary at position membuildcount (0) counter then increment membuildcount so next object goes in next position. .
+		memberdetails.splice(membuildcount,0, member.displayName);
+		membuildcount = membuildcount + 1;
+
+		//now lets get all thier roles into a string
+		userroles = member.roles.cache.map(r => r.name);
+
+		//Add timezone using checktime function.
+		//fill timepick with objects from the timezone list which pass checktime as true (should just be one match). Splice it into the next location of memberdetails then increment build count.
+		timepick = timezone.filter(checktime);
+		if (timepick.length == 0)
+		{memberdetails.splice(membuildcount,0, "No Timezone")}
+		else {memberdetails.splice(membuildcount,0, String(timepick))}
+		membuildcount = membuildcount + 1;
+
+		//Add team with checkteam function (see timepick)
+		teampick = teams.filter(checkteam);
+		if (teampick.length == 0)
+		{memberdetails.splice(membuildcount,0, "No Team");}
+		else {memberdetails.splice(membuildcount,0, String(teampick));}
+		membuildcount = membuildcount + 1;
+
+		//Add egg bonus with checkbonus function (see timepick)
+		bonuspick = eggbonus.filter(checkbonus);
+		if (bonuspick.length == 0)
+		{memberdetails.splice(membuildcount,0, "No Bonus");}
+		else {memberdetails.splice(membuildcount,0, String(bonuspick));}
+		membuildcount = membuildcount + 1;
+
+		//Add permit status with checkpermit function (see timepick)
+		permitpick = permitstatus.filter(checkpermit);
+		if (permitpick.length == 0)
+		{memberdetails.splice(membuildcount,0, "No Permit Status");}
+		else {memberdetails.splice(membuildcount,0, String(permitpick));}
+		membuildcount = membuildcount + 1;
+
+		//now we have all user details in memberdetails [0] to [4], splice all that as one object into memberlist.
+		memberlist.splice(memlistcount,0, memberdetails);
+		memlistcount = membuildcount + 1;//increment memlistcount ready for next loop/user
+		membuildcount = 0;//reset membuild count
+		memberdetails = [];//this may not be needed. Try take it out?
+	}//end for (let member of members) - every member on the server
+
+	//build the team specific arrays
+	buildteam(eggstremearr, "egg-streme");
+	buildteam(yolkstersarr, "yolksters");
+	buildteam(sunnysidearr, "sunny-side");
+	buildteam(fowlplayarr, "fowl-play");
+	buildteam(hardboiledarr, "hard-boiled");
+	buildteam(overeasyarr, "over-easy");
+
+}//end update function
+
+//check functions: When looping through each member in update function, these functions look through the users roles (userroles) and return true for the role which matches.
 	//check team function
 	function checkteam(value) {
 		for (var i = 0; i < userroles.length; i++) {
@@ -68,88 +137,19 @@ var overeasyarr = [];
   		return false;
 		}//end function
 
-	//member details are first stored in memberdetails, then stored in 2 dimension memberlist. Buildteam function adds the member objects from memberlist (containing member details) to a team specific array ready for processing to output.
-	function buildteam(teamarray, teamfilter){
- 		//clear array before start
-		teamarray.splice(0,teamarray.length);
-		for (var i = 0; i < memberlist.length; i++) {
-  		if (memberlist[i][2] == teamfilter) {
-  		teamarray.splice(i,0,memberlist[i]);
+//functions to build outputs
+//member details are first stored in memberdetails, then stored in 2 dimension memberlist. Buildteam function adds the member objects from memberlist (containing member details) to a team specific array ready for processing to output.
+function buildteam(teamarray, teamfilter){
+	teamarray.splice(0,teamarray.length);	//clear array before start
+	for (var i = 0; i < memberlist.length; i++) {
+		if (memberlist[i][2] == teamfilter) {
+		teamarray.splice(i,0,memberlist[i]);
 		}//end if
-		}//end for
-		}//end function
+	}//end for
+}//end function
 
-	function update(message){
-
-		//we are going to need a counter incremented for each match below so that we can order things into the array
-		var membuildcount = 0;
-		var memlistcount = 0;
-
-		//clear arrays on start
-		memberdetails.splice(0,memberdetails.length);
-		memberlist.splice(0,memberlist.length);
-
-		//load up the members
-		let members = message.guild.members.cache.array();
-
-		//for every member on the server
-		for(let member of members) {
-
-			//start member details with display name. Splice it into the arrary at position membuildcount (0) counter then increment membuildcount so next object goes in next position. .
-			memberdetails.splice(membuildcount,0, member.displayName);
-			membuildcount = membuildcount + 1;
-
-			//now lets get all thier roles into a string
-			userroles = member.roles.cache.map(r => r.name);
-
-			//Add timezone using checktime function.
-			//fill timepick with objects from the timezone list which pass checktime as true (should just be one match). Splice it into the next location of memberdetails then increment build count.
-			timepick = timezone.filter(checktime);
-			if (timepick.length == 0)
-			{memberdetails.splice(membuildcount,0, "No Timezone")}
-			else {memberdetails.splice(membuildcount,0, String(timepick))}
-			membuildcount = membuildcount + 1;
-
-			//Add team with checkteam function (see timepick)
-			teampick = teams.filter(checkteam);
-			if (teampick.length == 0)
-			{memberdetails.splice(membuildcount,0, "No Team");}
-			else {memberdetails.splice(membuildcount,0, String(teampick));}
-			membuildcount = membuildcount + 1;
-
-			//Add egg bonus with checkbonus function (see timepick)
-			bonuspick = eggbonus.filter(checkbonus);
-			if (bonuspick.length == 0)
-			{memberdetails.splice(membuildcount,0, "No Bonus");}
-			else {memberdetails.splice(membuildcount,0, String(bonuspick));}
-			membuildcount = membuildcount + 1;
-
-			//Add permit status with checkpermit function (see timepick)
-			permitpick = permitstatus.filter(checkpermit);
-			if (permitpick.length == 0)
-			{memberdetails.splice(membuildcount,0, "No Permit Status");}
-			else {memberdetails.splice(membuildcount,0, String(permitpick));}
-			membuildcount = membuildcount + 1;
-
-			//now we have all user details in memberdetails [0] to [4], splice all that as one object into memberlist.
-			memberlist.splice(memlistcount,0, memberdetails);
-			memlistcount = membuildcount + 1;//increment memlistcount ready for next loop/user
-			membuildcount = 0;//reset membuild count
-			memberdetails = [];//this may not be needed. Try take it out?
-		}//end for (let member of members) - every member on the server
-
-		//build the team specific arrays
-		buildteam(eggstremearr, "egg-streme");
-		buildteam(yolkstersarr, "yolksters");
-		buildteam(sunnysidearr, "sunny-side");
-		buildteam(fowlplayarr, "fowl-play");
-		buildteam(hardboiledarr, "hard-boiled");
-		buildteam(overeasyarr, "over-easy");
-
-	}//end update function
-
-	//this function builds and returns the discord embed
-	function prepupdate(color, title, description, array){
+//this function builds and returns the discord embed
+function prepupdate(color, title, description, array){
 	const TeamEmbed = new Discord.MessageEmbed()
 	.setColor(String(color))
 	.setTitle(String(title))
@@ -160,14 +160,13 @@ var overeasyarr = [];
 		TeamEmbed.addFields(
 			{ name: array[i][0], value: 'Rank: ' + array[i][3] + '\n' + 'Time Zone: ' + array[i][1] + '\n' + 'Permit: ' + array[i][4], inline: true},
 		);//end addfields
-		}//end for
+	}//end for
 	return TeamEmbed;//return embed back to caller
-	} //end fucntion
+} //end fucntion
 //end of functions
 
 //==========================================
 
-//look for messages, when one is sent do
 client.on('message', async message => {
 
 	//look for !update trigger. Allows manual update. Not needed with team outputs as update function is called first in those anyway.
@@ -220,7 +219,7 @@ client.on('message', async message => {
 //		Coop bot		|
 //=======================================
 
-//!coop - all commands start with coop
+//!coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
 
@@ -241,24 +240,7 @@ client.on('message', async message => {
 //open a new coop
 if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
-	//build initial team arrays. These arrarys will be looped through and updated when we place a member in a coop
-	//we are building them here becuase we dont want to rebuild the arrary on each command/message. Could make this into a functin to allow manual updating, but should be ok for now
-	//If we update these master arrary...it might mess up if we have multiple coops. We may want to copy them into the context of the message/channel or whatever before editing
-	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
-	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
-	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username);
-	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username);
-	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
-	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
-
-	//add red squares
-	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥 "+eggstremeMem[i];}
-	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥 "+overeasyMem[i];}
-	for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥 "+yolkstersMem[i];}
-	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥 "+sunnysideMem[i];}
-	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
-	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
-
+//block 1 - coop voting block
 	//unpin all messages
 	message.channel.messages.fetchPinned().then(messages => {messages.forEach(message => { message.unpin()})});
 
@@ -266,21 +248,20 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 	let embed = new Discord.MessageEmbed()
 	  .setTitle(eggcommand2)
 	  .setDescription('Please click 👍 if you are farming this contract.\n\nPlease click 👎 if you are not.\n\nPlease click 🥚 if you would like to be a starter.\n\nClicking 🗑 clears your choice.')
-	  .addField('Status', 'Coop\'s not started.')
 	  .setColor('#ffd700')
 		.setFooter('⬇️ Please add a reaction below ⬇️')
 
 	//send initial message with embed and pin it
 	message.channel.send(embed).then(async msg => {
-		msg.pin();
+	msg.pin();
 
 	//add reactions for clicking
-		await msg.react('👍');
-		await msg.react('👎');
-		await msg.react('🥚');
-		await msg.react('🗑️');
+	await msg.react('👍');
+	await msg.react('👎');
+	await msg.react('🥚');
+	await msg.react('🗑️');
 
-	//establish update function. Recheck the votes array and ???
+	//establish updatevotes function. Recheck the votes array and ???
 		async function updatevotes() {
 			//create newEmbed from old embed
 			const newEmbed = new Discord.MessageEmbed(embed);
@@ -350,61 +331,77 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 		});
 
 	});//end the .then from sending initial embed
+//end of block 1
 
-//send another message to act as the holder for placed users
-let placedEmbed = new Discord.MessageEmbed()
-	.setTitle("Users placed in coop")
-	.setDescription('Once users are placed, they will be shown here')
-	.setColor('#00FF00')
-	.setFooter('Bot created by LaniakeaSC')
-	.addFields(
-		{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
-		{ name: `Team Over-easy`, value: overeasyMem, inline: true },
-		{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
-		{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
-		{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
-	);
+//Block 2 - Who has been placed in coop
 
-message.channel.send(placedEmbed).then(async msg => {
+	//build initial team arrays.
+	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
+	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
+	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username);
+	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username);
+	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
+	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
+
+	//add red squares
+	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥 "+eggstremeMem[i];}
+	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥 "+overeasyMem[i];}
+	for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥 "+yolkstersMem[i];}
+	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥 "+sunnysideMem[i];}
+	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
+	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
+
+	let placedEmbed = new Discord.MessageEmbed()
+		.setTitle("Users placed in coop")
+		.setDescription('Once users are placed, they will be shown here')
+		.setColor('#00FF00')
+		.setFooter('Bot created by LaniakeaSC')
+		.addFields(
+			{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
+			{ name: `Team Over-easy`, value: overeasyMem, inline: true },
+			{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
+			{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
+			{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
+		);
+
+	message.channel.send(placedEmbed).then(async msg => {
 	msg.pin();
-})//end pin placed user embed
+	})//end pin placed user embed
+//end of block 2
 
-};//end the if "open" block
+};//end the if !open
 
 //!coop placed @user
 if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 
+	//what user was mentioned?
+	var mentioneduser = message.mentions.users.first().tag;
 
-//what user was mentioned?
-var mentioneduser = message.mentions.users.first().tag;
-
-//fetch pinned messages
-message.channel.messages.fetchPinned().then(messages => {
+	//fetch pinned messages
+	message.channel.messages.fetchPinned().then(messages => {
 	console.log(`Received ${messages.size} messages`);
 
-		//for each pinned message
-		messages.forEach(message => {
-		  let embed = message.embeds[0];
+	//for each pinned message
+	messages.forEach(message => {
+	let embed = message.embeds[0];
 
-try {
-  if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
-		var receivedEmbed = message.embeds[0];
-		var updatedEmbed = new Discord.MessageEmbed(receivedEmbed);
+	try { //not all embeds will have the footer match. This try/catch grabs the error for pinned posts that do not match
+	  if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+			var receivedEmbed = message.embeds[0]; //copy embeds from it
+			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
-		//console.log(message.embeds[0]);
-		//console.log(receivedEmbed);
-		//console.log(updatedEmbed);
+// CODE GOES HERE FOR GRABBING EMBEDS AND TURNING SQUARES ORANGE
 
-		//send the updated embed
-		message.edit(updatedEmbed);
-  }//end if
-}
-catch (error) {console.log("Seen an error: " + error)};
+			//send the updated embed
+			message.edit(updatedEmbed);
+	  }//end if
+	}
+	catch (error) {console.log("Seen an error: " + error)};
 
-		})//end message.forEach
+			})//end message.forEach
 
-	})//end .then after fetchPinned
-};//end placed block
+		})//end .then after fetchPinned
+	};//end placed block
 };//end if !coop block
 
 }) ;//end client on message
