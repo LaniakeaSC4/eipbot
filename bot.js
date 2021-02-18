@@ -227,6 +227,8 @@ client.on('message', async message => {
 	var fowlplayMem = [];
 	var hardboiledMem = [];
 
+console.log(eggstremeMem);
+
 //!coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
@@ -367,7 +369,7 @@ let placedEmbed = new Discord.MessageEmbed()
 if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 
 //if any team arrary is empty, build them all
-if (eggstremeMem.length === 0 || overeasyMem.length === 0 || yolkstersMem.length === 0 || sunnysideMem.length === 0 || fowlplayMem.length === 0 || hardboiledMem.length === 0){
+if (typeof(eggstremeMem) == 'undefined'){
 	//build initial team arrays.
 	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
 	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
