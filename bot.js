@@ -371,8 +371,8 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
 };//end the if !open
 
-//!coop placed @user
-if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
+//!coop orange @user - turn sqaure orange
+if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 
 	//what user was mentioned?
 	var mentioneduser = message.mentions.users.first().tag;
@@ -391,6 +391,9 @@ if (eggcommand1 == "placed" && String(eggcommand2) !== "undefined"){
 			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
 // CODE GOES HERE FOR GRABBING EMBEDS AND TURNING SQUARES ORANGE
+			console.log(updatedEmbed.fields[0].value[0])
+			console.log(updatedEmbed.fields[0].value[1])
+			console.log(updatedEmbed.fields[0].value[2])
 
 			//send the updated embed
 			message.edit(updatedEmbed);
