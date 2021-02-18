@@ -391,9 +391,9 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
 // CODE GOES HERE FOR GRABBING EMBEDS AND TURNING SQUARES ORANGE
+			console.log(updatedEmbed.fields)
+			console.log(updatedEmbed.fields[0])
 			console.log(updatedEmbed.fields[0].value[0])
-			console.log(updatedEmbed.fields[0].value[1])
-			console.log(updatedEmbed.fields[0].value[2])
 
 			//send the updated embed
 			message.edit(updatedEmbed);
