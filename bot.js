@@ -375,7 +375,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 
 	//what user was mentioned?
-	var mentioneduser = message.mentions.users.first().tag;
+	var mentioneduser = message.mentions.users.first().username;
 
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
@@ -391,10 +391,25 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
 // CODE GOES HERE FOR GRABBING EMBEDS AND TURNING SQUARES ORANGE
-			console.log(updatedEmbed.fields)
-			console.log(updatedEmbed.fields[0])
-			console.log(updatedEmbed.fields[0].value[0])
-
+for (var i=0;i<eggstremeMem.length;i++){
+	if (eggstremeMem[i] == mentioneduser) {console.log("found in eggstreme")
+		} else {
+			for(var i=0;i<overeasyMem.length;i++){
+				if (overeasyMem[i] == mentioneduser) {console.log("found in over-easy")
+		} else {
+			for(var i=0;i<yolkstersMem.length;i++){
+				if (yolkstersMem[i] == mentioneduser) {console.log("found in over-easy")
+		} else {
+			for(var i=0;i<sunnysideMem.length;i++){
+				if (sunnysideMem[i] == mentioneduser) {console.log("found in sunny-side")
+		} else {
+			for(var i=0;i<fowlplayMem.length;i++){
+				if (fowlplayMem[i] == mentioneduser) {console.log("found in fowl play")
+		} else {
+			for(var i=0;i<hardboiledMem.length;i++){
+				if (hardboiledMem[i] == mentioneduser) {console.log("found in hard boiled")
+		} else {console.log("Not found")}
+}}}}}}}}}}}
 			//send the updated embed
 			message.edit(updatedEmbed);
 	  }//end if
