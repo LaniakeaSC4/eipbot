@@ -386,6 +386,9 @@ if (typeof(eggstremeMem) == 'undefined'){
 	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
 	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
 }
+
+console.log(eggstremeMem);
+
 	//what user was mentioned?
 	var mentioneduser = message.mentions.users.first().username;
 
