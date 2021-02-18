@@ -167,6 +167,22 @@ function prepupdate(color, title, description, array){
 
 //==========================================
 
+//build initial team arrays.
+var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
+var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
+var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username);
+var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username);
+var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
+var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
+
+//add red squares
+for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥 "+eggstremeMem[i];}
+for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥 "+overeasyMem[i];}
+for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥 "+yolkstersMem[i];}
+for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥 "+sunnysideMem[i];}
+for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
+for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
+
 client.on('message', async message => {
 
 	//look for !update trigger. Allows manual update. Not needed with team outputs as update function is called first in those anyway.
@@ -335,23 +351,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
 //Block 2 - Who has been placed in coop
 
-	//build initial team arrays.
-	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
-	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
-	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username);
-	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username);
-	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
-	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
-
-	//add red squares
-	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥 "+eggstremeMem[i];}
-	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥 "+overeasyMem[i];}
-	for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥 "+yolkstersMem[i];}
-	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥 "+sunnysideMem[i];}
-	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
-	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
-
-	let placedEmbed = new Discord.MessageEmbed()
+let placedEmbed = new Discord.MessageEmbed()
 		.setTitle("Users placed in coop")
 		.setDescription('Once users are placed, they will be shown here')
 		.setColor('#00FF00')
