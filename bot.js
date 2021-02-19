@@ -405,27 +405,24 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 				if (eggstremeMem[i].includes(mentioneduser)) {console.log("found in eggstreme");
 				  let str = eggstremeMem[i];let res = str.replace("🟥","🟧");eggstremeMem[i] = res;}}
 
-console.log(overeasyMem);
-console.log(mentioneduser);
-
 			for(var i=0;i<overeasyMem.length;i++){
-				  if (overeasyMem[i] == mentioneduser) {console.log("found in over-easy");
+				  if (overeasyMem[i].includes(mentioneduser)) {console.log("found in over-easy");
 					let str = overeasyMem[i];let res = str.replace("🟥","🟧");overeasyMem[i] = res;}}
 
 			for(var i=0;i<yolkstersMem.length;i++){
-					if (yolkstersMem[i] == mentioneduser) {console.log("found in over-easy");
+					if (yolkstersMem[i].includes(mentioneduser)) {console.log("found in over-easy");
 					let str = yolkstersMem[i];let res = str.replace("🟥","🟧");yolkstersMem[i] = res;}}
 
 			for(var i=0;i<sunnysideMem.length;i++){
-					if (sunnysideMem[i] == mentioneduser) {console.log("found in sunny-side");
+					if (sunnysideMem[i].includes(mentioneduser)) {console.log("found in sunny-side");
 					let str = sunnysideMem[i];let res = str.replace("🟥","🟧");sunnysideMem[i] = res;}}
 
 			for(var i=0;i<fowlplayMem.length;i++){
-					if (fowlplayMem[i] == mentioneduser) {console.log("found in fowl play");
+					if (fowlplayMem[i].includes(mentioneduser)) {console.log("found in fowl play");
 					let str = fowlplayMem[i];let res = str.replace("🟥","🟧");fowlplayMem[i] = res;}}
 
 			for(var i=0;i<hardboiledMem.length;i++){
-					if (hardboiledMem[i] == mentioneduser) {console.log("found in hard boiled");
+					if (hardboiledMem[i].includes(mentioneduser)) {console.log("found in hard boiled");
 					let str = hardboiledMem[i];let res = str.replace("🟥","🟧");hardboiledMem[i] = res;}}
 
 			//clear fields
