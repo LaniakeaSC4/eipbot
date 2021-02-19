@@ -167,6 +167,7 @@ function prepupdate(color, title, description, array){
 
 //==========================================
 
+//here we actually output our team lists
 client.on('message', async message => {
 
 	//look for !update trigger. Allows manual update. Not needed with team outputs as update function is called first in those anyway.
@@ -213,7 +214,7 @@ client.on('message', async message => {
 		message.channel.send(prepupdate('#A822BD' , 'Over Easy', 'Here are the team members in team Over Easy!', overeasyarr));
 		}//end !overeasy trigger clock
 
-}); //end 'on message'
+}); //end 'on message' for outputing team lists
 
 //=======================================
 //		Coop bot		|
