@@ -379,9 +379,10 @@ let placedEmbed = new Discord.MessageEmbed()
 //end of block 2
 
 };//end the if !open
+};//end if !coop block
 
-//!coop orange @user - turn sqaure orange
-if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
+//!orange
+if (message.content.startsWith("!orange")){
 
 	//what user was mentioned?
 	var mentioneduser = message.mentions.users.first().username;
@@ -443,8 +444,7 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 			})//end message.forEach
 
 		})//end .then after fetchPinned
-	};//end placed block
-};//end if !coop block
+	};//end !orange block
 
 }) ;//end client on message
 
