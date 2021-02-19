@@ -234,7 +234,7 @@ function changesquare(oldsq1, oldsq2, newsq, user) {
 	//for loop to go through each team
 	for (var i=0;i<teams.length;i++){
 		for (var j=0;j<teams[i].length;j++){
-			if (teams[i][j].includes(user)) {console.log("found in: " + teams[i]);
+			if (teams[i][j].includes(user)) {
 				let str = teams[i][j];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);teams[i][j] = res;}
 		}//end for this team loop
 	}//end teams for loop
@@ -441,6 +441,9 @@ if (message.content.startsWith("!orange")){
 
 	//what user was mentioned?
 	var mentioneduser = message.mentions.users.first().username;
+	var mentionedrole = message.mentions.roles.first()
+
+console.log('user: '+mentioneduser+" Role: "+mentionedrole)
 
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
