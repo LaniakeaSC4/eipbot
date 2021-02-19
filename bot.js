@@ -409,37 +409,38 @@ console.log(eggstremeMem);
 for (var i=0;i<eggstremeMem.length;i++){
 	if (eggstremeMem[i].includes(mentioneduser)) {console.log("found in eggstreme");
 	  console.log('origional is:' + eggstremeMem[i]);
-	  let memstring = eggstremeMem[i];
-	  console.log('memstring is:' + memstring);
-	  console.log('substr is:' + memstring.substr(1));
-	  eggstremeMem[i] = "🟧"+memstring.substr(1);
+	  let str = eggstremeMem[i];
+		let res = str.replace("🟥","🟧")
+	  console.log('str is:' + str);
+	  console.log('res is:' + res);
+	  eggstremeMem[i] = res;
 	  console.log(eggstremeMem[i]);
-		}} 
+		}}
 
 for(var i=0;i<overeasyMem.length;i++){
 	  if (overeasyMem[i] == mentioneduser) {console.log("found in over-easy")
-		}} 
+		}}
 
 for(var i=0;i<yolkstersMem.length;i++){
 		if (yolkstersMem[i] == mentioneduser) {console.log("found in over-easy")
-		}} 
+		}}
 
 for(var i=0;i<sunnysideMem.length;i++){
 		if (sunnysideMem[i] == mentioneduser) {console.log("found in sunny-side")
-		}} 
+		}}
 
 for(var i=0;i<fowlplayMem.length;i++){
 		if (fowlplayMem[i] == mentioneduser) {console.log("found in fowl play")
-		}} 
+		}}
 
 for(var i=0;i<hardboiledMem.length;i++){
 		if (hardboiledMem[i] == mentioneduser) {console.log("found in hard boiled")
-		}} 
+		}}
 			//send the updated embed
 			message.edit(updatedEmbed);
 
 	  }//end if embed
-	  
+
 	}//end try
 	catch (error) {console.log("Seen an error: " + error)};
 
