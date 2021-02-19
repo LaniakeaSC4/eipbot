@@ -344,8 +344,6 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
 //Block 2 - Who has been placed in coop
 
-//if any team arrary is empty, build them all
-//if (typeof(eggstremeMem) == 'undefined'){
 	//build initial team arrays.
 	eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
 	overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
@@ -361,7 +359,6 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥 "+sunnysideMem[i];}
 	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
 	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
-//}//end if eggstremeMem undefined
 
 let placedEmbed = new Discord.MessageEmbed()
 		.setTitle("Users placed in coop")
@@ -419,8 +416,6 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 					let str = sunnysideMem[l];let res = str.replace("🟥","🟧");sunnysideMem[l] = res;}}
 
 			for(var n=0;n<fowlplayMem.length;n++){
-					console.log("fowlplayMem[i]: " + fowlplayMem[i]);
-					console.log("mentioneduser: " + mentioneduser);
 					if (fowlplayMem[n].includes(mentioneduser)) {console.log("found in fowl play");
 					let str = fowlplayMem[n];let res = str.replace("🟥","🟧");fowlplayMem[n] = res;}}
 
