@@ -393,8 +393,8 @@ let placedEmbed = new Discord.MessageEmbed()
 };//end the if !open
 };//end if !coop block
 
-//!orange
-if (message.content.startsWith("!orange")){
+//!red 🟥
+if (message.content.startsWith("!green")){
 
 	//what user was mentioned?
 	var mentioneduser = message.mentions.users.first().username;
@@ -411,30 +411,7 @@ if (message.content.startsWith("!orange")){
 				var receivedEmbed = message.embeds[0]; //copy embeds from it
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
-			// CODE GOES HERE FOR GRABBING EMBEDS AND TURNING SQUARES ORANGE
-			for (var i=0;i<eggstremeMem.length;i++){
-				if (eggstremeMem[i].includes(mentioneduser)) {console.log("found in eggstreme");
-				  let str = eggstremeMem[i];let res = str.replace("🟥","🟧");eggstremeMem[i] = res;}}
-
-			for(var j=0;j<overeasyMem.length;j++){
-				  if (overeasyMem[j].includes(mentioneduser)) {console.log("found in over-easy");
-					let str = overeasyMem[j];let res = str.replace("🟥","🟧");overeasyMem[j] = res;}}
-
-			for(var k=0;k<yolkstersMem.length;k++){
-					if (yolkstersMem[k].includes(mentioneduser)) {console.log("found in over-easy");
-					let str = yolkstersMem[k];let res = str.replace("🟥","🟧");yolkstersMem[k] = res;}}
-
-			for(var l=0;l<sunnysideMem.length;l++){
-					if (sunnysideMem[l].includes(mentioneduser)) {console.log("found in sunny-side");
-					let str = sunnysideMem[l];let res = str.replace("🟥","🟧");sunnysideMem[l] = res;}}
-
-			for(var n=0;n<fowlplayMem.length;n++){
-					if (fowlplayMem[n].includes(mentioneduser)) {console.log("found in fowl play");
-					let str = fowlplayMem[n];let res = str.replace("🟥","🟧");fowlplayMem[n] = res;}}
-
-			for(var o=0;o<hardboiledMem.length;o++){
-					if (hardboiledMem[o].includes(mentioneduser)) {console.log("found in hard boiled");
-					let str = hardboiledMem[o];let res = str.replace("🟥","🟧");hardboiledMem[o] = res;}}
+			changesquare("🟩","🟧 ","🟥",mentioneduser);
 
 			//clear fields
 			updatedEmbed.fields = [];
@@ -456,9 +433,54 @@ if (message.content.startsWith("!orange")){
 			})//end message.forEach
 
 		})//end .then after fetchPinned
-	};//end !orange block
 
-//orange to green test
+}//end !Red 🟥
+
+//!orange 🟧
+if (message.content.startsWith("!green")){
+
+	//what user was mentioned?
+	var mentioneduser = message.mentions.users.first().username;
+
+	//fetch pinned messages
+	message.channel.messages.fetchPinned().then(messages => {
+	console.log(`Received ${messages.size} messages`);
+
+	//for each pinned message
+	messages.forEach(message => {
+		let embed = message.embeds[0];
+
+		  if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				var receivedEmbed = message.embeds[0]; //copy embeds from it
+				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+
+			changesquare("🟩","🟥","🟧",mentioneduser);
+
+			//clear fields
+			updatedEmbed.fields = [];
+
+			//add the modified arrays back to fields
+			updatedEmbed.addFields(
+				{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
+				{ name: `Team Over-easy`, value: overeasyMem, inline: true },
+				{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
+				{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
+				{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
+			);
+
+			//send the updated embed
+			message.edit(updatedEmbed);
+
+	  }//end if embed and footer text contains
+
+			})//end message.forEach
+
+		})//end .then after fetchPinned
+
+}//end !orange
+
+
+//!green 🟩
 if (message.content.startsWith("!green")){
 
 	//what user was mentioned?
@@ -499,7 +521,7 @@ if (message.content.startsWith("!green")){
 
 		})//end .then after fetchPinned
 
-}//end orange to green test
+}//end !green
 
 }) ;//end client on message
 
