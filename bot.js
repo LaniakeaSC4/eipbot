@@ -405,27 +405,27 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 				if (eggstremeMem[i].includes(mentioneduser)) {console.log("found in eggstreme");
 				  let str = eggstremeMem[i];let res = str.replace("🟥","🟧");eggstremeMem[i] = res;}}
 
-			for(var i=0;i<overeasyMem.length;i++){
-				  if (overeasyMem[i].includes(mentioneduser)) {console.log("found in over-easy");
-					let str = overeasyMem[i];let res = str.replace("🟥","🟧");overeasyMem[i] = res;}}
+			for(var j=0;j<overeasyMem.length;j++){
+				  if (overeasyMem[j].includes(mentioneduser)) {console.log("found in over-easy");
+					let str = overeasyMem[j];let res = str.replace("🟥","🟧");overeasyMem[j] = res;}}
 
-			for(var i=0;i<yolkstersMem.length;i++){
-					if (yolkstersMem[i].includes(mentioneduser)) {console.log("found in over-easy");
-					let str = yolkstersMem[i];let res = str.replace("🟥","🟧");yolkstersMem[i] = res;}}
+			for(var k=0;k<yolkstersMem.length;k++){
+					if (yolkstersMem[k].includes(mentioneduser)) {console.log("found in over-easy");
+					let str = yolkstersMem[k];let res = str.replace("🟥","🟧");yolkstersMem[k] = res;}}
 
-			for(var i=0;i<sunnysideMem.length;i++){
-					if (sunnysideMem[i].includes(mentioneduser)) {console.log("found in sunny-side");
-					let str = sunnysideMem[i];let res = str.replace("🟥","🟧");sunnysideMem[i] = res;}}
+			for(var l=0;l<sunnysideMem.length;l++){
+					if (sunnysideMem[l].includes(mentioneduser)) {console.log("found in sunny-side");
+					let str = sunnysideMem[l];let res = str.replace("🟥","🟧");sunnysideMem[l] = res;}}
 
-			for(var i=0;i<fowlplayMem.length;i++){
+			for(var n=0;n<fowlplayMem.length;n++){
 					console.log("fowlplayMem[i]: " + fowlplayMem[i]);
 					console.log("mentioneduser: " + mentioneduser);
-					if (fowlplayMem[i].includes(mentioneduser)) {console.log("found in fowl play");
-					let str = fowlplayMem[i];let res = str.replace("🟥","🟧");fowlplayMem[i] = res;}}
+					if (fowlplayMem[n].includes(mentioneduser)) {console.log("found in fowl play");
+					let str = fowlplayMem[n];let res = str.replace("🟥","🟧");fowlplayMem[n] = res;}}
 
-			for(var i=0;i<hardboiledMem.length;i++){
-					if (hardboiledMem[i].includes(mentioneduser)) {console.log("found in hard boiled");
-					let str = hardboiledMem[i];let res = str.replace("🟥","🟧");hardboiledMem[i] = res;}}
+			for(var o=0;o<hardboiledMem.length;o++){
+					if (hardboiledMem[o].includes(mentioneduser)) {console.log("found in hard boiled");
+					let str = hardboiledMem[o];let res = str.replace("🟥","🟧");hardboiledMem[o] = res;}}
 
 			//clear fields
 			updatedEmbed.fields = [];
