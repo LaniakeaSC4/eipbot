@@ -405,6 +405,9 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 				if (eggstremeMem[i].includes(mentioneduser)) {console.log("found in eggstreme");
 				  let str = eggstremeMem[i];let res = str.replace("🟥","🟧");eggstremeMem[i] = res;}}
 
+console.log(overeasyMem);
+console.log(mentioneduser);
+
 			for(var i=0;i<overeasyMem.length;i++){
 				  if (overeasyMem[i] == mentioneduser) {console.log("found in over-easy");
 					let str = overeasyMem[i];let res = str.replace("🟥","🟧");overeasyMem[i] = res;}}
