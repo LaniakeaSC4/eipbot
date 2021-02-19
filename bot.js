@@ -228,6 +228,18 @@ client.on('message', async message => {
 	var fowlplayMem = [];
 	var hardboiledMem = [];
 
+function changesquare(oldsq, newsq, user) {
+
+	var teams = [eggstremeMem,overeasyMem,yolkstersMem,sunnysideMem,fowlplayMem,hardboiledMem]
+	//for loop to go through each team
+	for (var i=0;i<teams.length;i++){
+		for (var j=0;j<teams[i].length;j++){
+			if (teams[i][j].includes(user)) {console.log("found in: " + teams[i]);
+				let str = teams[i][j];let res = str.replace(oldsq,newsq);teams[i][j] = res;}}
+		}//end for this team loop
+	}//end teams for loop
+}//end of changesquare function
+
 //!coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
@@ -445,6 +457,49 @@ if (message.content.startsWith("!orange")){
 
 		})//end .then after fetchPinned
 	};//end !orange block
+
+//orange to green test
+if (message.content.startsWith("!orangetogreen")){
+
+	//what user was mentioned?
+	var mentioneduser = message.mentions.users.first().username;
+
+	//fetch pinned messages
+	message.channel.messages.fetchPinned().then(messages => {
+	console.log(`Received ${messages.size} messages`);
+
+	//for each pinned message
+	messages.forEach(message => {
+		let embed = message.embeds[0];
+
+		  if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				var receivedEmbed = message.embeds[0]; //copy embeds from it
+				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+
+			changesquare(🟧,🟩,mentioneduser);
+
+			//clear fields
+			updatedEmbed.fields = [];
+
+			//add the modified arrays back to fields
+			updatedEmbed.addFields(
+				{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
+				{ name: `Team Over-easy`, value: overeasyMem, inline: true },
+				{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
+				{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
+				{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
+			);
+
+			//send the updated embed
+			message.edit(updatedEmbed);
+
+	  }//end if embed and footer text contains
+
+			})//end message.forEach
+
+		})//end .then after fetchPinned
+
+}//end orange to green test
 
 }) ;//end client on message
 
