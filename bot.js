@@ -227,8 +227,6 @@ client.on('message', async message => {
 	var fowlplayMem = [];
 	var hardboiledMem = [];
 
-console.log(eggstremeMem);
-
 //!coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
@@ -346,7 +344,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 //Block 2 - Who has been placed in coop
 
 //if any team arrary is empty, build them all
-if (typeof(eggstremeMem) == 'undefined'){
+//if (typeof(eggstremeMem) == 'undefined'){
 	//build initial team arrays.
 	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
 	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
@@ -362,7 +360,7 @@ if (typeof(eggstremeMem) == 'undefined'){
 	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥 "+sunnysideMem[i];}
 	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
 	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
-}//end if eggstremeMem undefined
+//}//end if eggstremeMem undefined
 
 let placedEmbed = new Discord.MessageEmbed()
 		.setTitle("Users placed in coop")
