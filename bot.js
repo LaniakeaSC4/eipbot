@@ -396,7 +396,6 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 	messages.forEach(message => {
 		let embed = message.embeds[0];
 
-		try { //not all embeds will have the footer match. This try/catch grabs the error for pinned posts that do not match
 		  if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 				var receivedEmbed = message.embeds[0]; //copy embeds from it
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
@@ -442,9 +441,6 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 			message.edit(updatedEmbed);
 
 	  }//end if embed and footer text contains
-
-	}//end try
-	catch (error) {console.log("Seen an error: " + error)};
 
 			})//end message.forEach
 
