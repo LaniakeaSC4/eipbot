@@ -345,6 +345,25 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
 //Block 2 - Who has been placed in coop
 
+//if any team arrary is empty, build them all
+if (typeof(eggstremeMem) == 'undefined'){
+	//build initial team arrays.
+	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
+	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
+	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username);
+	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username);
+	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
+	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
+
+	//add red squares
+	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥 "+eggstremeMem[i];}
+	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥 "+overeasyMem[i];}
+	for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥 "+yolkstersMem[i];}
+	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥 "+sunnysideMem[i];}
+	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
+	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
+}//end if eggstremeMem undefined
+
 let placedEmbed = new Discord.MessageEmbed()
 		.setTitle("Users placed in coop")
 		.setDescription('Once users are placed, they will be shown here')
@@ -367,25 +386,6 @@ let placedEmbed = new Discord.MessageEmbed()
 
 //!coop orange @user - turn sqaure orange
 if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
-
-//if any team arrary is empty, build them all
-if (typeof(eggstremeMem) == 'undefined'){
-	//build initial team arrays.
-	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
-	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
-	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username);
-	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username);
-	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
-	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
-
-	//add red squares
-	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥 "+eggstremeMem[i];}
-	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥 "+overeasyMem[i];}
-	for(var i=0;i<yolkstersMem.length;i++){yolkstersMem[i]="🟥 "+yolkstersMem[i];}
-	for(var i=0;i<sunnysideMem.length;i++){sunnysideMem[i]="🟥 "+sunnysideMem[i];}
-	for(var i=0;i<fowlplayMem.length;i++){fowlplayMem[i]="🟥 "+fowlplayMem[i];}
-	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
-}//end if eggstremeMem undefined
 
 	//what user was mentioned?
 	var mentioneduser = message.mentions.users.first().username;
@@ -427,6 +427,9 @@ if (typeof(eggstremeMem) == 'undefined'){
 			for(var i=0;i<hardboiledMem.length;i++){
 					if (hardboiledMem[i] == mentioneduser) {console.log("found in hard boiled");
 					let str = hardboiledMem[i];let res = str.replace("🟥","🟧");hardboiledMem[i] = res;}}
+
+			//clear fields
+			updatedEmbed.fields = [];
 
 			//add the modified arrays back to fields
 			updatedEmbed.addFields(
