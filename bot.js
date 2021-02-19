@@ -418,6 +418,8 @@ if (eggcommand1 == "orange" && String(eggcommand2) !== "undefined"){
 					let str = sunnysideMem[i];let res = str.replace("🟥","🟧");sunnysideMem[i] = res;}}
 
 			for(var i=0;i<fowlplayMem.length;i++){
+					console.log("fowlplayMem[i]: " + fowlplayMem[i]);
+					console.log("mentioneduser: " + mentioneduser);
 					if (fowlplayMem[i].includes(mentioneduser)) {console.log("found in fowl play");
 					let str = fowlplayMem[i];let res = str.replace("🟥","🟧");fowlplayMem[i] = res;}}
 
