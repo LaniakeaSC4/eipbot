@@ -442,7 +442,7 @@ if (message.content.startsWith("!orange")){
 	//what user was mentioned?
 	if (message.mentions.users.first().username != 'undefined'){
 	var mentioneduser = message.mentions.users.first().username;} else if (message.mentions.roles.first() != 'undefined'){
-	var mentionedrole = message.mentions.roles.first()} else {console.log('did not find either');
+	var mentionedrole = message.mentions.roles.first()} else {console.log('did not find either');} 
 
 console.log('user: '+mentioneduser+" Role: "+mentionedrole)
 
