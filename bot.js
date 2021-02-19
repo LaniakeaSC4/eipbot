@@ -235,7 +235,7 @@ function changesquare(oldsq, newsq, user) {
 	for (var i=0;i<teams.length;i++){
 		for (var j=0;j<teams[i].length;j++){
 			if (teams[i][j].includes(user)) {console.log("found in: " + teams[i]);
-				let str = teams[i][j];let res = str.replace(oldsq,newsq);teams[i][j] = res;}}
+				let str = teams[i][j];let res = str.replace(oldsq,newsq);teams[i][j] = res;}
 		}//end for this team loop
 	}//end teams for loop
 }//end of changesquare function
