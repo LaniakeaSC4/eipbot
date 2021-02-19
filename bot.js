@@ -476,7 +476,7 @@ if (message.content.startsWith("!orangetogreen")){
 				var receivedEmbed = message.embeds[0]; //copy embeds from it
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
-			changesquare(🟧,🟩,mentioneduser);
+			changesquare("🟧","🟩",mentioneduser);
 
 			//clear fields
 			updatedEmbed.fields = [];
