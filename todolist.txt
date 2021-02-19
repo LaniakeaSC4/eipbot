@@ -1,0 +1,1 @@
+change commands around so its just !red, !orange, !green (will need to set up !red and !green ones). Can this be done as functions with an array of teams of something?
