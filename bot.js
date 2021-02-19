@@ -423,13 +423,13 @@ if (typeof(eggstremeMem) == 'undefined'){
 			for(var i=0;i<fowlplayMem.length;i++){
 					if (fowlplayMem[i] == mentioneduser) {console.log("found in fowl play");
 					let str = fowlplayMem[i];let res = str.replace("🟥","🟧");fowlplayMem[i] = res;}}
-					
+
 			for(var i=0;i<hardboiledMem.length;i++){
 					if (hardboiledMem[i] == mentioneduser) {console.log("found in hard boiled");
 					let str = hardboiledMem[i];let res = str.replace("🟥","🟧");hardboiledMem[i] = res;}}
 
 			//add the modified arrays back to fields
-			.addFields(
+			updatedEmbed.addFields(
 				{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
 				{ name: `Team Over-easy`, value: overeasyMem, inline: true },
 				{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
@@ -440,7 +440,7 @@ if (typeof(eggstremeMem) == 'undefined'){
 			//send the updated embed
 			message.edit(updatedEmbed);
 
-	  }//end if embed
+	  }//end if embed and footer text contains
 
 	}//end try
 	catch (error) {console.log("Seen an error: " + error)};
