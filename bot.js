@@ -394,7 +394,7 @@ let placedEmbed = new Discord.MessageEmbed()
 };//end if !coop block
 
 //!red 🟥
-if (message.content.startsWith("!green")){
+if (message.content.startsWith("!red")){
 
 	//what user was mentioned?
 	var mentioneduser = message.mentions.users.first().username;
@@ -437,7 +437,7 @@ if (message.content.startsWith("!green")){
 }//end !Red 🟥
 
 //!orange 🟧
-if (message.content.startsWith("!green")){
+if (message.content.startsWith("!orange")){
 
 	//what user was mentioned?
 	var mentioneduser = message.mentions.users.first().username;
