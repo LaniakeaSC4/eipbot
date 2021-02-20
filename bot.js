@@ -454,6 +454,9 @@ var isteam = false;
 
 console.log('user: '+mentioneduser+" Role: "+mentionedrole)
 
+console.log('user?:' + isuser);
+console.log('team?:' + isteam);
+
 if (isuser = true) {
 
 	//fetch pinned messages
