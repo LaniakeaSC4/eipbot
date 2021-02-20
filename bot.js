@@ -484,6 +484,7 @@ let placedEmbed = new Discord.MessageEmbed()
 //end of block 2
 
 };//end the if !open
+message.delete();//delete input command
 };//end if !coop block
 
 //!red 🟥
@@ -569,6 +570,7 @@ updateplayerboard(message);
 
 }) ;//end client on message
 
+//delete all bot pin notifications
 client.on("message", (message) => { if(message.type === "PINS_ADD" && message.author.bot) message.delete(); }) 
 
 // THIS  MUST  BE  THIS  WAY
