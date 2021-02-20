@@ -439,6 +439,10 @@ if (message.content.startsWith("!red")){
 //!orange 🟧
 if (message.content.startsWith("!orange")){
 
+console.log(message.mentions);
+console.log(message.mentions.users);
+console.log(message.mentions.users.first());
+
 	//what user was mentioned?
 	if (message.mentions.users !== 'undefined'){
 	var mentioneduser = message.mentions.users.first().username;} else if (message.mentions.first() !== 'undefined'){
