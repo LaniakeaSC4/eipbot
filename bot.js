@@ -273,14 +273,32 @@ for (var i=0;i<overeasyMem.length;i++){
   let str = overeasyMem[i];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);overeasyMem[i] = res;}  
 }//end if team over-easy
 
+if (team == 'yolksters'){
+for (var i=0;i<yolkstersMem.length;i++){
+  let str = yolkstersMem[i];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);yolkstersMem[i] = res;}  
+}//end if team yolksters
+
+if (team == 'sunny-side'){
+for (var i=0;i<sunnysideMem.length;i++){
+  let str = sunnysideMem[i];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);sunnysideMem[i] = res;}  
+}//end if team sunny-side
+
+if (team == 'fowl-play'){
+for (var i=0;i<fowlplayMem.length;i++){
+  let str = fowlplayMem[i];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);fowlplayMem[i] = res;}  
+}//end if team fowl-play
+
+if (team == 'hard-boiled'){
+for (var i=0;i<hardboiledMem.length;i++){
+  let str = hardboiledMem[i];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);hardboiledMem[i] = res;}  
+}//end if team hard-boilee
+
 }//end of changeteamsquare function
 
 
 function updateplayerboard(message){
   	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
-	console.log(`Received ${messages.size} messages`);
-
 	//for each pinned message
 	messages.forEach(message => {
 		let embed = message.embeds[0];
@@ -502,7 +520,7 @@ var isteam = false;
 	if (message.mentions.users.size !== 0){
 	var mentioneduser = message.mentions.users.first().username; isuser = true;} else if (message.mentions.roles.size !== 0){
 	var mentionedrole = message.mentions.roles.first().name; isteam = true;} else {console.log('did not find either');} 
-
+	
 if (isuser == true && validuser(message,mentioneduser) == true) {
   
 changeusersquare("🟩","🟥","🟧",mentioneduser);
