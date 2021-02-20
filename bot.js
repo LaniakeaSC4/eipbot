@@ -474,9 +474,7 @@ console.log('user: '+mentioneduser+" Role: "+mentionedrole)
 console.log('user?:' + isuser);
 console.log('team?:' + isteam);
 
-console.log('validuser:' + validuser(message,mentioneduser));
-
-if (isuser == true) {
+if (isuser == true && validuser(message,mentioneduser) == true) {
 
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
