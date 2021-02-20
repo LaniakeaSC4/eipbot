@@ -466,7 +466,7 @@ let placedEmbed = new Discord.MessageEmbed()
 };//end if !coop block
 
 //!red 🟥
-if (message.content.startsWith("!orange")){
+if (message.content.startsWith("!red")){
 
 var isuser = false;
 var isteam = false;
@@ -520,7 +520,7 @@ updateplayerboard(message);
 }//end !orange
 
 //!green 🟩
-if (message.content.startsWith("!orange")){
+if (message.content.startsWith("!green")){
 
 var isuser = false;
 var isteam = false;
