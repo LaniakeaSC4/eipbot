@@ -494,8 +494,12 @@ if (isuser = true) {
 
 		})//end .then after fetchPinned
 
-}//end ifuser = true
-else if (isteam = true ) {console.log('a team was found, so not code yet!')} 
+}//end if isuser = true
+
+if (isteam = true ) {console.log('a team was found, so not code yet!')
+  
+}//end if isteam = true
+
 }//end !orange
 
 
