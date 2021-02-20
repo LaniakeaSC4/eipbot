@@ -441,7 +441,7 @@ if (message.content.startsWith("!orange")){
 
 //console.log(message.mentions);
 //console.log(message.mentions.users);
-console.log(message.mentions.users.first().username);
+//console.log(message.mentions.users.first().username);
 console.log(message.mentions.roles.first().name);
 
 	//what user was mentioned?
