@@ -315,7 +315,8 @@ function updateplayerboard(message){
 			updatedEmbed.addFields(
 				{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
 				{ name: `Team Over-easy`, value: overeasyMem, inline: true },
-				{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
+				{ name: `Team Yolksters`, value: yolkstersMem, inline: true },
+				{ name: `Team Sunny-side`, value: sunnysideMem, inline: true },
 				{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
 				{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
 			);
@@ -471,7 +472,8 @@ let placedEmbed = new Discord.MessageEmbed()
 		.addFields(
 			{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
 			{ name: `Team Over-easy`, value: overeasyMem, inline: true },
-			{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
+			{ name: `Team Yolksters`, value: yolkstersMem, inline: true },
+			{ name: `Team Sunny-side`, value: sunnysideMem, inline: true },
 			{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
 			{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
 		);
