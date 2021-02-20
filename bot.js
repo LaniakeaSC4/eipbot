@@ -479,6 +479,8 @@ console.log('user?:' + isuser);
 console.log('team?:' + isteam);
 
 if (isuser == true && validuser(message,mentioneduser) == true) {
+  
+changesquare("🟩","🟥","🟧",mentioneduser);
 
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
@@ -491,8 +493,6 @@ if (isuser == true && validuser(message,mentioneduser) == true) {
 		  if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 				var receivedEmbed = message.embeds[0]; //copy embeds from it
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-
-			changesquare("🟩","🟥","🟧",mentioneduser);
 
 			//clear fields
 			updatedEmbed.fields = [];
