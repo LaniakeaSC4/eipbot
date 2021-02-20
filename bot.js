@@ -359,7 +359,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
 	//build initial message and embed
 	let embed = new Discord.MessageEmbed()
-	  .setTitle(eggcommand2)
+	  .setTitle('Reaction board for: ' + eggcommand2)
 	  .setDescription('Please click 👍 if you are farming this contract.\n\nPlease click 👎 if you are not.\n\nPlease click 🥚 if you would like to be a starter.\n\nClicking 🗑 clears your choice.')
 	  .setColor('#ffd700')
 		.setFooter('⬇️ Please add a reaction below ⬇️')
@@ -568,6 +568,8 @@ updateplayerboard(message);
 }//end !green
 
 }) ;//end client on message
+
+client.on("message", (message) => { if(message.type === "PINS_ADD" && message.author.bot) message.delete(); }) 
 
 // THIS  MUST  BE  THIS  WAY
 
