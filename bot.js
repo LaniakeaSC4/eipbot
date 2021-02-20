@@ -465,8 +465,8 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 	for(var i=0;i<hardboiledMem.length;i++){hardboiledMem[i]="🟥 "+hardboiledMem[i];}
 
 let placedEmbed = new Discord.MessageEmbed()
-		.setTitle("Users placed in coop")
-		.setDescription('Once users are placed, they will be shown here')
+		.setTitle("Player status board")
+		.setDescription('🟥 - Not yet offered coop\n\n🟧 - Offered coop\n\n🟩 - In coop')
 		.setColor('#00FF00')
 		.setFooter('Bot created by LaniakeaSC')
 		.addFields(
