@@ -457,7 +457,7 @@ console.log('user: '+mentioneduser+" Role: "+mentionedrole)
 console.log('user?:' + isuser);
 console.log('team?:' + isteam);
 
-if (isuser = true) {
+if (isuser == true) {
 
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
@@ -496,7 +496,7 @@ if (isuser = true) {
 
 }//end if isuser = true
 
-if (isteam = true ) {console.log('a team was found, so not code yet!')
+if (isteam == true ) {console.log('a team was found, so not code yet!')
   
 }//end if isteam = true
 
