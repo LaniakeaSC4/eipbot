@@ -262,6 +262,7 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 }//end of changeusersquare function
 
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
+console.log(team);
 
 if (team == 'egg-streme'){
 for (var i=0;i<eggstremeMem.length;i++){
