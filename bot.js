@@ -439,15 +439,13 @@ if (message.content.startsWith("!red")){
 //!orange 🟧
 if (message.content.startsWith("!orange")){
 
-//console.log(message.mentions);
-//console.log(message.mentions.users);
 //console.log(message.mentions.users.first().username);
-console.log(message.mentions.roles.first().name);
+//console.log(message.mentions.roles.first().name);
 
 	//what user was mentioned?
-	if (message.mentions.users !== 'undefined'){
-	var mentioneduser = message.mentions.users.first().username;} else if (message.mentions.first() !== 'undefined'){
-	var mentionedrole = message.mentions.first()} else {console.log('did not find either');} 
+	if (message.mentions.users.first() !== 'undefined'){
+	var mentioneduser = message.mentions.users.first().username;} else if (message.mentions.roles.first() !== 'undefined'){
+	var mentionedrole = message.mentions.roles.first().name} else {console.log('did not find either');} 
 
 console.log('user: '+mentioneduser+" Role: "+mentionedrole)
 
