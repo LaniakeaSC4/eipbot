@@ -228,6 +228,23 @@ client.on('message', async message => {
 	var fowlplayMem = [];
 	var hardboiledMem = [];
 
+function validuser(message,user){
+  
+  var validusers = [];
+  
+  var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
+	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
+	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username);
+	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username);
+	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
+	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
+  
+  var validusers = validusers.concat(eggstremeMem,overeasyMem,yolkstersMem,sunnysideMem,fowlplayMem,hardboiledMem)
+  
+  if (validusers.includes(user)){return true} else {return false} 
+  
+}//end function validuser
+
 function changesquare(oldsq1, oldsq2, newsq, user) {
 
 	var teams = [eggstremeMem,overeasyMem,yolkstersMem,sunnysideMem,fowlplayMem,hardboiledMem]
@@ -456,6 +473,8 @@ console.log('user: '+mentioneduser+" Role: "+mentionedrole)
 
 console.log('user?:' + isuser);
 console.log('team?:' + isteam);
+
+console.log('validuser:' + validuser(message,mentioneduser));
 
 if (isuser == true) {
 
