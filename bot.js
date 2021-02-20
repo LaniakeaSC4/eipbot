@@ -249,7 +249,7 @@ function validteam (team){
   if (teams.includes(team)) {return true} else {return false}
 }//end function validteam
 
-function changesquare(oldsq1, oldsq2, newsq, user) {
+function changeusersquare(oldsq1, oldsq2, newsq, user) {
 
 	var teams = [eggstremeMem,overeasyMem,yolkstersMem,sunnysideMem,fowlplayMem,hardboiledMem]
 	//for loop to go through each team
@@ -259,7 +259,22 @@ function changesquare(oldsq1, oldsq2, newsq, user) {
 				let str = teams[i][j];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);teams[i][j] = res;}
 		}//end for this team loop
 	}//end teams for loop
-}//end of changesquare function
+}//end of changeusersquare function
+
+function changeteamsquare(oldsq1, oldsq2, newsq, team) {
+
+if (team == 'egg-streme'){
+for (var i=0;i<eggstremeMem.length;i++){
+  let str = eggstremeMem[i];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);eggstremeMem[i] = res;}  
+}//end if team Egg-streme
+
+if (team == 'over-easy'){
+for (var i=0;i<overeasyMem.length;i++){
+  let str = overeasyMem[i];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);overeasyMem[i] = res;}  
+}//end if team over-easy
+
+}//end of changeteamsquare function
+
 
 function updateplayerboard(message){
   	//fetch pinned messages
@@ -468,7 +483,7 @@ if (message.content.startsWith("!red")){
 				var receivedEmbed = message.embeds[0]; //copy embeds from it
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
-			changesquare("🟩","🟧 ","🟥",mentioneduser);
+			changeusersquare("🟩","🟧 ","🟥",mentioneduser);
 
 			//clear fields
 			updatedEmbed.fields = [];
@@ -496,11 +511,6 @@ if (message.content.startsWith("!red")){
 //!orange 🟧
 if (message.content.startsWith("!orange")){
 
-//console.log(message.mentions.users.first().username);
-//console.log(message.mentions.roles.first().name);
-
-console.log(message.mentions.users.size);
-
 var isuser = false;
 var isteam = false;
 
@@ -509,19 +519,17 @@ var isteam = false;
 	var mentioneduser = message.mentions.users.first().username; isuser = true;} else if (message.mentions.roles.size !== 0){
 	var mentionedrole = message.mentions.roles.first().name; isteam = true;} else {console.log('did not find either');} 
 
-console.log('user: '+mentioneduser+" Role: "+mentionedrole)
-
-console.log('user?:' + isuser);
-console.log('team?:' + isteam);
-
 if (isuser == true && validuser(message,mentioneduser) == true) {
   
-changesquare("🟩","🟥","🟧",mentioneduser);
+changeusersquare("🟩","🟥","🟧",mentioneduser);
 updateplayerboard(message);
 
 }//end if isuser = true
 
-if (isteam == true && validteam(mentionedrole) == true) {console.log('a valid team was found, so not code yet!')
+if (isteam == true && validteam(mentionedrole) == true) {
+
+changeteamsquare("🟩","🟥","🟧",mentionedrole);
+updateplayerboard(message); 
   
 }//end if isteam = true
 
@@ -546,7 +554,7 @@ if (message.content.startsWith("!green")){
 				var receivedEmbed = message.embeds[0]; //copy embeds from it
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
-			changesquare("🟧","🟥","🟩",mentioneduser);
+			changeusersquare("🟧","🟥","🟩",mentioneduser);
 
 			//clear fields
 			updatedEmbed.fields = [];
