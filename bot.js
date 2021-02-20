@@ -245,6 +245,10 @@ function validuser(message,user){
   
 }//end function validuser
 
+function validteam (team){
+  if (teams.includes(team)) {return true} else {return false}
+}//end function validteam
+
 function changesquare(oldsq1, oldsq2, newsq, user) {
 
 	var teams = [eggstremeMem,overeasyMem,yolkstersMem,sunnysideMem,fowlplayMem,hardboiledMem]
@@ -513,7 +517,7 @@ if (isuser == true && validuser(message,mentioneduser) == true) {
 
 }//end if isuser = true
 
-if (isteam == true ) {console.log('a team was found, so not code yet!')
+if (isteam == true && validteam(mentionedrole) == true) {console.log('a valid team was found, so not code yet!')
   
 }//end if isteam = true
 
