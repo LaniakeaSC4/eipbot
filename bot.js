@@ -261,6 +261,42 @@ function changesquare(oldsq1, oldsq2, newsq, user) {
 	}//end teams for loop
 }//end of changesquare function
 
+function updateplayerboard(message){
+  	//fetch pinned messages
+	message.channel.messages.fetchPinned().then(messages => {
+	console.log(`Received ${messages.size} messages`);
+
+	//for each pinned message
+	messages.forEach(message => {
+		let embed = message.embeds[0];
+
+		  if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				var receivedEmbed = message.embeds[0]; //copy embeds from it
+				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+
+			//clear fields
+			updatedEmbed.fields = [];
+
+			//add the modified arrays back to fields
+			updatedEmbed.addFields(
+				{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
+				{ name: `Team Over-easy`, value: overeasyMem, inline: true },
+				{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
+				{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
+				{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
+			);
+
+			//send the updated embed
+			message.edit(updatedEmbed);
+
+	  }//end if embed and footer text contains
+
+			})//end message.forEach
+
+		})//end .then after fetchPinned 
+  
+}//end function updateplayerboard
+
 //!coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")){
@@ -481,39 +517,7 @@ console.log('team?:' + isteam);
 if (isuser == true && validuser(message,mentioneduser) == true) {
   
 changesquare("🟩","🟥","🟧",mentioneduser);
-
-	//fetch pinned messages
-	message.channel.messages.fetchPinned().then(messages => {
-	console.log(`Received ${messages.size} messages`);
-
-	//for each pinned message
-	messages.forEach(message => {
-		let embed = message.embeds[0];
-
-		  if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				var receivedEmbed = message.embeds[0]; //copy embeds from it
-				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-
-			//clear fields
-			updatedEmbed.fields = [];
-
-			//add the modified arrays back to fields
-			updatedEmbed.addFields(
-				{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
-				{ name: `Team Over-easy`, value: overeasyMem, inline: true },
-				{ name: `Team Yolksters`, value: sunnysideMem, inline: true },
-				{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
-				{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
-			);
-
-			//send the updated embed
-			message.edit(updatedEmbed);
-
-	  }//end if embed and footer text contains
-
-			})//end message.forEach
-
-		})//end .then after fetchPinned
+updateplayerboard(message);
 
 }//end if isuser = true
 
