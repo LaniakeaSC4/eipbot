@@ -444,12 +444,17 @@ if (message.content.startsWith("!orange")){
 
 console.log(message.mentions.users.size);
 
-	//what user was mentioned?
+var isuser = false;
+var isteam = false;
+
+	//what user or team was mentioned?
 	if (message.mentions.users.size !== 0){
-	var mentioneduser = message.mentions.users.first().username;} else if (message.mentions.roles.size !== 0){
-	var mentionedrole = message.mentions.roles.first().name} else {console.log('did not find either');} 
+	var mentioneduser = message.mentions.users.first().username; isuser = true;} else if (message.mentions.roles.size !== 0){
+	var mentionedrole = message.mentions.roles.first().name; isteam = true;} else {console.log('did not find either');} 
 
 console.log('user: '+mentioneduser+" Role: "+mentionedrole)
+
+if (isuser = true) {
 
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
@@ -486,6 +491,8 @@ console.log('user: '+mentioneduser+" Role: "+mentionedrole)
 
 		})//end .then after fetchPinned
 
+}//end ifuser = true
+else if (isteam = true ) {console.log('a team was found, so not code yet!')} 
 }//end !orange
 
 
