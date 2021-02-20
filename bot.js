@@ -276,7 +276,7 @@ for (var i=0;i<overeasyMem.length;i++){
 
 if (team == 'yolksters'){
 for (var i=0;i<yolkstersMem.length;i++){
-  let str = yolkstersMem[i];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);yolkstersMem[i] = res;}  
+  let str = yolkstersMem[i];let res = str.replace(oldsq1,newsq).replace(oldsq2,newsq);yolkstersMem[i] = res;console.log(str);}  
 }//end if team yolksters
 
 if (team == 'sunny-side'){
