@@ -456,6 +456,8 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 	fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.displayName);
 	hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.displayName);
 
+console.log(eggstremeMem)
+
 	//add red squares
 	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥 "+eggstremeMem[i];}
 	for(var i=0;i<overeasyMem.length;i++){overeasyMem[i]="🟥 "+overeasyMem[i];}
