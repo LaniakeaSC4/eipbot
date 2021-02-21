@@ -449,7 +449,7 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 //Block 2 - Who has been placed in coop
 
 	//build initial team arrays.
-	eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.displayName);
+	eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.displayName);
 	overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.displayName);
 	yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.displayName);
 	sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.displayName);
