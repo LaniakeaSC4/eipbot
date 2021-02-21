@@ -232,12 +232,12 @@ function validuser(message,user){
   
   var validusers = [];
   
-  var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
-	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
-	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username);
-	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username);
-	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
-	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
+  var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.displayName);
+	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.displayName);
+	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.displayName);
+	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.displayName);
+	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.displayName);
+	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.displayName);
   
   var validusers = validusers.concat(eggstremeMem,overeasyMem,yolkstersMem,sunnysideMem,fowlplayMem,hardboiledMem)
   
@@ -449,12 +449,12 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 //Block 2 - Who has been placed in coop
 
 	//build initial team arrays.
-	eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.username);
-	overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.username);
-	yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.username);
-	sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.username);
-	fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.username);
-	hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.username);
+	eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.displayName);
+	overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.displayName);
+	yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.displayName);
+	sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.displayName);
+	fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.displayName);
+	hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.displayName);
 
 	//add red squares
 	for(var i=0;i<eggstremeMem.length;i++){eggstremeMem[i]="🟥 "+eggstremeMem[i];}
@@ -495,7 +495,7 @@ var isteam = false;
 
 	//what user or team was mentioned?
 	if (message.mentions.users.size !== 0){
-	var mentioneduser = message.mentions.users.first().username; isuser = true;} else if (message.mentions.roles.size !== 0){
+	var mentioneduser = message.mentions.users.first().displayName; isuser = true;} else if (message.mentions.roles.size !== 0){
 	var mentionedrole = message.mentions.roles.first().name; isteam = true;} else {console.log('did not find either');} 
 
 if (isuser == true && validuser(message,mentioneduser) == true) {
@@ -522,7 +522,7 @@ var isteam = false;
 
 	//what user or team was mentioned?
 	if (message.mentions.users.size !== 0){
-	var mentioneduser = message.mentions.users.first().username; isuser = true;} else if (message.mentions.roles.size !== 0){
+	var mentioneduser = message.mentions.users.first().displayName; isuser = true;} else if (message.mentions.roles.size !== 0){
 	var mentionedrole = message.mentions.roles.first().name; isteam = true;} else {console.log('did not find either');} 
 	
 if (isuser == true && validuser(message,mentioneduser) == true) {
@@ -549,7 +549,7 @@ var isteam = false;
 
 	//what user or team was mentioned?
 	if (message.mentions.users.size !== 0){
-	var mentioneduser = message.mentions.users.first().username; isuser = true;} else if (message.mentions.roles.size !== 0){
+	var mentioneduser = message.mentions.users.first().displayName; isuser = true;} else if (message.mentions.roles.size !== 0){
 	var mentionedrole = message.mentions.roles.first().name; isteam = true;} else {console.log('did not find either');} 
 
 if (isuser == true && validuser(message,mentioneduser) == true) {
