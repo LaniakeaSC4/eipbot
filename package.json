@@ -1,10 +1,10 @@
 {
 
-  "name": "Example",
+  "name": "EIP Bot",
 
-  "description": "Example",
+  "description": "Coop organiser bot for EIP Prefarmers",
 
-  "version": "0.0.0",
+  "version": "1.0.0",
 
   "main": "bot.js",
 
