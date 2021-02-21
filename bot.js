@@ -232,12 +232,12 @@ function validuser(message,user){
   
   var validusers = [];
   
-  var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.user.displayName);
-	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.displayName);
-	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.displayName);
-	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.displayName);
-	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.displayName);
-	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.displayName);
+  var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.displayName);
+	var overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.displayName);
+	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.displayName);
+	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.displayName);
+	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.displayName);
+	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.displayName);
   
   var validusers = validusers.concat(eggstremeMem,overeasyMem,yolkstersMem,sunnysideMem,fowlplayMem,hardboiledMem)
   
@@ -450,11 +450,11 @@ if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined"){
 
 	//build initial team arrays.
 	eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m=>m.displayName);
-	overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.user.displayName);
-	yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.user.displayName);
-	sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.user.displayName);
-	fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.user.displayName);
-	hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.user.displayName);
+	overeasyMem =  message.guild.roles.cache.get('717392318017175643').members.map(m=>m.displayName);
+	yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m=>m.displayName);
+	sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m=>m.displayName);
+	fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m=>m.displayName);
+	hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m=>m.displayName);
 
 console.log(eggstremeMem)
 
