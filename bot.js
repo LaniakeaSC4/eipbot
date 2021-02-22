@@ -125,7 +125,7 @@ function updateplayerboard(message) {
 
 function getdisplayname(message,userid){
 //change this to if-check one when try the other
-const user = client.users.get(userid, { cache: true });
+const user = client.users.cache.get(userid);
 console.log("user object?: "+ user)	
 console.log("nickname: " + user.nickname);
 console.log("username: " + user.username);
