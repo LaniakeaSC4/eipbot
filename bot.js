@@ -123,15 +123,19 @@ function updateplayerboard(message) {
 
 }//end function updateplayerboard
 
-function getdisplayname(message,userid){
-//change this to if-check one when try the other
-var thisuser = client.guilds.cache.find(member => member.id == userid);
-console.log("user object?: "+ thisuser);
-//console.log("member object?: "+ member);
-console.log("nickname: " + thisuser.nickname);
-console.log("username: " + thisuser.username);
+//function getdisplayname(message,userid){
 
-}
+	const getdisplayname = async (message,userid) => {
+		const member = await message.guild.member(userid);
+		return member ? member.nickname : message.author.username;
+	  }
+
+//console.log("user object?: "+ thisuser);
+//console.log("member object?: "+ member);
+//console.log("nickname: " + thisuser.nickname);
+//console.log("username: " + thisuser.username);
+
+//}
 
 //!coop
 client.on('message', async message => {
