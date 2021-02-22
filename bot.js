@@ -49,8 +49,7 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 }//end of changeusersquare function
 
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
-	console.log(team);
-
+	
 	if (team == 'egg-streme') {
 		for (var i = 0; i < eggstremeMem.length; i++) {
 			let str = eggstremeMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); eggstremeMem[i] = res;
@@ -65,7 +64,7 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 
 	if (team == 'yolksters') {
 		for (var i = 0; i < yolkstersMem.length; i++) {
-			let str = yolkstersMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); yolkstersMem[i] = res; console.log(str);
+			let str = yolkstersMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); yolkstersMem[i] = res;
 		}
 	}//end if team yolksters
 
@@ -248,8 +247,6 @@ client.on('message', async message => {
 			fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
 			hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
 
-			console.log(eggstremeMem)
-
 			//add red squares
 			for (var i = 0; i < eggstremeMem.length; i++) { eggstremeMem[i] = "🟥 " + eggstremeMem[i]; }
 			for (var i = 0; i < overeasyMem.length; i++) { overeasyMem[i] = "🟥 " + overeasyMem[i]; }
@@ -293,6 +290,8 @@ client.on('message', async message => {
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
+
+		console.log('Mentioneduser :' + mentioneduser);
 
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
@@ -534,14 +533,6 @@ function prepupdate(color, title, description, array) {
 
 //here we actually output our team lists
 client.on('message', async message => {
-
-	//look for !update trigger. Allows manual update. Not needed with team outputs as update function is called first in those anyway.
-	if (message.content.startsWith("!update")) {
-		//updates all the arrays, passing message details to the function.
-		update(message);
-		message.channel.send("Teams updated");
-		message.delete();
-	} //end !update trigger block
 
 	//look for !yolksters trigger
 	if (message.content.startsWith("!yolksters")) {
