@@ -125,10 +125,13 @@ function updateplayerboard(message) {
 
 function getdisplayname(message,userid){
 //change this to if-check one when try the other
-    	
-	console.log("nickname: " + message.guild.member(userid));
-	console.log("username: " + message.guild.members.fetch(userid));
-	
+    
+var user = message.guild.members.fetch(userid);
+console.log("user object?: "+ user)	
+
+//console.log("nickname: " + message.guild.member(userid));
+//console.log("username: " + message.guild.members.fetch(userid));
+
 }
 
 //!coop
