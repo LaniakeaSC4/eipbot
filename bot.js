@@ -123,11 +123,17 @@ function updateplayerboard(message) {
 
 }//end function updateplayerboard
 
-function getdisplayname(message,userid){
-	var user = client.users.cache.get(userid);
-	console.log("user: " + user)
-	console.log("user.displayname: " + user.displayname);
-	return user.displayName;
+function getdisplayname(userid){
+	const promises = (userid => {
+         return new Promise(async (resolve) => {
+              const member = message.guild.member(userid) || await message.guild.members.fetch(userid);
+              resolve(member.displayName || member.user.username);
+         });
+});
+
+const nickname = await Promise.all(promises);
+return nickname;
+
 }
 
 //!coop
@@ -293,7 +299,7 @@ client.on('message', async message => {
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
-			var mentioneduser = getdisplayname(message,message.mentions.users.first().id); isuser = true;
+			var mentioneduser = getdisplayname(message.mentions.users.first().id); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
@@ -325,7 +331,7 @@ client.on('message', async message => {
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
-			var mentioneduser = getdisplayname(message,message.mentions.users.first().id); isuser = true;
+			var mentioneduser = getdisplayname(message.mentions.users.first().id); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
@@ -354,7 +360,7 @@ client.on('message', async message => {
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
-			var mentioneduser = getdisplayname(message,message.mentions.users.first().id); isuser = true;
+			var mentioneduser = getdisplayname(message.mentions.users.first().id); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
