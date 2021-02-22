@@ -325,7 +325,7 @@ client.on('message', async message => {
 	}//end !red
 
 	if (message.content.startsWith("!test")) {
-		getdisplayname(message,message.mentions.users.first().id).then(value => {console.log(value)}).catch(console.log(error));
+		getdisplayname(message,message.mentions.users.first().id).then(value => {console.log(value)});
 
 	}
 
