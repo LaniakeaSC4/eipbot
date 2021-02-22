@@ -123,19 +123,11 @@ function updateplayerboard(message) {
 
 }//end function updateplayerboard
 
-//function getdisplayname(message,userid){
-
-	const getdisplayname = async (message,userid) => {
-		const member = await message.guild.member(userid);
-		return member ? member.nickname : message.author.username;
-	  }
-
-//console.log("user object?: "+ thisuser);
-//console.log("member object?: "+ member);
-//console.log("nickname: " + thisuser.nickname);
-//console.log("username: " + thisuser.username);
-
-//}
+//function to get displayname for those that have changed thiers. Returns null if they dont have a nickname
+const getdisplayname = async (message,userid) => {
+	const member = await message.guild.member(userid);
+	return member ? member.nickname : message.author.username;
+}
 
 //!coop
 client.on('message', async message => {
