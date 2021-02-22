@@ -125,12 +125,10 @@ function updateplayerboard(message) {
 
 function getdisplayname(message,userid){
 //change this to if-check one when try the other
-    var user = [];
-message.guild.members.fetch(userid).then(members => {user = members});
+const user = await client.users.fetch(userid, { cache: true });
 console.log("user object?: "+ user)	
-
-//console.log("nickname: " + message.guild.member(userid));
-//console.log("username: " + message.guild.members.fetch(userid));
+console.log("nickname: " + user.nickname);
+console.log("username: " + user.username);
 
 }
 
