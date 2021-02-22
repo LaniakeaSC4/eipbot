@@ -126,7 +126,9 @@ function updateplayerboard(message) {
 function getdisplayname(message,userid){
 
     var member = message.guild.member(userid) || message.guild.members.fetch(userid);
-	console.log(member)
+	console.log("nickname: " + member.nickname);
+	console.log("username: " + member.username);
+	if member.nickname !== null){return member.nickname} else {return member.username}
 }
 
 //!coop
