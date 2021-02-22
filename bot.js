@@ -124,7 +124,7 @@ function updateplayerboard(message) {
 }//end function updateplayerboard
 
 function getdisplayname(message,userid){
-	var user = message.guild.members.cache.get(userid);
+	var user = client.users.cache.find(userid);
 	console.log("user: " + user)
 	console.log("user.displayname: " + user.displayname);
 	return user.displayName;
