@@ -124,7 +124,7 @@ function updateplayerboard(message) {
 }//end function updateplayerboard
 
 function getdisplayname(userid){
-	var user = client.users.cache.find(user => user.id === userid);
+	var user = client.users.cache.find(user => user === userid);
 	console.log("user: "+user)
 	console.log("user.displayname: "+user.displayname);
 	return user.displayName;
