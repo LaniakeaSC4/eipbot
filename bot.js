@@ -291,6 +291,7 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
+		console.log(message.mentions.users.first());
 		console.log('Mentioneduser :' + mentioneduser);
 
 		if (isuser == true && validuser(message, mentioneduser) == true) {
