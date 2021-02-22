@@ -125,12 +125,12 @@ function updateplayerboard(message) {
 
 function getdisplayname(message,userid){
 //change this to if-check one when try the other
-client.guilds.cache.find(member => member.id == userid).then(
-console.log("user object?: "+ user)
-console.log("member object?: "+ member)
+client.guilds.cache.find(member => member.id == userid).then({
+console.log("user object?: "+ user);
+console.log("member object?: "+ member);
 console.log("nickname: " + user.nickname);
 console.log("username: " + user.username);
-);
+);}
 
 }
 
