@@ -123,6 +123,12 @@ function updateplayerboard(message) {
 
 }//end function updateplayerboard
 
+function getdisplayname(userid){
+	client.users.cache.find(user => user.id === userid);
+	console.log(user.displayname);
+	return user.displayName;
+}
+
 //!coop
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")) {
@@ -286,7 +292,7 @@ client.on('message', async message => {
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
-			var mentioneduser = message.mentions.users.first().displayName; isuser = true;
+			var mentioneduser = getdisplayname(message.mentions.users.first().id); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
@@ -318,7 +324,7 @@ client.on('message', async message => {
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
-			var mentioneduser = message.mentions.users.first().displayName; isuser = true;
+			var mentioneduser = getdisplayname(message.mentions.users.first().id); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
@@ -347,7 +353,7 @@ client.on('message', async message => {
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
-			var mentioneduser = message.mentions.users.first().displayName; isuser = true;
+			var mentioneduser = getdisplayname(message.mentions.users.first().id); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
