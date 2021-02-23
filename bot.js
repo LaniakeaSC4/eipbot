@@ -131,7 +131,7 @@ const checknickname = async (message,userid) => {
 }
 
 function getname(message){
-  var dName = checknickname(message,message.mentions.users.first().id)
+  var dName = checknickname(message,message.mentions.users.first().id).then(value => {});
   
   var uName = message.mentions.users.first().username
   
