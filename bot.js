@@ -131,12 +131,14 @@ const checknickname = async (message,userid) => {
 }
 
 function getname(message){
-  var dName = checknickname(message,message.mentions.users.first().id).then(value => {console.log(value)})
+  var dName = checknickname(message,message.mentions.users.first().id)
   
   var uName = message.mentions.users.first().username
   
-  console.log(dName);
-  console.log(uName);
+  console.log('dname: ' + dName);
+  console.log('uname: ' + uName);
+  
+  if (dName !== null && uName !== null){return dName} else {return uName} 
 }
 
 //!coop
@@ -327,7 +329,8 @@ client.on('message', async message => {
 	}//end !red
 
 	if (message.content.startsWith("!test")) {
-		getname(message)
+	  var gotname = getname(message) 
+		console.log('returned: ' + gotname);
 	}
 
 	//!orange 🟧
