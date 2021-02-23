@@ -1,23 +1,18 @@
 {
 
-  "name": "EIP Bot",
+  "name": "Example",
 
-  "description": "Coop organiser bot for EIP Prefarmers",
+  "description": "Example",
 
-  "version": "1.0.0",
+  "version": "0.0.0",
 
   "main": "bot.js",
 
   "scripts": {
 
     "start": "node bot.js"
-    
-  },
 
-"engines": {
-  "node": "12.14.1",
-  "npm": "6.13.4"
-},
+  },
 
   "dependencies": {
 
