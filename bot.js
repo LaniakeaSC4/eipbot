@@ -124,9 +124,19 @@ function updateplayerboard(message) {
 }//end function updateplayerboard
 
 //function to get displayname for those that have changed thiers. Returns null if they dont have a nickname
-const getdisplayname = async (message,userid) => {
+
+const checknickname = async (message,userid) => {
 	const member = await message.guild.member(userid);
 	return member ? member.nickname : message.author.username;
+}
+
+function getname(message){
+  var dName = checknickname(message,message.mentions.users.first().id).then(value => {console.log(value)})
+  
+  var uName = message.mentions.users.first().username
+  
+  console.log(dName);
+  console.log(uName);
 }
 
 //!coop
@@ -317,8 +327,7 @@ client.on('message', async message => {
 	}//end !red
 
 	if (message.content.startsWith("!test")) {
-		getdisplayname(message,message.mentions.users.first().id).then(value => {console.log(value)});
-
+		getname(message)
 	}
 
 	//!orange 🟧
