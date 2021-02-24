@@ -142,6 +142,21 @@ function getname(message){
 }) 
 }
 
+function getname2(message){
+  
+  var userid = message.mentions.users.first().id
+  const member = message.guild.member(userid)
+  
+  var dName = member.nickname;
+  
+  var uName = message.mentions.users.first().username
+  
+  console.log('dname: ' + dName);
+  console.log('uname: ' + uName);
+  
+  if (dName !== null && uName !== null){return dName} else {return uName} 
+
+}
 
 //!coop
 client.on('message', async message => {
@@ -331,7 +346,7 @@ client.on('message', async message => {
 	}//end !red
 
 	if (message.content.startsWith("!test")) {
-	  var gotname = getname(message) 
+	  var gotname = getname2(message) 
 		console.log('returned: ' + gotname);
 	}
 
