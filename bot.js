@@ -3,8 +3,16 @@ const client = new Discord.Client();
 client.on('ready', () => { console.log('I am ready!'); });
 
 //=======================================
-//		Coop bot		|
+//		Coop bot	|	Functions
 //=======================================
+
+//!test command for testing things
+client.on('message', async message => {
+	if (message.content.startsWith("!test")) {
+		var gotname = getname(message)
+		console.log('returned: ' + gotname);
+	}
+});//end client on message
 
 //define team/role arrarys outside command
 var eggstremeMem = [];
@@ -14,10 +22,12 @@ var sunnysideMem = [];
 var fowlplayMem = [];
 var hardboiledMem = [];
 
+//check if the user is on one of the home teams
 function validuser(message, user) {
 
-	var validusers = [];
+	var validusers = [];//blank the validusers array
 
+	//fill validusers with all the members. vars declared local to this function
 	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
 	var overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
 	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
@@ -25,16 +35,21 @@ function validuser(message, user) {
 	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
 	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
 
-	var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem)
+	//combine all
+	var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
 
+	//if user passed to function is in that array, return true, else false
 	if (validusers.includes(user)) { return true } else { return false }
 
 }//end function validuser
 
+//check if the role mentioned is one of the valid home teams
 function validteam(team) {
+	//this uses teams arrary establised for the team card bot
 	if (teams.includes(team)) { return true } else { return false }
 }//end function validteam
 
+//function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 
 	var teams = [eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem]
@@ -43,11 +58,12 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 		for (var j = 0; j < teams[i].length; j++) {
 			if (teams[i][j].includes(user)) {
 				let str = teams[i][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teams[i][j] = res;
-			}
+			}//end replace square function
 		}//end for this team loop
 	}//end teams for loop
 }//end of changeusersquare function
 
+//function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 
 	if (team == 'egg-streme') {
@@ -88,6 +104,7 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 
 }//end of changeteamsquare function
 
+//function to republish the player status board from current state of arrays
 function updateplayerboard(message) {
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
@@ -145,7 +162,11 @@ function getname(message) {
 
 }//end getname function
 
-//!coop
+//=======================================
+//		Coop bot	|	Commands
+//=======================================
+
+//!coop (including !coop open [name])
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")) {
 
@@ -297,12 +318,19 @@ client.on('message', async message => {
 			//end of block 2
 
 		};//end the if !open
+
 		message.delete();//delete input command
+
 	};//end if !coop block
 
+});//end client on message
+
+//square colour change commands (!red, !orange, !green)
+client.on('message', async message => {
 	//!red 🟥
 	if (message.content.startsWith("!red")) {
 
+		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
 
@@ -313,9 +341,7 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
-		console.log(message.mentions.users.first());
-		console.log('Mentioneduser :' + mentioneduser);
-
+		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			changeusersquare("🟩", "🟧", "🟥", mentioneduser);
@@ -323,6 +349,7 @@ client.on('message', async message => {
 
 		}//end if isuser = true
 
+		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			changeteamsquare("🟩", "🟧", "🟥", mentionedrole);
@@ -332,14 +359,10 @@ client.on('message', async message => {
 
 	}//end !red
 
-	if (message.content.startsWith("!test")) {
-		var gotname = getname(message)
-		console.log('returned: ' + gotname);
-	}
-
 	//!orange 🟧
 	if (message.content.startsWith("!orange")) {
 
+		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
 
@@ -350,6 +373,7 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
+		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			changeusersquare("🟩", "🟥", "🟧", mentioneduser);
@@ -357,6 +381,7 @@ client.on('message', async message => {
 
 		}//end if isuser = true
 
+		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			changeteamsquare("🟩", "🟥", "🟧", mentionedrole);
@@ -369,6 +394,7 @@ client.on('message', async message => {
 	//!green 🟩
 	if (message.content.startsWith("!green")) {
 
+		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
 
@@ -379,6 +405,7 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
+		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			changeusersquare("🟧", "🟥", "🟩", mentioneduser);
@@ -386,6 +413,7 @@ client.on('message', async message => {
 
 		}//end if isuser = true
 
+		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			changeteamsquare("🟧", "🟥", "🟩", mentionedrole);
@@ -397,15 +425,14 @@ client.on('message', async message => {
 
 });//end client on message
 
-//delete all bot pin notifications
+//delete all bot pin notifications (this is for all bot pins, accross the whole server)
 client.on("message", (message) => { if (message.type === "PINS_ADD" && message.author.bot) message.delete(); })
 
-//===============================
-//	team update bot		|
-//===============================
+//=======================================
+//		team card bot	|	Functions
+//=======================================
 
 //initiate some variables for global use
-//Define the things we are going to want to sort by
 teams = ['egg-streme', 'yolksters', 'sunny-side', 'fowl-play', 'hard-boiled', 'over-easy'];
 timezone = ['Europe', 'US WC', 'US EC', 'South America', 'Oceania'];
 eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger'];
@@ -424,7 +451,7 @@ var fowlplayarr = [];
 var hardboiledarr = [];
 var overeasyarr = [];
 
-//functions
+//update function - main function to update team cards
 function update(message) {
 
 	//we are going to need a counter incremented for each match below so that we can order things into the array
@@ -559,6 +586,10 @@ function prepupdate(color, title, description, array) {
 } //end fucntion
 //end of functions
 
+//=======================================
+//		team card bot	|	Commands
+//=======================================
+
 //here we actually output our team lists
 client.on('message', async message => {
 
@@ -600,8 +631,8 @@ client.on('message', async message => {
 
 }); //end 'on message' for outputing team lists
 
-// THIS  MUST  BE  THIS  WAY
+//=======================================
+//		Discord Client Login
+//=======================================
 
 client.login(process.env.BOT_TOKEN);
-
-//BOT_TOKEN is the Client Secret
