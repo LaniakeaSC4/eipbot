@@ -37,7 +37,7 @@ function updatestatusboard(message) {
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				 console.log(embed.fields)
+				 console.log(embed.fields[0])
 
 			}//end if embed and footer text contains
 
