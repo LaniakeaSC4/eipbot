@@ -111,11 +111,13 @@ function getstatusboard(message) {
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message
+		console.log('messages: ' + messages)
 		messages.forEach(message => {
+			console.log('message: ' + message)
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				
+				console.log('message with footer: ' + message)
 				return message;
 
 			}//end if embed and footer text contains
