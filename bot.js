@@ -21,14 +21,13 @@ client.on('ready', () => { console.log('I am ready!'); });
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 		
-		var statusboard = await getstatusboard(message)
-		console.log("returned :" + statusboard)
+		updatestatusboard(message)
 
 	}
 });//end client on message
 
 //function to getstatusboard message
-async function getstatusboard(message) {
+function updatestatusboard(message) {
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message
@@ -38,9 +37,7 @@ async function getstatusboard(message) {
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				console.log('message with footer: ' + message)
-				console.log('messageID: ' + message.id);
-				return message.id;
+				 console.log(embed.fields)
 
 			}//end if embed and footer text contains
 
