@@ -49,7 +49,7 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 }//end of changeusersquare function
 
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
-	
+
 	if (team == 'egg-streme') {
 		for (var i = 0; i < eggstremeMem.length; i++) {
 			let str = eggstremeMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); eggstremeMem[i] = res;
@@ -84,7 +84,7 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 		for (var i = 0; i < hardboiledMem.length; i++) {
 			let str = hardboiledMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); hardboiledMem[i] = res;
 		}
-	}//end if team hard-boilee
+	}//end if team hard-boiled
 
 }//end of changeteamsquare function
 
@@ -124,21 +124,26 @@ function updateplayerboard(message) {
 }//end function updateplayerboard
 
 //function to get displayname for those that have changed thiers. Returns regular username if they dont have a nickname
-function getname(message){
-  
-  var userid = message.mentions.users.first().id
-  const member = message.guild.member(userid)
-  
-  var dName = member.nickname;
-  
-  var uName = message.mentions.users.first().username
-  
-  console.log('dname: ' + dName);
-  console.log('uname: ' + uName);
-  
-  if (dName !== null && uName !== null){return dName} else {return uName} 
+function getname(message) {
+		
+	if (message.mentions.users.size !== 0) {//first check if there were indeed any mentioned users
+		
+		var userid = message.mentions.users.first().id;//get the ID of the first mention
+		
+		//check if they have a nickname set
+		const member = message.guild.member(userid);//retrieve the user from ID
+		var dName = member.nickname;//set dName (displayName) to the member object's nickname
+		
+		//if they dont have a nickname, thier username is what is displayed by discord.
+		var uName = message.mentions.users.first().username;
 
-}
+		//if both dname and uName are not null, we must have found a nickame. Therefore return it, or instead return the username
+		if (dName !== null && uName !== null) { 
+			return dName } else { return uName };
+	
+		}//end if mentions size !== 0
+
+}//end getname function
 
 //!coop
 client.on('message', async message => {
@@ -328,7 +333,7 @@ client.on('message', async message => {
 	}//end !red
 
 	if (message.content.startsWith("!test")) {
-	  var gotname = getname(message) 
+		var gotname = getname(message)
 		console.log('returned: ' + gotname);
 	}
 
