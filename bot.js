@@ -30,15 +30,17 @@ client.on('message', async message => {
 function updatestatusboard(message) {
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
-		//for each pinned message
-		console.log('messages: ' + messages)
+		//for each pinned message 
 		messages.forEach(message => {
-			console.log('message: ' + message)
+
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 				 console.log(embed.fields[0])
         console.log(eggstremeMem)
+        
+        var thisteam = embed.fields[0].name.split(' ').pop() 
+        console.log(thisteam)
 			}//end if embed and footer text contains
 
 		})//end message.forEach
@@ -154,12 +156,12 @@ function updateplayerboard(message) {
 
 				//add the modified arrays back to fields
 				updatedEmbed.addFields(
-					{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
-					{ name: `Team Over-easy`, value: overeasyMem, inline: true },
-					{ name: `Team Yolksters`, value: yolkstersMem, inline: true },
-					{ name: `Team Sunny-side`, value: sunnysideMem, inline: true },
-					{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
-					{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
+					{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
+					{ name: `Team over-easy`, value: overeasyMem, inline: true },
+					{ name: `Team yolksters`, value: yolkstersMem, inline: true },
+					{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
+					{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
+					{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
 				);
 
 				//send the updated embed
@@ -337,12 +339,12 @@ client.on('message', async message => {
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC')
 				.addFields(
-					{ name: `Team Eggstreme`, value: eggstremeMem, inline: true },
-					{ name: `Team Over-easy`, value: overeasyMem, inline: true },
-					{ name: `Team Yolksters`, value: yolkstersMem, inline: true },
-					{ name: `Team Sunny-side`, value: sunnysideMem, inline: true },
-					{ name: `Team Fowl-play`, value: fowlplayMem, inline: true },
-					{ name: `Team Hard-boiled`, value: hardboiledMem, inline: true }
+					{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
+					{ name: `Team over-easy`, value: overeasyMem, inline: true },
+					{ name: `Team yolksters`, value: yolkstersMem, inline: true },
+					{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
+					{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
+					{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
 				);
 
 			message.channel.send(placedEmbed).then(async msg => {
