@@ -123,26 +123,8 @@ function updateplayerboard(message) {
 
 }//end function updateplayerboard
 
-//function to get displayname for those that have changed thiers. Returns null if they dont have a nickname
-
-const checknickname = async (message,userid) => {
-	const member = await message.guild.member(userid);
-	return member ? member.nickname : message.author.username;
-}
-
+//function to get displayname for those that have changed thiers. Returns regular username if they dont have a nickname
 function getname(message){
-  checknickname(message,message.mentions.users.first().id).then(value => {var dName = value;
-  
-  var uName = message.mentions.users.first().username
-  
-  console.log('dname: ' + dName);
-  console.log('uname: ' + uName);
-  
-  if (dName !== null && uName !== null){return dName} else {return uName} 
-}) 
-}
-
-function getname2(message){
   
   var userid = message.mentions.users.first().id
   const member = message.guild.member(userid)
@@ -321,7 +303,7 @@ client.on('message', async message => {
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
-			var mentioneduser = getdisplayname(message,message.mentions.users.first().id); isuser = true;
+			var mentioneduser = getname(message); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
@@ -346,7 +328,7 @@ client.on('message', async message => {
 	}//end !red
 
 	if (message.content.startsWith("!test")) {
-	  var gotname = getname2(message) 
+	  var gotname = getname(message) 
 		console.log('returned: ' + gotname);
 	}
 
@@ -358,7 +340,7 @@ client.on('message', async message => {
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
-			var mentioneduser = getdisplayname(message,message.mentions.users.first().id); isuser = true;
+			var mentioneduser = getname(message); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
@@ -387,7 +369,7 @@ client.on('message', async message => {
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
-			var mentioneduser = getdisplayname(message,message.mentions.users.first().id); isuser = true;
+			var mentioneduser = getname(message); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
