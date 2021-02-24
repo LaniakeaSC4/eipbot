@@ -9,8 +9,10 @@ client.on('ready', () => { console.log('I am ready!'); });
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-		var gotname = getname(message)
-		console.log('returned: ' + gotname);
+		
+		statusboard = getstatusboard(message);
+		console.log(statusboard)
+
 	}
 });//end client on message
 
@@ -103,6 +105,26 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 	}//end if team hard-boiled
 
 }//end of changeteamsquare function
+
+//function to getstatusboard message
+function getstatusboard(message) {
+	//fetch pinned messages
+	message.channel.messages.fetchPinned().then(messages => {
+		//for each pinned message
+		messages.forEach(message => {
+			let embed = message.embeds[0];
+
+			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				
+				return message;
+
+			}//end if embed and footer text contains
+
+		})//end message.forEach
+
+	})//end .then after fetchPinned 
+
+}//end function getstatusboard
 
 //function to republish the player status board from current state of arrays
 function updateplayerboard(message) {
