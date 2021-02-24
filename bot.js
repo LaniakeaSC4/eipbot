@@ -6,6 +6,17 @@ client.on('ready', () => { console.log('I am ready!'); });
 //		Coop bot	|	Functions
 //=======================================
 
+//function doHomework(subject, callback) {
+//	alert(`Starting my ${subject} homework.`);
+//	callback();
+// }
+  
+//function alertFinished(){
+//	alert('Finished my homework');
+//  }
+//
+//doHomework('math', alertFinished);
+
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
