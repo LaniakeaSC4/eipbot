@@ -131,7 +131,7 @@ const checknickname = async (message,userid) => {
 }
 
 function getname(message){
-  var dName = checknickname(message,message.mentions.users.first().id).then(value => {});
+  checknickname(message,message.mentions.users.first().id).then(value => {var dName = value;
   
   var uName = message.mentions.users.first().username
   
@@ -139,7 +139,9 @@ function getname(message){
   console.log('uname: ' + uName);
   
   if (dName !== null && uName !== null){return dName} else {return uName} 
+}) 
 }
+
 
 //!coop
 client.on('message', async message => {
