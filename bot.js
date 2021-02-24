@@ -10,7 +10,7 @@ client.on('ready', () => { console.log('I am ready!'); });
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 		
-		statusboard = getstatusboard(message);
+		var statusboard = getstatusboard(message);
 		console.log("statusboard :" + statusboard)
 
 	}
@@ -119,6 +119,7 @@ function getstatusboard(message) {
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 				console.log('message with footer: ' + message)
 				console.log('messageID: ' + message.id);
+				return message;
 
 			}//end if embed and footer text contains
 
