@@ -11,7 +11,7 @@ client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 		
 		statusboard = getstatusboard(message);
-		console.log(statusboard)
+		console.log("statusboard :" + statusboard)
 
 	}
 });//end client on message
