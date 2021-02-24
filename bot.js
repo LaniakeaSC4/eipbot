@@ -10,8 +10,8 @@ client.on('ready', () => { console.log('I am ready!'); });
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 		
-		var statusboard = await getstatusboard(message).then(
-		console.log("returned :" + statusboard))
+		var statusboard = await getstatusboard(message)
+		console.log("returned :" + statusboard)
 
 	}
 });//end client on message
