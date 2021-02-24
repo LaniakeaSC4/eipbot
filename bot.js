@@ -27,6 +27,29 @@ client.on('message', async message => {
 	}
 });//end client on message
 
+//function to getstatusboard message
+async function getstatusboard(message) {
+	//fetch pinned messages
+	message.channel.messages.fetchPinned().then(messages => {
+		//for each pinned message
+		console.log('messages: ' + messages)
+		messages.forEach(message => {
+			console.log('message: ' + message)
+			let embed = message.embeds[0];
+
+			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				console.log('message with footer: ' + message)
+				console.log('messageID: ' + message.id);
+				return message.id;
+
+			}//end if embed and footer text contains
+
+		})//end message.forEach
+
+	})//end .then after fetchPinned 
+
+}//end function getstatusboard 
+
 //define team/role arrarys outside command
 var eggstremeMem = [];
 var overeasyMem = [];
@@ -116,29 +139,6 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 	}//end if team hard-boiled
 
 }//end of changeteamsquare function
-
-//function to getstatusboard message
-function getstatusboard(message) {
-	//fetch pinned messages
-	message.channel.messages.fetchPinned().then(messages => {
-		//for each pinned message
-		console.log('messages: ' + messages)
-		messages.forEach(message => {
-			console.log('message: ' + message)
-			let embed = message.embeds[0];
-
-			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				console.log('message with footer: ' + message)
-				console.log('messageID: ' + message.id);
-				return message.id;
-
-			}//end if embed and footer text contains
-
-		})//end message.forEach
-
-	})//end .then after fetchPinned 
-
-}//end function getstatusboard
 
 //function to republish the player status board from current state of arrays
 function updateplayerboard(message) {
