@@ -21,13 +21,41 @@ client.on('ready', () => { console.log('I am ready!'); });
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 		
-		updatestatusboard(message)
+		//updatestatusboard(message)
+		buildteamarrays(message);
 
 	}
 });//end client on message
 
-//function to getstatusboard message
-function updatestatusboard(message) {
+//function to build team arrays from home team chsnnels
+
+   
+    function buildteamarrays(message) {
+    
+    //get array of server roles
+    roles = message.guild.roles.cache.map((role) => role.name);
+    console.log(roles);
+    
+    try{
+    let channels = client.channels.cache.array();
+    for (const channel of channels) 
+    {
+      //if channel matches a role return role
+        teams2.push(channel.id);
+        console.log(channel.id);
+    }}catch(err){
+        console.log('array error')
+        message.channel.send('An error occoured while getting the channels.')
+        console.log(err)
+    }
+
+    return teams2;
+    }
+
+
+//function rebuild team arrays
+function rebuildteamarrays(message) {
+  //get the status board
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message 
@@ -36,18 +64,14 @@ function updatestatusboard(message) {
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				//console.log(embed.fields[0])
-        //console.log(embed.fields[1])
-        console.log(embed.fields.length)
-        
-        
+			
         for (var i=0;i < embed.fields.length;i++){
           
-          console.log(embed.fields[i].value)
-          //var thisteam = embed.fields[i].name.split(' ').pop() 
+          console.log(embed.fields[i])
+          var thisteam = embed.fields[i].name.split(' ').pop() 
           
           
-       // console.log(thisteam);
+          console.log(thisteam);
           
           
         }
