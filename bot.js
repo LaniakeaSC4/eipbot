@@ -43,6 +43,7 @@ function updatestatusboard(message) {
           var thisteam = embed.fields[i].name.split(' ').pop() 
         console.log(thisteam);
           
+          
         }
         
 			}//end if embed and footer text contains
