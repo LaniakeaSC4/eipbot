@@ -33,7 +33,7 @@ client.on('message', async message => {
     function buildteamarrays() {
     
     //get array of server roles
-    var roles = client.guilds.roles.cache.map((role) => role.name);
+    var roles = guild.roles.cache.map((role) => role.name);
     console.log(roles);
     
     teams2 = [];
