@@ -36,11 +36,15 @@ function updatestatusboard(message) {
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				 console.log(embed.fields[0])
+				console.log(embed.fields[0])
         console.log(eggstremeMem)
         
-        var thisteam = embed.fields[0].name.split(' ').pop() 
-        console.log(thisteam)
+        for (i=0;i=embed.fields.length;i++){
+          var thisteam = embed.fields[0].name.split(' ').pop() 
+        console.log(thisteam);
+          
+        }
+        
 			}//end if embed and footer text contains
 
 		})//end message.forEach
