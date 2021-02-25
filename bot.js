@@ -40,7 +40,7 @@ function updatestatusboard(message) {
         console.log(eggstremeMem)
         
         for (i=0;i=embed.fields.length;i++){
-          var thisteam = embed.fields[0].name.split(' ').pop() 
+          var thisteam = embed.fields[i].name.split(' ').pop() 
         console.log(thisteam);
           
         }
