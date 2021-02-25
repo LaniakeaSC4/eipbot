@@ -36,7 +36,7 @@ client.on('message', async message => {
     roles = message.guild.roles.cache.map((role) => role.name);
     console.log(roles);
     
-    
+    teams2 = [];
     try{
     let channels = client.channels.cache.array();
     for (const channel of channels) 
