@@ -36,10 +36,12 @@ function updatestatusboard(message) {
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				console.log(embed.fields[0])
-        console.log(eggstremeMem)
+				//console.log(embed.fields[0])
+        //console.log(eggstremeMem)
         
         for (i=0;i=embed.fields.length;i++){
+          
+          console.log(embed.fields[i])
           var thisteam = embed.fields[i].name.split(' ').pop() 
         console.log(thisteam);
           
