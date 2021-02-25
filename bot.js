@@ -22,7 +22,7 @@ client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 		
 		//updatestatusboard(message)
-		buildteamarrays(message);
+		buildteamarrays();
 
 	}
 });//end client on message
@@ -30,10 +30,10 @@ client.on('message', async message => {
 //function to build team arrays from home team chsnnels
 
    
-    function buildteamarrays(message) {
+    function buildteamarrays() {
     
     //get array of server roles
-    roles = message.guild.roles.cache.map((role) => role.name);
+    var roles = client.guilds.roles.cache.map((role) => role.name);
     console.log(roles);
     
     teams2 = [];
@@ -42,6 +42,7 @@ client.on('message', async message => {
     for (const channel of channels) 
     {
       //if channel matches a role return role
+      //for (.......... )
         teams2.push(channel.name);
         console.log(channel.name);
     }}catch(err){
