@@ -42,8 +42,8 @@ client.on('message', async message => {
     for (const channel of channels) 
     {
       //if channel matches a role return role
-        teams2.push(channel.id);
-        console.log(channel.id);
+        teams2.push(channel.name);
+        console.log(channel.name);
     }}catch(err){
         console.log('array error')
         message.channel.send('An error occoured while getting the channels.')
