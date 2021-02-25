@@ -40,6 +40,7 @@ function updatestatusboard(message) {
         console.log(embed.fields[1])
         console.log(embeds.fields.length)
         
+        
         for (i=0;i=embed.fields.length;i++){
           
           //console.log(embed.fields[i])
