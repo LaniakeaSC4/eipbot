@@ -41,7 +41,7 @@ function updatestatusboard(message) {
         console.log(embed.fields.length)
         
         
-        for (var i=0;i=embed.fields.length;i++){
+        for (var i=0;i < embed.fields.length;i++){
           
           console.log(embed.fields[i])
           //var thisteam = embed.fields[i].name.split(' ').pop() 
