@@ -48,7 +48,15 @@ function buildteamarrays(message) {
 			})//end forEach child channel
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
-
+console.log(homechannels)
+//remove emoji
+for (var i = 0;i<homechannels.length;i++){
+ for (var j = 0;j<roles.length;j++) {
+   if (homechannels[i].includes(roles[j])) {
+     console.log('matched' + roles[j])
+   }
+ } 
+}
     console.log(homechannels)
     
 	//might just need parts of this for above
