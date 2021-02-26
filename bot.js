@@ -49,7 +49,7 @@ function buildteamarrays(message) {
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
 
-    console.log('homechannels: ' + homechannels)
+    console.log(homechannels)
     
 	//might just need parts of this for above
     teams2 = [];
