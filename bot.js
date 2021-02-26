@@ -36,6 +36,9 @@ client.on('message', async message => {
     var roles = message.guild.roles.cache.map((role) => role.name);
     console.log(roles);
     
+    homechannels = category.children.find(c => c.name == "🏠 Home Teams" && c.type == "text"); 
+    console.log('homechannels' + homechannels)
+    
     teams2 = [];
     try{
     let channels = client.channels.cache.array();
