@@ -54,7 +54,9 @@ for (var i = 0;i<homechannels.length;i++){
    if (homechannels[i].includes(roles[j])) {
      console.log('matched: ' + roles[j]);
      var ary = roles[j]+'MBRS';
-     console.log('ary :' + ary)
+     console.log('ary :' + ary);
+     ary = ary.replace(/[^a-zA-Z ]/g, "");
+     console.log('ary rep :' + ary) 
      ary = new Array();
    }//end if match
  }//end for roled
@@ -409,7 +411,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	//!red 🟥
 	if (message.content.startsWith("!red")) {
-console.log(egg-stremeMBRS)
+console.log(eggstremeMBRS)
 		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
