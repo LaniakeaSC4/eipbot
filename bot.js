@@ -2,6 +2,12 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.on('ready', () => { console.log('I am ready!'); });
 
+// ---- Info ----
+// home team should be under category including word "home"
+// channel names under "home" category should contact a match for the role (e.g. "Home Teams" category should contain a channel "team egg-streme" and the "egg-streme" part should match a server role for the team)
+// this is what we will use to establish the teams that there are
+// ---- ---- ----
+
 //=======================================
 //		Coop bot	|	Functions
 //=======================================
