@@ -38,7 +38,8 @@ client.on('message', async message => {
     
     const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
 categoryChannels.forEach(channel => {
-    console.log(channel.children.map((channel) => channel.name));
+    if (channel.name.includes('Home') == true){
+    console.log(channel.children.map((channel) => channel.name));} 
 });
     
     //homechannels = category.children.find(c => c.name == "🏠 Home Teams" && c.type == "text"); 
