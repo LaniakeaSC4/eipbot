@@ -43,40 +43,24 @@ function buildteamarrays(message) {
 			//if channel matches a role, then make new global variable for that role. Can I build the "teams" array with the team elements and kick-start the eggstremeMem type arrays? 
     
     	homechannels.push(channel.name);
-    
     	
 			})//end forEach child channel
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
-console.log(homechannels)
-//remove emoji
+
+
 for (var i = 0;i<homechannels.length;i++){
  for (var j = 0;j<roles.length;j++) {
    if (homechannels[i].includes(roles[j])) {
-     console.log('matched' + roles[j])
-   }
- } 
-}
-    console.log(homechannels)
+     console.log('matched: ' + roles[j]);
+     var ary = roles[j]+'MBRS';
+     console.log('ary :' + ary)
+     ary = new Array();
+   }//end if match
+ }//end for roled
+}//end for homechannels
     
-	//might just need parts of this for above
-    teams2 = [];
-    try{
-    let channels = client.channels.cache.array();
-    for (const channel of channels) 
-    {
-      //if channel matches a role return role
-      //for (.......... )
-        teams2.push(channel.name);
-        //console.log(channel.name);
-    }}catch(err){
-        console.log('array error')
-        message.channel.send('An error occoured while getting the channels.')
-        console.log(err)
-    }
-
-    return teams2;
-    }
+ }//end function 
 
 
 //function rebuild team arrays
@@ -425,7 +409,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	//!red 🟥
 	if (message.content.startsWith("!red")) {
-
+console.log(egg-stremeMBRS)
 		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
