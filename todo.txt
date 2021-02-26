@@ -1,0 +1,1 @@
+make all the home team channel stuff match in lower case
