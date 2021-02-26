@@ -37,14 +37,19 @@ client.on('message', async message => {
     console.log(roles);
     
     const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
+    var homechannels = [];
 categoryChannels.forEach(channel => {
     if (channel.name.includes('Home') == true){
-    console.log(channel.children.map((channel) => channel.name));} 
+    //if channel matches a role, then make new global variable for that role. Can I build the "teams" array with the team elements and kick-start the eggstremeMem type arrays? 
+    
+    homechannels.push(channel.name);
+    
+    //console.log(channel.children.map((channel) => channel.name));
+    
+    } 
 });
-    
-    //homechannels = category.children.find(c => c.name == "🏠 Home Teams" && c.type == "text"); 
-    //console.log('homechannels' + homechannels)
-    
+    console.log('homechannels: ' + homechannels)
+    //might just need parts of this for above
     teams2 = [];
     try{
     let channels = client.channels.cache.array();
@@ -53,7 +58,7 @@ categoryChannels.forEach(channel => {
       //if channel matches a role return role
       //for (.......... )
         teams2.push(channel.name);
-        console.log(channel.name);
+        //console.log(channel.name);
     }}catch(err){
         console.log('array error')
         message.channel.send('An error occoured while getting the channels.')
