@@ -6,17 +6,6 @@ client.on('ready', () => { console.log('I am ready!'); });
 //		Coop bot	|	Functions
 //=======================================
 
-//function doHomework(subject, callback) {
-//	alert(`Starting my ${subject} homework.`);
-//	callback();
-// }
-  
-//function alertFinished(){
-//	alert('Finished my homework');
-//  }
-//
-//doHomework('math', alertFinished);
-
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
@@ -28,28 +17,35 @@ client.on('message', async message => {
 });//end client on message
 
 //function to build team arrays from home team chsnnels
-
-   
-    function buildteamarrays(message) {
-    
-    //get array of server roles
+  
+function buildteamarrays(message) {
+	//get array of server roles
     var roles = message.guild.roles.cache.map((role) => role.name);
-    console.log(roles);
+    //console.log(roles);
     
+	//get category channels
     const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
-    var homechannels = [];
-categoryChannels.forEach(channel => {
+    
+	//blank array which will hold the channel names of the channels under the home team category
+	var homechannels = [];
+	
+	categoryChannels.forEach(channel => {
     if (channel.name.includes('Home') == true){
-    //if channel matches a role, then make new global variable for that role. Can I build the "teams" array with the team elements and kick-start the eggstremeMem type arrays? 
+
+		channel.children.forEach((channel) => {
+    	//if channel matches a role, then make new global variable for that role. Can I build the "teams" array with the team elements and kick-start the eggstremeMem type arrays? 
     
-    homechannels.push(channel.name);
+    	homechannels.push(channel.name);
     
-    //console.log(channel.children.map((channel) => channel.name));
+    	//console.log(channel.children.map((channel) => channel.name));
     
-    } 
-});
+			})//end forEach child channel
+		}//end if channel name includes home
+	});//end categoryChannels.forEach
+
     console.log('homechannels: ' + homechannels)
-    //might just need parts of this for above
+    
+	//might just need parts of this for above
     teams2 = [];
     try{
     let channels = client.channels.cache.array();
