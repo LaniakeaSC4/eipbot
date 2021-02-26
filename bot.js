@@ -36,8 +36,13 @@ client.on('message', async message => {
     var roles = message.guild.roles.cache.map((role) => role.name);
     console.log(roles);
     
-    homechannels = category.children.find(c => c.name == "🏠 Home Teams" && c.type == "text"); 
-    console.log('homechannels' + homechannels)
+    const categoryChannels = guild.channels.filter(channel => channel.type === "category");
+categoryChannels.forEach(channel => {
+    console.log(`Category ${channel.name} has ${channel.children} channels`);
+});
+    
+    //homechannels = category.children.find(c => c.name == "🏠 Home Teams" && c.type == "text"); 
+    //console.log('homechannels' + homechannels)
     
     teams2 = [];
     try{
