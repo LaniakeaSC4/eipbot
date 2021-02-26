@@ -36,7 +36,7 @@ client.on('message', async message => {
     var roles = message.guild.roles.cache.map((role) => role.name);
     console.log(roles);
     
-    const categoryChannels = message.guild.channels.filter(channel => channel.type === "category");
+    const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
 categoryChannels.forEach(channel => {
     console.log(`Category ${channel.name} has ${channel.children} channels`);
 });
