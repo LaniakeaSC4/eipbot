@@ -67,12 +67,12 @@ for (var i = 0;i<homechannels.length;i++){
    if (homechannels[i].includes(roles[j])) {
      console.log('matched: ' + roles[j]);
      var ary = roles[j]+'MBRS';
-     console.log('ary :' + ary);
+     //console.log('ary :' + ary);
      ary = ary.replace(/[^a-zA-Z ]/g, "");
-     console.log('ary rep :' + ary) 
+     //console.log('ary rep :' + ary) 
      
-     var MBRS = message.guild.roles.cache.get(String(roles[j])).members.map(m => m.displayName);
-     console.log(MBRS);
+     var role = message.guild.roles.cache.get(String(roles[j]));
+     console.log(role);
      teams3.teams.push(ary);
    }//end if match
  }//end for roled
