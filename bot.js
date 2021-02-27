@@ -73,8 +73,6 @@ for (var i = 0;i<homechannels.length;i++){
      
      let role = message.guild.roles.cache.find(r => r.name === roles[j]);
 
-    // var role = message.guild.roles.cache.get(String(roles[j]));
-     console.log(role);
      console.log(role.id)
      teams3.teams.push(ary);
    }//end if match
