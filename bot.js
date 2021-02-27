@@ -50,7 +50,6 @@ function buildteamarrays(message) {
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
 
-
 for (var i = 0;i<homechannels.length;i++){
  for (var j = 0;j<roles.length;j++) {
    if (homechannels[i].includes(roles[j])) {
@@ -59,7 +58,7 @@ for (var i = 0;i<homechannels.length;i++){
      console.log('ary :' + ary);
      ary = ary.replace(/[^a-zA-Z ]/g, "");
      console.log('ary rep :' + ary) 
-     teams3.ary = [];
+     teams3.teams.push(ary);
    }//end if match
  }//end for roled
 }//end for homechannels
