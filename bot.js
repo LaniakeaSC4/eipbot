@@ -73,13 +73,13 @@ for (var i = 0;i<homechannels.length;i++){
     
      ary = ary.replace(/[^a-zA-Z ]/g, "");
      
-     teams3.teams.push(ary);
+     teams3.teams[BC] = new array(ary);
      
      //console.log(teams3.teams)
      
      let role = message.guild.roles.cache.find(r => r.name === roles[j]);
 
-teams3.teams[BC] = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
+teams3.teams[BC][BC] = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
 
 console.log(teams3.teams[BC]);
 
