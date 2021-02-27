@@ -50,6 +50,8 @@ function buildteamarrays(message) {
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
 
+//define teams object in array
+teams3.teams = [];
 for (var i = 0;i<homechannels.length;i++){
  for (var j = 0;j<roles.length;j++) {
    if (homechannels[i].includes(roles[j])) {
