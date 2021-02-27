@@ -75,7 +75,7 @@ for (var i = 0;i<homechannels.length;i++){
      
      teams3.teams.push(ary);
      
-     console.log(teams3.teams)
+     //console.log(teams3.teams)
      
      let role = message.guild.roles.cache.find(r => r.name === roles[j]);
 
