@@ -79,10 +79,12 @@ for (var i = 0;i<homechannels.length;i++){
      
      let role = message.guild.roles.cache.find(r => r.name === roles[j]);
 
-var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
+teams3.teams[BC] = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
 
+console.log(teams3.teams[BC]);
 
-     console.log(thesemembers)
+BC=BC+1;
+     
      
    }//end if match
  }//end for roled
