@@ -70,7 +70,7 @@ for (var i = 0;i<homechannels.length;i++){
      console.log('ary :' + ary);
      ary = ary.replace(/[^a-zA-Z ]/g, "");
      console.log('ary rep :' + ary) 
-     teams3.teams.push(ary);
+     teams3.teams.push(new array(ary));
    }//end if match
  }//end for roled
 }//end for homechannels
