@@ -71,8 +71,11 @@ for (var i = 0;i<homechannels.length;i++){
      ary = ary.replace(/[^a-zA-Z ]/g, "");
      //console.log('ary rep :' + ary) 
      
-     var role = message.guild.roles.cache.get(String(roles[j]));
+     let role = message.guild.roles.cache.find(r => r.name === roles[j]);
+
+    // var role = message.guild.roles.cache.get(String(roles[j]));
      console.log(role);
+     console.log(role.id)
      teams3.teams.push(ary);
    }//end if match
  }//end for roled
