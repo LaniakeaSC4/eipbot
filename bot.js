@@ -22,6 +22,16 @@ client.on('message', async message => {
 	}
 });//end client on message
 
+//!test2 command for testing things
+client.on('message', async message => {
+	if (message.content.startsWith("!test2")) {
+		
+		console.log(teams3)
+
+	}
+});//end client on message
+
+
 //function to build team arrays from home team chsnnels
 
 var teams3 = {};
@@ -414,7 +424,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	//!red 🟥
 	if (message.content.startsWith("!red")) {
-console.log(teams3)
+
 		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
