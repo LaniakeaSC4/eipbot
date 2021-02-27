@@ -62,22 +62,28 @@ function buildteamarrays(message) {
 
 //define teams object in array
 teams3.teams = [];
+var BC = 0;
+
 for (var i = 0;i<homechannels.length;i++){
  for (var j = 0;j<roles.length;j++) {
    if (homechannels[i].includes(roles[j])) {
+     
      console.log('matched: ' + roles[j]);
      var ary = roles[j]+'MBRS';
-     //console.log('ary :' + ary);
+    
      ary = ary.replace(/[^a-zA-Z ]/g, "");
-     //console.log('ary rep :' + ary) 
+     
+     teams3.teams.push(ary);
+     
+     console.log(teams3.teams)
      
      let role = message.guild.roles.cache.find(r => r.name === roles[j]);
 
-var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
+var thesemembes = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
 
 
      console.log(thesemembers)
-     teams3.teams.push(ary);
+     
    }//end if match
  }//end for roled
 }//end for homechannels
