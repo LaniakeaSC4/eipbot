@@ -23,7 +23,9 @@ client.on('message', async message => {
 });//end client on message
 
 //function to build team arrays from home team chsnnels
-  
+
+var teams3 = {};
+
 function buildteamarrays(message) {
 	//get array of server roles
     var roles = message.guild.roles.cache.map((role) => role.name);
@@ -57,7 +59,7 @@ for (var i = 0;i<homechannels.length;i++){
      console.log('ary :' + ary);
      ary = ary.replace(/[^a-zA-Z ]/g, "");
      console.log('ary rep :' + ary) 
-     ary = new Array();
+     teams3.ary = [];
    }//end if match
  }//end for roled
 }//end for homechannels
@@ -411,7 +413,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	//!red 🟥
 	if (message.content.startsWith("!red")) {
-console.log(eggstremeMBRS)
+console.log(teams3)
 		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
