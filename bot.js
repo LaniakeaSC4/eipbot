@@ -73,7 +73,8 @@ for (var i = 0;i<homechannels.length;i++){
     
      ary = ary.replace(/[^a-zA-Z ]/g, "");
      
-     teams3.teams[BC] = new Array(ary);
+     teams3.teams[BC] = [];
+     teams3.teams[BC] = ary;
      
      //console.log(teams3.teams)
      
