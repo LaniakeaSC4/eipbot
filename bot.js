@@ -71,7 +71,7 @@ for (var i = 0;i<homechannels.length;i++){
      ary = ary.replace(/[^a-zA-Z ]/g, "");
      console.log('ary rep :' + ary) 
      
-     var MBRS = message.guild.roles.cache.find(String(roles[j])).members.map(m => m.displayName);
+     var MBRS = message.guild.roles.cache.get(String(roles[j])).members.map(m => m.displayName);
      console.log(MBRS);
      teams3.teams.push(ary);
    }//end if match
