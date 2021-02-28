@@ -27,6 +27,7 @@ client.on('message', async message => {
 	if (message.content.startsWith("!test2")) {
 		
 		console.log(teams3)
+		console.log(teams3.hardboiledMBRS)
 
 	}
 });//end client on message
