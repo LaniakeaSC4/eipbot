@@ -15,7 +15,7 @@ client.on('ready', () => { console.log('I am ready!'); });
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-		
+
 		//updatestatusboard(message)
 		buildteamarrays(message);
 
@@ -25,77 +25,75 @@ client.on('message', async message => {
 //!test2 command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test2")) {
-		
+
 		console.log(teams);
 
 	}
 });//end client on message
 
-
-//function to build team arrays from home team chsnnels
-
 var teams = {};
 
+//function to build team arrays from home team channels
 function buildteamarrays(message) {
-	//get array of server roles
-    var roles = message.guild.roles.cache.map((role) => role.name);
-    console.log(roles);
-    
-	//get category channels
-    const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
-    
-	//blank array which will hold the channel names of the channels under the home team category
-	var homechannels = [];
-	
-	categoryChannels.forEach(channel => {
-    if (channel.name.includes('Home') == true){
 
-		channel.children.forEach((channel) => {
-    	
-			//push the child channels under the home category into array
-    	homechannels.push(channel.name);
-    	
+	//get array of all server roles
+	var roles = message.guild.roles.cache.map((role) => role.name);
+
+	//get discord category channels (e.g 🏠 Home Teams)
+	const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
+
+	//blank array which will hold the channel names of the child channels under the home team category
+	var homechannels = [];
+
+	//push name of each child channel in "🏠 Home Teams" into array
+	categoryChannels.forEach(channel => {
+		if (channel.name.includes('Home') == true) {
+
+			channel.children.forEach((channel) => {
+
+				//push the child channels under the home category into array
+				homechannels.push(channel.name);
+
 			})//end forEach child channel
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
-	
-//define teams array, team names will be stored here for use by other functions
-var teams = [];
 
-//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
-for (var i = 0;i<homechannels.length;i++){
- for (var j = 0;j<roles.length;j++) {
-   //if a channel has a role/team match
-   if (homechannels[i].includes(roles[j])) {
-     
-    //first lets save the team name itself for use by other functions
-    teams.push(roles[j])
-    
-    //clean the role of any special characters (remove hyphenation) for keying storage in the teams object.
-     var cleanrole = roles[j].replace(/[^a-zA-Z ]/g, "");
-     
-     //find the role in the sever cache which matches the channel-matched role (we will need it's ID)
-     let role = message.guild.roles.cache.find(r => r.name === roles[j]);
+	//define teams array, team names will be stored here for use by other functions
+	var teams = [];
 
-//search by role ID to get all members with that role
-var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
+	//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
+	for (var i = 0; i < homechannels.length; i++) {
+		for (var j = 0; j < roles.length; j++) {
+			//if a channel has a role/team match
+			if (homechannels[i].includes(roles[j])) {
 
-//store members in the teams object, keyed by cleaned team name
-teams[cleanrole] = thesemembers;
-    
-   }//end if match
- }//end for roles
-}//end for homechannels
+				//first lets save the team name itself for use by other functions
+				teams.push(roles[j])
 
-//store the teams in the object too
-teams['teams'] = teams;
+				//clean the role of any special characters (remove hyphenation) for keying storage in the teams object.
+				var cleanrole = roles[j].replace(/[^a-zA-Z ]/g, "");
 
- }//end function 
+				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
+				let role = message.guild.roles.cache.find(r => r.name === roles[j]);
+
+				//search by role ID to get all members with that role
+				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
+
+				//store members in the teams object, keyed by cleaned team name
+				teams[cleanrole] = thesemembers;
+
+			}//end if match
+		}//end for roles
+	}//end for homechannels
+
+	//store the teams in the object too
+	teams['teams'] = teams;
+}//end function 
 
 
 //function rebuild team arrays
 function rebuildteamarrays(message) {
-  //get the status board
+	//get the status board
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message 
@@ -104,18 +102,18 @@ function rebuildteamarrays(message) {
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-			
-        for (var i=0;i < embed.fields.length;i++){
-          
-          console.log(embed.fields[i])
-          var thisteam = embed.fields[i].name.split(' ').pop() 
-          
-          
-          console.log(thisteam);
-          
-          
-        }
-        
+
+				for (var i = 0; i < embed.fields.length; i++) {
+
+					console.log(embed.fields[i])
+					var thisteam = embed.fields[i].name.split(' ').pop()
+
+
+					console.log(thisteam);
+
+
+				}
+
 			}//end if embed and footer text contains
 
 		})//end message.forEach
@@ -252,23 +250,24 @@ function updateplayerboard(message) {
 
 //function to get displayname for those that have changed thiers. Returns regular username if they dont have a nickname
 function getname(message) {
-		
+
 	if (message.mentions.users.size !== 0) {//first check if there were indeed any mentioned users
-		
+
 		var userid = message.mentions.users.first().id;//get the ID of the first mention
-		
+
 		//check if they have a nickname set
 		const member = message.guild.member(userid);//retrieve the user from ID
 		var dName = member.nickname;//set dName (displayName) to the member object's nickname
-		
+
 		//if they dont have a nickname, thier username is what is displayed by discord.
 		var uName = message.mentions.users.first().username;
 
 		//if both dname and uName are not null, we must have found a nickame. Therefore return it, or instead return the username
-		if (dName !== null && uName !== null) { 
-			return dName } else { return uName };
-	
-		}//end if mentions size !== 0
+		if (dName !== null && uName !== null) {
+			return dName
+		} else { return uName };
+
+	}//end if mentions size !== 0
 
 }//end getname function
 
