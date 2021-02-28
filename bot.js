@@ -16,8 +16,7 @@ client.on('ready', () => { console.log('I am ready!'); });
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 
-		//updatestatusboard(message)
-		buildteamarrays(message);
+		rebuildteamarrays(message);
 
 	}
 });//end client on message
