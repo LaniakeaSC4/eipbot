@@ -33,7 +33,7 @@ client.on('message', async message => {
 
 var teams = {};
 
-//function to build team arrays from home team channels
+//function to build team object from home team channels
 function buildteamarrays(message) {
 
 	//get array of all server roles
@@ -47,7 +47,8 @@ function buildteamarrays(message) {
 
 	//push name of each child channel in "🏠 Home Teams" into array
 	categoryChannels.forEach(channel => {
-		if (channel.name.includes('Home') == true) {
+	  var LCchan = channel.name.toLowerCase()
+		if (LCchan.includes('home') == true) {
 
 			channel.children.forEach((channel) => {
 
