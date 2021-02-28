@@ -50,7 +50,7 @@ function buildteamarrays(message) {
 	  var LCchan = channel.name.toLowerCase()
 	  console.log(LCchan)
 		if (LCchan.includes('home') == true) {
-
+console.log('matched:'+LCchan);
 			channel.children.forEach((channel) => {
 
 				//push the child channels under the home category into array
