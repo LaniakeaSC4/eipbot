@@ -60,13 +60,13 @@ function buildteamarrays(message) {
 			})//end forEach child channel
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
-
+var teams = [];
 for (var i = 0;i<homechannels.length;i++){
  for (var j = 0;j<roles.length;j++) {
    if (homechannels[i].includes(roles[j])) {
      
      console.log('matched: ' + roles[j]);
-    
+    teams.push(roles[j])
     
      var cleanrole = roles[j].replace(/[^a-zA-Z ]/g, "");
      
@@ -78,11 +78,13 @@ var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.dis
  console.log('thesemembers: '+thesemembers)
 teams3[cleanrole] = thesemembers;
     
-     console.log('rolesJ:'+roles[j]);
+     //console.log('rolesJ:'+roles[j]);
    }//end if match
- }//end for roled
+ }//end for roles
 }//end for homechannels
-    
+
+teams3['teams'] = teams;
+
  }//end function 
 
 
