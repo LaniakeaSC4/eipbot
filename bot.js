@@ -61,10 +61,6 @@ function buildteamarrays(message) {
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
 
-//define teams object in array
-teams3.teams = [];
-var BC = 0;
-
 for (var i = 0;i<homechannels.length;i++){
  for (var j = 0;j<roles.length;j++) {
    if (homechannels[i].includes(roles[j])) {
@@ -81,9 +77,6 @@ for (var i = 0;i<homechannels.length;i++){
 //var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
 
 teams3.roles[j] =  message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
-console.log(teams3.teams[BC]);
-
-BC=BC+1;
      
      
    }//end if match
