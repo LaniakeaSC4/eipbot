@@ -48,7 +48,7 @@ function buildteamarrays(message) {
 	//push name of each child channel in "🏠 Home Teams" into array
 	categoryChannels.forEach(channel => {
 	  var LCchan = channel.name.toLowerCase()
-	  console.log(LCChan)
+	  console.log(LCchan)
 		if (LCchan.includes('home') == true) {
 
 			channel.children.forEach((channel) => {
