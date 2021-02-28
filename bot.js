@@ -26,8 +26,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	if (message.content.startsWith("!test2")) {
 		
-		console.log(teams3)
-		console.log(teams3.hardboiledMBRS)
+		console.log(teams);
 
 	}
 });//end client on message
@@ -35,7 +34,7 @@ client.on('message', async message => {
 
 //function to build team arrays from home team chsnnels
 
-var teams3 = {};
+var teams = {};
 
 function buildteamarrays(message) {
 	//get array of server roles
@@ -53,37 +52,43 @@ function buildteamarrays(message) {
 
 		channel.children.forEach((channel) => {
     	
-			//if channel matches a role, then make new global variable for that role. Can I build the "teams" array with the team elements and kick-start the eggstremeMem type arrays? 
-    
+			//push the child channels under the home category into array
     	homechannels.push(channel.name);
     	
 			})//end forEach child channel
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
+	
+//define teams array, team names will be stored here for use by other functions
 var teams = [];
+
+//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
 for (var i = 0;i<homechannels.length;i++){
  for (var j = 0;j<roles.length;j++) {
+   //if a channel has a role/team match
    if (homechannels[i].includes(roles[j])) {
      
-     console.log('matched: ' + roles[j]);
+    //first lets save the team name itself for use by other functions
     teams.push(roles[j])
     
+    //clean the role of any special characters (remove hyphenation) for keying storage in the teams object.
      var cleanrole = roles[j].replace(/[^a-zA-Z ]/g, "");
      
-     //console.log(teams3.teams)
-     
+     //find the role in the sever cache which matches the channel-matched role (we will need it's ID)
      let role = message.guild.roles.cache.find(r => r.name === roles[j]);
 
+//search by role ID to get all members with that role
 var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
- console.log('thesemembers: '+thesemembers)
-teams3[cleanrole] = thesemembers;
+
+//store members in the teams object, keyed by cleaned team name
+teams[cleanrole] = thesemembers;
     
-     //console.log('rolesJ:'+roles[j]);
    }//end if match
  }//end for roles
 }//end for homechannels
 
-teams3['teams'] = teams;
+//store the teams in the object too
+teams['teams'] = teams;
 
  }//end function 
 
