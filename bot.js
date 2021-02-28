@@ -59,7 +59,7 @@ console.log('matched:'+LCchan);
 			})//end forEach child channel
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
-
+console.log('homechannels:' +homechannels)
 	//define teams array, team names will be stored here for use by other functions
 	var teams = [];
 
