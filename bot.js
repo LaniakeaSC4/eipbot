@@ -48,9 +48,7 @@ function buildteamarrays(message) {
 	//push name of each child channel in "🏠 Home Teams" into array
 	categoryChannels.forEach(channel => {
 	  var LCchan = channel.name.toLowerCase()
-	  console.log(LCchan)
 		if (LCchan.includes('home') == true) {
-console.log('matched:'+LCchan);
 			channel.children.forEach((channel) => {
 
 				//push the child channels under the home category into array
@@ -59,9 +57,9 @@ console.log('matched:'+LCchan);
 			})//end forEach child channel
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
-console.log('homechannels:' +homechannels)
+
 	//define teams array, team names will be stored here for use by other functions
-	var teams = [];
+	var teamnames = [];
 
 	//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
 	for (var i = 0; i < homechannels.length; i++) {
@@ -70,7 +68,7 @@ console.log('homechannels:' +homechannels)
 			if (homechannels[i].includes(roles[j])) {
 
 				//first lets save the team name itself for use by other functions
-				teams.push(roles[j])
+				teamnames.push(roles[j])
 
 				//clean the role of any special characters (remove hyphenation) for keying storage in the teams object.
 				var cleanrole = roles[j].replace(/[^a-zA-Z ]/g, "");
@@ -89,7 +87,7 @@ console.log('homechannels:' +homechannels)
 	}//end for homechannels
 
 	//store the teams in the object too
-	teams['teams'] = teams;
+	teams['teams'] = teamnames;
 }//end function 
 
 
