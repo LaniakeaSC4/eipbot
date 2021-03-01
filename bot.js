@@ -12,27 +12,26 @@ client.on('ready', () => { console.log('I am ready!'); });
 //		Coop bot	|	Functions
 //=======================================
 
-//!test command for testing things
+//!build command for testing things
 client.on('message', async message => {
-	if (message.content.startsWith("!test")) {
+	if (message.content.startsWith("!build")) {
 
-		rebuildteamarrays(message);
+		buildteamarrays(message);
 
 	}
 });//end client on message
 
-//!test2 command for testing things
+//!rebuild command for testing things
 client.on('message', async message => {
-	if (message.content.startsWith("!test2")) {
+	if (message.content.startsWith("!rebuild")) {
 
-		console.log(teams);
+		rebuildteamarrays(message)
 
 	}
 });//end client on message
-
-var teams = {};
 
 //function to build team object from home team channels
+var teams = {};
 function buildteamarrays(message) {
 
 	//get array of all server roles
