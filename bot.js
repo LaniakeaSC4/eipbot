@@ -17,7 +17,7 @@ client.on('message', async message => {
 	if (message.content.startsWith("!build")) {
 
 		buildteamarrays(message);
-
+		console.log(teams)
 	}
 });//end client on message
 
