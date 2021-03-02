@@ -439,22 +439,26 @@ client.on('message', async message => {
 				.setDescription('🟥 - Not yet offered coop\n\n🟧 - Offered coop\n\n🟩 - In coop')
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC')
-				
-				//.addFields(
-				//	{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
-				//	{ name: `Team over-easy`, value: overeasyMem, inline: true },
-				//	{ name: `Team yolksters`, value: yolkstersMem, inline: true },
-				//	{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
-				//	{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
-				//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
-				//);
 
-				console.log(teams)
-				var theteams = Object.values(teams)
-				console.log('before loop: ' + theteams)
-				for (var i = 0; i > theteams.length; i++){
-					console.log('in loop' + theteams[i])
-				}
+			//.addFields(
+			//	{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
+			//	{ name: `Team over-easy`, value: overeasyMem, inline: true },
+			//	{ name: `Team yolksters`, value: yolkstersMem, inline: true },
+			//	{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
+			//	{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
+			//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
+			//);
+
+			for (var i = 0; i > teams[teams].length; i++) {
+				console.log('in loop' + teams[teams][i])
+			}
+
+			//add red squares
+			//for (let key in teammembers) {
+			//	for (var i = 0; i < teammembers[key].length; i++) {
+			//		teammembers[key][i] = "🟥 " + teammembers[key][i];
+			//	}
+			//}
 
 			message.channel.send(placedEmbed).then(async msg => {
 				msg.pin();
