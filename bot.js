@@ -26,7 +26,7 @@ client.on('message', async message => {
 	if (message.content.startsWith("!build")) {
 
 		buildteamarrays(message);
-		console.log(teammembers)
+		//console.log(teammembers)
 		//console.log('teams:' + teams)
 	}
 });//end client on message
@@ -94,6 +94,11 @@ function buildteamarrays(message) {
 			}//end if match
 		}//end for roles
 	}//end for homechannels
+
+//add red squares
+for (let key in teammembers) {
+  console.log(teammembers[key]);
+} 
 
 	//store the teams in the object
 	teams['teams'] = teamnames;
