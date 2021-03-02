@@ -25,7 +25,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	if (message.content.startsWith("!build")) {
 
-		buildteamarrays(message);
+		buildteamobj(message);
 		console.log(teammembers)
 		//console.log('teams:' + teams)
 	}
@@ -35,7 +35,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	if (message.content.startsWith("!rebuild")) {
 
-		rebuildteamarrays(message)
+		rebuildteamobj(message)
 
 	}
 });//end client on message
@@ -43,7 +43,7 @@ client.on('message', async message => {
 //function to build team object from home team channels
 var teams = {};
 var teammembers = {};
-function buildteamarrays(message) {
+function buildteamobj(message) {
 
 	//get array of all server roles
 	var roles = message.guild.roles.cache.map((role) => role.name);
@@ -107,7 +107,7 @@ function buildteamarrays(message) {
 }//end function 
 
 //function rebuild team arrays
-function rebuildteamarrays(message) {
+function rebuildteamobj(message) {
 
 	//clear object for rebuilding it
 	console.log(teammembers);
@@ -417,34 +417,41 @@ client.on('message', async message => {
 			//Block 2 - Who has been placed in coop
 
 			//build initial team arrays.
-			eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
-			overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
-			yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
-			sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
-			fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
-			hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
+			//eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
+			//overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
+			//yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
+			//sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
+			//fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
+			//hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
 
 			//add red squares
-			for (var i = 0; i < eggstremeMem.length; i++) { eggstremeMem[i] = "🟥 " + eggstremeMem[i]; }
-			for (var i = 0; i < overeasyMem.length; i++) { overeasyMem[i] = "🟥 " + overeasyMem[i]; }
-			for (var i = 0; i < yolkstersMem.length; i++) { yolkstersMem[i] = "🟥 " + yolkstersMem[i]; }
-			for (var i = 0; i < sunnysideMem.length; i++) { sunnysideMem[i] = "🟥 " + sunnysideMem[i]; }
-			for (var i = 0; i < fowlplayMem.length; i++) { fowlplayMem[i] = "🟥 " + fowlplayMem[i]; }
-			for (var i = 0; i < hardboiledMem.length; i++) { hardboiledMem[i] = "🟥 " + hardboiledMem[i]; }
+			//for (var i = 0; i < eggstremeMem.length; i++) { eggstremeMem[i] = "🟥 " + eggstremeMem[i]; }
+			//for (var i = 0; i < overeasyMem.length; i++) { overeasyMem[i] = "🟥 " + overeasyMem[i]; }
+			//for (var i = 0; i < yolkstersMem.length; i++) { yolkstersMem[i] = "🟥 " + yolkstersMem[i]; }
+			//for (var i = 0; i < sunnysideMem.length; i++) { sunnysideMem[i] = "🟥 " + sunnysideMem[i]; }
+			//for (var i = 0; i < fowlplayMem.length; i++) { fowlplayMem[i] = "🟥 " + fowlplayMem[i]; }
+			//for (var i = 0; i < hardboiledMem.length; i++) { hardboiledMem[i] = "🟥 " + hardboiledMem[i]; }
+
+			buildteamobj(message);
 
 			let placedEmbed = new Discord.MessageEmbed()
 				.setTitle("Player status board")
 				.setDescription('🟥 - Not yet offered coop\n\n🟧 - Offered coop\n\n🟩 - In coop')
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC')
-				.addFields(
-					{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
-					{ name: `Team over-easy`, value: overeasyMem, inline: true },
-					{ name: `Team yolksters`, value: yolkstersMem, inline: true },
-					{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
-					{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
-					{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
-				);
+				
+				//.addFields(
+				//	{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
+				//	{ name: `Team over-easy`, value: overeasyMem, inline: true },
+				//	{ name: `Team yolksters`, value: yolkstersMem, inline: true },
+				//	{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
+				//	{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
+				//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
+				//);
+
+				const theteams = object.keys(teams)
+				console.log(theteams)
+				for (const team of theteams){console.log(team)}
 
 			message.channel.send(placedEmbed).then(async msg => {
 				msg.pin();
