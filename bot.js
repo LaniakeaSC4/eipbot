@@ -124,6 +124,7 @@ function rebuildteamarrays(message) {
 					var thesemembers = embed.fields[i].value
 					console.log(thesemembers)
 					console.log(typeof thesemembers)
+				  thesemembers = thesemembers.split('\n');
 					
 					//get clean team name to be key for updating main teammembers object
 					var thisteam = embed.fields[i].name.split(' ').pop()
