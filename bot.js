@@ -449,9 +449,11 @@ client.on('message', async message => {
 				//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
 				//);
 
-				const theteams = Object.values(teams)
+				var theteams = Object.values(teams)
 				console.log('before loop: ' + theteams)
-				for (const team of theteams){console.log('in loop' + team)}
+				for (var i = 0; i > theteams.length; i++){
+					console.log('in loop' + theteams[i])
+				}
 
 			message.channel.send(placedEmbed).then(async msg => {
 				msg.pin();
