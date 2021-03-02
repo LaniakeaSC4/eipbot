@@ -450,8 +450,8 @@ client.on('message', async message => {
 			//);
 
 			for (var i = 0; i < teams.teams.length; i++) {
-				console.log('in loop' + teams.teams.[i])
-				var cleanrole = teams.teams.[i].replace(/[^a-zA-Z ]/g, "");
+				console.log('in loop' + teams.teams[i])
+				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");
 				console.log('cleanrole: ' + cleanrole)
 			}
 
