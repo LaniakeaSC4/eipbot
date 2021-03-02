@@ -450,14 +450,14 @@ client.on('message', async message => {
 			//);
 
 			for (var i = 0; i < teams.teams.length; i++) {
-				console.log('in loop' + teams.teams[i])
+				//console.log('in loop' + teams.teams[i])
 				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");
 				console.log('cleanrole: ' + cleanrole)
-				console.log(teammembers[cleanrole].values);
-				for (var j = 0; j < teammembers[cleanrole].length; j++){
-					console.log(teammembers[cleanrole][j])
+				console.log(teammembers[cleanrole]);
+				//for (var j = 0; j < teammembers[cleanrole].length; j++){
+				//	console.log(teammembers[cleanrole][j])
 
-				}
+				//}
 			}
 
 			//add red squares
