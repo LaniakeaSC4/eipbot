@@ -12,11 +12,21 @@ client.on('ready', () => { console.log('I am ready!'); });
 //		Coop bot	|	Functions
 //=======================================
 
+//!test command for testing things
+client.on('message', async message => {
+	if (message.content.startsWith("!test")) {
+
+		console.log(teams[1])
+		
+	}
+});//end client on message
+
 //!build command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!build")) {
 
 		buildteamarrays(message);
+		console.log(teamnames)
 		console.log(teams)
 	}
 });//end client on message
@@ -32,6 +42,7 @@ client.on('message', async message => {
 
 //function to build team object from home team channels
 var teams = {};
+var teammembers = {};
 function buildteamarrays(message) {
 
 	//get array of all server roles
@@ -77,14 +88,14 @@ function buildteamarrays(message) {
 				//search by role ID to get all members with that role
 				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
 
-				//store members in the teams object, keyed by cleaned team name
-				teams[cleanrole] = thesemembers;
+				//store members in the team members object, keyed by cleaned team name
+				teammembers[cleanrole] = thesemembers;
 
 			}//end if match
 		}//end for roles
 	}//end for homechannels
 
-	//store the teams in the object too
+	//store the teams in the object
 	teams['teams'] = teamnames;
 }//end function 
 
