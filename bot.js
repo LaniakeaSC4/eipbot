@@ -450,7 +450,7 @@ client.on('message', async message => {
 			//);
 
 			console.log(teams);
-			console.log(teams.teams)
+			console.log(teams.teams.length)
 			for (var i = 0; i > teams.teams.length; i++) {
 				console.log('in loop' + teams[teams][i])
 			}
