@@ -26,7 +26,7 @@ client.on('message', async message => {
 	if (message.content.startsWith("!build")) {
 
 		buildteamarrays(message);
-		console.log(teamnames)
+		console.log(teammembers)
 		console.log(teams)
 	}
 });//end client on message
