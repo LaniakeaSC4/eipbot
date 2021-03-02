@@ -450,8 +450,8 @@ client.on('message', async message => {
 				//);
 
 				const theteams = Object.values(teams)
-				console.log(theteams)
-				for (const team of theteams){console.log(team)}
+				console.log('before loop: ' + theteams)
+				for (const team of theteams){console.log('in loop' + team)}
 
 			message.channel.send(placedEmbed).then(async msg => {
 				msg.pin();
