@@ -449,6 +449,7 @@ client.on('message', async message => {
 				//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
 				//);
 
+				console.log(teams)
 				var theteams = Object.values(teams)
 				console.log('before loop: ' + theteams)
 				for (var i = 0; i > theteams.length; i++){
