@@ -449,7 +449,7 @@ client.on('message', async message => {
 				//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
 				//);
 
-				const theteams = object.keys(teams)
+				const theteams = Object.keys(teams)
 				console.log(theteams)
 				for (const team of theteams){console.log(team)}
 
