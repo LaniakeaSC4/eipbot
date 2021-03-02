@@ -17,7 +17,7 @@ client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 
 		console.log(teams[1])
-		
+
 	}
 });//end client on message
 
@@ -56,7 +56,7 @@ function buildteamarrays(message) {
 
 	//push name of each child channel in "🏠 Home Teams" into array
 	categoryChannels.forEach(channel => {
-	  var LCchan = channel.name.toLowerCase()
+		var LCchan = channel.name.toLowerCase()
 		if (LCchan.includes('home') == true) {
 			channel.children.forEach((channel) => {
 
@@ -95,12 +95,12 @@ function buildteamarrays(message) {
 		}//end for roles
 	}//end for homechannels
 
-//add red squares
-for (let key in teammembers) {
-  for (var i=0;i<teammembers[key].length;i++){
-  teammembers[key][i] = "🟥 " + teammembers[key][i];
-  }
-} 
+	//add red squares
+	for (let key in teammembers) {
+		for (var i = 0; i < teammembers[key].length; i++) {
+			teammembers[key][i] = "🟥 " + teammembers[key][i];
+		}
+	}
 
 	//store the teams in the object
 	teams['teams'] = teamnames;
@@ -108,12 +108,12 @@ for (let key in teammembers) {
 
 //function rebuild team arrays
 function rebuildteamarrays(message) {
-  
-//clear object for rebuilding it
-console.log(teammembers);
-teammembers = {};
-console.log(teammembers);
-  
+
+	//clear object for rebuilding it
+	console.log(teammembers);
+	teammembers = {};
+	console.log(teammembers);
+
 	//get the status board
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
@@ -127,16 +127,19 @@ console.log(teammembers);
 				for (var i = 0; i < embed.fields.length; i++) {
 
 					var thesemembers = embed.fields[i].value
-					
-				  thesemembers = thesemembers.split('\n');
+
+					thesemembers = thesemembers.split('\n');
+					for (var i = 0; i < thesemembers.length; i++) {
+						thesemembers[i] = thesemembers[i].replace('\n', '');
+					}
 					console.log(thesemembers)
 					//console.log(typeof thesemembers)
 					//get clean team name to be key for updating main teammembers object
 					var thisteam = embed.fields[i].name.split(' ').pop()
-          thisteam = thisteam.replace(/[^a-zA-Z ]/g, ""); 
+					thisteam = thisteam.replace(/[^a-zA-Z ]/g, "");
 
 					console.log(thisteam);
-          teammembers[thisteam] = thesemembers;
+					teammembers[thisteam] = thesemembers;
 
 				}
 
