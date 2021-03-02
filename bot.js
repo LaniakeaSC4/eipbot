@@ -453,6 +453,7 @@ client.on('message', async message => {
 				console.log('in loop' + teams.teams[i])
 				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");
 				console.log('cleanrole: ' + cleanrole)
+				console.log(teammembers.cleanrole.values);
 			}
 
 			//add red squares
