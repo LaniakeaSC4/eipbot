@@ -106,9 +106,14 @@ for (let key in teammembers) {
 	teams['teams'] = teamnames;
 }//end function 
 
-
 //function rebuild team arrays
 function rebuildteamarrays(message) {
+  
+//clear object for rebuilding it
+console.log(teammembers);
+teammembers = {};
+console.log(teammembers);
+  
 	//get the status board
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
@@ -125,13 +130,13 @@ function rebuildteamarrays(message) {
 					
 				  thesemembers = thesemembers.split('\n');
 					console.log(thesemembers)
-					console.log(typeof thesemembers)
+					//console.log(typeof thesemembers)
 					//get clean team name to be key for updating main teammembers object
 					var thisteam = embed.fields[i].name.split(' ').pop()
           thisteam = thisteam.replace(/[^a-zA-Z ]/g, ""); 
 
-					//console.log(thisteam);
-
+					console.log(thisteam);
+          teammembers[thisteam] = thesemembers;
 
 				}
 
