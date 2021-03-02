@@ -121,9 +121,11 @@ function rebuildteamarrays(message) {
 
 				for (var i = 0; i < embed.fields.length; i++) {
 
-					console.log(embed.fields[i])
+					console.log(embed.fields[i].value)
+					
+					//get clean key for updating main object
 					var thisteam = embed.fields[i].name.split(' ').pop()
-
+          thisteam = thisteam.replace(/[^a-zA-Z ]/g, ""); 
 
 					console.log(thisteam);
 
