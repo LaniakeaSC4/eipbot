@@ -97,7 +97,9 @@ function buildteamarrays(message) {
 
 //add red squares
 for (let key in teammembers) {
-  console.log(teammembers[key][0]);
+  for (var i=0;i<teammembers[key].length;i++){
+  teammembers[key][i] = "🟥 " + teammembers[key][i];
+  }
 } 
 
 	//store the teams in the object
