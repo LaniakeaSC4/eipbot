@@ -253,14 +253,22 @@ function updateplayerboard(message) {
 				updatedEmbed.fields = [];
 
 				//add the modified arrays back to fields
-				updatedEmbed.addFields(
-					{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
-					{ name: `Team over-easy`, value: overeasyMem, inline: true },
-					{ name: `Team yolksters`, value: yolkstersMem, inline: true },
-					{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
-					{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
-					{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
-				);
+				//updatedEmbed.addFields(
+				//	{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
+				//	{ name: `Team over-easy`, value: overeasyMem, inline: true },
+				//	{ name: `Team yolksters`, value: yolkstersMem, inline: true },
+				//	{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
+				//	{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
+				//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
+				//);
+
+				//add teams and players for embed from teams/teammeber objects
+				for (var i = 0; i < teams.teams.length; i++) {
+
+					var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
+					updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
+
+				}
 
 				//send the updated embed
 				message.edit(updatedEmbed);
@@ -432,6 +440,7 @@ client.on('message', async message => {
 			//for (var i = 0; i < fowlplayMem.length; i++) { fowlplayMem[i] = "🟥 " + fowlplayMem[i]; }
 			//for (var i = 0; i < hardboiledMem.length; i++) { hardboiledMem[i] = "🟥 " + hardboiledMem[i]; }
 
+			//initialise teams object (becasue this is the !coop open command)
 			buildteamobj(message);
 
 			let placedEmbed = new Discord.MessageEmbed()
@@ -449,13 +458,11 @@ client.on('message', async message => {
 			//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
 			//);
 
+			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < teams.teams.length; i++) {
-				//console.log('in loop' + teams.teams[i])
-				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");
-				console.log('cleanrole: ' + cleanrole)
-				console.log(teammembers[cleanrole]);
 
-				placedEmbed.addField(`Team ${teams.teams[i]}`,teammembers[cleanrole], true)
+				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
+				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
 
 			}
 
