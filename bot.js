@@ -9,9 +9,7 @@ client.on('ready', () => {
 
 client.on('message', async message => {
 	if (message.content.startsWith("!EIP Bot reporting for duty")) {
-		console.log(teammembers)
 		buildteamobj(message);
-		console.log(teammembers)
 		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
 
 	}
@@ -31,7 +29,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 
-		console.log(teams[1])
+		
 
 	}
 });//end client on message
@@ -40,10 +38,8 @@ client.on('message', async message => {
 client.on('message', async message => {
 	if (message.content.startsWith("!build")) {
 
-		console.log(teammembers)
 		buildteamobj(message);
-		console.log(teammembers)
-
+		
 	}
 });//end client on message
 
@@ -126,9 +122,9 @@ function buildteamobj(message) {
 function rebuildteamobj(message) {
 
 	//clear object for rebuilding it
-	console.log(teammembers);
+	console.log('rebuildteamobj before clear: ' + teammembers);
 	teammembers = {};
-	console.log(teammembers);
+	console.log('rebuildteamobj after clear: ' + teammembers);
 
 	//get the status board
 	//fetch pinned messages
@@ -157,7 +153,7 @@ function rebuildteamobj(message) {
 			}//end if embed and footer text contains
 		})//end message.forEach
 	})//end .then after fetchPinned 
-}//end function getstatusboard 
+}//end function rebuildteamobj 
 
 //check if the user is on one of the home teams
 function validuser(message, user) {
@@ -199,7 +195,6 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 			} //end replace square core function
 		}//end for this team loop
 	}//end teams for loop
-	console.log(teammembers);
 }//end of changeusersquare function
 
 //function to change whole team's squares at once
