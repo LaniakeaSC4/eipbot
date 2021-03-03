@@ -122,9 +122,9 @@ function buildteamobj(message) {
 function rebuildteamobj(message) {
 
 	//clear object for rebuilding it
-	console.log('rebuildteamobj before clear: ' + teammembers);
+	console.log(teammembers);
 	teammembers = {};
-	console.log('rebuildteamobj after clear: ' + teammembers);
+	console.log(teammembers);
 
 	//get the status board
 	//fetch pinned messages
