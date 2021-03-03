@@ -12,7 +12,7 @@ client.on('message', async message => {
     console.log(teammembers)
 		buildteamobj(message);
 		console.log(teammembers)
-		message.channel.send('That is great news glad your up and running!');
+		message.channel.send('I am gald we are alive! Please tell our master that the tea members object has been rebuilt. We are ready for action!');
 
 	}
 });//end client on message
