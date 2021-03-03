@@ -1,11 +1,10 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-client.on('ready', () => { 
-  console.log('I am ready!'); 
-  var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
-  console.log(statuschannel);
-   client.channels.cache.get(statuschannel.id)
-          .send(`EIP Bot online!`);
+client.on('ready', () => {
+	console.log('I am ready!');
+	var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
+	client.channels.cache.get(statuschannel.id)
+		.send(`EIP Bot online!`);
 });
 
 // ---- Info ----
@@ -191,16 +190,16 @@ function validteam(team) {
 //function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 
-//new
+	//new
 
-for (var i = 0; i < teams.teams.length; i++) {
+	for (var i = 0; i < teams.teams.length; i++) {
 
-					var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
-					
-					for (var j = 0; j < teammembers[cleanrole].length;j++){
-					  if (teammembers[cleanrole][j].includes(user)) {
-					    let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
-					  } //end replace square core function
+		var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+
+		for (var j = 0; j < teammembers[cleanrole].length; j++) {
+			if (teammembers[cleanrole][j].includes(user)) {
+				let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
+			} //end replace square core function
 		}//end for this team loop
 	}//end teams for loop
 	console.log(teammembers);
@@ -209,47 +208,47 @@ for (var i = 0; i < teams.teams.length; i++) {
 //function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 
-var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
+	var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
 
-for (var i = 0;i < teammembers[cleanrole].length;i++){
-  let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
-}
+	for (var i = 0; i < teammembers[cleanrole].length; i++) {
+		let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
+	}
 
-//	if (team == 'egg-streme') {
-//		for (var i = 0; i < eggstremeMem.length; i++) {
-//			let str = eggstremeMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); eggstremeMem[i] = res;
-//		}
-//	}//end if team Egg-streme
+	//	if (team == 'egg-streme') {
+	//		for (var i = 0; i < eggstremeMem.length; i++) {
+	//			let str = eggstremeMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); eggstremeMem[i] = res;
+	//		}
+	//	}//end if team Egg-streme
 
-//	if (team == 'over-easy') {
-//		for (var i = 0; i < overeasyMem.length; i++) {
-//			let str = overeasyMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); overeasyMem[i] = res;
-//		}
-//	}//end if team over-easy
+	//	if (team == 'over-easy') {
+	//		for (var i = 0; i < overeasyMem.length; i++) {
+	//			let str = overeasyMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); overeasyMem[i] = res;
+	//		}
+	//	}//end if team over-easy
 
-//	if (team == 'yolksters') {
-//		for (var i = 0; i < yolkstersMem.length; i++) {
-//			let str = yolkstersMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); yolkstersMem[i] = res;
-//		}
-//	}//end if team yolksters
+	//	if (team == 'yolksters') {
+	//		for (var i = 0; i < yolkstersMem.length; i++) {
+	//			let str = yolkstersMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); yolkstersMem[i] = res;
+	//		}
+	//	}//end if team yolksters
 
-//	if (team == 'sunny-side') {
-//		for (var i = 0; i < sunnysideMem.length; i++) {
-//			let str = sunnysideMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); sunnysideMem[i] = res;
-//		}
-//	}//end if team sunny-side
+	//	if (team == 'sunny-side') {
+	//		for (var i = 0; i < sunnysideMem.length; i++) {
+	//			let str = sunnysideMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); sunnysideMem[i] = res;
+	//		}
+	//	}//end if team sunny-side
 
-//	if (team == 'fowl-play') {
-//		for (var i = 0; i < fowlplayMem.length; i++) {
-//			let str = fowlplayMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); fowlplayMem[i] = res;
-//		}
-//	}//end if team fowl-play
+	//	if (team == 'fowl-play') {
+	//		for (var i = 0; i < fowlplayMem.length; i++) {
+	//			let str = fowlplayMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); fowlplayMem[i] = res;
+	//		}
+	//	}//end if team fowl-play
 
-//	if (team == 'hard-boiled') {
-//		for (var i = 0; i < hardboiledMem.length; i++) {
-//			let str = hardboiledMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); hardboiledMem[i] = res;
-//		}
-//	}//end if team hard-boiled
+	//	if (team == 'hard-boiled') {
+	//		for (var i = 0; i < hardboiledMem.length; i++) {
+	//			let str = hardboiledMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); hardboiledMem[i] = res;
+	//		}
+	//	}//end if team hard-boiled
 
 }//end of changeteamsquare function
 
@@ -319,6 +318,51 @@ function getname(message) {
 	}//end if mentions size !== 0
 
 }//end getname function
+
+//search all channels. find all posts that need collectors and restart them?
+function startcollector(msg) {
+
+	//find all posts (in all channels?)
+
+	//define collector
+	const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
+
+	//when a reaction is collected (clicked)
+	collector.on('collect', async (reaction, user) => {
+
+		//check it is one of the allowed reactions, else remove it
+		if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
+
+			//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+			const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+			//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+			for (const userReaction of userReactions.values()) {
+				if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+					userReaction.users.remove(user.id);
+					votes[userReaction.emoji.name].delete(user);
+				}
+			}
+
+			//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
+			votes[reaction.emoji.name].add(user);
+		} else {
+			reaction.remove();//was not an allowed reaction
+		}
+
+		//before we leave this collect event, run update function
+		updatevotes();
+	});//end collector.on 'collect'
+
+	//when a user removes their own reaction
+	collector.on('remove', (reaction, user) => {
+		//delet the user from the votes array
+		votes[reaction.emoji.name].delete(user);
+		//run update function
+		updatevotes();
+	});
+
+}
 
 //=======================================
 //		Coop bot	|	Commands
