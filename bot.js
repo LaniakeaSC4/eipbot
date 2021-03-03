@@ -9,7 +9,7 @@ client.on('ready', () => {
 
 client.on('message', async message => {
 	if (message.content.startsWith("!EIP Bot reporting for duty")) {
-    console.log(teammembers)
+		console.log(teammembers)
 		buildteamobj(message);
 		console.log(teammembers)
 		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
@@ -39,11 +39,11 @@ client.on('message', async message => {
 //!build command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!build")) {
-    
-    console.log(teammembers)
+
+		console.log(teammembers)
 		buildteamobj(message);
 		console.log(teammembers)
-		
+
 	}
 });//end client on message
 
@@ -164,12 +164,12 @@ function rebuildteamobj(message) {
 }//end function getstatusboard 
 
 //define team/role arrarys outside command
-var eggstremeMem = [];
-var overeasyMem = [];
-var yolkstersMem = [];
-var sunnysideMem = [];
-var fowlplayMem = [];
-var hardboiledMem = [];
+//var eggstremeMem = [];
+//var overeasyMem = [];
+//var yolkstersMem = [];
+//var sunnysideMem = [];
+//var fowlplayMem = [];
+//var hardboiledMem = [];
 
 //check if the user is on one of the home teams
 function validuser(message, user) {
@@ -200,8 +200,6 @@ function validteam(team) {
 
 //function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
-
-	//new
 
 	for (var i = 0; i < teams.teams.length; i++) {
 
@@ -400,6 +398,62 @@ client.on('message', async message => {
 		//open a new coop
 		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
 
+			//Block 2 - Who has been placed in coop
+
+			//build initial team arrays.
+			//eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
+			//overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
+			//yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
+			//sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
+			//fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
+			//hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
+
+			//add red squares
+			//for (var i = 0; i < eggstremeMem.length; i++) { eggstremeMem[i] = "🟥 " + eggstremeMem[i]; }
+			//for (var i = 0; i < overeasyMem.length; i++) { overeasyMem[i] = "🟥 " + overeasyMem[i]; }
+			//for (var i = 0; i < yolkstersMem.length; i++) { yolkstersMem[i] = "🟥 " + yolkstersMem[i]; }
+			//for (var i = 0; i < sunnysideMem.length; i++) { sunnysideMem[i] = "🟥 " + sunnysideMem[i]; }
+			//for (var i = 0; i < fowlplayMem.length; i++) { fowlplayMem[i] = "🟥 " + fowlplayMem[i]; }
+			//for (var i = 0; i < hardboiledMem.length; i++) { hardboiledMem[i] = "🟥 " + hardboiledMem[i]; }
+
+			//initialise teams object (becasue this is the !coop open command)
+			buildteamobj(message);
+
+			let placedEmbed = new Discord.MessageEmbed()
+				.setTitle("Player status board")
+				.setDescription('🟥 - Not yet offered coop\n\n🟧 - Offered coop\n\n🟩 - In coop')
+				.setColor('#00FF00')
+				.setFooter('Bot created by LaniakeaSC')
+
+			//.addFields(
+			//	{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
+			//	{ name: `Team over-easy`, value: overeasyMem, inline: true },
+			//	{ name: `Team yolksters`, value: yolkstersMem, inline: true },
+			//	{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
+			//	{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
+			//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
+			//);
+
+			//add teams and players for embed from teams/teammeber objects
+			for (var i = 0; i < teams.teams.length; i++) {
+
+				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
+				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
+
+			}
+
+			//add red squares
+			//for (let key in teammembers) {
+			//	for (var i = 0; i < teammembers[key].length; i++) {
+			//		teammembers[key][i] = "🟥 " + teammembers[key][i];
+			//	}
+			//}
+
+			message.channel.send(placedEmbed).then(async msg => {
+				msg.pin();
+			})//end pin placed user embed
+			//end of block 2
+
 			//block 1 - coop voting block
 			//unpin all messages
 			message.channel.messages.fetchPinned().then(messages => { messages.forEach(message => { message.unpin() }) });
@@ -492,62 +546,6 @@ client.on('message', async message => {
 
 			});//end the .then from sending initial embed
 			//end of block 1
-
-			//Block 2 - Who has been placed in coop
-
-			//build initial team arrays.
-			//eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
-			//overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
-			//yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
-			//sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
-			//fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
-			//hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
-
-			//add red squares
-			//for (var i = 0; i < eggstremeMem.length; i++) { eggstremeMem[i] = "🟥 " + eggstremeMem[i]; }
-			//for (var i = 0; i < overeasyMem.length; i++) { overeasyMem[i] = "🟥 " + overeasyMem[i]; }
-			//for (var i = 0; i < yolkstersMem.length; i++) { yolkstersMem[i] = "🟥 " + yolkstersMem[i]; }
-			//for (var i = 0; i < sunnysideMem.length; i++) { sunnysideMem[i] = "🟥 " + sunnysideMem[i]; }
-			//for (var i = 0; i < fowlplayMem.length; i++) { fowlplayMem[i] = "🟥 " + fowlplayMem[i]; }
-			//for (var i = 0; i < hardboiledMem.length; i++) { hardboiledMem[i] = "🟥 " + hardboiledMem[i]; }
-
-			//initialise teams object (becasue this is the !coop open command)
-			buildteamobj(message);
-
-			let placedEmbed = new Discord.MessageEmbed()
-				.setTitle("Player status board")
-				.setDescription('🟥 - Not yet offered coop\n\n🟧 - Offered coop\n\n🟩 - In coop')
-				.setColor('#00FF00')
-				.setFooter('Bot created by LaniakeaSC')
-
-			//.addFields(
-			//	{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
-			//	{ name: `Team over-easy`, value: overeasyMem, inline: true },
-			//	{ name: `Team yolksters`, value: yolkstersMem, inline: true },
-			//	{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
-			//	{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
-			//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
-			//);
-
-			//add teams and players for embed from teams/teammeber objects
-			for (var i = 0; i < teams.teams.length; i++) {
-
-				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
-				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
-
-			}
-
-			//add red squares
-			//for (let key in teammembers) {
-			//	for (var i = 0; i < teammembers[key].length; i++) {
-			//		teammembers[key][i] = "🟥 " + teammembers[key][i];
-			//	}
-			//}
-
-			message.channel.send(placedEmbed).then(async msg => {
-				msg.pin();
-			})//end pin placed user embed
-			//end of block 2
 
 		};//end the if !open
 
