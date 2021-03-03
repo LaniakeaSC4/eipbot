@@ -188,7 +188,8 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	for (var i = 0; i < teams.teams.length; i++) {
 
 		var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
-
+		console.log('cleanrole: '+cleanrole);
+		console.log('teammembers[cleanrole]: ' + teammembers[cleanrole]);
 		for (var j = 0; j < teammembers[cleanrole].length; j++) {
 			if (teammembers[cleanrole][j].includes(user)) {
 				let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
