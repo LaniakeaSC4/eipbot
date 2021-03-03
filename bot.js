@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.on('ready', () => { 
   console.log('I am ready!'); 
-  var statuschannel = bot.channels.cache.find(channel => channel.name === "bot-status"); 
+  var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status"); 
    client.channels.cache.get(statuschannel)
           .send(`EIP Bot online!`);
 });
