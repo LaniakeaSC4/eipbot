@@ -4,15 +4,15 @@ client.on('ready', () => {
 	console.log('I am ready!');
 	var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
 	client.channels.cache.get(statuschannel.id)
-		.send(`!EIP Bot online!`);
+		.send(`!EIP Bot reporting for duty (I have been restarted... But I am back!)`);
 });
 
 client.on('message', async message => {
-	if (message.content.startsWith("!EIP Bot online!")) {
+	if (message.content.startsWith("!EIP Bot reporting for duty")) {
     console.log(teammembers)
 		buildteamobj(message);
 		console.log(teammembers)
-		message.channel.send('I am gald we are alive! Please tell our master that the tea members object has been rebuilt. We are ready for action!');
+		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
 
 	}
 });//end client on message
