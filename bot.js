@@ -10,7 +10,7 @@ client.on('ready', () => {
 client.on('message', async message => {
 	if (message.content.startsWith("!EIP Bot online!")) {
 
-		message.channel.send('That is great news glad your up and running!');
+		message.channel.reply('That is great news glad your up and running!');
 
 	}
 });//end client on message
