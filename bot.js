@@ -4,8 +4,16 @@ client.on('ready', () => {
 	console.log('I am ready!');
 	var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
 	client.channels.cache.get(statuschannel.id)
-		.send(`EIP Bot online!`);
+		.send(`!EIP Bot online!`);
 });
+
+client.on('message', async message => {
+	if (message.content.startsWith("!EIP Bot online!")) {
+
+		message.channel.send('That is great news glad your up and running!');
+
+	}
+});//end client on message
 
 // ---- Info ----
 // home team should be under category including word "home"
