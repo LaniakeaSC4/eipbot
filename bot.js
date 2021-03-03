@@ -4,7 +4,7 @@ client.on('ready', () => {
   console.log('I am ready!'); 
   var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
   console.log(statuschannel);
-   client.channels.cache.get(statuschannel)
+   client.channels.cache.get(statuschannel.id)
           .send(`EIP Bot online!`);
 });
 
