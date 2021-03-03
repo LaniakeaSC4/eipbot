@@ -154,22 +154,10 @@ function rebuildteamobj(message) {
 					teammembers[thisteam] = thesemembers;
 
 				}
-
 			}//end if embed and footer text contains
-
 		})//end message.forEach
-
 	})//end .then after fetchPinned 
-
 }//end function getstatusboard 
-
-//define team/role arrarys outside command
-//var eggstremeMem = [];
-//var overeasyMem = [];
-//var yolkstersMem = [];
-//var sunnysideMem = [];
-//var fowlplayMem = [];
-//var hardboiledMem = [];
 
 //check if the user is on one of the home teams
 function validuser(message, user) {
@@ -223,42 +211,6 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 		let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
 	}
 
-	//	if (team == 'egg-streme') {
-	//		for (var i = 0; i < eggstremeMem.length; i++) {
-	//			let str = eggstremeMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); eggstremeMem[i] = res;
-	//		}
-	//	}//end if team Egg-streme
-
-	//	if (team == 'over-easy') {
-	//		for (var i = 0; i < overeasyMem.length; i++) {
-	//			let str = overeasyMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); overeasyMem[i] = res;
-	//		}
-	//	}//end if team over-easy
-
-	//	if (team == 'yolksters') {
-	//		for (var i = 0; i < yolkstersMem.length; i++) {
-	//			let str = yolkstersMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); yolkstersMem[i] = res;
-	//		}
-	//	}//end if team yolksters
-
-	//	if (team == 'sunny-side') {
-	//		for (var i = 0; i < sunnysideMem.length; i++) {
-	//			let str = sunnysideMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); sunnysideMem[i] = res;
-	//		}
-	//	}//end if team sunny-side
-
-	//	if (team == 'fowl-play') {
-	//		for (var i = 0; i < fowlplayMem.length; i++) {
-	//			let str = fowlplayMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); fowlplayMem[i] = res;
-	//		}
-	//	}//end if team fowl-play
-
-	//	if (team == 'hard-boiled') {
-	//		for (var i = 0; i < hardboiledMem.length; i++) {
-	//			let str = hardboiledMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); hardboiledMem[i] = res;
-	//		}
-	//	}//end if team hard-boiled
-
 }//end of changeteamsquare function
 
 //function to republish the player status board from current state of arrays
@@ -270,21 +222,12 @@ function updateplayerboard(message) {
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+
 				var receivedEmbed = message.embeds[0]; //copy embeds from it
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
 				//clear fields
 				updatedEmbed.fields = [];
-
-				//add the modified arrays back to fields
-				//updatedEmbed.addFields(
-				//	{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
-				//	{ name: `Team over-easy`, value: overeasyMem, inline: true },
-				//	{ name: `Team yolksters`, value: yolkstersMem, inline: true },
-				//	{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
-				//	{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
-				//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
-				//);
 
 				//add teams and players for embed from teams/teammeber objects
 				for (var i = 0; i < teams.teams.length; i++) {
@@ -400,22 +343,6 @@ client.on('message', async message => {
 
 			//Block 2 - Who has been placed in coop
 
-			//build initial team arrays.
-			//eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
-			//overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
-			//yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
-			//sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
-			//fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
-			//hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
-
-			//add red squares
-			//for (var i = 0; i < eggstremeMem.length; i++) { eggstremeMem[i] = "🟥 " + eggstremeMem[i]; }
-			//for (var i = 0; i < overeasyMem.length; i++) { overeasyMem[i] = "🟥 " + overeasyMem[i]; }
-			//for (var i = 0; i < yolkstersMem.length; i++) { yolkstersMem[i] = "🟥 " + yolkstersMem[i]; }
-			//for (var i = 0; i < sunnysideMem.length; i++) { sunnysideMem[i] = "🟥 " + sunnysideMem[i]; }
-			//for (var i = 0; i < fowlplayMem.length; i++) { fowlplayMem[i] = "🟥 " + fowlplayMem[i]; }
-			//for (var i = 0; i < hardboiledMem.length; i++) { hardboiledMem[i] = "🟥 " + hardboiledMem[i]; }
-
 			//initialise teams object (becasue this is the !coop open command)
 			buildteamobj(message);
 
@@ -425,15 +352,6 @@ client.on('message', async message => {
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC')
 
-			//.addFields(
-			//	{ name: `Team egg-streme`, value: eggstremeMem, inline: true },
-			//	{ name: `Team over-easy`, value: overeasyMem, inline: true },
-			//	{ name: `Team yolksters`, value: yolkstersMem, inline: true },
-			//	{ name: `Team sunny-side`, value: sunnysideMem, inline: true },
-			//	{ name: `Team fowl-play`, value: fowlplayMem, inline: true },
-			//	{ name: `Team hard-boiled`, value: hardboiledMem, inline: true }
-			//);
-
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < teams.teams.length; i++) {
 
@@ -441,13 +359,6 @@ client.on('message', async message => {
 				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
 
 			}
-
-			//add red squares
-			//for (let key in teammembers) {
-			//	for (var i = 0; i < teammembers[key].length; i++) {
-			//		teammembers[key][i] = "🟥 " + teammembers[key][i];
-			//	}
-			//}
 
 			message.channel.send(placedEmbed).then(async msg => {
 				msg.pin();
@@ -574,6 +485,8 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
+			//rebuild teammembers object from this message
+			rebuildteamobj(message);
 			changeusersquare("🟩", "🟧", "🟥", mentioneduser);
 			updateplayerboard(message);
 
@@ -582,6 +495,7 @@ client.on('message', async message => {
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
+			rebuildteamobj(message);
 			changeteamsquare("🟩", "🟧", "🟥", mentionedrole);
 			updateplayerboard(message);
 
@@ -606,6 +520,7 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
+			rebuildteamobj(message);
 			changeusersquare("🟩", "🟥", "🟧", mentioneduser);
 			updateplayerboard(message);
 
@@ -614,6 +529,7 @@ client.on('message', async message => {
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
+			rebuildteamobj(message);
 			changeteamsquare("🟩", "🟥", "🟧", mentionedrole);
 			updateplayerboard(message);
 
@@ -638,6 +554,7 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
+			rebuildteamobj(message);
 			changeusersquare("🟧", "🟥", "🟩", mentioneduser);
 			updateplayerboard(message);
 
@@ -646,6 +563,7 @@ client.on('message', async message => {
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
+			rebuildteamobj(message);
 			changeteamsquare("🟧", "🟥", "🟩", mentionedrole);
 			updateplayerboard(message);
 
