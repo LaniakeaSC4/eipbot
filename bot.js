@@ -183,8 +183,8 @@ function validteam(team) {
 }//end function validteam
 
 //function to loop through all of the team arrarys looking for the user and change thier square colour
-function changeusersquare(oldsq1, oldsq2, newsq, user) {
-
+function changeusersquare(oldsq1, oldsq2, newsq, user, message) {
+	rebuildteamobj(message);
 	for (var i = 0; i < teams.teams.length; i++) {
 
 		var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
@@ -199,8 +199,8 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 }//end of changeusersquare function
 
 //function to change whole team's squares at once
-function changeteamsquare(oldsq1, oldsq2, newsq, team) {
-
+function changeteamsquare(oldsq1, oldsq2, newsq, team, message) {
+	rebuildteamobj(message);
 	var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
 
 	for (var i = 0; i < teammembers[cleanrole].length; i++) {
@@ -481,9 +481,7 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
-			//rebuild teammembers object from this message
-			rebuildteamobj(message);
-			changeusersquare("🟩", "🟧", "🟥", mentioneduser);
+			changeusersquare("🟩", "🟧", "🟥", mentioneduser, message);
 			updateplayerboard(message);
 
 		}//end if isuser = true
@@ -491,8 +489,7 @@ client.on('message', async message => {
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
-			rebuildteamobj(message);
-			changeteamsquare("🟩", "🟧", "🟥", mentionedrole);
+			changeteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
 			updateplayerboard(message);
 
 		}//end if isteam = true
@@ -516,8 +513,7 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
-			rebuildteamobj(message);
-			changeusersquare("🟩", "🟥", "🟧", mentioneduser);
+			changeusersquare("🟩", "🟥", "🟧", mentioneduser, message);
 			updateplayerboard(message);
 
 		}//end if isuser = true
@@ -525,8 +521,7 @@ client.on('message', async message => {
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
-			rebuildteamobj(message);
-			changeteamsquare("🟩", "🟥", "🟧", mentionedrole);
+			changeteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
 			updateplayerboard(message);
 
 		}//end if isteam = true
@@ -550,8 +545,7 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
-			rebuildteamobj(message);
-			changeusersquare("🟧", "🟥", "🟩", mentioneduser);
+			changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			updateplayerboard(message);
 
 		}//end if isuser = true
@@ -559,8 +553,7 @@ client.on('message', async message => {
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
-			rebuildteamobj(message);
-			changeteamsquare("🟧", "🟥", "🟩", mentionedrole);
+			changeteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
 			updateplayerboard(message);
 
 		}//end if isteam = true
