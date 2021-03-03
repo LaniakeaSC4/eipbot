@@ -185,15 +185,19 @@ function validteam(team) {
 //function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 
-	var teams = [eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem]
-	//for loop to go through each team
-	for (var i = 0; i < teams.length; i++) {
-		for (var j = 0; j < teams[i].length; j++) {
-			if (teams[i][j].includes(user)) {
-				let str = teams[i][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teams[i][j] = res;
-			}//end replace square function
+//new
+
+for (var i = 0; i < teams.teams.length; i++) {
+
+					var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+					
+					for (var j = 0; j < teammembers[cleanrole].length;j++){
+					  if (teammembers[cleanrole][j].includes(user)) {
+					    let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
+					  } //end replace square core function
 		}//end for this team loop
 	}//end teams for loop
+	console.log(teammembers);
 }//end of changeusersquare function
 
 //function to change whole team's squares at once
