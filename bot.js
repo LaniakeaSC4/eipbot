@@ -9,7 +9,9 @@ client.on('ready', () => {
 
 client.on('message', async message => {
 	if (message.content.startsWith("!EIP Bot online!")) {
-
+    console.log(teammembers)
+		buildteamobj(message);
+		console.log(teammembers)
 		message.channel.send('That is great news glad your up and running!');
 
 	}
