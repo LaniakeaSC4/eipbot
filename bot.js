@@ -153,6 +153,7 @@ function rebuildteamobj(message) {
 			}//end if embed and footer text contains
 		})//end message.forEach
 	})//end .then after fetchPinned 
+	console.log(teammembers);
 }//end function rebuildteamobj 
 
 //check if the user is on one of the home teams
