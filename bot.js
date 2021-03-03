@@ -10,7 +10,7 @@ client.on('ready', () => {
 client.on('message', async message => {
 	if (message.content.startsWith("!EIP Bot online!")) {
 
-		message.channel.reply('That is great news glad your up and running!');
+		message.channel.send('That is great news glad your up and running!');
 
 	}
 });//end client on message
@@ -37,10 +37,11 @@ client.on('message', async message => {
 //!build command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!build")) {
-
+    
+    console.log(teammembers)
 		buildteamobj(message);
 		console.log(teammembers)
-		//console.log('teams:' + teams)
+		
 	}
 });//end client on message
 
