@@ -203,41 +203,47 @@ for (var i = 0; i < teams.teams.length; i++) {
 //function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 
-	if (team == 'egg-streme') {
-		for (var i = 0; i < eggstremeMem.length; i++) {
-			let str = eggstremeMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); eggstremeMem[i] = res;
-		}
-	}//end if team Egg-streme
+var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
 
-	if (team == 'over-easy') {
-		for (var i = 0; i < overeasyMem.length; i++) {
-			let str = overeasyMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); overeasyMem[i] = res;
-		}
-	}//end if team over-easy
+for (var i = 0;i < teammembers[cleanrole].length;i++){
+  let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
+}
 
-	if (team == 'yolksters') {
-		for (var i = 0; i < yolkstersMem.length; i++) {
-			let str = yolkstersMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); yolkstersMem[i] = res;
-		}
-	}//end if team yolksters
+//	if (team == 'egg-streme') {
+//		for (var i = 0; i < eggstremeMem.length; i++) {
+//			let str = eggstremeMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); eggstremeMem[i] = res;
+//		}
+//	}//end if team Egg-streme
 
-	if (team == 'sunny-side') {
-		for (var i = 0; i < sunnysideMem.length; i++) {
-			let str = sunnysideMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); sunnysideMem[i] = res;
-		}
-	}//end if team sunny-side
+//	if (team == 'over-easy') {
+//		for (var i = 0; i < overeasyMem.length; i++) {
+//			let str = overeasyMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); overeasyMem[i] = res;
+//		}
+//	}//end if team over-easy
 
-	if (team == 'fowl-play') {
-		for (var i = 0; i < fowlplayMem.length; i++) {
-			let str = fowlplayMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); fowlplayMem[i] = res;
-		}
-	}//end if team fowl-play
+//	if (team == 'yolksters') {
+//		for (var i = 0; i < yolkstersMem.length; i++) {
+//			let str = yolkstersMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); yolkstersMem[i] = res;
+//		}
+//	}//end if team yolksters
 
-	if (team == 'hard-boiled') {
-		for (var i = 0; i < hardboiledMem.length; i++) {
-			let str = hardboiledMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); hardboiledMem[i] = res;
-		}
-	}//end if team hard-boiled
+//	if (team == 'sunny-side') {
+//		for (var i = 0; i < sunnysideMem.length; i++) {
+//			let str = sunnysideMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); sunnysideMem[i] = res;
+//		}
+//	}//end if team sunny-side
+
+//	if (team == 'fowl-play') {
+//		for (var i = 0; i < fowlplayMem.length; i++) {
+//			let str = fowlplayMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); fowlplayMem[i] = res;
+//		}
+//	}//end if team fowl-play
+
+//	if (team == 'hard-boiled') {
+//		for (var i = 0; i < hardboiledMem.length; i++) {
+//			let str = hardboiledMem[i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); hardboiledMem[i] = res;
+//		}
+//	}//end if team hard-boiled
 
 }//end of changeteamsquare function
 
