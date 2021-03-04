@@ -9,7 +9,7 @@ client.on('ready', () => {
 
 client.on('message', async message => {
 	if (message.content.startsWith("!EIP Bot reporting for duty")) {
-		buildteamobj(message);
+		//buildteamobj(message);
 		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
 
 	}
@@ -135,7 +135,7 @@ function rebuildteamobj(message) {
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-
+console.log('found message with footer in rebuild obj function');
 				for (var i = 0; i < embed.fields.length; i++) {
 
 					var thesemembers = embed.fields[i].value
