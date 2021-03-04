@@ -617,7 +617,7 @@ client.on('message', async message => {
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
-			updateplayersquare("🟧", "🟥", "🟩", mentionedrole, message);
+			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
 
 		}//end if isteam = true
 
