@@ -331,8 +331,8 @@ function getname(message) {
 
 }//end getname function
 
-function thankyou(author,updatedthis,message){
-	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + '. Statusboard will update in ~5 seconds. Please wait.')
+function thankyou(author,updatedthis,color,message){
+	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + '.\nStatusboard will update in ~5 seconds. Please wait.')
 	message.delete()
 
 }
@@ -553,6 +553,7 @@ client.on('message', async message => {
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
+			thankyou(message.member.displayName,mentioneduser,"red",message);
 
 		}//end if isuser = true
 
@@ -560,6 +561,7 @@ client.on('message', async message => {
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
+			thankyou(message.member.displayName,mentionedrole,"red",message);
 
 		}//end if isteam = true
 
@@ -583,6 +585,7 @@ client.on('message', async message => {
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message);
+			thankyou(message.member.displayName,mentioneduser,"orange",message);
 
 		}//end if isuser = true
 
@@ -590,6 +593,7 @@ client.on('message', async message => {
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
+			thankyou(message.member.displayName,mentionedrole,"orange",message);
 
 		}//end if isteam = true
 
@@ -613,7 +617,7 @@ client.on('message', async message => {
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
-			thankyou(message.member.displayName,mentioneduser,message);
+			thankyou(message.member.displayName,mentioneduser,"green",message);
 
 		}//end if isuser = true
 
@@ -621,7 +625,7 @@ client.on('message', async message => {
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
-			thankyou(message.member.displayName,mentionedrole,message);
+			thankyou(message.member.displayName,mentionedrole,"green",message);
 
 		}//end if isteam = true
 
