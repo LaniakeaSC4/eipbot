@@ -125,6 +125,9 @@ function rebuildteamobj(message) {
 		//clear object for rebuilding it
 		teammembers = {};
 
+		//define teams array, team names will be stored here for use by other functions
+		var teamnames = [];
+
 		//get the status board
 		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
@@ -143,16 +146,22 @@ function rebuildteamobj(message) {
 
 						//get clean team name to be key for updating main teammembers object
 						var thisteam = embed.fields[i].name.split(' ').pop()
-						thisteam = thisteam.replace(/[^a-zA-Z ]/g, "");
 
-						console.log(thisteam);
-						teammembers[thisteam] = thesemembers;
+						console.log(thisteam)
+						//save the team name itself for use by other functions
+						teamnames.push(thisteam)
+
+						//clean the role of any special characters (remove hyphenation) for keying storage in the teams object.
+						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
+
+						//store members in the team members object, keyed by cleaned team name
+						teammembers[cleanrole] = thesemembers;
 					}//end for loop
 					resolve(true);
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
-
+		teams['teams'] = teamnames;
 	})//end promise
 }//end function rebuildteamobj 
 
