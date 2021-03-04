@@ -548,9 +548,11 @@ client.on('message', async message => {
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			rebuildteamobj(message).then((truefalse) => {
-			console.log(truefalse)
-			changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
-			updateplayerboard(message);
+				console.log(truefalse)
+				changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
+				updateplayerboard(message);
+			}).catch((error) => {
+				console.log(error.name + ' ' + error.message)
 			})
 
 		}//end if isuser = true
