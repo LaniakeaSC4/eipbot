@@ -29,7 +29,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 
-		
+
 
 	}
 });//end client on message
@@ -39,7 +39,7 @@ client.on('message', async message => {
 	if (message.content.startsWith("!build")) {
 
 		buildteamobj(message);
-		
+
 	}
 });//end client on message
 
@@ -118,20 +118,20 @@ function buildteamobj(message) {
 	teams['teams'] = teamnames;
 }//end function
 
-const rebuildstatus = async function(oldsq1, oldsq2, newsq, user, message) {
-  await rebuildteamobj(message);
-  changeusersquare(oldsq1, oldsq2, newsq, user);
-  updateplayerboard(message);
+const rebuildstatus = async function (oldsq1, oldsq2, newsq, user, message) {
+	console.log('before f1');
+	await rebuildteamobj(message);
+	console.log('after f1')
+	changeusersquare(oldsq1, oldsq2, newsq, user);
+	updateplayerboard(message);
 }
 
 //function rebuild team arrays
-const rebuildteamobj = async function(message) {
-
+const rebuildteamobj = async function (message) {
+	console.log('entered rebuildteamobj function')
 	//clear object for rebuilding it
-	console.log(teammembers);
 	teammembers = {};
-	console.log(teammembers);
-
+	
 	//get the status board
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
@@ -141,7 +141,7 @@ const rebuildteamobj = async function(message) {
 			let embed = message.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-console.log('found message with footer in rebuild obj function');
+				console.log('found message with footer in rebuild obj function');
 				for (var i = 0; i < embed.fields.length; i++) {
 
 					var thesemembers = embed.fields[i].value
@@ -162,40 +162,13 @@ console.log('found message with footer in rebuild obj function');
 	console.log(teammembers);
 }//end function rebuildteamobj 
 
-//check if the user is on one of the home teams
-function validuser(message, user) {
-
-	var validusers = [];//blank the validusers array
-
-	//fill validusers with all the members. vars declared local to this function
-	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
-	var overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
-	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
-	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
-	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
-	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
-
-	//combine all
-	var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
-
-	//if user passed to function is in that array, return true, else false
-	if (validusers.includes(user)) { return true } else { return false }
-
-}//end function validuser
-
-//check if the role mentioned is one of the valid home teams
-function validteam(team) {
-	//this uses teams arrary establised for the team card bot
-	if (teams.includes(team)) { return true } else { return false }
-}//end function validteam
-
 //function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
+	console.log('entered changerusersquare function')
 	for (var i = 0; i < teams.teams.length; i++) {
 
 		var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
-		console.log('cleanrole: '+cleanrole);
-		console.log('teammembers[cleanrole]: ' + teammembers[cleanrole]);
+
 		for (var j = 0; j < teammembers[cleanrole].length; j++) {
 			if (teammembers[cleanrole][j].includes(user)) {
 				let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
@@ -206,7 +179,7 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 
 //function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
-	
+
 	var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
 
 	for (var i = 0; i < teammembers[cleanrole].length; i++) {
@@ -217,6 +190,7 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 
 //function to republish the player status board from current state of arrays
 function updateplayerboard(message) {
+	console.log('entered updateplayerboard function')
 	//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message
@@ -250,6 +224,33 @@ function updateplayerboard(message) {
 
 }//end function updateplayerboard
 
+//check if the user is on one of the home teams
+function validuser(message, user) {
+
+	var validusers = [];//blank the validusers array
+
+	//fill validusers with all the members. vars declared local to this function
+	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
+	var overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
+	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
+	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
+	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
+	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
+
+	//combine all
+	var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
+
+	//if user passed to function is in that array, return true, else false
+	if (validusers.includes(user)) { return true } else { return false }
+
+}//end function validuser
+
+//check if the role mentioned is one of the valid home teams
+function validteam(team) {
+	//this uses teams arrary establised for the team card bot
+	if (teams.includes(team)) { return true } else { return false }
+}//end function validteam
+
 //function to get displayname for those that have changed thiers. Returns regular username if they dont have a nickname
 function getname(message) {
 
@@ -273,6 +274,7 @@ function getname(message) {
 
 }//end getname function
 
+//restart collector function for startup - not yet developed
 //search all channels. find all posts that need collectors and restart them?
 function startcollector(msg) {
 
@@ -550,7 +552,7 @@ client.on('message', async message => {
 
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
-rebuildstatus("🟧", "🟥", "🟩", mentioneduser, message);
+			rebuildstatus("🟧", "🟥", "🟩", mentioneduser, message);
 			//changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			//updateplayerboard(message);
 
