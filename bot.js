@@ -119,7 +119,7 @@ function buildteamobj(message) {
 }//end function 
 
 //function rebuild team arrays
-async function rebuildteamobj(message) {
+const rebuildteamobj = async function(message) {
 
 	//clear object for rebuilding it
 	console.log(teammembers);
