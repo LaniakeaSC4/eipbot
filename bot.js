@@ -116,7 +116,13 @@ function buildteamobj(message) {
 
 	//store the teams in the object
 	teams['teams'] = teamnames;
-}//end function 
+}//end function
+
+const rebuildstatus = async function(oldsq1, oldsq2, newsq, user, message) {
+  await rebuildteamobj(message);
+  changeusersquare(oldsq1, oldsq2, newsq, user);
+  updateplayerboard(message);
+}
 
 //function rebuild team arrays
 const rebuildteamobj = async function(message) {
@@ -184,8 +190,7 @@ function validteam(team) {
 }//end function validteam
 
 //function to loop through all of the team arrarys looking for the user and change thier square colour
-function changeusersquare(oldsq1, oldsq2, newsq, user, message) {
-await	rebuildteamobj(message);
+function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	for (var i = 0; i < teams.teams.length; i++) {
 
 		var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
@@ -200,8 +205,8 @@ await	rebuildteamobj(message);
 }//end of changeusersquare function
 
 //function to change whole team's squares at once
-function changeteamsquare(oldsq1, oldsq2, newsq, team, message) {
-	await rebuildteamobj(message);
+function changeteamsquare(oldsq1, oldsq2, newsq, team) {
+	
 	var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
 
 	for (var i = 0; i < teammembers[cleanrole].length; i++) {
@@ -545,9 +550,9 @@ client.on('message', async message => {
 
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
-
-			changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
-			updateplayerboard(message);
+rebuildstatus("🟧", "🟥", "🟩", mentioneduser, message);
+			//changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
+			//updateplayerboard(message);
 
 		}//end if isuser = true
 
