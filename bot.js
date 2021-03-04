@@ -162,11 +162,11 @@ function rebuildteamobj(message) {
 		})//end message.forEach
 	})//end .then after fetchPinned 
 	console.log(teammembers);
-}//end function rebuildteamobj 
+})//end function rebuildteamobj 
 
 //function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user, message) {
-	rebuildteamobj(message);
+	
 	console.log('entered changerusersquare function')
 	for (var i = 0; i < teams.teams.length; i++) {
 
@@ -556,6 +556,7 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 			
+			rebuildteamobj(message);
 			changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			updateplayerboard(message);
 
