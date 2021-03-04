@@ -129,7 +129,7 @@ const rebuildstatus = async function (oldsq1, oldsq2, newsq, user, message) {
 }
 
 //function rebuild team arrays
-const rebuildteamobj = async function (message) {
+function rebuildteamobj(message) {
 	console.log('entered rebuildteamobj function')
 	//clear object for rebuilding it
 	teammembers = {};
@@ -554,9 +554,10 @@ client.on('message', async message => {
 
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
-			rebuildstatus("🟧", "🟥", "🟩", mentioneduser, message);
-			//changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
-			//updateplayerboard(message);
+			
+			rebuildteamobj(message);
+			changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
+			updateplayerboard(message);
 
 		}//end if isuser = true
 
