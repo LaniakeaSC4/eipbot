@@ -120,10 +120,10 @@ function buildteamobj(message) {
 
 const rebuildstatus = async function (oldsq1, oldsq2, newsq, user, message) {
 	console.log('before f1');
-	await rebuildteamobj(message);
+	await rebuildteamobj(message).then({changeusersquare(oldsq1, oldsq2, newsq, user);updateplayerboard(message);});
 	console.log('after f1')
-	changeusersquare(oldsq1, oldsq2, newsq, user);
-	updateplayerboard(message);
+	//changeusersquare(oldsq1, oldsq2, newsq, user);
+	//updateplayerboard(message);
 }
 
 //function rebuild team arrays
