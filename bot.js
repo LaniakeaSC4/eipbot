@@ -118,55 +118,46 @@ function buildteamobj(message) {
 	teams['teams'] = teamnames;
 }//end function
 
-const rebuildstatus = async function (oldsq1, oldsq2, newsq, user, message) {
-	console.log('before f1');
-	await rebuildteamobj(message).then(result => {
-		changeusersquare(oldsq1, oldsq2, newsq, user);
-		updateplayerboard(message)});
-	console.log('after f1');
-	//changeusersquare(oldsq1, oldsq2, newsq, user);
-	//updateplayerboard(message);
-}
-
 //function rebuild team arrays
 function rebuildteamobj(message) {
-	console.log('entered rebuildteamobj function')
-	//clear object for rebuilding it
-	teammembers = {};
-	
-	//get the status board
-	//fetch pinned messages
-	message.channel.messages.fetchPinned().then(messages => {
-		//for each pinned message 
-		messages.forEach(message => {
+	return new Promise((resolve, reject) => {
+		console.log('entered rebuildteamobj function')
+		//clear object for rebuilding it
+		teammembers = {};
 
-			let embed = message.embeds[0];
+		//get the status board
+		//fetch pinned messages
+		message.channel.messages.fetchPinned().then(messages => {
+			//for each pinned message 
+			messages.forEach(message => {
 
-			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				console.log('found message with footer in rebuild obj function');
-				for (var i = 0; i < embed.fields.length; i++) {
+				let embed = message.embeds[0];
 
-					var thesemembers = embed.fields[i].value
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+					console.log('found message with footer in rebuild obj function');
+					for (var i = 0; i < embed.fields.length; i++) {
 
-					thesemembers = thesemembers.split('\n');
+						var thesemembers = embed.fields[i].value
 
-					//get clean team name to be key for updating main teammembers object
-					var thisteam = embed.fields[i].name.split(' ').pop()
-					thisteam = thisteam.replace(/[^a-zA-Z ]/g, "");
+						thesemembers = thesemembers.split('\n');
 
-					console.log(thisteam);
-					teammembers[thisteam] = thesemembers;
+						//get clean team name to be key for updating main teammembers object
+						var thisteam = embed.fields[i].name.split(' ').pop()
+						thisteam = thisteam.replace(/[^a-zA-Z ]/g, "");
 
-				}
-			}//end if embed and footer text contains
-		})//end message.forEach
-	})//end .then after fetchPinned 
-	console.log(teammembers);
+						console.log(thisteam);
+						teammembers[thisteam] = thesemembers;
+						resolve(true);
+					}
+				} else { reject(false) }//end if embed and footer text contains
+			})//end message.forEach
+		})//end .then after fetchPinned
+	})//end promise
 }//end function rebuildteamobj 
 
 //function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user, message) {
-	
+
 	console.log('entered changerusersquare function')
 	for (var i = 0; i < teams.teams.length; i++) {
 
@@ -555,10 +546,12 @@ client.on('message', async message => {
 
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
-			
-			rebuildteamobj(message);
+
+			rebuildteamobj(message).then((truefalse) => {
+			console.log(truefalse)
 			changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			updateplayerboard(message);
+			}
 
 		}//end if isuser = true
 
