@@ -551,7 +551,7 @@ client.on('message', async message => {
 			console.log(truefalse)
 			changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			updateplayerboard(message);
-			}
+			})
 
 		}//end if isuser = true
 
