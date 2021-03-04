@@ -119,7 +119,7 @@ function buildteamobj(message) {
 }//end function 
 
 //function rebuild team arrays
-function rebuildteamobj(message) {
+async function rebuildteamobj(message) {
 
 	//clear object for rebuilding it
 	console.log(teammembers);
@@ -185,7 +185,7 @@ function validteam(team) {
 
 //function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user, message) {
-	rebuildteamobj(message);
+await	rebuildteamobj(message);
 	for (var i = 0; i < teams.teams.length; i++) {
 
 		var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
@@ -201,7 +201,7 @@ function changeusersquare(oldsq1, oldsq2, newsq, user, message) {
 
 //function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team, message) {
-	rebuildteamobj(message);
+	await rebuildteamobj(message);
 	var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
 
 	for (var i = 0; i < teammembers[cleanrole].length; i++) {
