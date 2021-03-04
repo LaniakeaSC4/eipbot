@@ -22,7 +22,7 @@ client.on('message', async message => {
 // ---- ---- ----
 
 //=======================================
-//		Coop bot	|	Functions
+//	Coop bot | Functions
 //=======================================
 
 //!test command for testing things
@@ -52,9 +52,15 @@ client.on('message', async message => {
 	}
 });//end client on message
 
-//function to build team object from home team channels
+//=======================================
+// Coop bot | Functions | Initalise
+//=======================================
+
+//define global storage objects
 var teams = {};
 var teammembers = {};
+
+//function to build team object from home team channels
 function buildteamobj(message) {
 
 	//get array of all server roles
@@ -91,7 +97,7 @@ function buildteamobj(message) {
 				//first lets save the team name itself for use by other functions
 				teamnames.push(roles[j])
 
-				//clean the role of any special characters (remove hyphenation) for keying storage in the teams object.
+				//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 				var cleanrole = roles[j].replace(/[^a-zA-Z ]/g, "");
 
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
@@ -114,9 +120,13 @@ function buildteamobj(message) {
 		}
 	}
 
-	//store the teams in the object
+	//store the teams (roles) in the object
 	teams['teams'] = teamnames;
 }//end function
+
+//=======================================
+// Coop bot | Functions | rebuild
+//=======================================
 
 //function rebuild team arrays
 function rebuildteamobj(message) {
@@ -128,30 +138,31 @@ function rebuildteamobj(message) {
 		//define teams array, team names will be stored here for use by other functions
 		var teamnames = [];
 
-		//get the status board
-		//fetch pinned messages
+		//get the status board		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message 
 			messages.forEach(message => {
 
+				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = message.embeds[0];
 
 				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 					console.log('found message with footer in rebuild obj function');
-					for (var i = 0; i < embed.fields.length; i++) {
+					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
 
+						//get the values (team members). Is loaded as string with \n after each player
 						var thesemembers = embed.fields[i].value
 
+						//split into array. thesemembers is now array of team members with thier current status square
 						thesemembers = thesemembers.split('\n');
 
-						//get clean team name to be key for updating main teammembers object
+						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
 						var thisteam = embed.fields[i].name.split(' ').pop()
 
-						console.log(thisteam)
-						//save the team name itself for use by other functions
+						//save the team (role) name itself for use by other functions
 						teamnames.push(thisteam)
 
-						//clean the role of any special characters (remove hyphenation) for keying storage in the teams object.
+						//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
 
 						//store members in the team members object, keyed by cleaned team name
@@ -161,7 +172,10 @@ function rebuildteamobj(message) {
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
+
+		//store the teams (roles) in the object
 		teams['teams'] = teamnames;
+
 	})//end promise
 }//end function rebuildteamobj 
 
@@ -169,10 +183,11 @@ function rebuildteamobj(message) {
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	return new Promise((resolve, reject) => {
 		console.log('entered changerusersquare function')
-		for (var i = 0; i < teams.teams.length; i++) {
+		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
 
 			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 
+			//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 			for (var j = 0; j < teammembers[cleanrole].length; j++) {
 				if (teammembers[cleanrole][j].includes(user)) {
 					let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
@@ -186,8 +201,10 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 //function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 	return new Promise((resolve, reject) => {
-		var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
 
+		var cleanrole = team.replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+
+		//access teammembers object at cleaned teamname provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 		for (var i = 0; i < teammembers[cleanrole].length; i++) {
 			let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
 		}//end for loop
@@ -203,6 +220,8 @@ function updateplayerboard(message) {
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message
 			messages.forEach(message => {
+
+				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = message.embeds[0];
 
 				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
@@ -232,7 +251,8 @@ function updateplayerboard(message) {
 	})//end promise
 }//end function updateplayerboard
 
-async function changeplayersquare(oldsq1, oldsq2, newsq, user, message) {
+//async function to chain rebuild functions to follow each other - for single user
+async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 
 	try {
 		await rebuildteamobj(message)
@@ -242,7 +262,24 @@ async function changeplayersquare(oldsq1, oldsq2, newsq, user, message) {
 		console.log(err)
 	}
 
-}
+}//end function
+
+//async function to chain rebuild functions to follow each other - for team
+async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
+
+	try {
+		await rebuildteamobj(message)
+		await changeteamsquare(oldsq1, oldsq2, newsq, team)
+		await updateplayerboard(message)
+	} catch (err) {
+		console.log(err)
+	}
+
+}//end function
+
+//=======================================
+// Coop bot | Functions | other
+//=======================================
 
 //check if the user is on one of the home teams
 function validuser(message, user) {
@@ -573,16 +610,14 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
-
-			changeplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
+			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 
 		}//end if isuser = true
 
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
-			changeteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
-			updateplayerboard(message);
+			updateplayersquare("🟧", "🟥", "🟩", mentionedrole, message);
 
 		}//end if isteam = true
 
