@@ -331,11 +331,11 @@ function getname(message) {
 
 }//end getname function
 
+//function to delete color change input command and reply with a thank you/wait message
 function thankyou(author,updatedthis,color,message){
-	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + '.\nStatusboard will update in ~5 seconds. Please wait.')
-	message.delete()
-
-}
+	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + '. Statusboard will update in ~5 seconds. Please wait.')
+	message.delete()//delete the input message
+}//end thankyou function
 
 //restart collector function for startup - not yet developed
 //search all channels. find all posts that need collectors and restart them?
@@ -384,7 +384,7 @@ function startcollector(msg) {
 }
 
 //=======================================
-//		Coop bot	|	Commands
+//		Coop bot	|	User Commands
 //=======================================
 
 //!coop (including !coop open [name])
