@@ -331,6 +331,12 @@ function getname(message) {
 
 }//end getname function
 
+function thankyou(author,updatedthis,message){
+	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + '. Statusboard will update in ~5 seconds. Please wait.')
+	message.delete()
+
+}
+
 //restart collector function for startup - not yet developed
 //search all channels. find all posts that need collectors and restart them?
 function startcollector(msg) {
@@ -546,16 +552,14 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
-			changeusersquare("🟩", "🟧", "🟥", mentioneduser, message);
-			updateplayerboard(message);
+			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
 
 		}//end if isuser = true
 
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
-			changeteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
-			updateplayerboard(message);
+			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
 
 		}//end if isteam = true
 
@@ -578,16 +582,14 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
-			changeusersquare("🟩", "🟥", "🟧", mentioneduser, message);
-			updateplayerboard(message);
+			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message);
 
 		}//end if isuser = true
 
 		//if mentioned is a valid team
 		if (isteam == true && validteam(mentionedrole) == true) {
 
-			changeteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
-			updateplayerboard(message);
+			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
 
 		}//end if isteam = true
 
@@ -611,6 +613,7 @@ client.on('message', async message => {
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
+			thankyou(message.member.displayName,mentioneduser,message);
 
 		}//end if isuser = true
 
@@ -618,6 +621,7 @@ client.on('message', async message => {
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
+			thankyou(message.member.displayName,mentionedrole,message);
 
 		}//end if isteam = true
 
