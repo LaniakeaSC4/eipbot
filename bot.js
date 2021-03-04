@@ -147,11 +147,11 @@ function rebuildteamobj(message) {
 
 						console.log(thisteam);
 						teammembers[thisteam] = thesemembers;
-						resolve(true);
-					}
-				} else { reject(false) }//end if embed and footer text contains
+						}
+				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
+		resolve(true);
 	})//end promise
 }//end function rebuildteamobj 
 
@@ -547,8 +547,8 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
-			rebuildteamobj(message).then((truefalse) => {
-				console.log(truefalse)
+			rebuildteamobj(message).then((message) => {
+				console.log(message)
 				changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
 				updateplayerboard(message);
 			}).catch((error) => {
