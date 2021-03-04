@@ -147,76 +147,93 @@ function rebuildteamobj(message) {
 
 						console.log(thisteam);
 						teammembers[thisteam] = thesemembers;
-						}
+					}//end for loop
+					resolve(true);
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
-		resolve(true);
+
 	})//end promise
 }//end function rebuildteamobj 
 
 //function to loop through all of the team arrarys looking for the user and change thier square colour
-function changeusersquare(oldsq1, oldsq2, newsq, user, message) {
+function changeusersquare(oldsq1, oldsq2, newsq, user) {
+	return new Promise((resolve, reject) => {
+		console.log('entered changerusersquare function')
+		for (var i = 0; i < teams.teams.length; i++) {
 
-	console.log('entered changerusersquare function')
-	for (var i = 0; i < teams.teams.length; i++) {
+			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 
-		var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
-
-		for (var j = 0; j < teammembers[cleanrole].length; j++) {
-			if (teammembers[cleanrole][j].includes(user)) {
-				let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
-			} //end replace square core function
-		}//end for this team loop
-	}//end teams for loop
+			for (var j = 0; j < teammembers[cleanrole].length; j++) {
+				if (teammembers[cleanrole][j].includes(user)) {
+					let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
+				} //end replace square core function
+			}//end for this team loop
+		}//end teams for loop
+		resolve(true);
+	})//end promise
 }//end of changeusersquare function
 
 //function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
+	return new Promise((resolve, reject) => {
+		var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
 
-	var cleanrole = team.replace(/[^a-zA-Z ]/g, "");
-
-	for (var i = 0; i < teammembers[cleanrole].length; i++) {
-		let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
-	}
-
+		for (var i = 0; i < teammembers[cleanrole].length; i++) {
+			let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
+		}//end for loop
+		resolve(true);
+	})//end promise
 }//end of changeteamsquare function
 
 //function to republish the player status board from current state of arrays
 function updateplayerboard(message) {
-	console.log('entered updateplayerboard function')
-	//fetch pinned messages
-	message.channel.messages.fetchPinned().then(messages => {
-		//for each pinned message
-		messages.forEach(message => {
-			let embed = message.embeds[0];
+	return new Promise((resolve, reject) => {
+		console.log('entered updateplayerboard function')
+		//fetch pinned messages
+		message.channel.messages.fetchPinned().then(messages => {
+			//for each pinned message
+			messages.forEach(message => {
+				let embed = message.embeds[0];
 
-			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 
-				var receivedEmbed = message.embeds[0]; //copy embeds from it
-				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+					var receivedEmbed = message.embeds[0]; //copy embeds from it
+					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 
-				//clear fields
-				updatedEmbed.fields = [];
+					//clear fields
+					updatedEmbed.fields = [];
 
-				//add teams and players for embed from teams/teammeber objects
-				for (var i = 0; i < teams.teams.length; i++) {
+					//add teams and players for embed from teams/teammeber objects
+					for (var i = 0; i < teams.teams.length; i++) {
 
-					var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
-					updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
+						var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
+						updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
 
-				}
+					}
 
-				//send the updated embed
-				message.edit(updatedEmbed);
+					//send the updated embed
+					message.edit(updatedEmbed);
+					resolve(true);
+				}//end if embed and footer text contains
 
-			}//end if embed and footer text contains
+			})//end message.forEach
 
-		})//end message.forEach
-
-	})//end .then after fetchPinned 
-
+		})//end .then after fetchPinned 
+	})//end promise
 }//end function updateplayerboard
+
+async function changeplayersquare(oldsq1, oldsq2, newsq, user, message) {
+
+	try {
+		await rebuildteamobj(message)
+		await changeusersquare(oldsq1, oldsq2, newsq, user)
+		await updateplayerboard(message)
+	} catch (err) {
+		console.log(err)
+	}
+
+}
 
 //check if the user is on one of the home teams
 function validuser(message, user) {
@@ -547,13 +564,8 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
-			rebuildteamobj(message).then((message) => {
-				console.log(message)
-				changeusersquare("🟧", "🟥", "🟩", mentioneduser, message);
-				updateplayerboard(message);
-			}).catch((error) => {
-				console.log(error.name + ' ' + error.message)
-			})
+
+			changeplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 
 		}//end if isuser = true
 
