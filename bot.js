@@ -370,7 +370,7 @@ console.log('found the pinned message')
 					);
 
 					//edit message with newEmbed to update it
-					await msg.edit(newEmbed);
+					await message.edit(newEmbed);
 				}
 
 				//make votes unique???
