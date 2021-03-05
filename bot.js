@@ -385,6 +385,7 @@ function restartcollector(message) {
 				
 					              
 				let reactions = message.reactions.cache.keys();
+				Array.from(reactions, ([key, value]) => `${key}:${value}`)
 				console.log(reactions);
 
 				//before we leave this collect event, run update function
