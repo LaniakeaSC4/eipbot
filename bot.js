@@ -382,7 +382,7 @@ function restartcollector(message) {
 				};
 				//rebuild set from current post
 
-				var reactedusers = message.reactions.resolve(👍).users.fetch().then(userList => {
+				var reactedusers = message.reactions.resolve('👍').users.fetch().then(userList => {
 					return userList.map((user) => user.id)}
 
 					console.log(reactedusers);
