@@ -399,7 +399,7 @@ function restartcollector(message) {
 				}
 						
 
-					something = two(message)
+					two(message).then(function(result) {console.log(result)})
 
 					console.log(something)
 				//before we leave this collect event, run update function
