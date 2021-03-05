@@ -384,13 +384,7 @@ function restartcollector(message) {
 				
 				
 					              
-				var reactedusers = message.reactions.resolve('👍').users.fetch().then(userList => {
-								return userList.map((user) => user.id)
-							});
-						
-			                        
-					         
-				
+				var reactedusers = message.reactions				
 
 				console.log(reactedusers);
 
