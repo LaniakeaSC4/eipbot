@@ -384,7 +384,7 @@ function restartcollector(message) {
 				
 				
 					              
-				var reactedusers = message.reactions.resolve(emoji).users.fetch().then(userList => {
+				var reactedusers = message.reactions.resolve('👍').users.fetch().then(userList => {
 								return userList.map((user) => user.id)
 							});
 						
