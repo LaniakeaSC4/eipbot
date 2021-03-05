@@ -382,8 +382,11 @@ function restartcollector(message) {
 				};
 				//rebuild set from current post
 
-				var reactedusers = message.reactions.resolve('👍').users.fetch().then(userList => {
-					return userList.map((user) => user.id)})
+				var reactedusers = 	message.reactions.cache
+				.each(async (reaction) => await reaction.users.fetch())
+				.map((reaction) => reaction.users.cache.filter((user) => !user.bot))
+				.flat()
+			  
 
 					console.log(reactedusers);
 
