@@ -384,10 +384,8 @@ function restartcollector(message) {
 				
 				
 					              
-				let reactions = message.reactions;
-				let reaction = reactions.first();
-				let users = reaction.users.map((u) => u.toString());
-				console.log(users);
+				let reactions = message.reactions.cache.keys();
+				console.log(reactions);
 
 				//before we leave this collect event, run update function
 				updatevotes();
