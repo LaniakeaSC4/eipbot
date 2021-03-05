@@ -383,7 +383,7 @@ function restartcollector(message) {
 				//rebuild set from current post
 				//var thisemoji = client.emojis.cache.find(emoji => emoji.name === 'thumbsup') 
 				//console.log(thisemoji)
-				var reaction = message.reactions.get("👍")
+				var reaction = message.reactions.cache.get("👍")
 				reaction.fetchUsers();
 
 				for (const user of reaction.users.values()) {
