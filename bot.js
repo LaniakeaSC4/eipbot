@@ -29,7 +29,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 
-restartstartcollector(message)
+restartcollector(message)
 
 	}
 });//end client on message
@@ -339,7 +339,7 @@ function thankyou(author,updatedthis,color,message){
 
 //restart collector function for startup - not yet developed
 //search all channels. find all posts that need collectors and restart them?
-function restartstartcollector(message) {
+function restartcollector(message) {
 
 	//find all posts (in all channels?)
 message.channel.messages.fetchPinned().then(messages => {
@@ -350,7 +350,7 @@ message.channel.messages.fetchPinned().then(messages => {
 				let embed = message.embeds[0];
 
 				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the right pinned message
-
+console.log('found the pinned message')
 					//define collector
 	const collector = message.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
 
