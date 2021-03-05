@@ -351,6 +351,39 @@ message.channel.messages.fetchPinned().then(messages => {
 
 				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the right pinned message
 console.log('found the pinned message')
+
+//establish updatevotes function. Recheck the votes array and ???
+				async function updatevotes() {
+					//create newEmbed from old embed
+					const newEmbed = new Discord.MessageEmbed(embed);
+
+					//set each votes equal to 0 then.....??????
+					const userYes = (votes['👍'].size === 0) ? '-' : [...votes['👍']];
+					const userNo = (votes['👎'].size === 0) ? '-' : [...votes['👎']];
+					const userStarter = (votes['🥚'].size === 0) ? '-' : [...votes['🥚']];
+
+					//add votes values to embed fiels?
+					newEmbed.addFields(
+						{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
+						{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
+						{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
+					);
+
+					//edit message with newEmbed to update it
+					await msg.edit(newEmbed);
+				}
+
+				//make votes unique???
+				const votes = {
+					'👍': new Set(),
+					'👎': new Set(),
+					'🥚': new Set(),
+					'🗑️': new Set()
+				};
+
+				updatevotes();
+
+
 					//define collector
 	const collector = message.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
 
