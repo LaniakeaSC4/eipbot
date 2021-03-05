@@ -381,16 +381,16 @@ function restartcollector(message) {
 					'🗑️': new Set()
 				};
 				//rebuild set from current post
-				//var thisemoji = client.emojis.cache.find(emoji => emoji.name === 'thumbsup') 
-				//console.log(thisemoji)
-				var reaction = message.reactions.cache.get("👍")
-				reaction.fetchUsers();
-
-				for (const user of reaction.users.values()) {
-					const data = user.id;
-					console.log('data: ' + data)
-					//reacted.push(data);
-				}
+				
+				
+					              
+				var reactedusers = message.reactions.resolve(emoji).users.fetch().then(userList => {
+								return userList.map((user) => user.id)
+							});
+						
+			                        
+					         
+				
 
 				console.log(reactedusers);
 
