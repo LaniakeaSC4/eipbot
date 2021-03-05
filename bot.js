@@ -363,11 +363,11 @@ console.log('found the pinned message')
 					const userStarter = (votes['🥚'].size === 0) ? '-' : [...votes['🥚']];
 
 					//add votes values to embed fiels?
-					newEmbed.addFields(
-						{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
-						{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
-						{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
-					);
+					//newEmbed.addFields(
+					//	{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
+						//{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
+					//	{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
+					//);
 
 					//edit message with newEmbed to update it
 					await message.edit(newEmbed);
@@ -506,7 +506,7 @@ client.on('message', async message => {
 				async function updatevotes() {
 					//create newEmbed from old embed
 					const newEmbed = new Discord.MessageEmbed(embed);
-
+console.log(votes)
 					//set each votes equal to 0 then.....??????
 					const userYes = (votes['👍'].size === 0) ? '-' : [...votes['👍']];
 					const userNo = (votes['👎'].size === 0) ? '-' : [...votes['👎']];
