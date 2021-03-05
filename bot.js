@@ -384,7 +384,7 @@ function restartcollector(message) {
 				
 				
 					              
-				something = message.reactions.filter(rx => rx.emoji.name == '👍');
+				something = message.reactions.cache.filter(rx => rx.emoji.name == '👍');
 
 				console.log(something);
 
