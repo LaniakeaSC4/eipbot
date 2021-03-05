@@ -383,9 +383,14 @@ function restartcollector(message) {
 				//rebuild set from current post
 				//var thisemoji = client.emojis.cache.find(emoji => emoji.name === 'thumbsup') 
 				//console.log(thisemoji)
-				var reactedusers = message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove('684896787655557216')
-				//.each(async (reaction) => await reaction.users.fetch()).map((reaction) => reaction.users.cache.filter((user) => !user.bot)).flat()
+				var reaction = message.reactions.get("👍")
+				reaction.fetchUsers();
 
+				for (const user of reaction.users.values()) {
+					const data = user.id;
+					console.log('data: ' + data)
+					//reacted.push(data);
+				}
 
 				console.log(reactedusers);
 
