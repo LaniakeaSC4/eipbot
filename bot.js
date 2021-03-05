@@ -395,6 +395,7 @@ function restartcollector(message) {
 
 				async function two(message) {
 					thiscrap = await one(message);
+					console.log(thiscrap)
 					return thiscrap
 				}
 						
