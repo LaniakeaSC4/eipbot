@@ -382,19 +382,24 @@ function restartcollector(message) {
 				};
 				//rebuild set from current post
 
+				var reactedusers = message.reactions.resolve(👍).users.fetch().then(userList => {
+					return userList.map((user) => user.id)}
+
+					console.log(reactedusers);
+
 				//check it is one of the allowed reactions, else remove it
 				//if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
 
 				//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-				const userReactions = message.reactions.cache//.filter(reaction => reaction.users.cache.has(user.id));
-				console.log(userReactions)
+				//const userReactions = message.reactions.cache//.filter(reaction => reaction.users.cache.has(user.id));
+				//console.log(userReactions)
 				//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
-				for (const userReaction of userReactions.values()) {
-					votes[reaction.emoji.name].add(user);
+				//for (const userReaction of userReactions.values()) {
+				//	votes[reaction.emoji.name].add(user);
 					//if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
 					//	userReaction.users.remove(user.id);
 					///	votes[userReaction.emoji.name].delete(user);
-					}
+				//	}
 				//}
 
 				//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
