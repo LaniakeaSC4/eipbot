@@ -384,8 +384,14 @@ function restartcollector(message) {
 				
 				
 					              
-				let reactions = message.reactions.cache.keys();
-				something = Array.from(reactions, ([key, value]) => `${key}:${value}`)
+				message.reactions.cache.forEach((k, reaction) => {
+					reaction.users.cache.forEach((snowflake, user) => {
+						console.log(user)
+						console.log(user.id)
+
+					})
+				})
+
 				console.log(something);
 
 				//before we leave this collect event, run update function
