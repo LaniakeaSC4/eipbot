@@ -29,7 +29,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 
-
+restartstartcollector(message)
 
 	}
 });//end client on message
@@ -339,12 +339,20 @@ function thankyou(author,updatedthis,color,message){
 
 //restart collector function for startup - not yet developed
 //search all channels. find all posts that need collectors and restart them?
-function startcollector(msg) {
+function restartstartcollector(message) {
 
 	//find all posts (in all channels?)
+message.channel.messages.fetchPinned().then(messages => {
+			//for each pinned message
+			messages.forEach(message => {
 
-	//define collector
-	const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
+				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = message.embeds[0];
+
+				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the right pinned message
+
+					//define collector
+	const collector = message.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
 
 	//when a reaction is collected (clicked)
 	collector.on('collect', async (reaction, user) => {
@@ -353,7 +361,7 @@ function startcollector(msg) {
 		if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
 
 			//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-			const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+			const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
 
 			//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
 			for (const userReaction of userReactions.values()) {
@@ -381,6 +389,14 @@ function startcollector(msg) {
 		updatevotes();
 	});
 
+
+
+				}//end if embed and footer text contains
+
+			})//end message.forEach
+
+		})//end .then after fetchPinned 
+	
 }
 
 //=======================================
