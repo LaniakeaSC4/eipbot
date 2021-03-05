@@ -383,7 +383,10 @@ function restartcollector(message) {
 				//rebuild set from current post
 				
 				
-					              
+				console.log(message)
+				console.log(message.reactions)
+				console.log(message.reactions.cahce)
+				
 				something = message.reactions.cache.array()
 				
 				console.log(something);
