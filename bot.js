@@ -381,15 +381,25 @@ function restartcollector(message) {
 					'🗑️': new Set()
 				};
 				//rebuild set from current post
-				
-				
-				console.log(message)
-				console.log(message.reactions)
-				console.log(message.reactions.cahce)
-				
-				something = message.reactions.cache.array()
-				
-				console.log(something);
+
+				function getoldreactions(message) {
+					return new Promise((resolve, reject) => {
+
+						// raw.js event file
+						await reaction.message.reactions.forEach(r => {
+							r.fetchUsers({ before: `${reaction.message.author.id}` });
+						});
+						// emit the messageReactionAdd event
+
+						// messageReactionAdd.js event file
+						// the message.reactions.users should be populated, which I can use
+						reactions = await reaction.message.reactions.filter(r => r.users.has(`${reaction.message.author.id}`));
+						resolve(reactions)
+					})
+				}
+
+
+					something = getoldreactions(message)
 
 				//before we leave this collect event, run update function
 				updatevotes();
