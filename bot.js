@@ -29,7 +29,7 @@ client.on('message', async message => {
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 
-restartcollector(message)
+		restartcollector(message)
 
 	}
 });//end client on message
@@ -332,7 +332,7 @@ function getname(message) {
 }//end getname function
 
 //function to delete color change input command and reply with a thank you/wait message
-function thankyou(author,updatedthis,color,message){
+function thankyou(author, updatedthis, color, message) {
 	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + '. Statusboard will update in ~5 seconds. Please wait.')
 	message.delete()//delete the input message
 }//end thankyou function
@@ -342,32 +342,32 @@ function thankyou(author,updatedthis,color,message){
 function restartcollector(message) {
 
 	//find all posts (in all channels?)
-message.channel.messages.fetchPinned().then(messages => {
-			//for each pinned message
-			messages.forEach(message => {
+	message.channel.messages.fetchPinned().then(messages => {
+		//for each pinned message
+		messages.forEach(message => {
 
-				//embed[0] is first/only embed in message. Copy it to embed variable
-				let embed = message.embeds[0];
+			//embed[0] is first/only embed in message. Copy it to embed variable
+			let embed = message.embeds[0];
 
-				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the right pinned message
-console.log('found the pinned message')
+			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the right pinned message
+				console.log('found the pinned message')
 
-//establish updatevotes function. Recheck the votes array and ???
+				//establish updatevotes function. Recheck the votes array and ???
 				async function updatevotes() {
 					//create newEmbed from old embed
 					const newEmbed = new Discord.MessageEmbed(embed);
 
-					//set each votes equal to 0 then.....??????
+					//if emoji-vote-set size = 0, then userYes = "-", else 
 					const userYes = (votes['👍'].size === 0) ? '-' : [...votes['👍']];
 					const userNo = (votes['👎'].size === 0) ? '-' : [...votes['👎']];
 					const userStarter = (votes['🥚'].size === 0) ? '-' : [...votes['🥚']];
 
 					//add votes values to embed fiels?
-					//newEmbed.addFields(
-					//	{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
-						//{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
-					//	{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
-					//);
+					newEmbed.addFields(
+						{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
+						{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
+						{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
+					);
 
 					//edit message with newEmbed to update it
 					await message.edit(newEmbed);
@@ -380,56 +380,79 @@ console.log('found the pinned message')
 					'🥚': new Set(),
 					'🗑️': new Set()
 				};
+				//rebuild set from current post
 
-				updatevotes();
+				//check it is one of the allowed reactions, else remove it
+				//if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
 
-
-					//define collector
-	const collector = message.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
-
-	//when a reaction is collected (clicked)
-	collector.on('collect', async (reaction, user) => {
-
-		//check it is one of the allowed reactions, else remove it
-		if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
-
-			//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-			const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
-
-			//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
-			for (const userReaction of userReactions.values()) {
-				if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
-					userReaction.users.remove(user.id);
-					votes[userReaction.emoji.name].delete(user);
+				//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+				const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+				console.log(userReactions)
+				//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+				for (const userReaction of userReactions.values()) {
+					if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+						userReaction.users.remove(user.id);
+						votes[userReaction.emoji.name].delete(user);
+					}
 				}
+
+				//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
+				votes[reaction.emoji.name].add(user);
+			} else {
+				reaction.remove();//was not an allowed reaction
 			}
 
-			//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
-			votes[reaction.emoji.name].add(user);
-		} else {
-			reaction.remove();//was not an allowed reaction
-		}
-
-		//before we leave this collect event, run update function
-		updatevotes();
-	});//end collector.on 'collect'
-
-	//when a user removes their own reaction
-	collector.on('remove', (reaction, user) => {
-		//delet the user from the votes array
-		votes[reaction.emoji.name].delete(user);
-		//run update function
-		updatevotes();
-	});
+			//before we leave this collect event, run update function
+			updatevotes();
+			//updatevotes();
 
 
+			//define collector
+			const collector = message.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
 
-				}//end if embed and footer text contains
+			//when a reaction is collected (clicked)
+			collector.on('collect', async (reaction, user) => {
 
-			})//end message.forEach
+				//check it is one of the allowed reactions, else remove it
+				if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
 
-		})//end .then after fetchPinned 
-	
+					//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+					const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+					//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+					for (const userReaction of userReactions.values()) {
+						if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+							userReaction.users.remove(user.id);
+							votes[userReaction.emoji.name].delete(user);
+						}
+					}
+
+					//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
+					votes[reaction.emoji.name].add(user);
+				} else {
+					reaction.remove();//was not an allowed reaction
+				}
+
+				//before we leave this collect event, run update function
+				updatevotes();
+			});//end collector.on 'collect'
+
+			//when a user removes their own reaction
+			collector.on('remove', (reaction, user) => {
+				//delet the user from the votes array
+				votes[reaction.emoji.name].delete(user);
+				//run update function
+				updatevotes();
+			});
+
+
+
+		}//end if embed and footer text contains
+
+		})//end message.forEach
+
+})//end .then after fetchPinned 
+
 }
 
 //=======================================
@@ -506,7 +529,7 @@ client.on('message', async message => {
 				async function updatevotes() {
 					//create newEmbed from old embed
 					const newEmbed = new Discord.MessageEmbed(embed);
-console.log(votes)
+					console.log(votes)
 					//set each votes equal to 0 then.....??????
 					const userYes = (votes['👍'].size === 0) ? '-' : [...votes['👍']];
 					const userNo = (votes['👎'].size === 0) ? '-' : [...votes['👎']];
@@ -602,7 +625,7 @@ client.on('message', async message => {
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
-			thankyou(message.member.displayName,mentioneduser,"red",message);
+			thankyou(message.member.displayName, mentioneduser, "red", message);
 
 		}//end if isuser = true
 
@@ -610,7 +633,7 @@ client.on('message', async message => {
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
-			thankyou(message.member.displayName,mentionedrole,"red",message);
+			thankyou(message.member.displayName, mentionedrole, "red", message);
 
 		}//end if isteam = true
 
@@ -634,7 +657,7 @@ client.on('message', async message => {
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message);
-			thankyou(message.member.displayName,mentioneduser,"orange",message);
+			thankyou(message.member.displayName, mentioneduser, "orange", message);
 
 		}//end if isuser = true
 
@@ -642,7 +665,7 @@ client.on('message', async message => {
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
-			thankyou(message.member.displayName,mentionedrole,"orange",message);
+			thankyou(message.member.displayName, mentionedrole, "orange", message);
 
 		}//end if isteam = true
 
@@ -666,7 +689,7 @@ client.on('message', async message => {
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 
 			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
-			thankyou(message.member.displayName,mentioneduser,"green",message);
+			thankyou(message.member.displayName, mentioneduser, "green", message);
 
 		}//end if isuser = true
 
@@ -674,7 +697,7 @@ client.on('message', async message => {
 		if (isteam == true && validteam(mentionedrole) == true) {
 
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
-			thankyou(message.member.displayName,mentionedrole,"green",message);
+			thankyou(message.member.displayName, mentionedrole, "green", message);
 
 		}//end if isteam = true
 
