@@ -384,15 +384,9 @@ function restartcollector(message) {
 				
 				
 					              
-				message.reactions.cache.forEach((k, reaction) => {
-					reaction.users.cache.forEach((snowflake, user) => {
-						console.log(user)
-						console.log(user.id)
+				something = message.reactions.users.map()
 
-					})
-				})
-
-				console.log(something);
+				//console.log(something);
 
 				//before we leave this collect event, run update function
 				updatevotes();
