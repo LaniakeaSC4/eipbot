@@ -386,7 +386,7 @@ function restartcollector(message) {
 					              
 				something = message.reactions.users.map()
 
-				//console.log(something);
+				console.log(something);
 
 				//before we leave this collect event, run update function
 				updatevotes();
