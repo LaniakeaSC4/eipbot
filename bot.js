@@ -386,7 +386,7 @@ function restartcollector(message) {
 					return new Promise((resolve, reject) => {
 						 
 						// raw.js event file
-						ureacts = message.reactions.forEach(r => {
+						ureacts = message.reactions.cache.forEach(r => {
 							r.fetchUsers({before: `${reaction.message.author.id}`});
 						});
 						resolve(ureacts)
