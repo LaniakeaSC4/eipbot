@@ -337,10 +337,18 @@ function thankyou(author, updatedthis, color, message) {
 	message.delete()//delete the input message
 }//end thankyou function
 
+//make votes unique???
+const newvotes = {
+	'👍': new Set(),
+	'👎': new Set(),
+	'🥚': new Set(),
+	'🗑️': new Set()
+};
+
 //restart collector function
 function restartcollector(message) {
 	var collectorstate = {}
-	
+
 	//fetch pinned message in channel from passed message
 	message.channel.messages.fetchPinned().then(messages => {
 
@@ -364,20 +372,28 @@ function restartcollector(message) {
 					thesemembers = thesemembers.split('\n');
 
 					for (var j = 0; j < thesemembers.length; j++) {//loop through array and pull out the userID
-						thesemembers[j] = thesemembers[j].substring(thesemembers[j].lastIndexOf("@") + 1,thesemembers[j].lastIndexOf(">"));
+						thesemembers[j] = thesemembers[j].substring(thesemembers[j].lastIndexOf("@") + 1, thesemembers[j].lastIndexOf(">"));
 					}
-					
+
 					//the title of each fields is set to farming/not farming/starter
 					var thisteam = embed.fields[i].name;
-					
+
 					//clean the title. Remove the count, lowercase, remove hyphens. This will key the object.
 					cleanteam = thisteam.substring(0, thisteam.lastIndexOf("(") - 1).replace(/[^A-Z0-9]/ig, "").toLowerCase();
-					
+
 					//store current collector state. Keyed by field title
 					collectorstate[cleanteam] = thesemembers;
 				}//end for embed fields loop
 
 				console.log(collectorstate)
+
+				if (collectorstate.farming.length != 0) {
+					for (var k = 0; k < collectorstate.farming.length; k++) {
+						console.log('found 1 thumbs up')
+						console.log(collectorstate.farming[k])
+					}
+				}
+
 			}//end if embed and footer text contains
 
 		})//end message.forEach
