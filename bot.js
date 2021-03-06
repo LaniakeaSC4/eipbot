@@ -387,11 +387,30 @@ function restartcollector(message) {
 
 				console.log(collectorstate)
 
+				//add farmers to newvotes
 				if (collectorstate.farming.length != 0) {
-					for (var k = 0; k < collectorstate.farming.length; k++) {
+					for (var f = 0; f < collectorstate.farming.length; f++) {
 						console.log('found 1 thumbs up')
-						console.log(collectorstate.farming[k])
-						client.users.fetch(collectorstate.farming[k]).then(user => {newvotes['👍'].add(user);})						
+						console.log(collectorstate.farming[f])
+						client.users.fetch(collectorstate.farming[f]).then(user => {newvotes['👍'].add(user);})						
+					}
+				}
+
+				//add not-farmers to newvotes
+				if (collectorstate.notfarming.length != 0) {
+					for (var n = 0; n < collectorstate.notfarming.length; n++) {
+						console.log('found 1 thumbs down')
+						console.log(collectorstate.notfarming[n])
+						client.users.fetch(collectorstate.notfarming[n]).then(user => {newvotes['👎'].add(user);})						
+					}
+				}
+
+				//add starters to newvotes
+				if (collectorstate.starter.length != 0) {
+					for (var s = 0; s < collectorstate.notfarming.length; s++) {
+						console.log('found 1 starter')
+						console.log(collectorstate.notfarming[s])
+						client.users.fetch(collectorstate.notfarming[s]).then(user => {newvotes['🥚'].add(user);})						
 					}
 				}
 
@@ -479,22 +498,22 @@ client.on('message', async message => {
 				async function updatevotes() {
 					//create newEmbed from old embed
 					const newEmbed = new Discord.MessageEmbed(embed);
-					console.log(votes)
+					console.log(newvotes)
 					//set each votes equal to 0 then.....??????
-					const userYes = (votes['👍'].size === 0) ? '-' : [...votes['👍']];
-					const userNo = (votes['👎'].size === 0) ? '-' : [...votes['👎']];
-					const userStarter = (votes['🥚'].size === 0) ? '-' : [...votes['🥚']];
+					const userYes = (newvotes['👍'].size === 0) ? '-' : [...newvotes['👍']];
+					const userNo = (newvotes['👎'].size === 0) ? '-' : [...newvotes['👎']];
+					const userStarter = (newvotes['🥚'].size === 0) ? '-' : [...newvotes['🥚']];
 
 					//add votes values to embed fiels?
 					newEmbed.addFields(
-						{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
-						{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
-						{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
+						{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
+						{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
+						{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
 					);
 
 					//edit message with newEmbed to update it
 					await msg.edit(newEmbed);
-					console.log(votes);
+					console.log(newvotes);
 				}
 
 				//make votes unique???
@@ -523,12 +542,12 @@ client.on('message', async message => {
 						for (const userReaction of userReactions.values()) {
 							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
 								userReaction.users.remove(user.id);
-								votes[userReaction.emoji.name].delete(user);
+								newvotes[userReaction.emoji.name].delete(user);
 							}
 						}
 
 						//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
-						votes[reaction.emoji.name].add(user);
+						newvotes[reaction.emoji.name].add(user);
 					} else {
 						reaction.remove();//was not an allowed reaction
 					}
@@ -540,7 +559,7 @@ client.on('message', async message => {
 				//when a user removes their own reaction
 				collector.on('remove', (reaction, user) => {
 					//delet the user from the votes array
-					votes[reaction.emoji.name].delete(user);
+					newvotes[reaction.emoji.name].delete(user);
 					//run update function
 					updatevotes();
 				});
