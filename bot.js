@@ -340,7 +340,7 @@ function thankyou(author, updatedthis, color, message) {
 //restart collector function for startup - not yet developed
 //search all channels. find all posts that need collectors and restart them?
 function restartcollector(message) {
-var colletorstate = {}
+var collectorstate = {}
 	//find all posts (in all channels?)
 	message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message
