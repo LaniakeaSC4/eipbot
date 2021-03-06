@@ -344,7 +344,7 @@ function restartcollector(message) {
 	//find all posts (in all channels?)
 	message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message
-		messages.forEach(message => {
+		messages.forEach(msg => {
 
 			//embed[0] is first/only embed in message. Copy it to embed variable
 			let embed = message.embeds[0];
@@ -366,7 +366,7 @@ function restartcollector(message) {
     }
 }
 
-something = getReactedUsers(message,'817166308495982652', '817660944267083787','👍')
+something = getReactedUsers(msg,'817166308495982652', '817660944267083787','👍')
 					console.log(something)
 
 			}//end if embed and footer text contains
