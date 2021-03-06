@@ -363,7 +363,7 @@ console.log(thesemembers)
 						thesemembers = thesemembers.split('\n');
 
 						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
-						var thisteam = embed.fields[i].name.split(' ').pop()
+						var thisteam = embed.fields[i].name.split(' (').pop()
 console.log(thisteam)
 						//save the team (role) name itself for use by other functions
 						//teamnames.push(thisteam)
