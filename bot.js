@@ -354,17 +354,29 @@ function restartcollector(message) {
 
 
 				//rebuild set from current post
-for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
+for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (farming/not farming/starter) in the embed
 
-						//get the values (team members). Is loaded as string with \n after each player
+						//get the values (reacted users). Is loaded as string with \n after each player
 						var thesemembers = embed.fields[i].value
 console.log(thesemembers)
-						//split into array. thesemembers is now array of team members with thier current status square
+						//split into array. thesemembers is now array of team members with thier team members ids
 						thesemembers = thesemembers.split('\n');
 
+for (var i = 0;i < thesemembers.length;i++){
+  
+  
+  thesemembers[i] = thesemembers[i].substring(
+    str.lastIndexOf("@") + 1, 
+    str.lastIndexOf(">")
+);
+}
+console.log(thesemembers)
 						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
-						var thisteam = embed.fields[i].name.split(' (').pop()
+						var thisteam = embed.fields[i].name
 console.log(thisteam)
+thisteam = thisteam.substring(0, 
+    str.lastIndexOf("(" -1 )
+    console.log(thisteam)
 						//save the team (role) name itself for use by other functions
 						//teamnames.push(thisteam)
 
