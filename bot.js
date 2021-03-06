@@ -362,12 +362,12 @@ console.log(thesemembers)
 						//split into array. thesemembers is now array of team members with thier team members ids
 						thesemembers = thesemembers.split('\n');
 
-for (var i = 0;i < thesemembers.length;i++){
+for (var j = 0;j < thesemembers.length;j++){
   
   
-  thesemembers[i] = thesemembers[i].substring(
-    thesemembers[i].lastIndexOf("@") + 1, 
-    thesemembers[i].lastIndexOf(">")
+  thesemembers[j] = thesemembers[j].substring(
+    thesemembers[j].lastIndexOf("@") + 1, 
+    thesemembers[j].lastIndexOf(">")
 );
 }
 console.log(thesemembers)
