@@ -374,8 +374,11 @@ function rebuildcollectorstate(message) {
 
 						for (var j = 0; j < thesemembers.length; j++) {//loop through array and pull out the userID
 
-							thesemembers[j] = thesemembers[j].substring(thesemembers[j].lastIndexOf("@") + 1, thesemembers[j].lastIndexOf(">"));
-
+							if (thesemembers[j] = "None") {
+								thesemembers[j].pop()
+							} else {
+								thesemembers[j] = thesemembers[j].substring(thesemembers[j].lastIndexOf("@") + 1, thesemembers[j].lastIndexOf(">"));
+							}
 						}
 
 						//the title of each fields is set to farming/not farming/starter
