@@ -391,9 +391,11 @@ function restartcollector(message) {
 					for (var k = 0; k < collectorstate.farming.length; k++) {
 						console.log('found 1 thumbs up')
 						console.log(collectorstate.farming[k])
-						client.users.fetch(collectorstate.farming[k]).then(user => {console.log(user)})						
+						client.users.fetch(collectorstate.farming[k]).then(user => {newvotes['👍'].add(user);})						
 					}
 				}
+
+				console.log(newvotes)
 
 			}//end if embed and footer text contains
 
