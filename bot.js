@@ -355,31 +355,19 @@ function restartcollector(message) {
 
 				//rebuild set from current post
 
-				function one(message) {
-					return new Promise((resolve, reject) => {
-						 
-					message.reactions.cache.map(async function(reaction){
-            reaction.fetch().then(r => {
-                 r.users.cache.map(item => {
-                    if(!item.bot) console.log(item.id);                         
-                })                        
-            })                    
-            }) 
-            console.log(ureacts)
-						resolve(ureacts)
-					})
-				}
+				var getReactedUsers = async(msg, channelID, messageID, emoji) => {
+    let cacheChannel = msg.guild.channels.cache.get(channelID); 
+    if(cacheChannel){
+        cacheChannel.messages.fetch(messageID).then(reactionMessage => {
+            reactionMessage.reactions.resolve(emoji).users.fetch().then(userList => {
+                return userList.map((user) => user.id)
+            });
+        });
+    }
+}
 
-				async function two(message) {
-					thiscrap = await one(message);
-					console.log(thiscrap)
-					return thiscrap
-				}
-						
-
-					two(message).then(function(result) {console.log(result)})
-
-					//console.log(something)
+something = getReactedUsers(message,'817166308495982652', '817660944267083787','👍')
+					console.log(something)
 
 			}//end if embed and footer text contains
 
