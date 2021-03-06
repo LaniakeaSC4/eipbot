@@ -347,7 +347,7 @@ function restartcollector(message) {
 		messages.forEach(msg => {
 
 			//embed[0] is first/only embed in message. Copy it to embed variable
-			let embed = message.embeds[0];
+			let embed = msg.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the right pinned message
 				console.log('found the pinned message')
