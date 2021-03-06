@@ -370,7 +370,9 @@ function rebuildcollectorstate(message) {
 						console.log(thesemembers)
 
 						//split into array. thesemembers is now array of team members with thier team members ids
-						thesemembers = thesemembers.replace(/[^A-Z0-9]/ig, "").split('\n');
+						thesemembers = thesemembers.replace("-", "");
+
+						thesemembers = thesemembers.split('\n');
 
 						for (var j = 0; j < thesemembers.length; j++) {//loop through array and pull out the userID
 
