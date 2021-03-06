@@ -340,7 +340,7 @@ function thankyou(author, updatedthis, color, message) {
 //restart collector function for startup - not yet developed
 //search all channels. find all posts that need collectors and restart them?
 function restartcollector(message) {
-
+var colletorstate = {}
 	//find all posts (in all channels?)
 	message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message
@@ -383,11 +383,10 @@ cleanteam = thisteam.substring(0,thisteam.lastIndexOf("(")-1);
 						//var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
 
 						//store members in the team members object, keyed by cleaned team name
-						//teammembers[cleanrole] = thesemembers;
-					}//end for loop
+						collectorstate[cleanteam] = thesemembers;
+					}//end for embed fields loop
 			
-					//console.log(something)
-
+console.log(collectorstate)
 			}//end if embed and footer text contains
 
 		})//end message.forEach
