@@ -370,7 +370,7 @@ function rebuildcollectorstate(message) {
 						console.log(thesemembers)
 
 						//split into array. thesemembers is now array of team members with thier team members ids
-						thesemembers = thesemembers.replace("-", "");
+						thesemembers = thesemembers.replace('-', '');
 
 						thesemembers = thesemembers.split('\n');
 
