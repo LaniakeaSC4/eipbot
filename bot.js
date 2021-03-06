@@ -374,13 +374,8 @@ console.log(thesemembers)
 						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
 						var thisteam = embed.fields[i].name;
 console.log(thisteam);
-cleanteam = thisteam.substring(0,thisteam.lastIndexOf("(")-1); 
-    console.log(cleanteam);
-						//save the team (role) name itself for use by other functions
-						//teamnames.push(thisteam)
-
-						//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
-						//var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
+cleanteam = thisteam.substring(0,thisteam.lastIndexOf("(")-1).replace(/[^a-zA-Z ]/g, ""); 
+    console.log(cleanteam)
 
 						//store members in the team members object, keyed by cleaned team name
 						collectorstate[cleanteam] = thesemembers;
