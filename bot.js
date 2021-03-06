@@ -375,7 +375,7 @@ console.log(thesemembers)
 						var thisteam = embed.fields[i].name
 console.log(thisteam)
 thisteam = thisteam.substring(0, 
-    thisteam.lastIndexOf("(" -2 )) 
+    thisteam.lastIndexOf("(")-2) 
     console.log(thisteam)
 						//save the team (role) name itself for use by other functions
 						//teamnames.push(thisteam)
