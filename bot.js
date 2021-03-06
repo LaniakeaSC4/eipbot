@@ -358,13 +358,14 @@ function restartcollector(message) {
 				function one(message) {
 					return new Promise((resolve, reject) => {
 						 
-					var	ureacts =  message.reactions.cache.map(async function(reaction){
+					message.reactions.cache.map(async function(reaction){
             reaction.fetch().then(r => {
                  r.users.cache.map(item => {
                     if(!item.bot) console.log(item.id);                         
                 })                        
             })                    
-            })  
+            }) 
+            console.log(ureacts)
 						resolve(ureacts)
 					})
 				}
@@ -378,7 +379,7 @@ function restartcollector(message) {
 
 					two(message).then(function(result) {console.log(result)})
 
-					console.log(something)
+					//console.log(something)
 
 			}//end if embed and footer text contains
 
