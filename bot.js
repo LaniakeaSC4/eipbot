@@ -378,53 +378,54 @@ function rebuildcollectorstate(message) {
 							if (thesemembers[j] != "None") {
 								cleanmembers.push(thesemembers[j].substring(thesemembers[j].lastIndexOf("@") + 1, thesemembers[j].lastIndexOf(">")))
 							}
-
-							console.log('cleanmembers: '+cleanmembers)
-							//the title of each fields is set to farming/not farming/starter
-							var thisteam = embed.fields[i].name;
-
-							//clean the title. Remove the count, lowercase, remove hyphens. This will key the object.
-							cleanteam = thisteam.substring(0, thisteam.lastIndexOf("(") - 1).replace(/[^A-Z0-9]/ig, "").toLowerCase();
-
-							//store current collector state. Keyed by field title
-							console.log(cleanteam + " length: " + cleanmemembers.length)
-							collectorstate[cleanteam] = cleanmembers;
-						}//end for embed fields loop
-
-						console.log(collectorstate)
-
-						//add farmers to newvotes
-						if (collectorstate.farming.length != 0) {
-							for (var f = 0; f < collectorstate.farming.length; f++) {
-								console.log('found 1 thumbs up')
-								console.log(collectorstate.farming[f])
-								client.users.fetch(collectorstate.farming[f]).then(user => { newvotes['👍'].add(user); })
-							}
 						}
 
-						//add not-farmers to newvotes
-						if (collectorstate.notfarming.length != 0) {
-							for (var n = 0; n < collectorstate.notfarming.length; n++) {
-								console.log('found 1 thumbs down')
-								console.log(collectorstate.notfarming[n])
-								client.users.fetch(collectorstate.notfarming[n]).then(user => { newvotes['👎'].add(user); })
-							}
+						console.log('cleanmembers: ' + cleanmembers)
+						//the title of each fields is set to farming/not farming/starter
+						var thisteam = embed.fields[i].name;
+
+						//clean the title. Remove the count, lowercase, remove hyphens. This will key the object.
+						cleanteam = thisteam.substring(0, thisteam.lastIndexOf("(") - 1).replace(/[^A-Z0-9]/ig, "").toLowerCase();
+
+						//store current collector state. Keyed by field title
+						console.log(cleanteam + " length: " + cleanmemembers.length)
+						collectorstate[cleanteam] = cleanmembers;
+					}//end for embed fields loop
+
+					console.log(collectorstate)
+
+					//add farmers to newvotes
+					if (collectorstate.farming.length != 0) {
+						for (var f = 0; f < collectorstate.farming.length; f++) {
+							console.log('found 1 thumbs up')
+							console.log(collectorstate.farming[f])
+							client.users.fetch(collectorstate.farming[f]).then(user => { newvotes['👍'].add(user); })
 						}
+					}
 
-						//add starters to newvotes
-						if (collectorstate.starter.length != 0) {
-							for (var s = 0; s < collectorstate.notfarming.length; s++) {
-								console.log('found 1 starter')
-								console.log(collectorstate.notfarming[s])
-								client.users.fetch(collectorstate.notfarming[s]).then(user => { newvotes['🥚'].add(user); })
-							}
+					//add not-farmers to newvotes
+					if (collectorstate.notfarming.length != 0) {
+						for (var n = 0; n < collectorstate.notfarming.length; n++) {
+							console.log('found 1 thumbs down')
+							console.log(collectorstate.notfarming[n])
+							client.users.fetch(collectorstate.notfarming[n]).then(user => { newvotes['👎'].add(user); })
 						}
+					}
 
-						console.log(newvotes)
+					//add starters to newvotes
+					if (collectorstate.starter.length != 0) {
+						for (var s = 0; s < collectorstate.notfarming.length; s++) {
+							console.log('found 1 starter')
+							console.log(collectorstate.notfarming[s])
+							client.users.fetch(collectorstate.notfarming[s]).then(user => { newvotes['🥚'].add(user); })
+						}
+					}
 
-					}//end if embed and footer text contains
+					console.log(newvotes)
 
-				})//end message.forEach
+				}//end if embed and footer text contains
+
+			})//end message.forEach
 
 		})//end .then after fetchPinned
 		resolve();
