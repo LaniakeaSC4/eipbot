@@ -348,156 +348,157 @@ const newvotes = {
 //restart collector function
 function rebuildcollectorstate(message) {
 	return new Promise((resolve, reject) => {
-	var collectorstate = {}
+		var collectorstate = {}
 
-	//fetch pinned message in channel from passed message
-	message.channel.messages.fetchPinned().then(messages => {
+		//fetch pinned message in channel from passed message
+		message.channel.messages.fetchPinned().then(messages => {
 
-		//for each pinned message
-		messages.forEach(msg => {
+			//for each pinned message
+			messages.forEach(msg => {
 
-			//embed[0] is first/only embed in message. Copy it to embed variable
-			let embed = msg.embeds[0];
+				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = msg.embeds[0];
 
-			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
-				console.log('found the pinned message')
+				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
+					console.log('found the pinned message')
 
-				//rebuild set from current post
-				for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (farming/not farming/starter) in the embed
+					//rebuild set from current post
+					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (farming/not farming/starter) in the embed
 
-					//get the values (reacted users). Is loaded as string with \n after each player
-					var thesemembers = embed.fields[i].value
-					console.log(thesemembers)
+						//get the values (reacted users). Is loaded as string with \n after each player
+						var thesemembers = embed.fields[i].value
+						console.log(thesemembers)
 
-					//split into array. thesemembers is now array of team members with thier team members ids
-					thesemembers = thesemembers.split('\n');
+						//split into array. thesemembers is now array of team members with thier team members ids
+						thesemembers = thesemembers.split('\n');
 
-					for (var j = 0; j < thesemembers.length; j++) {//loop through array and pull out the userID
-						if (thesemembers[j] != ''){
-						thesemembers[j] = thesemembers[j].substring(thesemembers[j].lastIndexOf("@") + 1, thesemembers[j].lastIndexOf(">"));
+						for (var j = 0; j < thesemembers.length; j++) {//loop through array and pull out the userID
+
+								thesemembers[j] = thesemembers[j].substring(thesemembers[j].lastIndexOf("@") + 1, thesemembers[j].lastIndexOf(">"));
+
+							}
+						
+						//the title of each fields is set to farming/not farming/starter
+						var thisteam = embed.fields[i].name;
+
+						//clean the title. Remove the count, lowercase, remove hyphens. This will key the object.
+						cleanteam = thisteam.substring(0, thisteam.lastIndexOf("(") - 1).replace(/[^A-Z0-9]/ig, "").toLowerCase();
+
+						//store current collector state. Keyed by field title
+						console.log(cleanteam + " length: " + thesemembers.length)
+						collectorstate[cleanteam] = thesemembers;
+					}//end for embed fields loop
+
+					console.log(collectorstate)
+
+					//add farmers to newvotes
+					if (collectorstate.farming.length != 0) {
+						for (var f = 0; f < collectorstate.farming.length; f++) {
+							console.log('found 1 thumbs up')
+							console.log(collectorstate.farming[f])
+							client.users.fetch(collectorstate.farming[f]).then(user => { newvotes['👍'].add(user); })
 						}
 					}
 
-					//the title of each fields is set to farming/not farming/starter
-					var thisteam = embed.fields[i].name;
-
-					//clean the title. Remove the count, lowercase, remove hyphens. This will key the object.
-					cleanteam = thisteam.substring(0, thisteam.lastIndexOf("(") - 1).replace(/[^A-Z0-9]/ig, "").toLowerCase();
-
-					//store current collector state. Keyed by field title
-					collectorstate[cleanteam] = thesemembers;
-				}//end for embed fields loop
-
-				console.log(collectorstate)
-
-				//add farmers to newvotes
-				if (collectorstate.farming.length != 0) {
-					for (var f = 0; f < collectorstate.farming.length; f++) {
-						console.log('found 1 thumbs up')
-						console.log(collectorstate.farming[f])
-						client.users.fetch(collectorstate.farming[f]).then(user => { newvotes['👍'].add(user); })
+					//add not-farmers to newvotes
+					if (collectorstate.notfarming.length != 0) {
+						for (var n = 0; n < collectorstate.notfarming.length; n++) {
+							console.log('found 1 thumbs down')
+							console.log(collectorstate.notfarming[n])
+							client.users.fetch(collectorstate.notfarming[n]).then(user => { newvotes['👎'].add(user); })
+						}
 					}
-				}
 
-				//add not-farmers to newvotes
-				if (collectorstate.notfarming.length != 0) {
-					for (var n = 0; n < collectorstate.notfarming.length; n++) {
-						console.log('found 1 thumbs down')
-						console.log(collectorstate.notfarming[n])
-						client.users.fetch(collectorstate.notfarming[n]).then(user => { newvotes['👎'].add(user); })
+					//add starters to newvotes
+					if (collectorstate.starter.length != 0) {
+						for (var s = 0; s < collectorstate.notfarming.length; s++) {
+							console.log('found 1 starter')
+							console.log(collectorstate.notfarming[s])
+							client.users.fetch(collectorstate.notfarming[s]).then(user => { newvotes['🥚'].add(user); })
+						}
 					}
-				}
 
-				//add starters to newvotes
-				if (collectorstate.starter.length != 0) {
-					for (var s = 0; s < collectorstate.notfarming.length; s++) {
-						console.log('found 1 starter')
-						console.log(collectorstate.notfarming[s])
-						client.users.fetch(collectorstate.notfarming[s]).then(user => { newvotes['🥚'].add(user); })
-					}
-				}
-
-				console.log(newvotes)
+					console.log(newvotes)
 
 				}//end if embed and footer text contains
 
-		})//end message.forEach
+			})//end message.forEach
 
-	})//end .then after fetchPinned
-	resolve();
+		})//end .then after fetchPinned
+		resolve();
 	})//end promise
 }
 
-function restartvotes(msg){
+function restartvotes(msg) {
 	return new Promise((resolve, reject) => {
-	//borrow functions from the initial setup
+		//borrow functions from the initial setup
 
-				//establish updatevotes function. Recheck the votes array and ???
-				async function updatevotes() {
-					//create newEmbed from old embed
-					const newEmbed = new Discord.MessageEmbed(embed);
-					console.log(newvotes)
-					//set each votes equal to 0 then.....??????
-					const userYes = (newvotes['👍'].size === 0) ? '-' : [...newvotes['👍']];
-					const userNo = (newvotes['👎'].size === 0) ? '-' : [...newvotes['👎']];
-					const userStarter = (newvotes['🥚'].size === 0) ? '-' : [...newvotes['🥚']];
+		//establish updatevotes function. Recheck the votes array and ???
+		async function updatevotes() {
+			//create newEmbed from old embed
+			const newEmbed = new Discord.MessageEmbed(embed);
+			console.log(newvotes)
+			//set each votes equal to 0 then.....??????
+			const userYes = (newvotes['👍'].size === 0) ? '-' : [...newvotes['👍']];
+			const userNo = (newvotes['👎'].size === 0) ? '-' : [...newvotes['👎']];
+			const userStarter = (newvotes['🥚'].size === 0) ? '-' : [...newvotes['🥚']];
 
-					//clear fields
-					newEmbed.fields = [];
+			//clear fields
+			newEmbed.fields = [];
 
-					//add votes values to embed fiels?
-					newEmbed.addFields(
-						{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
-						{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
-						{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
-					);
+			//add votes values to embed fiels?
+			newEmbed.addFields(
+				{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
+				{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
+				{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
+			);
 
-					//edit message with newEmbed to update it
-					await msg.edit(newEmbed);
-					console.log(newvotes);
+			//edit message with newEmbed to update it
+			await msg.edit(newEmbed);
+			console.log(newvotes);
+		}
+
+		updatevotes();
+
+		//define collector
+		const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
+
+		//when a reaction is collected (clicked)
+		collector.on('collect', async (reaction, user) => {
+
+			//check it is one of the allowed reactions, else remove it
+			if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
+
+				//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+				const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+				//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+				for (const userReaction of userReactions.values()) {
+					if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+						userReaction.users.remove(user.id);
+						newvotes[userReaction.emoji.name].delete(user);
+					}
 				}
 
-				updatevotes();
+				//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
+				newvotes[reaction.emoji.name].add(user);
+			} else {
+				reaction.remove();//was not an allowed reaction
+			}
 
-				//define collector
-				const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
+			//before we leave this collect event, run update function
+			updatevotes();
+		});//end collector.on 'collect'
 
-				//when a reaction is collected (clicked)
-				collector.on('collect', async (reaction, user) => {
-
-					//check it is one of the allowed reactions, else remove it
-					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
-
-						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-						const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
-
-						//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
-						for (const userReaction of userReactions.values()) {
-							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
-								userReaction.users.remove(user.id);
-								newvotes[userReaction.emoji.name].delete(user);
-							}
-						}
-
-						//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
-						newvotes[reaction.emoji.name].add(user);
-					} else {
-						reaction.remove();//was not an allowed reaction
-					}
-
-					//before we leave this collect event, run update function
-					updatevotes();
-				});//end collector.on 'collect'
-
-				//when a user removes their own reaction
-				collector.on('remove', (reaction, user) => {
-					//delet the user from the votes array
-					newvotes[reaction.emoji.name].delete(user);
-					//run update function
-					updatevotes();
-				});
-				resolve();
-			})//end promise
+		//when a user removes their own reaction
+		collector.on('remove', (reaction, user) => {
+			//delet the user from the votes array
+			newvotes[reaction.emoji.name].delete(user);
+			//run update function
+			updatevotes();
+		});
+		resolve();
+	})//end promise
 }
 
 //async function to chain rebuild functions to follow each other - for single user
