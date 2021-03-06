@@ -352,43 +352,19 @@ function restartcollector(message) {
 			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the right pinned message
 				console.log('found the pinned message')
 
-				//establish updatevotes function. Recheck the votes array and ???
-				async function updatevotes() {
-					//create newEmbed from old embed
-					const newEmbed = new Discord.MessageEmbed(embed);
 
-					//if emoji-vote-set size = 0, then userYes = "-", else 
-					const userYes = (votes['👍'].size === 0) ? '-' : [...votes['👍']];
-					const userNo = (votes['👎'].size === 0) ? '-' : [...votes['👎']];
-					const userStarter = (votes['🥚'].size === 0) ? '-' : [...votes['🥚']];
-
-					//add votes values to embed fiels?
-					newEmbed.addFields(
-						{ name: `Farming (${votes['👍'].size})`, value: userYes, inline: true },
-						{ name: `Not Farming (${votes['👎'].size})`, value: userNo, inline: true },
-						{ name: `Starter (${votes['🥚'].size})`, value: userStarter, inline: true }
-					);
-
-					//edit message with newEmbed to update it
-					await message.edit(newEmbed);
-				}
-
-				//make votes unique???
-				const votes = {
-					'👍': new Set(),
-					'👎': new Set(),
-					'🥚': new Set(),
-					'🗑️': new Set()
-				};
 				//rebuild set from current post
 
 				function one(message) {
 					return new Promise((resolve, reject) => {
 						 
-						// raw.js event file
-						ureacts = message.reactions.cache.forEach(r => {
-							r.fetchUsers({before: `${reaction.message.author.id}`});
-						});
+					var	ureacts =  message.reactions.cache.map(async function(reaction){
+            reaction.fetch().then(r => {
+                 r.users.cache.map(item => {
+                    if(!item.bot) console.log(item.id);                         
+                })                        
+            })                    
+            })  
 						resolve(ureacts)
 					})
 				}
@@ -403,50 +379,6 @@ function restartcollector(message) {
 					two(message).then(function(result) {console.log(result)})
 
 					console.log(something)
-				//before we leave this collect event, run update function
-				updatevotes();
-				//updatevotes();
-
-
-				//define collector
-				const collector = message.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
-
-				//when a reaction is collected (clicked)
-				collector.on('collect', async (reaction, user) => {
-
-					//check it is one of the allowed reactions, else remove it
-					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
-
-						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-						const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
-
-						//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
-						for (const userReaction of userReactions.values()) {
-							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
-								userReaction.users.remove(user.id);
-								votes[userReaction.emoji.name].delete(user);
-							}
-						}
-
-						//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
-						votes[reaction.emoji.name].add(user);
-					} else {
-						reaction.remove();//was not an allowed reaction
-					}
-
-					//before we leave this collect event, run update function
-					updatevotes();
-				});//end collector.on 'collect'
-
-				//when a user removes their own reaction
-				collector.on('remove', (reaction, user) => {
-					//delet the user from the votes array
-					votes[reaction.emoji.name].delete(user);
-					//run update function
-					updatevotes();
-				});
-
-
 
 			}//end if embed and footer text contains
 
