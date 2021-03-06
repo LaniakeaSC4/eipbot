@@ -388,7 +388,7 @@ function rebuildcollectorstate(message) {
 						cleanteam = thisteam.substring(0, thisteam.lastIndexOf("(") - 1).replace(/[^A-Z0-9]/ig, "").toLowerCase();
 
 						//store current collector state. Keyed by field title
-						console.log(cleanteam + " length: " + cleanmemembers.length)
+						console.log(cleanteam + " length: " + cleanmembers.length)
 						collectorstate[cleanteam] = cleanmembers;
 					}//end for embed fields loop
 
