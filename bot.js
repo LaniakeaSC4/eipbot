@@ -354,20 +354,28 @@ function restartcollector(message) {
 
 
 				//rebuild set from current post
+for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
 
-				var getReactedUsers = async(msg, channelID, messageID, emoji) => {
-    let cacheChannel = msg.guild.channels.cache.get(channelID); 
-    if(cacheChannel){
-        cacheChannel.messages.fetch(messageID).then(reactionMessage => {
-            reactionMessage.reactions.resolve(emoji).users.fetch().then(userList => {
-                return userList.map((user) => user.id)
-            });
-        });
-    }
-}
+						//get the values (team members). Is loaded as string with \n after each player
+						var thesemembers = embed.fields[i].value
+console.log(thesemembers)
+						//split into array. thesemembers is now array of team members with thier current status square
+						thesemembers = thesemembers.split('\n');
 
-something = getReactedUsers(msg,'817166308495982652', '817660944267083787','👍')
-					console.log(something)
+						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
+						var thisteam = embed.fields[i].name.split(' ').pop()
+console.log(thisteam)
+						//save the team (role) name itself for use by other functions
+						//teamnames.push(thisteam)
+
+						//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
+						//var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
+
+						//store members in the team members object, keyed by cleaned team name
+						//teammembers[cleanrole] = thesemembers;
+					}//end for loop
+			
+					//console.log(something)
 
 			}//end if embed and footer text contains
 
