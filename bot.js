@@ -372,7 +372,7 @@ for (var i = 0;i < thesemembers.length;i++){
 }
 console.log(thesemembers)
 						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
-						var thisteam = embed.fields[i].name.value()
+						var thisteam = embed.fields[i].name.value();
 console.log(thisteam)
 //cleanteam = thisteam.substring(0,thisteam.indexOf("(")-1); 
     //console.log(cleanteam);
