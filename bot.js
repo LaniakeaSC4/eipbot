@@ -337,51 +337,47 @@ function thankyou(author, updatedthis, color, message) {
 	message.delete()//delete the input message
 }//end thankyou function
 
-//restart collector function for startup - not yet developed
-//search all channels. find all posts that need collectors and restart them?
+//restart collector function
 function restartcollector(message) {
-var collectorstate = {}
-	//find all posts (in all channels?)
+	var collectorstate = {}
+	
+	//fetch pinned message in channel from passed message
 	message.channel.messages.fetchPinned().then(messages => {
+
 		//for each pinned message
 		messages.forEach(msg => {
 
 			//embed[0] is first/only embed in message. Copy it to embed variable
 			let embed = msg.embeds[0];
 
-			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the right pinned message
+			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
 				console.log('found the pinned message')
 
-
 				//rebuild set from current post
-for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (farming/not farming/starter) in the embed
+				for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (farming/not farming/starter) in the embed
 
-						//get the values (reacted users). Is loaded as string with \n after each player
-						var thesemembers = embed.fields[i].value
-console.log(thesemembers)
-						//split into array. thesemembers is now array of team members with thier team members ids
-						thesemembers = thesemembers.split('\n');
+					//get the values (reacted users). Is loaded as string with \n after each player
+					var thesemembers = embed.fields[i].value
+					console.log(thesemembers)
 
-for (var j = 0;j < thesemembers.length;j++){
-  
-  
-  thesemembers[j] = thesemembers[j].substring(
-    thesemembers[j].lastIndexOf("@") + 1, 
-    thesemembers[j].lastIndexOf(">")
-);
-}
-console.log(thesemembers)
-						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
-						var thisteam = embed.fields[i].name;
-console.log(thisteam);
-cleanteam = thisteam.substring(0,thisteam.lastIndexOf("(")-1).replace(/[^A-Z0-9]/ig, "" ).toLowerCase(); 
-    console.log(cleanteam)
+					//split into array. thesemembers is now array of team members with thier team members ids
+					thesemembers = thesemembers.split('\n');
 
-						//store members in the team members object, keyed by cleaned team name
-						collectorstate[cleanteam] = thesemembers;
-					}//end for embed fields loop
-			
-console.log(collectorstate)
+					for (var j = 0; j < thesemembers.length; j++) {//loop through array and pull out the userID
+						thesemembers[j] = thesemembers[j].substring(thesemembers[j].lastIndexOf("@") + 1,thesemembers[j].lastIndexOf(">"));
+					}
+					
+					//the title of each fields is set to farming/not farming/starter
+					var thisteam = embed.fields[i].name;
+					
+					//clean the title. Remove the count, lowercase, remove hyphens. This will key the object.
+					cleanteam = thisteam.substring(0, thisteam.lastIndexOf("(") - 1).replace(/[^A-Z0-9]/ig, "").toLowerCase();
+					
+					//store current collector state. Keyed by field title
+					collectorstate[cleanteam] = thesemembers;
+				}//end for embed fields loop
+
+				console.log(collectorstate)
 			}//end if embed and footer text contains
 
 		})//end message.forEach
@@ -479,6 +475,7 @@ client.on('message', async message => {
 
 					//edit message with newEmbed to update it
 					await msg.edit(newEmbed);
+					console.log(votes);
 				}
 
 				//make votes unique???
