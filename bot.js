@@ -366,13 +366,13 @@ function rebuildcollectorstate(message) {
 					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (farming/not farming/starter) in the embed
 
 						//get the values (reacted users). Is loaded as string with \n after each player
-						var thesemembers = embed.fields[i].value
+						var thesemembersone = embed.fields[i].value
 						console.log(thesemembers)
 
 						//split into array. thesemembers is now array of team members with thier team members ids
-						thesemembers = thesemembers.replace('None', '');
+						var thesememberstwo = thesemembersone.replace('None', '');
 
-						thesemembers = thesemembers.split('\n');
+						var thesemembers = thesememberstwo.split('\n');
 
 						for (var j = 0; j < thesemembers.length; j++) {//loop through array and pull out the userID
 
