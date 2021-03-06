@@ -346,7 +346,8 @@ const newvotes = {
 };
 
 //restart collector function
-function restartcollector(message) {
+function rebuildcollectorstate(message) {
+	return new Promise((resolve, reject) => {
 	var collectorstate = {}
 
 	//fetch pinned message in channel from passed message
@@ -416,7 +417,18 @@ function restartcollector(message) {
 
 				console.log(newvotes)
 
-				//borrow functions from the initial setup
+				}//end if embed and footer text contains
+
+		})//end message.forEach
+
+	})//end .then after fetchPinned
+	resolve();
+	})//end promise
+}
+
+function restartvotes(msg){
+	return new Promise((resolve, reject) => {
+	//borrow functions from the initial setup
 
 				//establish updatevotes function. Recheck the votes array and ???
 				async function updatevotes() {
@@ -482,14 +494,22 @@ function restartcollector(message) {
 					//run update function
 					updatevotes();
 				});
-
-			}//end if embed and footer text contains
-
-		})//end message.forEach
-
-	})//end .then after fetchPinned 
-
+				resolve();
+			})//end promise
 }
+
+//async function to chain rebuild functions to follow each other - for single user
+async function restartcollector(message) {
+
+	try {
+		await rebuildcollectorstate(message)
+		await restartvotes(message)
+	} catch (err) {
+		console.log(err)
+	}
+
+}//end function
+
 
 //=======================================
 //		Coop bot	|	User Commands
