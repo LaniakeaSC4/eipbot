@@ -429,8 +429,8 @@ function restartcollector(message) {
 					const userStarter = (newvotes['🥚'].size === 0) ? '-' : [...newvotes['🥚']];
 
 					//clear fields
-					updatedEmbed.fields = [];
-					
+					newEmbed.fields = [];
+
 					//add votes values to embed fiels?
 					newEmbed.addFields(
 						{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
