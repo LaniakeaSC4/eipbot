@@ -2,18 +2,19 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.on('ready', () => {
 	console.log('I am ready!');
-	var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
-	client.channels.cache.get(statuschannel.id)
-		.send(`!EIP Bot reporting for duty (I have been restarted... But I am back!)`);
+	//var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
+	//client.channels.cache.get(statuschannel.id)
+	//	.send(`!EIP Bot reporting for duty (I have been restarted... But I am back!)`);
 });
 
-client.on('message', async message => {
-	if (message.content.startsWith("!EIP Bot reporting for duty")) {
-		//buildteamobj(message);
-		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
+//client.on('message', async message => {
+//	if (message.content.startsWith("!EIP Bot reporting for duty")) {
+//
+//		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
 
-	}
-});//end client on message
+//	}
+	
+//});//end client on message
 
 // ---- Info ----
 // home team should be under category including word "home"
@@ -30,24 +31,6 @@ client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 
 		restartcollector(message)
-
-	}
-});//end client on message
-
-//!build command for testing things
-client.on('message', async message => {
-	if (message.content.startsWith("!build")) {
-
-		buildteamobj(message);
-
-	}
-});//end client on message
-
-//!rebuild command for testing things
-client.on('message', async message => {
-	if (message.content.startsWith("!rebuild")) {
-
-		rebuildteamobj(message)
 
 	}
 });//end client on message
