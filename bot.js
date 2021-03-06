@@ -366,8 +366,8 @@ for (var i = 0;i < thesemembers.length;i++){
   
   
   thesemembers[i] = thesemembers[i].substring(
-    str.lastIndexOf("@") + 1, 
-    str.lastIndexOf(">")
+    thesemembers[i].lastIndexOf("@") + 1, 
+    thesemembers[i].lastIndexOf(">")
 );
 }
 console.log(thesemembers)
