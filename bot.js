@@ -370,7 +370,7 @@ function rebuildcollectorstate(message) {
 						console.log(thesemembers)
 
 						//split into array. thesemembers is now array of team members with thier team members ids
-						thesemembers = thesemembers.replace('-', '');
+						thesemembers = thesemembers.replace('None', '');
 
 						thesemembers = thesemembers.split('\n');
 
@@ -452,9 +452,9 @@ function restartvotes(message) {
 						const newEmbed = new Discord.MessageEmbed(embed);
 						console.log(newvotes)
 						//set each votes equal to 0 then.....??????
-						const userYes = (newvotes['👍'].size === 0) ? '-' : [...newvotes['👍']];
-						const userNo = (newvotes['👎'].size === 0) ? '-' : [...newvotes['👎']];
-						const userStarter = (newvotes['🥚'].size === 0) ? '-' : [...newvotes['🥚']];
+						const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
+						const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
+						const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
 
 						//clear fields
 						newEmbed.fields = [];
@@ -608,9 +608,9 @@ client.on('message', async message => {
 					const newEmbed = new Discord.MessageEmbed(embed);
 					console.log(newvotes)
 					//set each votes equal to 0 then.....??????
-					const userYes = (newvotes['👍'].size === 0) ? '-' : [...newvotes['👍']];
-					const userNo = (newvotes['👎'].size === 0) ? '-' : [...newvotes['👎']];
-					const userStarter = (newvotes['🥚'].size === 0) ? '-' : [...newvotes['🥚']];
+					const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
+					const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
+					const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
 
 					//add votes values to embed fiels?
 					newEmbed.addFields(
