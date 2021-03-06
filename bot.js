@@ -451,7 +451,7 @@ function restartvotes(message) {
 					async function updatevotes() {
 						//create newEmbed from old embed
 						const newEmbed = new Discord.MessageEmbed(embed);
-						console.log(newvotes)
+
 						//set each votes equal to 0 then.....??????
 						const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
 						const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
@@ -624,14 +624,6 @@ client.on('message', async message => {
 					await msg.edit(newEmbed);
 					console.log(newvotes);
 				}
-
-				//make votes unique???
-				const votes = {
-					'👍': new Set(),
-					'👎': new Set(),
-					'🥚': new Set(),
-					'🗑️': new Set()
-				};
 
 				updatevotes();
 
