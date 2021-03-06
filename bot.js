@@ -391,8 +391,7 @@ function restartcollector(message) {
 					for (var k = 0; k < collectorstate.farming.length; k++) {
 						console.log('found 1 thumbs up')
 						console.log(collectorstate.farming[k])
-						var thisuser = client.users.fetch(collectorstate.farming[k])
-						console.log(thisuser)
+						client.users.fetch(collectorstate.farming[k]).then(user => {console.log(user)})						
 					}
 				}
 
