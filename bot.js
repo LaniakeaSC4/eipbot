@@ -362,7 +362,7 @@ function rebuildcollectorstate(message) {
 			messages.forEach(msg => {
 
 //remove all reactions
-msg.reactions.removeAll();
+//msg.reactions.removeAll();
 
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = msg.embeds[0];
@@ -481,10 +481,10 @@ function restartvotes(message) {
 				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
 					console.log('found the pinned message')
 
-        msg.react('👍');
-				msg.react('👎');
-				msg.react('🥚');
-				msg.react('🗑️');
+      //  msg.react('👍');
+			//	msg.react('👎');
+			//	msg.react('🥚');
+			//	msg.react('🗑️');
 
 					//establish updatevotes function. Recheck the votes array and ???
 					async function updatevotes() {
