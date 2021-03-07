@@ -477,10 +477,11 @@ let restartvotes = async (message) => {
 			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
 				console.log('found the pinned message')
 
-				//  msg.react('👍');
-				//	msg.react('👎');
-				//	msg.react('🥚');
-				//	msg.react('🗑️');
+				await reactions.removeAll()
+				await msg.react('👍');
+				await msg.react('👎');
+				await msg.react('🥚');
+				await msg.react('🗑️');
 
 				//establish updatevotes function. Recheck the votes array and ???
 				async function updatevotes() {
@@ -578,8 +579,8 @@ let restartvotes = async (message) => {
 async function restartcollector(message) {
 
 	try {
-		await rebuildcollectorstate(message)
-		await clearboard(message)
+		//await rebuildcollectorstate(message)
+		//await clearboard(message)
 		await restartvotes(message)
 	} catch (err) {
 		console.log(err)
