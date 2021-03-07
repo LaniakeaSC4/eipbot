@@ -433,6 +433,11 @@ function restartvotes(message) {
 				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
 					console.log('found the pinned message')
 
+        message.react('👍');
+				message.react('👎');
+				message.react('🥚');
+				message.react('🗑️');
+
 					//establish updatevotes function. Recheck the votes array and ???
 					async function updatevotes() {
 						//create newEmbed from old embed
@@ -511,11 +516,6 @@ async function restartcollector(message) {
 
 	try {
 		await rebuildcollectorstate(message)
-		//add reactions for clicking
-				await message.react('👍');
-				await message.react('👎');
-				await message.react('🥚');
-				await message.react('🗑️');
 		await restartvotes(message)
 	} catch (err) {
 		console.log(err)
