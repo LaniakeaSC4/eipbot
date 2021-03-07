@@ -361,7 +361,7 @@ function rebuildcollectorstate(message) {
 			//for each pinned message
 			messages.forEach(msg => {
 
-				msg.fetch({force:true})
+				console.log(msg)
 
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = msg.embeds[0];
