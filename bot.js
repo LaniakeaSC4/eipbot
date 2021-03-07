@@ -339,6 +339,9 @@ function rebuildcollectorstate(message) {
 			//for each pinned message
 			messages.forEach(msg => {
 
+//remove all reactions
+msg.reactions.removeAll();
+
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = msg.embeds[0];
 
@@ -508,6 +511,11 @@ async function restartcollector(message) {
 
 	try {
 		await rebuildcollectorstate(message)
+		//add reactions for clicking
+				await message.react('👍');
+				await message.react('👎');
+				await message.react('🥚');
+				await message.react('🗑️');
 		await restartvotes(message)
 	} catch (err) {
 		console.log(err)
