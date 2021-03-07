@@ -418,6 +418,37 @@ msg.reactions.removeAll();
 	})//end promise
 }
 
+function clearboard(message) {
+	return new Promise((resolve, reject) => {
+	  message.channel.messages.fetchPinned().then(messages => {
+
+			//for each pinned message
+			messages.forEach(msg => {
+			  let embed = msg.embeds[0];
+
+				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) {
+				  const newEmbed = new Discord.MessageEmbed(embed);
+				  
+				  //clear fields
+						newEmbed.fields = [];
+
+						//add votes values to embed fiels?
+						newEmbed.addFields(
+							{ name: `Farming (0)`, value: 'None', inline: true },
+							{ name: `Not Farming (0)`, value: 'None', inline: true },
+							{ name: `Starter (0)`, value: 'None', inline: true }
+						);
+
+						//edit message with newEmbed to update it
+						await msg.edit(newEmbed);
+				  
+				}
+				reolve()
+			}) 
+	  }) 
+	})//end promise
+} 
+
 function restartvotes(message) {
 	return new Promise((resolve, reject) => {
 		//borrow functions from the initial setup
@@ -516,6 +547,7 @@ async function restartcollector(message) {
 
 	try {
 		await rebuildcollectorstate(message)
+		await clearboard(message)
 		await restartvotes(message)
 	} catch (err) {
 		console.log(err)
