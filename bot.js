@@ -465,8 +465,6 @@ function clearboard(message) {
 
 let restartvotes = async (message) => {
 
-	console.log(message.partial)
-	
 	//fetch pinned message in channel from passed message
 	message.channel.messages.fetchPinned().then(messages => {
 
@@ -538,6 +536,8 @@ let restartvotes = async (message) => {
 				//when a reaction is collected (clicked)
 				collector.on('collect', async (reaction, user) => {
 
+					console.log(reaction.message.partial)
+
 					//check it is one of the allowed reactions, else remove it
 					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
 
@@ -569,7 +569,6 @@ let restartvotes = async (message) => {
 					//run update function
 					updatevotes();
 				});
-				resolve();
 			}
 		})
 	})
