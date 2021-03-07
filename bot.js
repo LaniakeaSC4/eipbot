@@ -443,7 +443,7 @@ function clearboard(message) {
 						msg.edit(newEmbed);
 				  
 				}
-				reolve()
+				resolve()
 			}) 
 	  }) 
 	})//end promise
