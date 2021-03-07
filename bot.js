@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+const client = new Discord.Client();
 client.on('ready', () => {
 	console.log('I am ready!');
 	//var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
@@ -545,7 +545,7 @@ let restartvotes = async (message) => {
 						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
 						const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
 						console.log("userReactions")
-						coneolse.log(userReactions)
+						console.log(userReactions)
 						//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
 						for (const userReaction of userReactions.values()) {
 							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
