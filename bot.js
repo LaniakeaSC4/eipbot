@@ -468,6 +468,8 @@ let restartvotes = async (message) => {
 	//fetch pinned message in channel from passed message
 	message.channel.messages.fetchPinned().then(messages => {
 
+		await reactions.removeAll()
+
 		//for each pinned message
 		messages.forEach(msg => {
 
@@ -477,11 +479,11 @@ let restartvotes = async (message) => {
 			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
 				console.log('found the pinned message')
 
-				await reactions.removeAll()
-				await msg.react('👍');
-				await msg.react('👎');
-				await msg.react('🥚');
-				await msg.react('🗑️');
+				
+				msg.react('👍');
+				msg.react('👎');
+				msg.react('🥚');
+				msg.react('🗑️');
 
 				//establish updatevotes function. Recheck the votes array and ???
 				async function updatevotes() {
