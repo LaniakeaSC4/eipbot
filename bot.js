@@ -466,7 +466,7 @@ function clearboard(message) {
 let restartvotes = async (message) => {
 
 	//fetch pinned message in channel from passed message
-	message.channel.messages.fetchPinned().then(messages => {
+	message.channel.messages.fetchPinned({force:true}).then(messages => {
 
 		//for each pinned message
 		messages.forEach(msg => {
