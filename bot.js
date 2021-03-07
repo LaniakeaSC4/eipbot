@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 client.on('ready', () => {
 	console.log('I am ready!');
 	//var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
@@ -13,7 +13,7 @@ client.on('ready', () => {
 //		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
 
 //	}
-	
+
 //});//end client on message
 
 // ---- Info ----
@@ -361,9 +361,6 @@ function rebuildcollectorstate(message) {
 			//for each pinned message
 			messages.forEach(msg => {
 
-//remove all reactions
-//msg.reactions.removeAll();
-
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = msg.embeds[0];
 
@@ -437,155 +434,153 @@ function rebuildcollectorstate(message) {
 
 function clearboard(message) {
 	return new Promise((resolve, reject) => {
-	  message.channel.messages.fetchPinned().then(messages => {
-
-			//for each pinned message
-			messages.forEach(msg => {
-			  let embed = msg.embeds[0];
-
-				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) {
-				  const newEmbed = new Discord.MessageEmbed(embed);
-				  
-				  //clear fields
-						newEmbed.fields = [];
-
-						//add votes values to embed fiels?
-						newEmbed.addFields(
-							{ name: `Farming (0)`, value: 'None', inline: true },
-							{ name: `Not Farming (0)`, value: 'None', inline: true },
-							{ name: `Starter (0)`, value: 'None', inline: true }
-						);
-
-						//edit message with newEmbed to update it
-						msg.edit(newEmbed);
-				  
-				}
-				resolve()
-			}) 
-	  }) 
-	})//end promise
-} 
-
-function restartvotes(message) {
-	return new Promise((resolve, reject) => {
-		//borrow functions from the initial setup
-		//fetch pinned message in channel from passed message
 		message.channel.messages.fetchPinned().then(messages => {
 
 			//for each pinned message
 			messages.forEach(msg => {
-
-				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = msg.embeds[0];
 
-				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
-					console.log('found the pinned message')
+				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) {
+					const newEmbed = new Discord.MessageEmbed(embed);
 
-      //  msg.react('👍');
-			//	msg.react('👎');
-			//	msg.react('🥚');
-			//	msg.react('🗑️');
+					//clear fields
+					newEmbed.fields = [];
 
-					//establish updatevotes function. Recheck the votes array and ???
-					async function updatevotes() {
-					  
-					  await clearvotes()
-					  
-						//create newEmbed from old embed
-						const newEmbed = new Discord.MessageEmbed(embed);
+					//add votes values to embed fiels?
+					newEmbed.addFields(
+						{ name: `Farming (0)`, value: 'None', inline: true },
+						{ name: `Not Farming (0)`, value: 'None', inline: true },
+						{ name: `Starter (0)`, value: 'None', inline: true }
+					);
 
-						//set each votes equal to 0 then.....??????
-						const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
-						const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
-						const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
+					//edit message with newEmbed to update it
+					msg.edit(newEmbed);
 
-						//clear fields
-						newEmbed.fields = [];
-
-						//add votes values to embed fiels?
-						newEmbed.addFields(
-							{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
-							{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
-							{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
-						);
-
-						//edit message with newEmbed to update it
-					await	msg.edit(newEmbed);
-						//console.log(newvotes);
-					}
-
-async function clearvotes(){
-  
-						//create newEmbed from old embed
-						const newEmbed = new Discord.MessageEmbed(embed);
-						
-						newEmbed.fields = [];
-						
-						newEmbed.addFields(
-							{ name: `Farming (0)`, value: 'None', inline: true },
-							{ name: `Not Farming (0)`, value: 'None', inline: true },
-							{ name: `Starter (0)`, value: 'None', inline: true }
-						);
-
-						//edit message with newEmbed to update it
-					await	msg.edit(newEmbed);
-}
-
-
-					updatevotes();
-
-					//define collector
-					const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
-
-					//when a reaction is collected (clicked)
-					collector.on('collect', async (reaction, user) => {
-
-						//check it is one of the allowed reactions, else remove it
-						if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
-
-							//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-							const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
-
-							//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
-							for (const userReaction of userReactions.values()) {
-								if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
-									userReaction.users.remove(user.id);
-									newvotes[userReaction.emoji.name].delete(user);
-								}
-							}
-
-							//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
-							newvotes[reaction.emoji.name].add(user);
-						} else {
-							reaction.remove();//was not an allowed reaction
-						}
-
-						//before we leave this collect event, run update function
-						updatevotes();
-					});//end collector.on 'collect'
-
-					//when a user removes their own reaction
-					collector.on('remove', (reaction, user) => {
-						//delet the user from the votes array
-						newvotes[reaction.emoji.name].delete(user);
-						//run update function
-						updatevotes();
-					});
-					resolve();
 				}
+				resolve()
 			})
 		})
-
-
 	})//end promise
+}
+
+let restartvotes = async (message) => {
+
+	console.log(message.partial)
+	
+	//fetch pinned message in channel from passed message
+	message.channel.messages.fetchPinned().then(messages => {
+
+		//for each pinned message
+		messages.forEach(msg => {
+
+			//embed[0] is first/only embed in message. Copy it to embed variable
+			let embed = msg.embeds[0];
+
+			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
+				console.log('found the pinned message')
+
+				//  msg.react('👍');
+				//	msg.react('👎');
+				//	msg.react('🥚');
+				//	msg.react('🗑️');
+
+				//establish updatevotes function. Recheck the votes array and ???
+				async function updatevotes() {
+
+					//await clearvotes()
+
+					//create newEmbed from old embed
+					const newEmbed = new Discord.MessageEmbed(embed);
+
+					//set each votes equal to 0 then.....??????
+					const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
+					const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
+					const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
+
+					//clear fields
+					newEmbed.fields = [];
+
+					//add votes values to embed fiels?
+					newEmbed.addFields(
+						{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
+						{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
+						{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
+					);
+
+					//edit message with newEmbed to update it
+					await msg.edit(newEmbed);
+					//console.log(newvotes);
+				}
+
+				async function clearvotes() {
+
+					//create newEmbed from old embed
+					const newEmbed = new Discord.MessageEmbed(embed);
+
+					newEmbed.fields = [];
+
+					newEmbed.addFields(
+						{ name: `Farming (0)`, value: 'None', inline: true },
+						{ name: `Not Farming (0)`, value: 'None', inline: true },
+						{ name: `Starter (0)`, value: 'None', inline: true }
+					);
+
+					//edit message with newEmbed to update it
+					await msg.edit(newEmbed);
+				}
+
+
+				updatevotes();
+
+				//define collector
+				const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
+
+				//when a reaction is collected (clicked)
+				collector.on('collect', async (reaction, user) => {
+
+					//check it is one of the allowed reactions, else remove it
+					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
+
+						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+						const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+						//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+						for (const userReaction of userReactions.values()) {
+							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+								userReaction.users.remove(user.id);
+								newvotes[userReaction.emoji.name].delete(user);
+							}
+						}
+
+						//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
+						newvotes[reaction.emoji.name].add(user);
+					} else {
+						reaction.remove();//was not an allowed reaction
+					}
+
+					//before we leave this collect event, run update function
+					updatevotes();
+				});//end collector.on 'collect'
+
+				//when a user removes their own reaction
+				collector.on('remove', (reaction, user) => {
+					//delet the user from the votes array
+					newvotes[reaction.emoji.name].delete(user);
+					//run update function
+					updatevotes();
+				});
+				resolve();
+			}
+		})
+	})
 }
 
 //async function to chain rebuild functions to follow each other - for single user
 async function restartcollector(message) {
 
 	try {
-		await rebuildcollectorstate(message)
-		await clearboard(message)
+		//await rebuildcollectorstate(message)
+		//await clearboard(message)
 		await restartvotes(message)
 	} catch (err) {
 		console.log(err)
@@ -668,7 +663,7 @@ client.on('message', async message => {
 				async function updatevotes() {
 					//create newEmbed from old embed
 					const newEmbed = new Discord.MessageEmbed(embed);
-					
+
 					//set each votes equal to 0 then.....??????
 					const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
 					const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
@@ -683,7 +678,7 @@ client.on('message', async message => {
 
 					//edit message with newEmbed to update it
 					await msg.edit(newEmbed);
-					
+
 				}
 
 				updatevotes();
