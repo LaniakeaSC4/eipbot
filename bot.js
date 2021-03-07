@@ -477,11 +477,11 @@ let restartvotes = async (message) => {
 			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
 				console.log('found the pinned message')
 
-				msg.reactions.removeAll()
-				msg.react('👍');
-				msg.react('👎');
-				msg.react('🥚');
-				msg.react('🗑️');
+				//msg.reactions.removeAll()
+				//msg.react('👍');
+				//msg.react('👎');
+				//msg.react('🥚');
+				//msg.react('🗑️');
 
 				//establish updatevotes function. Recheck the votes array and ???
 				async function updatevotes() {
@@ -565,6 +565,30 @@ let restartvotes = async (message) => {
 
 				//when a user removes their own reaction
 				collector.on('remove', (reaction, user) => {
+
+
+					//check it is one of the allowed reactions, else remove it
+					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
+
+						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+						const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+						//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+						for (const userReaction of userReactions.values()) {
+							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+								userReaction.users.remove(user.id);
+								newvotes[userReaction.emoji.name].delete(user);
+							}
+						}
+
+						//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
+						newvotes[reaction.emoji.name].delete(user);
+					} else {
+						reaction.remove();//was not an allowed reaction
+					}
+
+
+
 					//delet the user from the votes array
 					newvotes[reaction.emoji.name].delete(user);
 					//run update function
