@@ -501,7 +501,9 @@ async function clearvotes(){
   
 						//create newEmbed from old embed
 						const newEmbed = new Discord.MessageEmbed(embed);
-
+						
+						newEmbed.fields = [];
+						
 						newEmbed.addFields(
 							{ name: `Farming (0)`, value: 'None', inline: true },
 							{ name: `Not Farming (0)`, value: 'None', inline: true },
