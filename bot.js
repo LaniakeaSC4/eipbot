@@ -433,10 +433,10 @@ function restartvotes(message) {
 				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
 					console.log('found the pinned message')
 
-        message.react('👍');
-				message.react('👎');
-				message.react('🥚');
-				message.react('🗑️');
+        msg.react('👍');
+				msg.react('👎');
+				msg.react('🥚');
+				msg.react('🗑️');
 
 					//establish updatevotes function. Recheck the votes array and ???
 					async function updatevotes() {
