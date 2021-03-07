@@ -474,6 +474,23 @@ function restartvotes(message) {
 						//create newEmbed from old embed
 						const newEmbed = new Discord.MessageEmbed(embed);
 
+
+
+
+						newEmbed.addFields(
+							{ name: `Farming (0)`, value: 'None', inline: true },
+							{ name: `Not Farming (0)`, value: 'None', inline: true },
+							{ name: `Starter (0)`, value: 'None', inline: true }
+						);
+
+						//edit message with newEmbed to update it
+					await	msg.edit(newEmbed);
+
+
+
+
+
+
 						//set each votes equal to 0 then.....??????
 						const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
 						const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
