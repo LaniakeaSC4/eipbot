@@ -361,6 +361,8 @@ function rebuildcollectorstate(message) {
 			//for each pinned message
 			messages.forEach(msg => {
 
+				msg.fetch({force:true})
+
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = msg.embeds[0];
 
@@ -466,7 +468,7 @@ function clearboard(message) {
 let restartvotes = async (message) => {
 
 	//fetch pinned message in channel from passed message
-	message.channel.messages.fetchPinned({force:true}).then(messages => {
+	message.channel.messages.fetchPinned().then(messages => {
 
 		//for each pinned message
 		messages.forEach(msg => {
