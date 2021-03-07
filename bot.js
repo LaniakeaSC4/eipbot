@@ -578,8 +578,8 @@ let restartvotes = async (message) => {
 async function restartcollector(message) {
 
 	try {
-		//await rebuildcollectorstate(message)
-		//await clearboard(message)
+		await rebuildcollectorstate(message)
+		await clearboard(message)
 		await restartvotes(message)
 	} catch (err) {
 		console.log(err)
