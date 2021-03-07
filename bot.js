@@ -35,6 +35,17 @@ client.on('message', async message => {
 	}
 });//end client on message
 
+
+//!votes command for testing things
+client.on('message', async message => {
+	if (message.content.startsWith("!votes")) {
+
+		console.log('new votes is')
+		console.log(newvotes)
+
+	}
+});//end client on message
+
 //=======================================
 // Coop bot | Functions | Initalise
 //=======================================
@@ -651,7 +662,7 @@ client.on('message', async message => {
 				async function updatevotes() {
 					//create newEmbed from old embed
 					const newEmbed = new Discord.MessageEmbed(embed);
-					console.log(newvotes)
+					
 					//set each votes equal to 0 then.....??????
 					const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
 					const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
@@ -666,7 +677,7 @@ client.on('message', async message => {
 
 					//edit message with newEmbed to update it
 					await msg.edit(newEmbed);
-					console.log(newvotes);
+					
 				}
 
 				updatevotes();
