@@ -46,6 +46,16 @@ client.on('message', async message => {
 	}
 });//end client on message
 
+//!collectcommand for testing things
+client.on('message', async message => {
+	if (message.content.startsWith("!collect")) {
+
+		console.log('collectorstate is')
+		console.log(collectorstate)
+
+	}
+});//end client on message
+
 //=======================================
 // Coop bot | Functions | Initalise
 //=======================================
@@ -364,7 +374,6 @@ msg.reactions.removeAll();
 
 						//get the values (reacted users). Is loaded as string with \n after each player
 						var thesemembers = embed.fields[i].value
-						console.log(thesemembers)
 
 						//split into array. thesemembers is now array of team members with thier team members ids
 						thesemembers = thesemembers.split('\n');
@@ -377,7 +386,6 @@ msg.reactions.removeAll();
 							}
 						}
 
-						console.log('cleanmembers: ' + cleanmembers)
 						//the title of each fields is set to farming/not farming/starter
 						var thisteam = embed.fields[i].name;
 
@@ -385,11 +393,8 @@ msg.reactions.removeAll();
 						cleanteam = thisteam.substring(0, thisteam.lastIndexOf("(") - 1).replace(/[^A-Z0-9]/ig, "").toLowerCase();
 
 						//store current collector state. Keyed by field title
-						console.log(cleanteam + " length: " + cleanmembers.length)
 						collectorstate[cleanteam] = cleanmembers;
 					}//end for embed fields loop
-
-					console.log(collectorstate)
 
 					//add farmers to newvotes
 					if (collectorstate.farming.length != 0) {
