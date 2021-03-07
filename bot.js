@@ -348,11 +348,12 @@ const newvotes = {
 	'🥚': new Set(),
 	'🗑️': new Set()
 };
+var collectorstate = {}
 
 //restart collector function
 function rebuildcollectorstate(message) {
 	return new Promise((resolve, reject) => {
-		var collectorstate = {}
+		collectorstate = {}
 
 		//fetch pinned message in channel from passed message
 		message.channel.messages.fetchPinned().then(messages => {
