@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Discord.Client({"partials": ['CHANNEL', 'MESSAGE']});
 client.on('ready', () => {
 	console.log('I am ready!');
 	//var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
@@ -7,12 +7,13 @@ client.on('ready', () => {
 	//	.send(`!EIP Bot reporting for duty (I have been restarted... But I am back!)`);
 });
 
-//client.on('message', async message => {
-//	if (message.content.startsWith("!EIP Bot reporting for duty")) {
-//
-//		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
-
-//	}
+client.on("messageReactionAdd", async function(messageReaction, user){
+	// fetch message data if we got a partial event
+	if (messageReaction.message.partial) {
+		console.log("found a partial, fetching")
+		await messageReaction.message.fetch();
+	}
+  })
 
 //});//end client on message
 
@@ -545,7 +546,7 @@ let restartvotes = async (message) => {
 					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
 
 						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-						msg.reactions.message.fetch(true).then(msg => {
+						
 							const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
 							console.log("userReactions")
 							console.log(userReactions)
@@ -566,7 +567,7 @@ let restartvotes = async (message) => {
 								//before we leave this collect event, run update function
 								updatevotes();
 							}
-						})
+						
 
 
 
