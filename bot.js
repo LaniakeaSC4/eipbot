@@ -490,7 +490,7 @@ function restartvotes(message) {
 						);
 
 						//edit message with newEmbed to update it
-						await msg.edit(newEmbed);
+						msg.edit(newEmbed);
 						//console.log(newvotes);
 					}
 
