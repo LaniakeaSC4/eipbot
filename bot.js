@@ -7,6 +7,15 @@ client.on('ready', () => {
 	//	.send(`!EIP Bot reporting for duty (I have been restarted... But I am back!)`);
 });
 
+//client.on('message', async message => {
+//	if (message.content.startsWith("!EIP Bot reporting for duty")) {
+//
+//		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
+
+//	}
+
+//});//end client on message
+
 // ---- Info ----
 // home team should be under category including word "home"
 // channel names under "home" category should contact a match for the role (e.g. "Home Teams" category should contain a channel "team egg-streme" and the "egg-streme" part should match a server role for the team)
@@ -352,6 +361,9 @@ function rebuildcollectorstate(message) {
 			//for each pinned message
 			messages.forEach(msg => {
 
+				//remove all reactions
+				//msg.reactions.removeAll();
+
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = msg.embeds[0];
 
@@ -454,125 +466,118 @@ function clearboard(message) {
 	})//end promise
 }
 
-let restartvotes = async (message) => {
+function restartvotes(message) {
+	return new Promise((resolve, reject) => {
+		//borrow functions from the initial setup
+		//fetch pinned message in channel from passed message
+		message.channel.messages.fetchPinned().then(messages => {
 
-	//fetch pinned message in channel from passed message
-	message.channel.messages.fetchPinned().then(messages => {
+			//for each pinned message
+			messages.forEach(msg => {
 
-		//for each pinned message
-		messages.forEach(msg => {
+				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = msg.embeds[0];
 
-			//embed[0] is first/only embed in message. Copy it to embed variable
-			let embed = msg.embeds[0];
+				if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
+					console.log('found the pinned message')
 
-			if (embed != null && embed.footer.text.includes('⬇️ Please add a reaction below ⬇️')) { //find the pinned message with the reaction board
-				console.log('found the pinned message')
+					//  msg.react('👍');
+					//	msg.react('👎');
+					//	msg.react('🥚');
+					//	msg.react('🗑️');
 
-				//msg.reactions.removeAll()
-				//msg.react('👍');
-				//msg.react('👎');
-				//msg.react('🥚');
-				//msg.react('🗑️');
+					//establish updatevotes function. Recheck the votes array and ???
+					async function updatevotes() {
 
-				//establish updatevotes function. Recheck the votes array and ???
-				async function updatevotes() {
+						await clearvotes()
 
-					//await clearvotes()
+						//create newEmbed from old embed
+						const newEmbed = new Discord.MessageEmbed(embed);
 
-					//create newEmbed from old embed
-					const newEmbed = new Discord.MessageEmbed(embed);
+						//set each votes equal to 0 then.....??????
+						const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
+						const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
+						const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
 
-					//set each votes equal to 0 then.....??????
-					const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
-					const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
-					const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
+						//clear fields
+						newEmbed.fields = [];
 
-					//clear fields
-					newEmbed.fields = [];
+						//add votes values to embed fiels?
+						newEmbed.addFields(
+							{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
+							{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
+							{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
+						);
 
-					//add votes values to embed fiels?
-					newEmbed.addFields(
-						{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
-						{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
-						{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
-					);
+						//edit message with newEmbed to update it
+						await msg.edit(newEmbed);
+						//console.log(newvotes);
+					}
 
-					//edit message with newEmbed to update it
-					await msg.edit(newEmbed);
-					//console.log(newvotes);
-				}
+					async function clearvotes() {
 
-				async function clearvotes() {
+						//create newEmbed from old embed
+						const newEmbed = new Discord.MessageEmbed(embed);
 
-					//create newEmbed from old embed
-					const newEmbed = new Discord.MessageEmbed(embed);
+						newEmbed.fields = [];
 
-					newEmbed.fields = [];
+						newEmbed.addFields(
+							{ name: `Farming (0)`, value: 'None', inline: true },
+							{ name: `Not Farming (0)`, value: 'None', inline: true },
+							{ name: `Starter (0)`, value: 'None', inline: true }
+						);
 
-					newEmbed.addFields(
-						{ name: `Farming (0)`, value: 'None', inline: true },
-						{ name: `Not Farming (0)`, value: 'None', inline: true },
-						{ name: `Starter (0)`, value: 'None', inline: true }
-					);
-
-					//edit message with newEmbed to update it
-					await msg.edit(newEmbed);
-				}
-
-
-				updatevotes();
-
-				//define collector
-				const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
-
-				//when a reaction is collected (clicked)
-				collector.on('collect', async (reaction, user) => {
-
-					console.log(reaction.message.partial)
-
-					//check it is one of the allowed reactions, else remove it
-					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
-
-						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-
-						const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
-
-						//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
-						for (const userReaction of userReactions.values()) {
-							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
-								userReaction.users.remove(user.id);
-								newvotes[userReaction.emoji.name].delete(user);
+						//edit message with newEmbed to update it
+						await msg.edit(newEmbed);
+					}
 
 
+					updatevotes();
 
-								//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
-								newvotes[reaction.emoji.name].add(user);
-							} else {
-								reaction.remove();//was not an allowed reaction
+					//define collector
+					const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
+
+					//when a reaction is collected (clicked)
+					collector.on('collect', async (reaction, user) => {
+
+						//check it is one of the allowed reactions, else remove it
+						if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
+
+							//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+							const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+							//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+							for (const userReaction of userReactions.values()) {
+								if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+									userReaction.users.remove(user.id);
+									newvotes[userReaction.emoji.name].delete(user);
+								}
 							}
 
-							//before we leave this collect event, run update function
-							updatevotes();
+							//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
+							newvotes[reaction.emoji.name].add(user);
+						} else {
+							reaction.remove();//was not an allowed reaction
 						}
 
+						//before we leave this collect event, run update function
+						updatevotes();
+					});//end collector.on 'collect'
 
-
-
-					}//end if
-
-
-				});//end collector.on 'collect'
-
-				//when a user removes their own reaction
-				collector.on('remove', (reaction, user) => {
-					//delet the user from the votes array
-					newvotes[reaction.emoji.name].delete(user);
-					//run update function
-					updatevotes();
-				});
-			}
+					//when a user removes their own reaction
+					collector.on('remove', (reaction, user) => {
+						//delet the user from the votes array
+						newvotes[reaction.emoji.name].delete(user);
+						//run update function
+						updatevotes();
+					});
+					resolve();
+				}
+			})
 		})
-	})
+
+
+	})//end promise
 }
 
 //async function to chain rebuild functions to follow each other - for single user
