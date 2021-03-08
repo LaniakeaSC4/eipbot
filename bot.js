@@ -144,7 +144,7 @@ function findstatusboard(message) {
 				if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 					console.log('found the pinned message')
 					console.log(msg.id)
-					resolve(msg.id);
+					resolve(msg);
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
