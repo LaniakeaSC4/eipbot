@@ -1,5 +1,26 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+
+//working on this. swap any of the 4 emoji for the clicked one
+function changeplayerstatus(oldsq1, oldsq2, newsq, user) {
+	return new Promise((resolve, reject) => {
+		console.log('entered changeplayerstatus function')
+
+		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
+
+			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+
+			//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+			for (var j = 0; j < teammembers[cleanrole].length; j++) {
+				if (teammembers[cleanrole][j].includes(user)) {
+					let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
+				} //end replace square core function
+			}//end for this team loop
+		}//end teams for loop
+		resolve(true);
+	})//end promise
+}//end of changeusersquare function
+
 client.on('messageReactionAdd', async (reaction, user) => {
 	// When we receive a reaction we check if the reaction is partial or not
 	if (reaction.partial) {
@@ -13,15 +34,28 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			return;
 		}
 	}
+
+	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
+
+			//code goes here to update reaction status
 			console.log('Reaction was on a status board message: ' + statusboardmessages[i])
+			console.log(reaction.emoji.name)
+
+			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
+
+			try {
+				//await rebuildteamobj(message)
+				//await changeplayerstatus(reaction.emoji.name,reaction.user.displayName)
+				//await updateplayerboard(message)
+			} catch (err) {
+				console.log(err)
+			}
+
 		}
 	}
-	// Now the message has been cached and is fully available
-	console.log(`${reaction.message.author}'s message "${reaction.message.id}" gained a reaction!`);
-	// The reaction is now also fully available and the properties will be reflected accurately:
-	console.log(`${reaction.count} user(s) have given the same reaction to this message!`);
+
 });
 
 //global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
@@ -548,6 +582,7 @@ client.on('message', async message => {
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 				updatedEmbed.setFooter('Bot created by LaniakeaSC\nThis coop is closed');
 				statusboard.edit(updatedEmbed);
+				arraystatusboards()
 			})
 
 		};//end the if !close
