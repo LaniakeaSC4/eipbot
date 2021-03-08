@@ -29,7 +29,7 @@ client.on('ready', () => {
 	console.log('I am ready!');
 
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text");
-
+console.log(categoryChannels)
 	categoryChannels.forEach(channel => {
 
 		channel.messages.fetchPinned().then(messages => {
