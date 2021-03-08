@@ -516,13 +516,13 @@ client.on('message', async message => {
 		if (eggcommand1 == 'close') {
 
 			
-			await findstatusboard(message).then(statusboard => {
-				console.log('statusboard: ' + statusboard)
-				var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
-				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-				updatedEmbed.setFooter('Bot created by LaniakeaSC\nThis coop is closed')
-				statusboard.edit(updatedEmbed);
-			})
+			await findstatusboard(message).then((statusboard) => {
+					console.log('statusboard: ' + statusboard);
+					var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+					updatedEmbed.setFooter('Bot created by LaniakeaSC\nThis coop is closed');
+					statusboard.edit(updatedEmbed);
+				})
 
 		};//end the if !close
 
