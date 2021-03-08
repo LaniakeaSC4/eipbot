@@ -44,10 +44,10 @@ client.on('ready', () => {
 					console.log(msg.id)
 					statusboardmessages.push(msg.id);
 				}//end if embed and footer text contains
-			}).catch((err) => {
-				console.error(err);
-			});//end message.forEach
-		})//end .then after fetchPinned
+			})//end message.forEach
+		}).catch((err) => {
+			console.error(err);
+		});//end .then after fetchPinned
 	});//end categoryChannels.forEach
 
 });
