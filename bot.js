@@ -131,7 +131,7 @@ function buildteamobj(message) {
 //=============================================
 
 async function findstatusboard(message) {
-
+console.log("entered finstatusboard function")
 	//get the status board		//fetch pinned messages
 	message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message 
@@ -141,6 +141,8 @@ async function findstatusboard(message) {
 			let embed = msg.embeds[0];
 
 			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				console.log('found the pinned message')
+				console.log(msg)
 				return (msg)
 			}//end if embed and footer text contains
 		})//end message.forEach
