@@ -316,6 +316,9 @@ function thankyou(author, updatedthis, color, message) {
 //		Coop bot	|	User Commands
 //=======================================
 
+//global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
+var statusboardmessages = [];
+
 //!coop (including !coop open [name])
 client.on('message', async message => {
 	if (message.content.startsWith("!coop")) {
@@ -336,6 +339,9 @@ client.on('message', async message => {
 
 		//open a new coop
 		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
+
+			//unpin all messages - update to unpin only the specific messages
+			message.channel.messages.fetchPinned().then(messages => { messages.forEach(message => { message.unpin() }) });
 
 			//===============================
 			// block 1 - Status board block
@@ -359,6 +365,11 @@ client.on('message', async message => {
 			}
 
 			message.channel.send(placedEmbed).then(async msg => {
+				
+				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
+				statusboardmessages.push(msg.id);
+				console.log(statusboardmessages)
+
 				await msg.pin();
 				//add reactions for clicking
 				await msg.react('👍');
@@ -372,9 +383,6 @@ client.on('message', async message => {
 			//===============================
 			// block 2 - Reaction board block
 			//===============================
-
-			//unpin all messages
-			message.channel.messages.fetchPinned().then(messages => { messages.forEach(message => { message.unpin() }) });
 
 			//build initial message and embed
 			let embed = new Discord.MessageEmbed()
