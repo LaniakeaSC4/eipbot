@@ -140,7 +140,7 @@ console.log("entered finstatusboard function")
 			//embed[0] is first/only embed in message. Copy it to embed variable
 			let embed = msg.embeds[0];
 
-			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+			if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 				console.log('found the pinned message')
 				console.log(msg)
 				return (msg)
