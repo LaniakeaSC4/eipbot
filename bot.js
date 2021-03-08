@@ -142,8 +142,8 @@ console.log("entered finstatusboard function")
 
 			if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 				console.log('found the pinned message')
-				console.log(msg)
-				return msg.id;
+				console.log(msg.id)
+				resolve(msg.id);
 			}//end if embed and footer text contains
 		})//end message.forEach
 	})//end .then after fetchPinned
