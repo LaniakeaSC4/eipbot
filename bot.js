@@ -23,9 +23,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 	console.log(`${reaction.count} user(s) have given the same reaction to this message!`);
 });
 
-
-
-client.on('ready', () => {
+//global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
+var statusboardmessages = [];
+function arraystatusboards(){
 
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
 
@@ -47,6 +47,12 @@ client.on('ready', () => {
 		})//end .then after fetchPinned
 			.catch((err) => { });
 	});//end categoryChannels.forEach
+
+}
+
+client.on('ready', () => {
+
+	arraystatusboards()
 	console.log('I am ready!');
 });
 
@@ -380,9 +386,6 @@ function thankyou(author, updatedthis, color, message) {
 //=======================================
 //		Coop bot	|	User Commands
 //=======================================
-
-//global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
-var statusboardmessages = [];
 
 //!coop (including !coop open [name])
 client.on('message', async message => {
