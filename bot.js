@@ -46,7 +46,7 @@ client.on('ready', () => {
 				}//end if embed and footer text contains
 			})//end message.forEach
 		}).catch((err) => {
-			console.error(err);
+			console.error("error is: " + err);
 		});//end .then after fetchPinned
 	});//end categoryChannels.forEach
 
