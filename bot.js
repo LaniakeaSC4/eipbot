@@ -133,7 +133,7 @@ function buildteamobj(message) {
 async function findstatusboard(message) {
 console.log("entered finstatusboard function")
 	//get the status board		//fetch pinned messages
-	message.channel.messages.fetchPinned().then(messages => {
+	await message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message 
 		messages.forEach(msg => {
 
@@ -515,7 +515,7 @@ client.on('message', async message => {
 		//open a new coop
 		if (eggcommand1 == 'close') {
 
-			findstatusboard(message).then(statusboard => {
+			await findstatusboard(message).then(statusboard => {
 				console.log(statusboard)
 				var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
 				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
