@@ -130,25 +130,25 @@ function buildteamobj(message) {
 // Get the player status board and rebuild it
 //=============================================
 
-async function findstatusboard(message) {
-console.log("entered finstatusboard function")
-return new Promise((resolve, reject) => {
-	//get the status board		//fetch pinned messages
-	await message.channel.messages.fetchPinned().then(messages => {
-		//for each pinned message 
-		messages.forEach(msg => {
+function findstatusboard(message) {
+	console.log("entered finstatusboard function")
+	return new Promise((resolve, reject) => {
+		//get the status board		//fetch pinned messages
+		message.channel.messages.fetchPinned().then(messages => {
+			//for each pinned message 
+			messages.forEach(msg => {
 
-			//embed[0] is first/only embed in message. Copy it to embed variable
-			let embed = msg.embeds[0];
+				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = msg.embeds[0];
 
-			if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-				console.log('found the pinned message')
-				console.log(msg.id)
-				resolve(msg.id);
-			}//end if embed and footer text contains
-		})//end message.forEach
-	})//end .then after fetchPinned
-})//end promise
+				if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+					console.log('found the pinned message')
+					console.log(msg.id)
+					resolve(msg.id);
+				}//end if embed and footer text contains
+			})//end message.forEach
+		})//end .then after fetchPinned
+	})//end promise
 }
 
 //async function to chain rebuild functions to follow each other - for single user
@@ -517,14 +517,14 @@ client.on('message', async message => {
 		//open a new coop
 		if (eggcommand1 == 'close') {
 
-			
+
 			await findstatusboard(message).then((statusboard) => {
-					console.log('statusboard: ' + statusboard);
-					var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
-					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-					updatedEmbed.setFooter('Bot created by LaniakeaSC\nThis coop is closed');
-					statusboard.edit(updatedEmbed);
-				})
+				console.log('statusboard: ' + statusboard);
+				var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+				updatedEmbed.setFooter('Bot created by LaniakeaSC\nThis coop is closed');
+				statusboard.edit(updatedEmbed);
+			})
 
 		};//end the if !close
 
