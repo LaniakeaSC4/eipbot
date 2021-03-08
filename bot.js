@@ -13,9 +13,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			return;
 		}
 	}
-
-	if (statusboardmessages.includes(reaction.message.id)) {
-		console.log('Reaction was on a status board message!')
+	for (var i = 0; i < statusboardmessages.length; i++) {
+		if (statusboardmessages[i].includes(reaction.message.id)) {
+			console.log('Reaction was on a status board message!')
+		}
 	}
 	// Now the message has been cached and is fully available
 	console.log(`${reaction.message.author}'s message "${reaction.message.id}" gained a reaction!`);
@@ -25,23 +26,26 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 //global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
 var statusboardmessages = [];
-function arraystatusboards(){
 
+//function to rebuild statusboardmessages with open coop status boards
+function arraystatusboards() {
+
+	//get all text channels
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
 
 	categoryChannels.forEach(channel => {
 
-		channel.messages.fetchPinned().then(messages => {
-			//for each pinned message 
-			messages.forEach(msg => {
+		channel.messages.fetchPinned().then(messages => {//fetch pinned messsages
+
+			messages.forEach(msg => {//for each pinned message 
 
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = msg.embeds[0];
 
 				if (embed != undefined && embed.footer.text.includes('LaniakeaSC') && !embed.footer.text.includes('This coop is closed')) { //find the right pinned message
-					console.log('found a pinned statusboard message with ID' + msg.id)
-					
-					statusboardmessages.push(msg.id);
+					console.log('found a pinned statusboard message with ID: ' + msg.id)
+
+					statusboardmessages.push(msg.id);//push this message ID into the statusboardmessages array
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
@@ -52,11 +56,10 @@ function arraystatusboards(){
 
 client.on('ready', () => {
 
+	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!');
 });
-
-//client.on('message', async message => {if (message.content.startsWith("!EIP Bot reporting for duty")) {message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');}});//end client on message
 
 // ---- Info ----
 // home team should be under category including word "home"
@@ -154,9 +157,9 @@ function buildteamobj(message) {
 // Get the player status board and rebuild it
 //=============================================
 
-//returns promise of statusboard message object
+//returns promise of statusboard message object in the channel the command was sent
 function findstatusboard(message) {
-	console.log("entered finstatusboard function")
+
 	return new Promise((resolve, reject) => {
 		//get the status board		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
@@ -167,9 +170,8 @@ function findstatusboard(message) {
 				let embed = msg.embeds[0];
 
 				if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-					console.log('found the pinned message')
-					console.log(msg.id)
-					resolve(msg);
+					console.log('found a pinned statusboard message with ID: ' + msg.id)
+					resolve(msg)
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
