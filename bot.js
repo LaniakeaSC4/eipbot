@@ -28,7 +28,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 client.on('ready', () => {
 	console.log('I am ready!');
 
-	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text");
+	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
 
 	categoryChannels.forEach(channel => {
 		console.log(channel.name)
@@ -46,7 +46,7 @@ client.on('ready', () => {
 				}//end if embed and footer text contains
 			})//end message.forEach
 		}).catch((err) => {
-			console.error("error is: " + err);
+			console.error("error is: " + eerr);
 		});//end .then after fetchPinned
 	});//end categoryChannels.forEach
 
