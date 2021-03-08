@@ -44,11 +44,17 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			console.log(reaction.emoji.name)
 
 			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
+			var thischannel = reaction.channel.id
+			var thismessage = reaction.message.id
+
+			let message = client.channels.cache.get(thischannel).messages.fetch(thismessage);
+
+			console.log(messsage)
 
 			try {
-				//await rebuildteamobj(message)
-				//await changeplayerstatus(reaction.emoji.name,reaction.user.displayName)
-				//await updateplayerboard(message)
+				await rebuildteamobj(message)
+				await changeplayerstatus(reaction.emoji.name,reaction.user.displayName)
+				await updateplayerboard(message)
 			} catch (err) {
 				console.log(err)
 			}
