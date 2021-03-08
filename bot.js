@@ -13,6 +13,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			return;
 		}
 	}
+	
+	if (statusboardmessages.includes(reaction.message.id)) {
+	  console.log('Reaction was on a status board message!')
+	}
 	// Now the message has been cached and is fully available
 	console.log(`${reaction.message.author}'s message "${reaction.message.id}" gained a reaction!`);
 	// The reaction is now also fully available and the properties will be reflected accurately:
