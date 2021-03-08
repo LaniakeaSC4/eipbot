@@ -27,9 +27,27 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 client.on('ready', () => {
 	console.log('I am ready!');
-	//var statuschannel = client.channels.cache.find(channel => channel.name === "bot-status");
-	//client.channels.cache.get(statuschannel.id)
-	//	.send(`!EIP Bot reporting for duty (I have been restarted... But I am back!)`);
+
+	const categoryChannels = client.channels.cache.filter(channel => channel.type === "TextChannel");
+
+	categoryChannels.forEach(channel => {
+
+		channel.messages.fetchPinned().then(messages => {
+			//for each pinned message 
+			messages.forEach(msg => {
+
+				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = msg.embeds[0];
+
+				if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+					console.log('found a pinned message')
+					console.log(msg.id)
+					statusboardmessages.push(msg.id);
+				}//end if embed and footer text contains
+			})//end message.forEach
+		})//end .then after fetchPinned
+	});//end categoryChannels.forEach
+
 });
 
 //client.on('message', async message => {if (message.content.startsWith("!EIP Bot reporting for duty")) {message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');}});//end client on message
@@ -48,7 +66,7 @@ client.on('ready', () => {
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
 
-		restartcollector(message)
+		console.log(statusboardmessages)
 
 	}
 });//end client on message
@@ -130,6 +148,7 @@ function buildteamobj(message) {
 // Get the player status board and rebuild it
 //=============================================
 
+//returns promise of statusboard message object
 function findstatusboard(message) {
 	console.log("entered finstatusboard function")
 	return new Promise((resolve, reject) => {
