@@ -7,14 +7,7 @@ client.on('ready', () => {
 	//	.send(`!EIP Bot reporting for duty (I have been restarted... But I am back!)`);
 });
 
-//client.on('message', async message => {
-//	if (message.content.startsWith("!EIP Bot reporting for duty")) {
-//
-//		message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');
-
-//	}
-
-//});//end client on message
+//client.on('message', async message => {if (message.content.startsWith("!EIP Bot reporting for duty")) {message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');}});//end client on message
 
 // ---- Info ----
 // home team should be under category including word "home"
@@ -35,27 +28,6 @@ client.on('message', async message => {
 	}
 });//end client on message
 
-
-//!votes command for testing things
-client.on('message', async message => {
-	if (message.content.startsWith("!votes")) {
-
-		console.log('new votes is')
-		console.log(newvotes)
-
-	}
-});//end client on message
-
-//!collectcommand for testing things
-client.on('message', async message => {
-	if (message.content.startsWith("!collect")) {
-
-		console.log('collectorstate is')
-		console.log(collectorstate)
-
-	}
-});//end client on message
-
 //=======================================
 // Coop bot | Functions | Initalise
 //=======================================
@@ -64,7 +36,7 @@ client.on('message', async message => {
 var teams = {};
 var teammembers = {};
 
-//function to build team object from home team channels
+//function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
 
 	//get array of all server roles
@@ -120,7 +92,7 @@ function buildteamobj(message) {
 	//add red squares
 	for (let key in teammembers) {
 		for (var i = 0; i < teammembers[key].length; i++) {
-			teammembers[key][i] = "🟥 " + teammembers[key][i];
+			teammembers[key][i] = "🟥(💤) " + teammembers[key][i];
 		}
 	}
 
@@ -128,11 +100,36 @@ function buildteamobj(message) {
 	teams['teams'] = teamnames;
 }//end function
 
-//=======================================
-// Coop bot | Functions | rebuild
-//=======================================
+//=============================================
+// Coop bot | Functions | rebuild status board
+// Get the player status board and rebuild it
+//=============================================
 
-//function rebuild team arrays
+//async function to chain rebuild functions to follow each other - for single user
+async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
+
+	try {
+		await rebuildteamobj(message)
+		await changeusersquare(oldsq1, oldsq2, newsq, user)
+		await updateplayerboard(message)
+	} catch (err) {
+		console.log(err)
+	}
+}//end function
+
+//async function to chain rebuild functions to follow each other - for team
+async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
+
+	try {
+		await rebuildteamobj(message)
+		await changeteamsquare(oldsq1, oldsq2, newsq, team)
+		await updateplayerboard(message)
+	} catch (err) {
+		console.log(err)
+	}
+}//end function
+
+//function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
 		console.log('entered rebuildteamobj function')
@@ -255,32 +252,6 @@ function updateplayerboard(message) {
 	})//end promise
 }//end function updateplayerboard
 
-//async function to chain rebuild functions to follow each other - for single user
-async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
-
-	try {
-		await rebuildteamobj(message)
-		await changeusersquare(oldsq1, oldsq2, newsq, user)
-		await updateplayerboard(message)
-	} catch (err) {
-		console.log(err)
-	}
-
-}//end function
-
-//async function to chain rebuild functions to follow each other - for team
-async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
-
-	try {
-		await rebuildteamobj(message)
-		await changeteamsquare(oldsq1, oldsq2, newsq, team)
-		await updateplayerboard(message)
-	} catch (err) {
-		console.log(err)
-	}
-
-}//end function
-
 //=======================================
 // Coop bot | Functions | other
 //=======================================
@@ -341,13 +312,270 @@ function thankyou(author, updatedthis, color, message) {
 	message.delete()//delete the input message
 }//end thankyou function
 
-//make votes unique???
+//=======================================
+//		Coop bot	|	User Commands
+//=======================================
+
+//!coop (including !coop open [name])
+client.on('message', async message => {
+	if (message.content.startsWith("!coop")) {
+
+		//first lets split up commands
+		//transfer message contents into msg
+		let msg = message.content;
+		//make substring from first space onwards
+		let argString = msg.substr(msg.indexOf(' ') + 1);
+		//split into multiple parts and store in array - might get errors if more then 3 parts?
+		let argArr = argString.split(' ');
+		//for each element in array, make into variable
+		let [eggcommand1, eggcommand2, eggcommand3] = argArr;
+
+		console.log('commmand 1 is: ' + eggcommand1);
+		console.log('commmand 2 is: ' + eggcommand2);
+		console.log('commmand 3 is: ' + eggcommand3);
+
+		//open a new coop
+		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
+
+			//===============================
+			// block 1 - Status board block
+			//===============================
+
+			//initialise teams object (becasue this is the !coop open command)
+			buildteamobj(message);
+
+			let placedEmbed = new Discord.MessageEmbed()
+				.setTitle("Player status board")
+				.setDescription('🟥 - Not yet offered coop\n\n🟧 - Offered coop\n\n🟩 - In coop')
+				.setColor('#00FF00')
+				.setFooter('Bot created by LaniakeaSC')
+
+			//add teams and players for embed from teams/teammeber objects
+			for (var i = 0; i < teams.teams.length; i++) {
+
+				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
+				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
+
+			}
+
+			message.channel.send(placedEmbed).then(async msg => {
+				msg.pin();
+			})//end pin placed user embed
+			//end of block 1
+
+			//===============================
+			// block 2 - Reaction board block
+			//===============================
+
+			//unpin all messages
+			message.channel.messages.fetchPinned().then(messages => { messages.forEach(message => { message.unpin() }) });
+
+			//build initial message and embed
+			let embed = new Discord.MessageEmbed()
+				.setTitle('Reaction board for: ' + eggcommand2)
+				.setDescription('Please click 👍 if you are farming this contract.\n\nPlease click 👎 if you are not.\n\nPlease click 🥚 if you would like to be a starter.\n\nClicking 🗑 clears your choice.')
+				.setColor('#ffd700')
+				.setFooter('⬇️ Please add a reaction below ⬇️')
+
+			//send initial message with embed and pin it
+			message.channel.send(embed).then(async msg => {
+				msg.pin();
+
+				//add reactions for clicking
+				await msg.react('👍');
+				await msg.react('👎');
+				await msg.react('🥚');
+				await msg.react('🗑️');
+
+				//establish updatevotes function. Recheck the votes array and ???
+				async function updatevotes() {
+					//create newEmbed from old embed
+					const newEmbed = new Discord.MessageEmbed(embed);
+
+					//set each votes equal to 0 then.....??????
+					const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
+					const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
+					const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
+
+					//add votes values to embed fiels?
+					newEmbed.addFields(
+						{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
+						{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
+						{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
+					);
+
+					//edit message with newEmbed to update it
+					await msg.edit(newEmbed);
+
+				}
+
+				updatevotes();
+
+				//define collector
+				const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
+
+				//when a reaction is collected (clicked)
+				collector.on('collect', async (reaction, user) => {
+
+					//check it is one of the allowed reactions, else remove it
+					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
+
+						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+						const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+						//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+						for (const userReaction of userReactions.values()) {
+							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+								userReaction.users.remove(user.id);
+								newvotes[userReaction.emoji.name].delete(user);
+							}
+						}
+
+						//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
+						newvotes[reaction.emoji.name].add(user);
+					} else {
+						reaction.remove();//was not an allowed reaction
+					}
+
+					//before we leave this collect event, run update function
+					updatevotes();
+				});//end collector.on 'collect'
+
+				//when a user removes their own reaction
+				collector.on('remove', (reaction, user) => {
+					//delet the user from the votes array
+					newvotes[reaction.emoji.name].delete(user);
+					//run update function
+					updatevotes();
+				});
+
+			});//end the .then from sending initial embed
+			//end of block 2
+
+		};//end the if !open
+
+		message.delete();//delete input command
+
+	};//end if !coop block
+
+});//end client on message
+
+//square colour change commands (!red, !orange, !green)
+client.on('message', async message => {
+	//!red 🟥
+	if (message.content.startsWith("!red")) {
+
+		//initalise isuser and isteam as false
+		var isuser = false;
+		var isteam = false;
+
+		//what user or team was mentioned?
+		if (message.mentions.users.size !== 0) {
+			var mentioneduser = getname(message); isuser = true;
+		} else if (message.mentions.roles.size !== 0) {
+			var mentionedrole = message.mentions.roles.first().name; isteam = true;
+		} else { console.log('did not find either'); }
+
+		//if mention is a valid user
+		if (isuser == true && validuser(message, mentioneduser) == true) {
+
+			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
+			thankyou(message.member.displayName, mentioneduser, "red", message);
+
+		}//end if isuser = true
+
+		//if mentioned is a valid team
+		if (isteam == true && validteam(mentionedrole) == true) {
+
+			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
+			thankyou(message.member.displayName, mentionedrole, "red", message);
+
+		}//end if isteam = true
+
+	}//end !red
+
+	//!orange 🟧
+	if (message.content.startsWith("!orange")) {
+
+		//initalise isuser and isteam as false
+		var isuser = false;
+		var isteam = false;
+
+		//what user or team was mentioned?
+		if (message.mentions.users.size !== 0) {
+			var mentioneduser = getname(message); isuser = true;
+		} else if (message.mentions.roles.size !== 0) {
+			var mentionedrole = message.mentions.roles.first().name; isteam = true;
+		} else { console.log('did not find either'); }
+
+		//if mention is a valid user
+		if (isuser == true && validuser(message, mentioneduser) == true) {
+
+			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message);
+			thankyou(message.member.displayName, mentioneduser, "orange", message);
+
+		}//end if isuser = true
+
+		//if mentioned is a valid team
+		if (isteam == true && validteam(mentionedrole) == true) {
+
+			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
+			thankyou(message.member.displayName, mentionedrole, "orange", message);
+
+		}//end if isteam = true
+
+	}//end !orange
+
+	//!green 🟩
+	if (message.content.startsWith("!green")) {
+
+		//initalise isuser and isteam as false
+		var isuser = false;
+		var isteam = false;
+
+		//what user or team was mentioned?
+		if (message.mentions.users.size !== 0) {
+			var mentioneduser = getname(message); isuser = true;
+		} else if (message.mentions.roles.size !== 0) {
+			var mentionedrole = message.mentions.roles.first().name; isteam = true;
+		} else { console.log('did not find either'); }
+
+		//if mention is a valid user
+		if (isuser == true && validuser(message, mentioneduser) == true) {
+
+			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
+			thankyou(message.member.displayName, mentioneduser, "green", message);
+
+		}//end if isuser = true
+
+		//if mentioned is a valid team
+		if (isteam == true && validteam(mentionedrole) == true) {
+
+			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
+			thankyou(message.member.displayName, mentionedrole, "green", message);
+
+		}//end if isteam = true
+
+	}//end !green
+
+});//end client on message
+
+//delete all bot pin notifications (this is for all bot pins, accross the whole server)
+client.on("message", (message) => { if (message.type === "PINS_ADD" && message.author.bot) message.delete(); })
+
+//=========================================
+// Coop bot	| Functions | restart collector
+//=========================================
+
+//define newvotes sets - THIS IS USED BY NORMAL COLLECTOR (not just restart function)
 const newvotes = {
 	'👍': new Set(),
 	'👎': new Set(),
 	'🥚': new Set(),
 	'🗑️': new Set()
 };
+
+//used to store current user reactions
 var collectorstate = {}
 
 //restart collector function
@@ -592,253 +820,6 @@ async function restartcollector(message) {
 	}
 
 }//end function
-
-
-//=======================================
-//		Coop bot	|	User Commands
-//=======================================
-
-//!coop (including !coop open [name])
-client.on('message', async message => {
-	if (message.content.startsWith("!coop")) {
-
-		//first lets split up commands
-		//transfer message contents into msg
-		let msg = message.content;
-		//make substring from first space onwards
-		let argString = msg.substr(msg.indexOf(' ') + 1);
-		//split into multiple parts and store in array - might get errors if more then 3 parts?
-		let argArr = argString.split(' ');
-		//for each element in array, make into variable
-		let [eggcommand1, eggcommand2, eggcommand3] = argArr;
-
-		console.log('commmand 1 is: ' + eggcommand1);
-		console.log('commmand 2 is: ' + eggcommand2);
-		console.log('commmand 3 is: ' + eggcommand3);
-
-		//open a new coop
-		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
-
-			//Block 2 - Who has been placed in coop
-
-			//initialise teams object (becasue this is the !coop open command)
-			buildteamobj(message);
-
-			let placedEmbed = new Discord.MessageEmbed()
-				.setTitle("Player status board")
-				.setDescription('🟥 - Not yet offered coop\n\n🟧 - Offered coop\n\n🟩 - In coop')
-				.setColor('#00FF00')
-				.setFooter('Bot created by LaniakeaSC')
-
-			//add teams and players for embed from teams/teammeber objects
-			for (var i = 0; i < teams.teams.length; i++) {
-
-				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
-				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
-
-			}
-
-			message.channel.send(placedEmbed).then(async msg => {
-				msg.pin();
-			})//end pin placed user embed
-			//end of block 2
-
-			//block 1 - coop voting block
-			//unpin all messages
-			message.channel.messages.fetchPinned().then(messages => { messages.forEach(message => { message.unpin() }) });
-
-			//build initial message and embed
-			let embed = new Discord.MessageEmbed()
-				.setTitle('Reaction board for: ' + eggcommand2)
-				.setDescription('Please click 👍 if you are farming this contract.\n\nPlease click 👎 if you are not.\n\nPlease click 🥚 if you would like to be a starter.\n\nClicking 🗑 clears your choice.')
-				.setColor('#ffd700')
-				.setFooter('⬇️ Please add a reaction below ⬇️')
-
-			//send initial message with embed and pin it
-			message.channel.send(embed).then(async msg => {
-				msg.pin();
-
-				//add reactions for clicking
-				await msg.react('👍');
-				await msg.react('👎');
-				await msg.react('🥚');
-				await msg.react('🗑️');
-
-				//establish updatevotes function. Recheck the votes array and ???
-				async function updatevotes() {
-					//create newEmbed from old embed
-					const newEmbed = new Discord.MessageEmbed(embed);
-
-					//set each votes equal to 0 then.....??????
-					const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
-					const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
-					const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
-
-					//add votes values to embed fiels?
-					newEmbed.addFields(
-						{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
-						{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
-						{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
-					);
-
-					//edit message with newEmbed to update it
-					await msg.edit(newEmbed);
-
-				}
-
-				updatevotes();
-
-				//define collector
-				const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
-
-				//when a reaction is collected (clicked)
-				collector.on('collect', async (reaction, user) => {
-
-					//check it is one of the allowed reactions, else remove it
-					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
-
-						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-						const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
-
-						//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
-						for (const userReaction of userReactions.values()) {
-							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
-								userReaction.users.remove(user.id);
-								newvotes[userReaction.emoji.name].delete(user);
-							}
-						}
-
-						//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
-						newvotes[reaction.emoji.name].add(user);
-					} else {
-						reaction.remove();//was not an allowed reaction
-					}
-
-					//before we leave this collect event, run update function
-					updatevotes();
-				});//end collector.on 'collect'
-
-				//when a user removes their own reaction
-				collector.on('remove', (reaction, user) => {
-					//delet the user from the votes array
-					newvotes[reaction.emoji.name].delete(user);
-					//run update function
-					updatevotes();
-				});
-
-			});//end the .then from sending initial embed
-			//end of block 1
-
-		};//end the if !open
-
-		message.delete();//delete input command
-
-	};//end if !coop block
-
-});//end client on message
-
-//square colour change commands (!red, !orange, !green)
-client.on('message', async message => {
-	//!red 🟥
-	if (message.content.startsWith("!red")) {
-
-		//initalise isuser and isteam as false
-		var isuser = false;
-		var isteam = false;
-
-		//what user or team was mentioned?
-		if (message.mentions.users.size !== 0) {
-			var mentioneduser = getname(message); isuser = true;
-		} else if (message.mentions.roles.size !== 0) {
-			var mentionedrole = message.mentions.roles.first().name; isteam = true;
-		} else { console.log('did not find either'); }
-
-		//if mention is a valid user
-		if (isuser == true && validuser(message, mentioneduser) == true) {
-
-			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
-			thankyou(message.member.displayName, mentioneduser, "red", message);
-
-		}//end if isuser = true
-
-		//if mentioned is a valid team
-		if (isteam == true && validteam(mentionedrole) == true) {
-
-			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
-			thankyou(message.member.displayName, mentionedrole, "red", message);
-
-		}//end if isteam = true
-
-	}//end !red
-
-	//!orange 🟧
-	if (message.content.startsWith("!orange")) {
-
-		//initalise isuser and isteam as false
-		var isuser = false;
-		var isteam = false;
-
-		//what user or team was mentioned?
-		if (message.mentions.users.size !== 0) {
-			var mentioneduser = getname(message); isuser = true;
-		} else if (message.mentions.roles.size !== 0) {
-			var mentionedrole = message.mentions.roles.first().name; isteam = true;
-		} else { console.log('did not find either'); }
-
-		//if mention is a valid user
-		if (isuser == true && validuser(message, mentioneduser) == true) {
-
-			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message);
-			thankyou(message.member.displayName, mentioneduser, "orange", message);
-
-		}//end if isuser = true
-
-		//if mentioned is a valid team
-		if (isteam == true && validteam(mentionedrole) == true) {
-
-			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
-			thankyou(message.member.displayName, mentionedrole, "orange", message);
-
-		}//end if isteam = true
-
-	}//end !orange
-
-	//!green 🟩
-	if (message.content.startsWith("!green")) {
-
-		//initalise isuser and isteam as false
-		var isuser = false;
-		var isteam = false;
-
-		//what user or team was mentioned?
-		if (message.mentions.users.size !== 0) {
-			var mentioneduser = getname(message); isuser = true;
-		} else if (message.mentions.roles.size !== 0) {
-			var mentionedrole = message.mentions.roles.first().name; isteam = true;
-		} else { console.log('did not find either'); }
-
-		//if mention is a valid user
-		if (isuser == true && validuser(message, mentioneduser) == true) {
-
-			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
-			thankyou(message.member.displayName, mentioneduser, "green", message);
-
-		}//end if isuser = true
-
-		//if mentioned is a valid team
-		if (isteam == true && validteam(mentionedrole) == true) {
-
-			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
-			thankyou(message.member.displayName, mentionedrole, "green", message);
-
-		}//end if isteam = true
-
-	}//end !green
-
-});//end client on message
-
-//delete all bot pin notifications (this is for all bot pins, accross the whole server)
-client.on("message", (message) => { if (message.type === "PINS_ADD" && message.author.bot) message.delete(); })
 
 //=======================================
 //		team card bot	|	Functions
