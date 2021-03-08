@@ -13,9 +13,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			return;
 		}
 	}
-	
+
 	if (statusboardmessages.includes(reaction.message.id)) {
-	  console.log('Reaction was on a status board message!')
+		console.log('Reaction was on a status board message!')
 	}
 	// Now the message has been cached and is fully available
 	console.log(`${reaction.message.author}'s message "${reaction.message.id}" gained a reaction!`);
@@ -129,6 +129,23 @@ function buildteamobj(message) {
 // Coop bot | Functions | rebuild status board
 // Get the player status board and rebuild it
 //=============================================
+
+async function findstatusboard(message) {
+
+	//get the status board		//fetch pinned messages
+	message.channel.messages.fetchPinned().then(messages => {
+		//for each pinned message 
+		messages.forEach(msg => {
+
+			//embed[0] is first/only embed in message. Copy it to embed variable
+			let embed = msg.embeds[0];
+
+			if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				return (msg)
+			}//end if embed and footer text contains
+		})//end message.forEach
+	})//end .then after fetchPinned
+}
 
 //async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
@@ -390,7 +407,7 @@ client.on('message', async message => {
 			}
 
 			message.channel.send(placedEmbed).then(async msg => {
-				
+
 				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
 				statusboardmessages.push(msg.id);
 				console.log(statusboardmessages)
@@ -492,6 +509,19 @@ client.on('message', async message => {
 			//end of block 2
 
 		};//end the if !open
+
+		//open a new coop
+		if (eggcommand1 == 'close' && String(eggcommand2) !== "undefined") {
+
+			findstatusboard(message).then(statusboard => {
+
+				var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+				updatedEmbed.setFooter('Bot created by LaniakeaSC\nThis coop is closed')
+				statusboard.edit(updatedEmbed);
+			})
+
+		};//end the if !close
 
 		message.delete();//delete input command
 
