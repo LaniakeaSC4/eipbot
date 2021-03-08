@@ -359,7 +359,13 @@ client.on('message', async message => {
 			}
 
 			message.channel.send(placedEmbed).then(async msg => {
-				msg.pin();
+				await msg.pin();
+				//add reactions for clicking
+				await msg.react('👍');
+				await msg.react('👎');
+				await msg.react('🥚');
+				await msg.react('💤');
+
 			})//end pin placed user embed
 			//end of block 1
 
