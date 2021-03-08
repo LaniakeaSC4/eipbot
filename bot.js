@@ -511,7 +511,7 @@ client.on('message', async message => {
 		};//end the if !open
 
 		//open a new coop
-		if (eggcommand1 == 'close' && String(eggcommand2) !== "undefined") {
+		if (eggcommand1 == 'close') {
 
 			findstatusboard(message).then(statusboard => {
 
