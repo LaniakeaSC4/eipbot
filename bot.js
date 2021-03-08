@@ -15,7 +15,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 	}
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
-			console.log('Reaction was on a status board message!')
+			console.log('Reaction was on a status board message: ' + statusboardmessages[i])
 		}
 	}
 	// Now the message has been cached and is fully available
