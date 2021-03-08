@@ -92,7 +92,7 @@ function buildteamobj(message) {
 	//add red squares
 	for (let key in teammembers) {
 		for (var i = 0; i < teammembers[key].length; i++) {
-			teammembers[key][i] = "🟥(💤) " + teammembers[key][i];
+			teammembers[key][i] = "🟥 (💤) " + teammembers[key][i];
 		}
 	}
 
