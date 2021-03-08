@@ -26,12 +26,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 
 client.on('ready', () => {
-	console.log('I am ready!');
 
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
 
 	categoryChannels.forEach(channel => {
-		console.log(channel.name)
+
 		channel.messages.fetchPinned().then(messages => {
 			//for each pinned message 
 			messages.forEach(msg => {
@@ -45,11 +44,10 @@ client.on('ready', () => {
 					statusboardmessages.push(msg.id);
 				}//end if embed and footer text contains
 			})//end message.forEach
-		}).catch((err) => {
-			console.error("error is: " + err);
-		});//end .then after fetchPinned
+		})//end .then after fetchPinned
+			.catch((err) => { });
 	});//end categoryChannels.forEach
-
+	console.log('I am ready!');
 });
 
 //client.on('message', async message => {if (message.content.startsWith("!EIP Bot reporting for duty")) {message.channel.send('It is great to be back! Please tell our master that the team members object has been rebuilt. We are ready for action!');}});//end client on message
