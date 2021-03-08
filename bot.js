@@ -29,9 +29,9 @@ client.on('ready', () => {
 	console.log('I am ready!');
 
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text");
-console.log(categoryChannels)
-	categoryChannels.forEach(channel => {
 
+	categoryChannels.forEach(channel => {
+		console.log(channel.name)
 		channel.messages.fetchPinned().then(messages => {
 			//for each pinned message 
 			messages.forEach(msg => {
