@@ -132,6 +132,7 @@ function buildteamobj(message) {
 
 async function findstatusboard(message) {
 console.log("entered finstatusboard function")
+return new Promise((resolve, reject) => {
 	//get the status board		//fetch pinned messages
 	await message.channel.messages.fetchPinned().then(messages => {
 		//for each pinned message 
@@ -147,6 +148,7 @@ console.log("entered finstatusboard function")
 			}//end if embed and footer text contains
 		})//end message.forEach
 	})//end .then after fetchPinned
+})//end promise
 }
 
 //async function to chain rebuild functions to follow each other - for single user
