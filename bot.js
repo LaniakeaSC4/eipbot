@@ -28,7 +28,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 client.on('ready', () => {
 	console.log('I am ready!');
 
-	const categoryChannels = client.channels.cache.filter(channel => channel.type === "TextChannel");
+	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text");
 
 	categoryChannels.forEach(channel => {
 
