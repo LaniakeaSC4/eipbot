@@ -106,7 +106,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				thisuser = dName
 			} else { thisuser = uName };
 
-			console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id + " in channel " + reaction.channel.name);
+			console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id);
 
 			var allowedemoji = ['👍', '👎', '🥚', '💤']
 
