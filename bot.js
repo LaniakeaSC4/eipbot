@@ -75,9 +75,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 					try {
 						await rebuildteamobj(msg)
-						//console.log(teammembers)
+						console.log(teammembers)
 						await changeplayerstatus(reaction.emoji.name, thisuser)
-						//console.log(teammembers)
+						console.log(teammembers)
 						await updateplayerboard(msg)
 					} catch (err) {
 						console.log(err)
@@ -155,6 +155,8 @@ var teammembers = {};
 
 //function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
+
+	if (message.partial){console.log("Partial message!!!!")}
 
 	//get array of all server roles
 	var roles = message.guild.roles.cache.map((role) => role.name);
