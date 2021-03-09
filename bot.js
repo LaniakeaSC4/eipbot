@@ -3,7 +3,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 
 //working on this. swap any of the 4 emoji for the clicked one
 function changeplayerstatus(newemoji, user) {
-	console.log('newemoji: '+ newemoji)
+	console.log('newemoji: ' + newemoji)
 	console.log('user: ' + user)
 	return new Promise((resolve, reject) => {
 		console.log('entered changeplayerstatus function')
@@ -53,12 +53,13 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			var thismessage = reaction.message.id
 
 			await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-
+				console.log(user)
+				console.log(user.displayName)
 				try {
 					await rebuildteamobj(msg)
-					console.log(teammembers)
+					//console.log(teammembers)
 					await changeplayerstatus(reaction.emoji.name, user.displayName)
-					console.log(teammembers)
+					//console.log(teammembers)
 					await updateplayerboard(msg)
 				} catch (err) {
 					console.log(err)
