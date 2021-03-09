@@ -26,29 +26,29 @@ function changeplayerstatus(newemoji, user) {
 	})//end promise
 }//end of changeusersquare function
 
+var thisstatusboard = {}
+
 async function pleasewait(message,finished) {
 
 	if (finished === false) {
-		await findstatusboard(message).then((statusboard) => {
+		
 
-			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+			var receivedEmbed = thisstatusboard.embeds[0]; //copy embeds from it
 			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 			updatedEmbed.setFooter('Bot created by LaniakeaSC\nPlease wait. I am thinking 🤔');
-			statusboard.edit(updatedEmbed);
+			thisstatusboard.edit(updatedEmbed);
 			
-		})
+		
 
 	}
 
 	if (finished === true) {
-		await findstatusboard(message).then((statusboard) => {
+		
 
-			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+			var receivedEmbed = thisstatusboard.embeds[0]; //copy embeds from it
 			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
 			updatedEmbed.setFooter('Bot created by LaniakeaSC');
-			statusboard.edit(updatedEmbed);
-			
-		})
+			thisstatusboard.edit(updatedEmbed);
 
 	}
 }
@@ -100,8 +100,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 					try {
 
-						pleasewait(msg,false)
-
+						await findstatusboard(msg)
 						reaction.message.reactions.removeAll()
 						await rebuildteamobj(msg)
 						console.log(teammembers)
@@ -114,7 +113,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 						await msg.react('💤');
 
 						pleasewait(msg,true)
-						
+
 					} catch (err) {
 						console.log(err)
 					}
@@ -275,6 +274,7 @@ function findstatusboard(message) {
 
 				if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 					console.log('found a pinned statusboard message with ID: ' + msg.id)
+					thisstatusboard = msg
 					resolve(msg)
 				}//end if embed and footer text contains
 			})//end message.forEach
