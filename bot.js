@@ -66,7 +66,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			if (dName !== null && uName !== null) {
 				thisuser = dName
 			} else { thisuser = uName };
-
+			console.log('thisuser :' + thisuser)
 			await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
 				try {
