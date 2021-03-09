@@ -115,11 +115,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 					try {
 
-						var loading = true
-							(function () {
-								if (loading === true){
-								setTimeout(pleasewait(msg), 1000)}
-							})();
+						loading = true
+						setInterval(pleasewait(msg), 1000)
 
 						reaction.message.reactions.removeAll()
 						await rebuildteamobj(msg)
@@ -131,7 +128,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 						await msg.react('👎');
 						await msg.react('🥚');
 						await msg.react('💤');
-						var loading = false
+						loading = false
+						clearInterval()
 					} catch (err) {
 						console.log(err)
 					}
