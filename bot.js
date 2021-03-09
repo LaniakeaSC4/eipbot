@@ -50,7 +50,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 			await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(msg => {
 			  
-			  console.log(msg)})
+			  console.log(msg)
 
 			try {
 				await rebuildteamobj(msg)
@@ -59,7 +59,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			} catch (err) {
 				console.log(err)
 			}
-
+}) 
 		}
 	}
 
