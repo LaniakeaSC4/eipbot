@@ -3,9 +3,11 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 
 //working on this. swap any of the 4 emoji for the clicked one
 function changeplayerstatus(newemoji, user) {
+	console.log('newemoji: '+ newwemoji)
+	console.log('user: ' + user)
 	return new Promise((resolve, reject) => {
 		console.log('entered changeplayerstatus function')
-var oldemoji = ['👍', '👎', '🥚', '💤'] 
+		var oldemoji = ['👍', '👎', '🥚', '💤']
 
 		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
 
@@ -14,7 +16,9 @@ var oldemoji = ['👍', '👎', '🥚', '💤']
 			//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 			for (var j = 0; j < teammembers[cleanrole].length; j++) {
 				if (teammembers[cleanrole][j].includes(user)) {
-					let str = teammembers[cleanrole][j]; let res = str.replace(oldemoji[0], newemoji).replace(oldemoji[1], newemoji).replace(oldemoji[2], newemoji).replace(oldemoji[3], newemoji); teammembers[cleanrole][j] = res;
+					let str = teammembers[cleanrole][j];
+					let res = str.replace(oldemoji[0], newemoji).replace(oldemoji[1], newemoji).replace(oldemoji[2], newemoji).replace(oldemoji[3], newemoji);
+					teammembers[cleanrole][j] = res;
 				} //end replace square core function
 			}//end for this team loop
 		}//end teams for loop
@@ -50,16 +54,16 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 			await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
-			try {
-				await rebuildteamobj(msg)
-				console.log(teammembers)
-			await changeplayerstatus(reaction.emoji.name,user.displayName)
-			console.log(teammembers)
-				await updateplayerboard(msg)
-			} catch (err) {
-				console.log(err)
-			}
-}) 
+				try {
+					await rebuildteamobj(msg)
+					console.log(teammembers)
+					await changeplayerstatus(reaction.emoji.name, user.displayName)
+					console.log(teammembers)
+					await updateplayerboard(msg)
+				} catch (err) {
+					console.log(err)
+				}
+			})
 		}
 	}
 
