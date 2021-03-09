@@ -29,40 +29,40 @@ function changeplayerstatus(newemoji, user) {
 //global var for the loading bar
 var loading = false
 var loopflop = false
-async function pleasewait(message) {
+function pleasewait(message) {
 
 
 	if (loading === true && loopflop === false) {
-		await findstatusboard(message).then((statusboard) => {
+		var statusboard = findstatusboard(message)
 
-			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
-			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-			updatedEmbed.setFooter('Bot created by LaniakeaSC\n✳✴✳✴✳✴✳✴✳✴');
-			statusboard.edit(updatedEmbed);
-			loopflop = true
-		})
+		var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+		var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+		updatedEmbed.setFooter('Bot created by LaniakeaSC\n✳✴✳✴✳✴✳✴✳✴');
+		statusboard.edit(updatedEmbed);
+		loopflop = true
+
 
 	}
 
 	if (loading === true && loopflop === true) {
-		await findstatusboard(message).then((statusboard) => {
+		var statusboard = findstatusboard(message)
 
-			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
-			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-			updatedEmbed.setFooter('Bot created by LaniakeaSC\n✴✳✴✳✴✳✴✳✴✳');
-			statusboard.edit(updatedEmbed);
-			loopflop = false
-		})
+		var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+		var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+		updatedEmbed.setFooter('Bot created by LaniakeaSC\n✴✳✴✳✴✳✴✳✴✳');
+		statusboard.edit(updatedEmbed);
+		loopflop = false
+
 	}
 
 	if (loading === false) {
-		await findstatusboard(message).then((statusboard) => {
+		var statusboard = findstatusboard(message)
 
-			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
-			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-			updatedEmbed.setFooter('Bot created by LaniakeaSC');
-			statusboard.edit(updatedEmbed);
-		})
+		var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+		var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+		updatedEmbed.setFooter('Bot created by LaniakeaSC');
+		statusboard.edit(updatedEmbed);
+
 
 	}
 
