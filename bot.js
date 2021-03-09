@@ -54,7 +54,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 			//get displayname from userID
 			//check if they have a nickname set
-			const member = message.guild.member(user.id);//retrieve the user from ID
+			const member = await client.users.fetch(user.id);//retrieve the user from ID
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
 			console.log("dName " + dName)
 			//if they dont have a nickname, thier username is what is displayed by discord.
