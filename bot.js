@@ -117,7 +117,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 						loading = true
 							(function () {
-								if (loading = true){
+								if (loading === true){
 								setTimeout(pleasewait(msg), 1000)}
 							})();
 
