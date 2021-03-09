@@ -50,8 +50,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			//trigger a rebuild of the statusboards array (background function, not needed for this function, but keeps us up to date)
 			arraystatusboards()
 
-			reaction.message.reactions.removeAll()
-
 			//code goes here to update reaction status
 			console.log('Reaction was on a status board message: ' + statusboardmessages[i])
 			console.log(reaction.emoji.name)
@@ -82,6 +80,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
 					try {
+						reaction.message.reactions.removeAll()
 						await rebuildteamobj(msg)
 						console.log(teammembers)
 						await changeplayerstatus(reaction.emoji.name, thisuser)
