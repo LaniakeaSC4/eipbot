@@ -50,7 +50,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			//trigger a rebuild of the statusboards array (background function, not needed for this function, but keeps us up to date)
 			arraystatusboards()
 
-			reaction.removeAll()
+			reaction.message.reactions.removeAll()
 
 			//code goes here to update reaction status
 			console.log('Reaction was on a status board message: ' + statusboardmessages[i])
