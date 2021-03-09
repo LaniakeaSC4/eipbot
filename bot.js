@@ -40,6 +40,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 		}
 	}
 
+	reaction.remove()
+
 	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
