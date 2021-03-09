@@ -36,8 +36,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 		}
 	}
 
-console.log('users: ' + reaction.users)
-
 	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
@@ -51,12 +49,10 @@ console.log('users: ' + reaction.users)
 			var thismessage = reaction.message.id
 
 			await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-			  
-			  console.log(msg)
 
 			try {
 				await rebuildteamobj(msg)
-			await changeplayerstatus(reaction.emoji.name,reaction.user.displayName)
+			await changeplayerstatus(reaction.emoji.name,user.displayName)
 				await updateplayerboard(msg)
 			} catch (err) {
 				console.log(err)
