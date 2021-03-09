@@ -47,7 +47,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			var thischannel = reaction.message.channel.id
 			var thismessage = reaction.message.id
 
-			let message = client.channels.cache.get(thischannel).messages.fetch(thismessage);
+			let message = await client.channels.cache.get(thischannel).messages.fetch(thismessage);
 
 			console.log(messsage)
 
