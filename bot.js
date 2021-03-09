@@ -26,46 +26,31 @@ function changeplayerstatus(newemoji, user) {
 	})//end promise
 }//end of changeusersquare function
 
-//global var for the loading bar
-var loading = false
-var loopflop = false
-function pleasewait(message) {
+async function pleasewait(message,finished) {
 
+	if (finished === false) {
+		await findstatusboard(message).then((statusboard) => {
 
-	if (loading === true && loopflop === false) {
-		var statusboard = findstatusboard(message)
-
-		var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
-		var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-		updatedEmbed.setFooter('Bot created by LaniakeaSC\n✳✴✳✴✳✴✳✴✳✴');
-		statusboard.edit(updatedEmbed);
-		loopflop = true
-
+			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+			updatedEmbed.setFooter('Bot created by LaniakeaSC\nPlease wait. I am thinking 🤔');
+			statusboard.edit(updatedEmbed);
+			
+		})
 
 	}
 
-	if (loading === true && loopflop === true) {
-		var statusboard = findstatusboard(message)
+	if (finished === true) {
+		await findstatusboard(message).then((statusboard) => {
 
-		var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
-		var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-		updatedEmbed.setFooter('Bot created by LaniakeaSC\n✴✳✴✳✴✳✴✳✴✳');
-		statusboard.edit(updatedEmbed);
-		loopflop = false
-
-	}
-
-	if (loading === false) {
-		var statusboard = findstatusboard(message)
-
-		var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
-		var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-		updatedEmbed.setFooter('Bot created by LaniakeaSC');
-		statusboard.edit(updatedEmbed);
-
+			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+			updatedEmbed.setFooter('Bot created by LaniakeaSC');
+			statusboard.edit(updatedEmbed);
+			
+		})
 
 	}
-
 }
 
 client.on('messageReactionAdd', async (reaction, user) => {
@@ -115,8 +100,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 					try {
 
-						loading = true
-						setInterval(pleasewait(msg), 1000)
+						pleasewait(msg,false)
 
 						reaction.message.reactions.removeAll()
 						await rebuildteamobj(msg)
@@ -128,8 +112,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 						await msg.react('👎');
 						await msg.react('🥚');
 						await msg.react('💤');
-						loading = false
-						clearInterval()
+
+						pleasewait(msg,true)
+						
 					} catch (err) {
 						console.log(err)
 					}
