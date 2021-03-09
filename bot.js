@@ -40,7 +40,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 		}
 	}
 
-	reaction.message.reactions.first().remove(user.id)
+
+
 
 	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
@@ -48,6 +49,19 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 			//trigger a rebuild of the statusboards array (background function, not needed for this function, but keeps us up to date)
 			arraystatusboards()
+
+			//remove the reaction
+			let statusboardmessage = message.channel.fetchMessage(reaction.message.id).catch(console.error);
+			console.log()
+			//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+			const userReactions = statusboardmessage.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+
+			//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+			for (const userReaction of userReactions.values()) {
+
+				userReaction.users.remove(user.id);
+
+			}
 
 			//code goes here to update reaction status
 			console.log('Reaction was on a status board message: ' + statusboardmessages[i])
@@ -162,7 +176,7 @@ var teammembers = {};
 //function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
 
-	if (message.partial){console.log("Partial message!!!!")}
+	if (message.partial) { console.log("Partial message!!!!") }
 
 	//get array of all server roles
 	var roles = message.guild.roles.cache.map((role) => role.name);
