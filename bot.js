@@ -69,18 +69,21 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				thisuser = dName
 			} else { thisuser = uName };
 			console.log('thisuser :' + thisuser)
-			await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
-				try {
-					await rebuildteamobj(msg)
-					//console.log(teammembers)
-					await changeplayerstatus(reaction.emoji.name, thisuser)
-					//console.log(teammembers)
-					await updateplayerboard(msg)
-				} catch (err) {
-					console.log(err)
-				}
-			})
+			if (thisuser != "EiP Bot") {
+				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
+
+					try {
+						await rebuildteamobj(msg)
+						//console.log(teammembers)
+						await changeplayerstatus(reaction.emoji.name, thisuser)
+						//console.log(teammembers)
+						await updateplayerboard(msg)
+					} catch (err) {
+						console.log(err)
+					}
+				})
+			}
 		}
 	}
 
