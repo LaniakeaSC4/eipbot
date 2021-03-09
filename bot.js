@@ -50,10 +50,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			//trigger a rebuild of the statusboards array (background function, not needed for this function, but keeps us up to date)
 			arraystatusboards()
 
-			//code goes here to update reaction status
-			console.log('Reaction was on a status board message: ' + statusboardmessages[i])
-			console.log(reaction.emoji.name)
-
 			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
 			var thischannel = reaction.message.channel.id
 			var thismessage = reaction.message.id
@@ -62,21 +58,21 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			//check if they have a nickname set
 			const member = await client.users.fetch(user.id);//retrieve the user from ID
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
-			console.log("dName " + dName)
 			//if they dont have a nickname, thier username is what is displayed by discord.
 			var uName = member.username;
-			console.log("uName " + uName)
-
 			var thisuser = ""
-			console.log(typeof uName)
-			console.log(typeof dName)
+
 			//if both dname and uName are not null, we must have found a nickame. Therefore return it, or instead return the username
 			if (dName !== undefined && uName !== undefined) {
 				thisuser = dName
 			} else { thisuser = uName };
-			console.log('thisuser :' + thisuser)
+			
+			console.log(thisuser + "reacted with " + reaction.emoji.name + "on status board message: " + statusboardmessages[i])
 
-			if (thisuser != "EiP Bot") {
+			var allowedemoji = ['👍', '👎', '🥚', '💤']
+
+
+			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name) ) {
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
 					try {
