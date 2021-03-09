@@ -62,8 +62,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			console.log("uName " + uName)
 
 			var thisuser = ""
+			console.log(typeof uName)
+			console.log(typeof dName)
 			//if both dname and uName are not null, we must have found a nickame. Therefore return it, or instead return the username
-			if (dName !== null && uName !== null) {
+			if (dName !== undefined && uName !== undefined) {
 				thisuser = dName
 			} else { thisuser = uName };
 			console.log('thisuser :' + thisuser)
