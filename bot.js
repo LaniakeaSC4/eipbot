@@ -533,86 +533,86 @@ client.on('message', async message => {
 			// block 2 - Reaction board block
 			//===============================
 
-			//build initial message and embed
-			let embed = new Discord.MessageEmbed()
-				.setTitle('Reaction board for: ' + eggcommand2)
-				.setDescription('Please click 👍 if you are farming this contract.\n\nPlease click 👎 if you are not.\n\nPlease click 🥚 if you would like to be a starter.\n\nClicking 🗑 clears your choice.')
-				.setColor('#ffd700')
-				.setFooter('⬇️ Please add a reaction below ⬇️')
+			// //build initial message and embed
+			// let embed = new Discord.MessageEmbed()
+			// 	.setTitle('Reaction board for: ' + eggcommand2)
+			// 	.setDescription('Please click 👍 if you are farming this contract.\n\nPlease click 👎 if you are not.\n\nPlease click 🥚 if you would like to be a starter.\n\nClicking 🗑 clears your choice.')
+			// 	.setColor('#ffd700')
+			// 	.setFooter('⬇️ Please add a reaction below ⬇️')
 
-			//send initial message with embed and pin it
-			message.channel.send(embed).then(async msg => {
-				msg.pin();
+			// //send initial message with embed and pin it
+			// message.channel.send(embed).then(async msg => {
+			// 	msg.pin();
 
-				//add reactions for clicking
-				await msg.react('👍');
-				await msg.react('👎');
-				await msg.react('🥚');
-				await msg.react('🗑️');
+			// 	//add reactions for clicking
+			// 	await msg.react('👍');
+			// 	await msg.react('👎');
+			// 	await msg.react('🥚');
+			// 	await msg.react('🗑️');
 
-				//establish updatevotes function. Recheck the votes array and ???
-				async function updatevotes() {
-					//create newEmbed from old embed
-					const newEmbed = new Discord.MessageEmbed(embed);
+			// 	//establish updatevotes function. Recheck the votes array and ???
+			// 	async function updatevotes() {
+			// 		//create newEmbed from old embed
+			// 		const newEmbed = new Discord.MessageEmbed(embed);
 
-					//set each votes equal to 0 then.....??????
-					const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
-					const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
-					const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
+			// 		//set each votes equal to 0 then.....??????
+			// 		const userYes = (newvotes['👍'].size === 0) ? 'None' : [...newvotes['👍']];
+			// 		const userNo = (newvotes['👎'].size === 0) ? 'None' : [...newvotes['👎']];
+			// 		const userStarter = (newvotes['🥚'].size === 0) ? 'None' : [...newvotes['🥚']];
 
-					//add votes values to embed fiels?
-					newEmbed.addFields(
-						{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
-						{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
-						{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
-					);
+			// 		//add votes values to embed fiels?
+			// 		newEmbed.addFields(
+			// 			{ name: `Farming (${newvotes['👍'].size})`, value: userYes, inline: true },
+			// 			{ name: `Not Farming (${newvotes['👎'].size})`, value: userNo, inline: true },
+			// 			{ name: `Starter (${newvotes['🥚'].size})`, value: userStarter, inline: true }
+			// 		);
 
-					//edit message with newEmbed to update it
-					await msg.edit(newEmbed);
+			// 		//edit message with newEmbed to update it
+			// 		await msg.edit(newEmbed);
 
-				}
+			// 	}
 
-				updatevotes();
+			// 	updatevotes();
 
-				//define collector
-				const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
+			// 	//define collector
+			// 	const collector = msg.createReactionCollector((reaction, user) => !user.bot, { dispose: true });
 
-				//when a reaction is collected (clicked)
-				collector.on('collect', async (reaction, user) => {
+			// 	//when a reaction is collected (clicked)
+			// 	collector.on('collect', async (reaction, user) => {
 
-					//check it is one of the allowed reactions, else remove it
-					if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
+			// 		//check it is one of the allowed reactions, else remove it
+			// 		if (['👍', '👎', '🥚', '🗑️'].includes(reaction.emoji.name)) {
 
-						//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
-						const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+			// 			//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
+			// 			const userReactions = msg.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
 
-						//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
-						for (const userReaction of userReactions.values()) {
-							if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
-								userReaction.users.remove(user.id);
-								newvotes[userReaction.emoji.name].delete(user);
-							}
-						}
+			// 			//check if it was the bin which was clicked, if so we need to loop through all reactions and remove any by the user
+			// 			for (const userReaction of userReactions.values()) {
+			// 				if (userReaction.emoji.name !== reaction.emoji.name || reaction.emoji.name === '🗑️') {
+			// 					userReaction.users.remove(user.id);
+			// 					newvotes[userReaction.emoji.name].delete(user);
+			// 				}
+			// 			}
 
-						//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
-						newvotes[reaction.emoji.name].add(user);
-					} else {
-						reaction.remove();//was not an allowed reaction
-					}
+			// 			//if reaction was in the allowed 4, but not the bin, add user to votes arrary under that emoji
+			// 			newvotes[reaction.emoji.name].add(user);
+			// 		} else {
+			// 			reaction.remove();//was not an allowed reaction
+			// 		}
 
-					//before we leave this collect event, run update function
-					updatevotes();
-				});//end collector.on 'collect'
+			// 		//before we leave this collect event, run update function
+			// 		updatevotes();
+			// 	});//end collector.on 'collect'
 
-				//when a user removes their own reaction
-				collector.on('remove', (reaction, user) => {
-					//delet the user from the votes array
-					newvotes[reaction.emoji.name].delete(user);
-					//run update function
-					updatevotes();
-				});
+			// 	//when a user removes their own reaction
+			// 	collector.on('remove', (reaction, user) => {
+			// 		//delet the user from the votes array
+			// 		newvotes[reaction.emoji.name].delete(user);
+			// 		//run update function
+			// 		updatevotes();
+			// 	});
 
-			});//end the .then from sending initial embed
+			// });//end the .then from sending initial embed
 			//end of block 2
 
 		};//end the if !open
@@ -739,7 +739,7 @@ client.on('message', async message => {
 });//end client on message
 
 //delete all bot pin notifications (this is for all bot pins, accross the whole server)
-client.on("message", (message) => { if (message.type === "PINS_ADD" && message.author.bot) message.delete(); })
+//client.on("message", (message) => { if (message.type === "PINS_ADD" && message.author.bot) message.delete(); })
 
 //=========================================
 // Coop bot	| Functions | restart collector
