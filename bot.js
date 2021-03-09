@@ -47,14 +47,14 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			var thischannel = reaction.message.channel.id
 			var thismessage = reaction.message.id
 
-			let message = await client.channels.cache.get(thischannel).messages.fetch(thismessage);
+			await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(msg => {console.log(msg)})
 
-			console.log(messsage)
+			
 
 			try {
-				await rebuildteamobj(message)
-				await changeplayerstatus(reaction.emoji.name,reaction.user.displayName)
-				await updateplayerboard(message)
+				//await rebuildteamobj(message)
+			//	await changeplayerstatus(reaction.emoji.name,reaction.user.displayName)
+				//await updateplayerboard(message)
 			} catch (err) {
 				console.log(err)
 			}
