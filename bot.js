@@ -52,13 +52,27 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			var thischannel = reaction.message.channel.id
 			var thismessage = reaction.message.id
 
+			//get displayname from userID
+			//check if they have a nickname set
+			const member = message.guild.member(user.id);//retrieve the user from ID
+			var dName = member.nickname;//set dName (displayName) to the member object's nickname
+			console.log("dName " + dName)
+			//if they dont have a nickname, thier username is what is displayed by discord.
+			var uName = member.username;
+			console.log("uName " + uName)
+
+			var thisuser = ""
+			//if both dname and uName are not null, we must have found a nickame. Therefore return it, or instead return the username
+			if (dName !== null && uName !== null) {
+				thisuser = dName
+			} else { thisuser = uName };
+
 			await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-				console.log(user)
-				console.log(user.displayName)
+
 				try {
 					await rebuildteamobj(msg)
 					//console.log(teammembers)
-					await changeplayerstatus(reaction.emoji.name, user.displayName)
+					await changeplayerstatus(reaction.emoji.name, thisuser)
 					//console.log(teammembers)
 					await updateplayerboard(msg)
 				} catch (err) {
