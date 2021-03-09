@@ -26,6 +26,48 @@ function changeplayerstatus(newemoji, user) {
 	})//end promise
 }//end of changeusersquare function
 
+//global var for the loading bar
+var loading = false
+var loopflop = false
+async function pleasewait(message) {
+
+
+	if (loading === true && loopflop === false) {
+		await findstatusboard(message).then((statusboard) => {
+
+			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+			updatedEmbed.setFooter('Bot created by LaniakeaSC\n✳✴✳✴✳✴✳✴✳✴');
+			statusboard.edit(updatedEmbed);
+			loopflop = true
+		})
+
+	}
+
+	if (loading === true && loopflop === true) {
+		await findstatusboard(message).then((statusboard) => {
+
+			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+			updatedEmbed.setFooter('Bot created by LaniakeaSC\n✴✳✴✳✴✳✴✳✴✳');
+			statusboard.edit(updatedEmbed);
+			loopflop = false
+		})
+	}
+
+	if (loading === false) {
+		await findstatusboard(message).then((statusboard) => {
+
+			var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
+			var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
+			updatedEmbed.setFooter('Bot created by LaniakeaSC');
+			statusboard.edit(updatedEmbed);
+		})
+
+	}
+
+}
+
 client.on('messageReactionAdd', async (reaction, user) => {
 	// When we receive a reaction we check if the reaction is partial or not
 	if (reaction.partial) {
@@ -39,9 +81,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			return;
 		}
 	}
-
-
-
 
 	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
@@ -66,16 +105,22 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			if (dName !== undefined && uName !== undefined) {
 				thisuser = dName
 			} else { thisuser = uName };
-			
-			console.log(thisuser + "reacted with " + reaction.emoji.name + "on status board message: " + statusboardmessages[i])
+
+			console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id + " in channel " + reaction.channel.name);
 
 			var allowedemoji = ['👍', '👎', '🥚', '💤']
 
-
-			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name) ) {
+			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
 					try {
+
+						loading = true
+							(function () {
+								if (loading = true){
+								setTimeout(pleasewait(msg), 1000)}
+							})();
+
 						reaction.message.reactions.removeAll()
 						await rebuildteamobj(msg)
 						console.log(teammembers)
@@ -86,6 +131,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 						await msg.react('👎');
 						await msg.react('🥚');
 						await msg.react('💤');
+						loading = false
 					} catch (err) {
 						console.log(err)
 					}
