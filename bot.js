@@ -40,7 +40,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 		}
 	}
 
-	reaction.message.reactions.remove(user)
+	reaction.message.reactions.remove(user.id)
 
 	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
