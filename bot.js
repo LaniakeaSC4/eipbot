@@ -52,7 +52,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 			try {
 				await rebuildteamobj(msg)
+				console.log(teammeber)
 			await changeplayerstatus(reaction.emoji.name,user.displayName)
+			console.log(teammembers)
 				await updateplayerboard(msg)
 			} catch (err) {
 				console.log(err)
