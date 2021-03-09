@@ -44,6 +44,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
 
+			//trigger a rebuild of the statusboards array (background function, not needed for this function, but keeps us up to date)
+			arraystatusboards()
+
 			//code goes here to update reaction status
 			console.log('Reaction was on a status board message: ' + statusboardmessages[i])
 			console.log(reaction.emoji.name)
@@ -94,7 +97,8 @@ var statusboardmessages = [];
 
 //function to rebuild statusboardmessages with open coop status boards
 function arraystatusboards() {
-
+	//clear array before rebuild
+	statusboardmessages = []
 	//get all text channels
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
 
