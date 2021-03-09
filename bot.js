@@ -51,8 +51,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			arraystatusboards()
 
 			//remove the reaction
-			let statusboardmessage = message.channel.fetchMessage(reaction.message.id).catch(console.error);
-			console.log()
+			let statusboardmessage = reaction.message.channel.fetchMessage(reaction.message.id).catch(console.error);
+			console.log(statusboardmessage)
 			//filter the reactions on the message to those by the user who just clicked (which triggered this collect)
 			const userReactions = statusboardmessage.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
 
