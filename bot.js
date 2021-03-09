@@ -3,7 +3,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 
 //working on this. swap any of the 4 emoji for the clicked one
 function changeplayerstatus(newemoji, user) {
-	console.log('newemoji: '+ newwemoji)
+	console.log('newemoji: '+ newemoji)
 	console.log('user: ' + user)
 	return new Promise((resolve, reject) => {
 		console.log('entered changeplayerstatus function')
