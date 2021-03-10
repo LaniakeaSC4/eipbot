@@ -618,11 +618,13 @@ client.on('message', async message => {
 
 
 			await findstatusboard(message).then((statusboard) => {
-				console.log('statusboard: ' + statusboard);
-				var receivedEmbed = statusboard.embeds[0]; //copy embeds from it
-				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-				updatedEmbed.setFooter('Bot created by LaniakeaSC\nThis coop is closed');
-				statusboard.edit(updatedEmbed);
+				console.log('Closing statusboard: ' + statusboard)
+				statusboard.reactions.removeAll()
+				var receivedEmbed = statusboard.embeds[0] //copy embeds from it
+				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
+				updatedEmbed.setFooter('Bot created by LaniakeaSC\nThis coop is closed')
+				updatedEmbed.setColor('#FF0000')
+				statusboard.edit(updatedEmbed)
 				arraystatusboards()
 			})
 
