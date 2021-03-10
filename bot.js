@@ -367,7 +367,7 @@ async function checkifvaliduser(message, user) {
 //check if the role mentioned is one of the valid home teams
 async function validteam(message,team) {
 	await rebuildteamobj(message)
-	var validteams = Object.keys(teams)
+	var validteams = teams.teams.values
 	console.log(validteams)
 	//this uses teams arrary establised for the team card bot
 	if (validteams.includes(team)) { return true } else { return false }
