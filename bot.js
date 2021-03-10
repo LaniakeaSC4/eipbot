@@ -1,6 +1,130 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
+client.on('ready', () => {
+	//build arrary of open status boards
+	arraystatusboards()
+	console.log('I am ready!');
+}); 
+
+// ---- Info ----
+// home team should be under category including word "home"
+// channel names under "home" category should contact a match for the role (e.g. "Home Teams" category should contain a channel "team egg-streme" and the "egg-streme" part should match a server role for the team)
+// this is what we will use to establish the teams that there are
+// ---- ---- ----
+
+//!test command for testing things
+client.on('message', async message => {
+	if (message.content.startsWith("!test")) {
+
+		console.log(statusboardmessages)
+
+	}
+});//end client on message 
+
+//========================================
+//	Coop bot | Functions | Reaction Status
+//========================================
+
+client.on('messageReactionAdd', async (reaction, user) => {
+	// When we receive a reaction we check if the reaction is partial or not
+	if (reaction.partial) {
+		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
+		try {
+			await reaction.fetch();
+			console.log('a partial reaction was fetched')
+		} catch (error) {
+			console.error('Something went wrong when fetching the message: ', error);
+			// Return as `reaction.message.author` may be undefined/null
+			return;
+		}
+	}
+
+	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
+	for (var i = 0; i < statusboardmessages.length; i++) {
+		if (statusboardmessages[i].includes(reaction.message.id)) {
+
+			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
+			var thischannel = reaction.message.channel.id
+			var thismessage = reaction.message.id
+
+			//get displayname from userid. Need this for the string match in the status board/teammembers object
+			//check if they have a nickname set
+			const member = await client.users.fetch(user.id);//retrieve the user from ID
+			var dName = member.nickname;//set dName (displayName) to the member object's nickname
+			//if they dont have a nickname, thier username is what is displayed by discord.
+			var uName = member.username;
+			
+			var thisuser = ""
+			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
+			if (dName !== undefined && uName !== undefined) {
+				thisuser = dName
+			} else { thisuser = uName };
+			
+if (thisuser != "EiP Bot")  {console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id);} 
+
+//we are only going further into the function with one of these 4 emoji
+			var allowedemoji = ['👍', '👎', '🥚', '💤']
+
+			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
+			  //get the message object for the status board which recieved the reaction, then...
+				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
+
+					try {
+
+						reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
+						await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
+						await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
+						await updateplayerboard(msg)//now the teammembers object is updated, republish the status board
+						//add the reactions back in ready for the next person
+						await msg.react('👍');
+						await msg.react('👎');
+						await msg.react('🥚');
+						await msg.react('💤');
+						
+						//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
+			 arraystatusboards() 
+
+					} catch (err) {
+						console.log(err)
+					}//end catch error
+				})//end .then after fetching statusboard
+			}//end if EIP Bot and allowed reaction
+		}//end if reaction message is a statusboard message
+	}//end for loop checking through stored reaction board message ids for a match for this reaction add
+});//end client on reaction add 
+
+//global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuilt on startup and when any reaction is added to a status board message
+var statusboardmessages = [];
+
+//function to rebuild statusboardmessages with open coop status boards
+function arraystatusboards() {
+	//clear array before rebuild
+	statusboardmessages = []
+	//get all text channels
+	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
+
+	categoryChannels.forEach(channel => {//for each non-deleted test channel
+
+		channel.messages.fetchPinned().then(messages => {//fetch pinned messsages
+
+			messages.forEach(msg => {//for each pinned message
+
+				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = msg.embeds[0];
+
+				if (embed != undefined && embed.footer.text.includes('LaniakeaSC') && !embed.footer.text.includes('This coop is closed')) { //find the right pinned message
+					console.log('found a pinned statusboard message with ID: ' + msg.id)
+
+					statusboardmessages.push(msg.id);//push this message ID into the statusboardmessages array if it is not closed
+				}//end if embed and footer text contains
+			})//end message.forEach
+		})//end .then after fetchPinned
+			.catch((err) => { });
+	});//end categoryChannels.forEach
+
+}//end array statusboards function 
+
 //function to swap any of the 4 emoji for the clicked one
 function changeplayerstatus(newemoji, user) {
 
@@ -27,143 +151,19 @@ function changeplayerstatus(newemoji, user) {
 	})//end promise
 }//end of changeplayerstatus function
 
-client.on('messageReactionAdd', async (reaction, user) => {
-	// When we receive a reaction we check if the reaction is partial or not
-	if (reaction.partial) {
-		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
-		try {
-			await reaction.fetch();
-			console.log('a partial reaction was fetched')
-		} catch (error) {
-			console.error('Something went wrong when fetching the message: ', error);
-			// Return as `reaction.message.author` may be undefined/null
-			return;
-		}
-	}
-
-	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
-	for (var i = 0; i < statusboardmessages.length; i++) {
-		if (statusboardmessages[i].includes(reaction.message.id)) {
-
-			//trigger a rebuild of the statusboards array (background function, not needed for this function, but keeps us up to date)
-			arraystatusboards()
-
-			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
-			var thischannel = reaction.message.channel.id
-			var thismessage = reaction.message.id
-
-			//get displayname from userID
-			//check if they have a nickname set
-			const member = await client.users.fetch(user.id);//retrieve the user from ID
-			var dName = member.nickname;//set dName (displayName) to the member object's nickname
-			//if they dont have a nickname, thier username is what is displayed by discord.
-			var uName = member.username;
-			var thisuser = ""
-
-			//if both dname and uName are not null, we must have found a nickame. Therefore return it, or instead return the username
-			if (dName !== undefined && uName !== undefined) {
-				thisuser = dName
-			} else { thisuser = uName };
-
-			console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id);
-
-			var allowedemoji = ['👍', '👎', '🥚', '💤']
-
-			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
-				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-
-					try {
-
-						reaction.message.reactions.removeAll()
-						await rebuildteamobj(msg)
-						console.log(teammembers)
-						await changeplayerstatus(reaction.emoji.name, thisuser)
-						console.log(teammembers)
-						await updateplayerboard(msg)
-						await msg.react('👍');
-						await msg.react('👎');
-						await msg.react('🥚');
-						await msg.react('💤');
-
-					} catch (err) {
-						console.log(err)
-					}
-				})
-			}
-		}
-	}
-
-});
-
-//global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
-var statusboardmessages = [];
-
-//function to rebuild statusboardmessages with open coop status boards
-function arraystatusboards() {
-	//clear array before rebuild
-	statusboardmessages = []
-	//get all text channels
-	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
-
-	categoryChannels.forEach(channel => {
-
-		channel.messages.fetchPinned().then(messages => {//fetch pinned messsages
-
-			messages.forEach(msg => {//for each pinned message 
-
-				//embed[0] is first/only embed in message. Copy it to embed variable
-				let embed = msg.embeds[0];
-
-				if (embed != undefined && embed.footer.text.includes('LaniakeaSC') && !embed.footer.text.includes('This coop is closed')) { //find the right pinned message
-					console.log('found a pinned statusboard message with ID: ' + msg.id)
-
-					statusboardmessages.push(msg.id);//push this message ID into the statusboardmessages array
-				}//end if embed and footer text contains
-			})//end message.forEach
-		})//end .then after fetchPinned
-			.catch((err) => { });
-	});//end categoryChannels.forEach
-
-}
-
-client.on('ready', () => {
-
-	//build arrary of open status boards
-	arraystatusboards()
-	console.log('I am ready!');
-});
-
-// ---- Info ----
-// home team should be under category including word "home"
-// channel names under "home" category should contact a match for the role (e.g. "Home Teams" category should contain a channel "team egg-streme" and the "egg-streme" part should match a server role for the team)
-// this is what we will use to establish the teams that there are
-// ---- ---- ----
-
-//=======================================
-//	Coop bot | Functions
-//=======================================
-
-//!test command for testing things
-client.on('message', async message => {
-	if (message.content.startsWith("!test")) {
-
-		console.log(statusboardmessages)
-
-	}
-});//end client on message
-
 //=======================================
 // Coop bot | Functions | Initalise
 //=======================================
 
 //define global storage objects
-var teams = {};
-var teammembers = {};
+var teams = {};//this one is for just the teams/roles that match the home team channels
+var teammembers = {};//the main data storage for the status board. Team titles and team members with squares and farming status
 
 //function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
 
-	if (message.partial) { console.log("Partial message!!!!") }
+//not sure if this will ever trigger. Here as a safety net. If this goes off, we might have problems. 
+	if (message.partial) {console.log("Partial message!!!!") }
 
 	//get array of all server roles
 	var roles = message.guild.roles.cache.map((role) => role.name);
@@ -219,16 +219,18 @@ function buildteamobj(message) {
 	for (let key in teammembers) {
 		for (var i = 0; i < teammembers[key].length; i++) {
 			teammembers[key][i] = "🟥 (💤) " + teammembers[key][i];
-		}
-	}
+		}//end for each team member
+	}//end for each team
 
 	//store the teams (roles) in the object
 	teams['teams'] = teamnames;
 }//end function
 
 //=============================================
-// Coop bot | Functions | rebuild status board
-// Get the player status board and rebuild it
+// Coop bot | Functions | coop (Square) status
+// 1. rebuild from current status board (scrape)
+// 2. modify the object in memory
+// 3. edit/update message on discord
 //=============================================
 
 //returns promise of statusboard message object in the channel the command was sent
