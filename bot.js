@@ -369,6 +369,7 @@ function validuser(message, user) {
 	//combine all
 	//var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
 	var teammembervalues = Object.values(teammembers)
+	console.log(teammembers)
 	console.log(user)
 	console.log(teammembervalues)
 	//if user passed to function is in that array, return true, else false
