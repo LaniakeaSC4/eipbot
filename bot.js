@@ -365,7 +365,7 @@ async function checkifvaliduser(message, user) {
 }//end function validuser
 
 //check if the role mentioned is one of the valid home teams
-async function validteam(team) {
+async function validteam(message,team) {
 	await rebuildteamobj(message)
 	var validteams = teams.keys()
 	console.log(validteams)
@@ -606,7 +606,7 @@ client.on('message', async message => {
 		}//end if isuser = true
 
 		//if mentioned is a valid team
-		if (isteam == true && validteam(mentionedrole) == true) {
+		if (isteam == true && validteam(message, mentionedrole) == true) {
 
 			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
 			thankyou(message.member.displayName, mentionedrole, "red", message);
@@ -640,7 +640,7 @@ client.on('message', async message => {
 		}//end if isuser = true
 
 		//if mentioned is a valid team
-		if (isteam == true && validteam(mentionedrole) == true) {
+		if (isteam == true && validteam(message, mentionedrole) == true) {
 
 			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
 			thankyou(message.member.displayName, mentionedrole, "orange", message);
@@ -674,7 +674,7 @@ client.on('message', async message => {
 		}//end if isuser = true
 
 		//if mentioned is a valid team
-		if (isteam == true && validteam(mentionedrole) == true) {
+		if (isteam == true && validteam(message, mentionedrole) == true) {
 
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
 			thankyou(message.member.displayName, mentionedrole, "green", message);
