@@ -360,7 +360,6 @@ async function checkifvaliduser(message, user) {
 	var teammembervalues = Object.values(teammembers)//get all the values from the object
 	var merged = [].concat.apply([], teammembervalues)//merge all values into 1 dimensional array
 	var found = merged.find(element => element.includes(user))//search merged array for user passed to function. If there, return user, else undefined
-	console.log("found is: " + found)
 	//if user passed to function is in that array, return true, else false
 	if (typeof found !== 'undefined') { return true } else { return false }
 }//end function validuser
@@ -949,7 +948,7 @@ client.on('message', async message => {
 //=======================================
 
 //initiate some variables for global use
-teams = ['egg-streme', 'yolksters', 'sunny-side', 'fowl-play', 'hard-boiled', 'over-easy'];
+//teams = ['egg-streme', 'yolksters', 'sunny-side', 'fowl-play', 'hard-boiled', 'over-easy'];
 timezone = ['Europe', 'US WC', 'US EC', 'South America', 'Oceania'];
 eggbonus = ['Medical Egger', 'Fusion Egger', 'Tachyon Egger', 'Antimatter Egger', 'Universe Egger', 'Enlightened Egger'];
 permitstatus = ['Pro Permit', 'Standard Permit'];
