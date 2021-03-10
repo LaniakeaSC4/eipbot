@@ -360,6 +360,7 @@ async function checkifvaliduser(message, user) {
 	var teammembervalues = Object.values(teammembers)//get all the values from the object
 	var merged = [].concat.apply([], teammembervalues)//merge all values into 1 dimensional array
 	var found = merged.find(element => element.includes(user))//search merged array for user passed to function. If there, return user, else undefined
+	console.log("found is: " + found)
 	//if user passed to function is in that array, return true, else false
 	if (found != 'undefined') { return true } else { return false }
 }//end function validuser
