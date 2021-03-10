@@ -370,11 +370,11 @@ async function validuser(message, user) {
 	//var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
 	await rebuildteamobj(message)
 	var teammembervalues = Object.values(teammembers)
-	console.log(teammembers)
-	console.log(user)
-	console.log(teammembervalues)
+	var merged = [].concat.apply([], teammembervalues);
+	console.log(merged)
+
 	//if user passed to function is in that array, return true, else false
-	if (teammembervalues.includes(user)) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
+	if (merged.includes(user)) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
 
 }//end function validuser
 
