@@ -350,32 +350,18 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 
 //=======================================
 // Coop bot | Functions | other
-// got to here tidying up
+// 1. Check if user is valid
 //=======================================
 
-//check if the user is on one of the home teams
-async function validuser(message, user) {
-
-	//var validusers = [];//blank the validusers array
-
-	//fill validusers with all the members. vars declared local to this function
-	//var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
-	//var overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
-	//var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
-	//var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
-	//var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
-	//var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
-
-	//combine all
-	//var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
+// 1. check if the user is on one of the home teams
+async function checkifvaliduser(message, user) {
+	//rebuild team object so we can search through valid users
 	await rebuildteamobj(message)
-	var teammembervalues = Object.values(teammembers)
-	var merged = [].concat.apply([], teammembervalues);
-	var found = merged.find(element => element.includes(user))
-		
+	var teammembervalues = Object.values(teammembers)//get all the values from the object
+	var merged = [].concat.apply([], teammembervalues)//merge all values into 1 dimensional array
+	var found = merged.find(element => element.includes(user))//search merged array for user passed to function. If there, return user, else undefined
 	//if user passed to function is in that array, return true, else false
 	if (found != 'undefined') { return true } else { return false }
-
 }//end function validuser
 
 //check if the role mentioned is one of the valid home teams
@@ -606,9 +592,11 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
+		var checkeduser = await checkifvaliduser(message, mentioneduser)
+
 		//if mention is a valid user
-		if (isuser == true && validuser(message, mentioneduser) == true) {
-			
+		if (isuser == true && checkeduser == true) {
+
 			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
 			thankyou(message.member.displayName, mentioneduser, "red", message);
 
@@ -638,8 +626,10 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
+		var checkeduser = await checkifvaliduser(message, mentioneduser)
+
 		//if mention is a valid user
-		if (isuser == true && validuser(message, mentioneduser) == true) {
+		if (isuser == true && checkeduser == true) {
 
 			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message);
 			thankyou(message.member.displayName, mentioneduser, "orange", message);
@@ -670,12 +660,11 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
-		var checkeduser = await validuser(message, mentioneduser)
-		console.log(checkeduser)
+		var checkeduser = await checkifvaliduser(message, mentioneduser)
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
-			console.log("banana")
+
 			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			thankyou(message.member.displayName, mentioneduser, "green", message);
 
