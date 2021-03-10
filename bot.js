@@ -244,7 +244,7 @@ function rebuildteamobj(message) {
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = message.embeds[0];
 				//find the right pinned message
-				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { 
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
 					console.log('found message with footer in rebuild obj function');
 					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
 						//get the values (team members). Is loaded as string with \n after each player
@@ -311,7 +311,7 @@ function updateplayerboard(message) {
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = message.embeds[0];
 				//find the right pinned message
-				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { 
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
 					var receivedEmbed = message.embeds[0]; //copy embeds from it
 					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
 					updatedEmbed.fields = []//clear fields
@@ -336,7 +336,7 @@ async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
-	} catch (err) {console.log(err)}
+	} catch (err) { console.log(err) }
 }//end function
 
 // 5b. async function to chain rebuild functions to follow each other - for team
@@ -345,7 +345,7 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
-	} catch (err) {console.log(err)}
+	} catch (err) { console.log(err) }
 }//end function
 
 //=======================================
@@ -371,10 +371,11 @@ async function validuser(message, user) {
 	await rebuildteamobj(message)
 	var teammembervalues = Object.values(teammembers)
 	var merged = [].concat.apply([], teammembervalues);
-	console.log(merged)
-console.log(merged.indexOf(user) > -1)
+	var found = merged.find(element => element.includes(user))
+	console.log(found)
+	
 	//if user passed to function is in that array, return true, else false
-	if (merged.indexOf(user) > -1 ) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
+	if (merged.indexOf(user) > -1) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
 
 }//end function validuser
 
