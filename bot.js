@@ -670,6 +670,9 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
+		var checkeduser = await validuser(message, mentioneduser)
+		console.log(checkeduser)
+
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
 			console.log("banana")
