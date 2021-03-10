@@ -661,7 +661,7 @@ client.on('message', async message => {
 		} else { console.log('did not find either'); }
 
 		var checkeduser = await checkifvaliduser(message, mentioneduser)
-
+		console.log(checkeduser)
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
 
