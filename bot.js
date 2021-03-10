@@ -1,30 +1,31 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
-//working on this. swap any of the 4 emoji for the clicked one
+//function to swap any of the 4 emoji for the clicked one
 function changeplayerstatus(newemoji, user) {
-	console.log('newemoji: ' + newemoji)
-	console.log('user: ' + user)
-	return new Promise((resolve, reject) => {
-		console.log('entered changeplayerstatus function')
-		var oldemoji = ['👍', '👎', '🥚', '💤']
 
+	console.log('user: ' + user + 'just changed thier status to: ' + newemoji)//log the change we are making
+
+	return new Promise((resolve, reject) => {
+		var oldemoji = ['👍', '👎', '🥚', '💤']//these are the possible emoji that we will be replacing
+
+		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
 		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
 
 			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 
-			//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
 			for (var j = 0; j < teammembers[cleanrole].length; j++) {
 				if (teammembers[cleanrole][j].includes(user)) {
 					let str = teammembers[cleanrole][j];
 					let res = str.replace(oldemoji[0], newemoji).replace(oldemoji[1], newemoji).replace(oldemoji[2], newemoji).replace(oldemoji[3], newemoji);
 					teammembers[cleanrole][j] = res;
-				} //end replace square core function
+				} //end replace emoji core function
 			}//end for this team loop
 		}//end teams for loop
 		resolve(true);
 	})//end promise
-}//end of changeusersquare function
+}//end of changeplayerstatus function
 
 client.on('messageReactionAdd', async (reaction, user) => {
 	// When we receive a reaction we check if the reaction is partial or not
@@ -84,7 +85,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 						await msg.react('🥚');
 						await msg.react('💤');
 
-						} catch (err) {
+					} catch (err) {
 						console.log(err)
 					}
 				})
