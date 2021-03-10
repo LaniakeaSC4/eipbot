@@ -608,7 +608,7 @@ client.on('message', async message => {
 
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
-
+			
 			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
 			thankyou(message.member.displayName, mentioneduser, "red", message);
 
@@ -672,7 +672,7 @@ client.on('message', async message => {
 
 		//if mention is a valid user
 		if (isuser == true && validuser(message, mentioneduser) == true) {
-
+			console.log("banana")
 			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			thankyou(message.member.displayName, mentioneduser, "green", message);
 
