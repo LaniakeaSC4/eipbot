@@ -370,7 +370,7 @@ function validuser(message, user) {
 	//var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
 
 	//if user passed to function is in that array, return true, else false
-	if (Object.values(teammembers).includes(user)) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
+	if (Object.values(teammembers).indexOf(user) > -1) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
 
 }//end function validuser
 
