@@ -374,7 +374,7 @@ async function validuser(message, user) {
 	var found = merged.find(element => element.includes(user))
 		
 	//if user passed to function is in that array, return true, else false
-	if (found != 'undefined') { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
+	if (found != 'undefined') { return true } else { return false }
 
 }//end function validuser
 
