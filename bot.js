@@ -374,7 +374,7 @@ async function validuser(message, user) {
 	console.log(user)
 	console.log(teammembervalues)
 	//if user passed to function is in that array, return true, else false
-	if (Object.values(teammembers).indexOf(user) > -1) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
+	if (teammembervalues.includes(user)) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
 
 }//end function validuser
 
