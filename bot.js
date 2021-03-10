@@ -674,7 +674,7 @@ client.on('message', async message => {
 		console.log(checkeduser)
 
 		//if mention is a valid user
-		if (isuser == true && validuser(message, mentioneduser) == true) {
+		if (isuser == true && checkeduser == true) {
 			console.log("banana")
 			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			thankyou(message.member.displayName, mentioneduser, "green", message);
