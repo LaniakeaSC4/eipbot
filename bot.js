@@ -1,12 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
-client.on('ready', () => {
-	//build arrary of open status boards
-	arraystatusboards()
-	console.log('I am ready!');
-}); 
-
 // ---- Info ----
 // home team should be under category including word "home"
 // channel names under "home" category should contact a match for the role (e.g. "Home Teams" category should contain a channel "team egg-streme" and the "egg-streme" part should match a server role for the team)
@@ -22,138 +16,15 @@ client.on('message', async message => {
 	}
 });//end client on message 
 
-//========================================
-//	Coop bot | Functions | Reaction Status
-//========================================
-
-client.on('messageReactionAdd', async (reaction, user) => {
-	// When we receive a reaction we check if the reaction is partial or not
-	if (reaction.partial) {
-		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
-		try {
-			await reaction.fetch();
-			console.log('a partial reaction was fetched')
-		} catch (error) {
-			console.error('Something went wrong when fetching the message: ', error);
-			// Return as `reaction.message.author` may be undefined/null
-			return;
-		}
-	}
-
-	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
-	for (var i = 0; i < statusboardmessages.length; i++) {
-		if (statusboardmessages[i].includes(reaction.message.id)) {
-
-			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
-			var thischannel = reaction.message.channel.id
-			var thismessage = reaction.message.id
-
-			//get displayname from userid. Need this for the string match in the status board/teammembers object
-			//check if they have a nickname set
-			const member = await client.users.fetch(user.id);//retrieve the user from ID
-			var dName = member.nickname;//set dName (displayName) to the member object's nickname
-			//if they dont have a nickname, thier username is what is displayed by discord.
-			var uName = member.username;
-			
-			var thisuser = ""
-			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
-			if (dName !== undefined && uName !== undefined) {
-				thisuser = dName
-			} else { thisuser = uName };
-			
-if (thisuser != "EiP Bot")  {console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id);} 
-
-//we are only going further into the function with one of these 4 emoji
-			var allowedemoji = ['👍', '👎', '🥚', '💤']
-
-			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
-			  //get the message object for the status board which recieved the reaction, then...
-				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-
-					try {
-
-						reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
-						await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
-						await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
-						await updateplayerboard(msg)//now the teammembers object is updated, republish the status board
-						//add the reactions back in ready for the next person
-						await msg.react('👍');
-						await msg.react('👎');
-						await msg.react('🥚');
-						await msg.react('💤');
-						
-						//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
-			 arraystatusboards() 
-
-					} catch (err) {
-						console.log(err)
-					}//end catch error
-				})//end .then after fetching statusboard
-			}//end if EIP Bot and allowed reaction
-		}//end if reaction message is a statusboard message
-	}//end for loop checking through stored reaction board message ids for a match for this reaction add
-});//end client on reaction add 
-
-//global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuilt on startup and when any reaction is added to a status board message
-var statusboardmessages = [];
-
-//function to rebuild statusboardmessages with open coop status boards
-function arraystatusboards() {
-	//clear array before rebuild
-	statusboardmessages = []
-	//get all text channels
-	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
-
-	categoryChannels.forEach(channel => {//for each non-deleted test channel
-
-		channel.messages.fetchPinned().then(messages => {//fetch pinned messsages
-
-			messages.forEach(msg => {//for each pinned message
-
-				//embed[0] is first/only embed in message. Copy it to embed variable
-				let embed = msg.embeds[0];
-
-				if (embed != undefined && embed.footer.text.includes('LaniakeaSC') && !embed.footer.text.includes('This coop is closed')) { //find the right pinned message
-					console.log('found a pinned statusboard message with ID: ' + msg.id)
-
-					statusboardmessages.push(msg.id);//push this message ID into the statusboardmessages array if it is not closed
-				}//end if embed and footer text contains
-			})//end message.forEach
-		})//end .then after fetchPinned
-			.catch((err) => { });
-	});//end categoryChannels.forEach
-
-}//end array statusboards function 
-
-//function to swap any of the 4 emoji for the clicked one
-function changeplayerstatus(newemoji, user) {
-
-	console.log('user: ' + user + 'just changed thier status to: ' + newemoji)//log the change we are making
-
-	return new Promise((resolve, reject) => {
-		var oldemoji = ['👍', '👎', '🥚', '💤']//these are the possible emoji that we will be replacing
-
-		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
-		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
-
-			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
-
-			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
-			for (var j = 0; j < teammembers[cleanrole].length; j++) {
-				if (teammembers[cleanrole][j].includes(user)) {
-					let str = teammembers[cleanrole][j];
-					let res = str.replace(oldemoji[0], newemoji).replace(oldemoji[1], newemoji).replace(oldemoji[2], newemoji).replace(oldemoji[3], newemoji);
-					teammembers[cleanrole][j] = res;
-				} //end replace emoji core function
-			}//end for this team loop
-		}//end teams for loop
-		resolve(true);
-	})//end promise
-}//end of changeplayerstatus function
-
 //=======================================
 // Coop bot | Functions | Initalise
 //=======================================
+
+client.on('ready', () => {
+	//build arrary of open status boards
+	arraystatusboards()
+	console.log('I am ready!');
+});
 
 //define global storage objects
 var teams = {};//this one is for just the teams/roles that match the home team channels
@@ -162,8 +33,8 @@ var teammembers = {};//the main data storage for the status board. Team titles a
 //function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
 
-//not sure if this will ever trigger. Here as a safety net. If this goes off, we might have problems. 
-	if (message.partial) {console.log("Partial message!!!!") }
+	//not sure if this will ever trigger. Here as a safety net. If this goes off, we might have problems. 
+	if (message.partial) { console.log("Partial message!!!!") }
 
 	//get array of all server roles
 	var roles = message.guild.roles.cache.map((role) => role.name);
@@ -226,14 +97,147 @@ function buildteamobj(message) {
 	teams['teams'] = teamnames;
 }//end function
 
-//=============================================
-// Coop bot | Functions | coop (Square) status
-// 1. rebuild from current status board (scrape)
-// 2. modify the object in memory
-// 3. edit/update message on discord
-//=============================================
+//======================================================
+//	Coop bot | Functions | Reaction Status (👍👎🥚💤)
+//  1. Message reaction add listener
+//  2. Refresh array of currently open coops
+//  3. Emoji swapper function
+//======================================================
 
-//returns promise of statusboard message object in the channel the command was sent
+// 1. reaction add listener
+client.on('messageReactionAdd', async (reaction, user) => {
+	// When we receive a reaction we check if the reaction is partial or not
+	if (reaction.partial) {
+		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
+		try {
+			await reaction.fetch();
+			console.log('a partial reaction was fetched')
+		} catch (error) {
+			console.error('Something went wrong when fetching the message: ', error);
+			// Return as `reaction.message.author` may be undefined/null
+			return;
+		}
+	}
+
+	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
+	for (var i = 0; i < statusboardmessages.length; i++) {
+		if (statusboardmessages[i].includes(reaction.message.id)) {
+
+			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
+			var thischannel = reaction.message.channel.id
+			var thismessage = reaction.message.id
+
+			//get displayname from userid. Need this for the string match in the status board/teammembers object
+			//check if they have a nickname set
+			const member = await client.users.fetch(user.id);//retrieve the user from ID
+			var dName = member.nickname;//set dName (displayName) to the member object's nickname
+			//if they dont have a nickname, thier username is what is displayed by discord.
+			var uName = member.username;
+
+			var thisuser = ""
+			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
+			if (dName !== undefined && uName !== undefined) {
+				thisuser = dName
+			} else { thisuser = uName };
+
+			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id); }
+
+			//we are only going further into the function with one of these 4 emoji
+			var allowedemoji = ['👍', '👎', '🥚', '💤']
+
+			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
+				//get the message object for the status board which recieved the reaction, then...
+				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
+
+					try {
+						reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
+						await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
+						await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
+						await updateplayerboard(msg)//now the teammembers object is updated, republish the status board
+						//add the reactions back in ready for the next person
+						await msg.react('👍');
+						await msg.react('👎');
+						await msg.react('🥚');
+						await msg.react('💤');
+
+						//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
+						arraystatusboards()
+
+					} catch (err) {
+						console.log(err)
+					}//end catch error
+				})//end .then after fetching statusboard
+			}//end if EIP Bot and allowed reaction
+		}//end if reaction message is a statusboard message
+	}//end for loop checking through stored reaction board message ids for a match for this reaction add
+});//end client on reaction add 
+
+//global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuilt on startup and when any reaction is added to a status board message
+var statusboardmessages = [];
+
+// 2. function to rebuild statusboardmessages with open coop status boards
+function arraystatusboards() {
+	//clear array before rebuild
+	statusboardmessages = []
+
+	//get all text channels
+	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
+	categoryChannels.forEach(channel => {//for each non-deleted test channel
+
+		channel.messages.fetchPinned().then(messages => {//fetch pinned messsages
+			messages.forEach(msg => {//for each pinned message
+				
+				let embed = msg.embeds[0];//embed[0] is first/only embed in message. Copy it to embed variable
+
+				if (embed != undefined && embed.footer.text.includes('LaniakeaSC') && !embed.footer.text.includes('This coop is closed')) { //find the right pinned message
+					console.log('found a pinned statusboard message with ID: ' + msg.id)
+
+					statusboardmessages.push(msg.id);//push this message ID into the statusboardmessages array if it is not closed
+
+				}//end if embed and footer text contains
+			})//end message.forEach
+		})//end .then after fetchPinned
+			.catch((err) => { });
+	});//end categoryChannels.forEach
+
+}//end array statusboards function 
+
+// 3. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
+function changeplayerstatus(newemoji, user) {
+
+	console.log('user: ' + user + 'just changed thier status to: ' + newemoji)//log the change we are making
+
+	return new Promise((resolve, reject) => {
+		var oldemoji = ['👍', '👎', '🥚', '💤']//these are the possible emoji that we will be replacing
+
+		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
+		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
+
+			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+
+			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
+			for (var j = 0; j < teammembers[cleanrole].length; j++) {
+				if (teammembers[cleanrole][j].includes(user)) {
+					let str = teammembers[cleanrole][j];
+					let res = str.replace(oldemoji[0], newemoji).replace(oldemoji[1], newemoji).replace(oldemoji[2], newemoji).replace(oldemoji[3], newemoji);
+					teammembers[cleanrole][j] = res;
+				} //end replace emoji core function
+			}//end for this team loop
+		}//end teams for loop
+		resolve(true);
+	})//end promise
+}//end of changeplayerstatus function
+
+//========================================================
+// Coop bot | Functions | Coop status (🟥🟧🟩)
+// 1. Find and return promise of statusboard 
+// 2. Rebuild from current status board (scrape)
+// 3. modify the object in memory (for team or individual)
+// 4. edit/update message on discord
+// 5. Async functions to chain steps 1-4 together
+//========================================================
+
+// 1. Returns promise of statusboard message object in the channel the command was sent
 function findstatusboard(message) {
 
 	return new Promise((resolve, reject) => {
@@ -252,33 +256,9 @@ function findstatusboard(message) {
 			})//end message.forEach
 		})//end .then after fetchPinned
 	})//end promise
-}
+}//end function findstatusboard
 
-//async function to chain rebuild functions to follow each other - for single user
-async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
-
-	try {
-		await rebuildteamobj(message)
-		await changeusersquare(oldsq1, oldsq2, newsq, user)
-		await updateplayerboard(message)
-	} catch (err) {
-		console.log(err)
-	}
-}//end function
-
-//async function to chain rebuild functions to follow each other - for team
-async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
-
-	try {
-		await rebuildteamobj(message)
-		await changeteamsquare(oldsq1, oldsq2, newsq, team)
-		await updateplayerboard(message)
-	} catch (err) {
-		console.log(err)
-	}
-}//end function
-
-//function to rebuild teammembers object by finding it in the channel the command was sent
+// 2. Function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
 		console.log('entered rebuildteamobj function')
@@ -299,22 +279,16 @@ function rebuildteamobj(message) {
 				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
 					console.log('found message with footer in rebuild obj function');
 					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
-
 						//get the values (team members). Is loaded as string with \n after each player
 						var thesemembers = embed.fields[i].value
-
 						//split into array. thesemembers is now array of team members with thier current status square
 						thesemembers = thesemembers.split('\n');
-
 						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
 						var thisteam = embed.fields[i].name.split(' ').pop()
-
 						//save the team (role) name itself for use by other functions
 						teamnames.push(thisteam)
-
 						//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
-
 						//store members in the team members object, keyed by cleaned team name
 						teammembers[cleanrole] = thesemembers;
 					}//end for loop
@@ -329,7 +303,7 @@ function rebuildteamobj(message) {
 	})//end promise
 }//end function rebuildteamobj 
 
-//function to loop through all of the team arrarys looking for the user and change thier square colour
+// 3a. function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	return new Promise((resolve, reject) => {
 		console.log('entered changerusersquare function')
@@ -348,7 +322,7 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	})//end promise
 }//end of changeusersquare function
 
-//function to change whole team's squares at once
+// 3b. function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 	return new Promise((resolve, reject) => {
 
@@ -362,7 +336,7 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 	})//end promise
 }//end of changeteamsquare function
 
-//function to republish the player status board from current state of arrays
+// 4. function to republish the player status board from current state of arrays
 function updateplayerboard(message) {
 	return new Promise((resolve, reject) => {
 		console.log('entered updateplayerboard function')
@@ -388,7 +362,7 @@ function updateplayerboard(message) {
 						var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
 						updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
 
-					}
+					}//end loop through teams updating from memory teammembers object
 
 					//send the updated embed
 					message.edit(updatedEmbed);
@@ -401,8 +375,33 @@ function updateplayerboard(message) {
 	})//end promise
 }//end function updateplayerboard
 
+// 5a. async function to chain rebuild functions to follow each other - for single user
+async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
+
+	try {
+		await rebuildteamobj(message)//rebuild memory object from message passed to function
+		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
+		await updateplayerboard(message)//update player board from memory object
+	} catch (err) {
+		console.log(err)
+	}
+}//end function
+
+// 5b. async function to chain rebuild functions to follow each other - for team
+async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
+
+	try {
+		await rebuildteamobj(message)//rebuild memory object from message passed to function
+		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
+		await updateplayerboard(message)//update player board from memory object
+	} catch (err) {
+		console.log(err)
+	}
+}//end function
+
 //=======================================
 // Coop bot | Functions | other
+// got to here tidying up
 //=======================================
 
 //check if the user is on one of the home teams
@@ -497,10 +496,10 @@ client.on('message', async message => {
 			buildteamobj(message);
 
 			let placedEmbed = new Discord.MessageEmbed()
-				.setTitle("Player status board")
-				.setDescription('🟥 - Not yet offered coop\n\n🟧 - Offered coop\n\n🟩 - In coop')
+				.setTitle("EiP Status Board for contract: " + eggcommand2)
+				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n👎 if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🟧 - Player offered coop (set this with !orange @user or !orange @team)\n🟩 - Player is confirmed in coop (set this with !green @user or !green @team)')
 				.setColor('#00FF00')
-				.setFooter('Bot created by LaniakeaSC')
+				.setFooter('Bot created by LaniakeaSC\n⬇️ Please add a reaction below ⬇️')
 
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < teams.teams.length; i++) {
