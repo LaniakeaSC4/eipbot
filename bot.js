@@ -362,7 +362,7 @@ async function checkifvaliduser(message, user) {
 	var found = merged.find(element => element.includes(user))//search merged array for user passed to function. If there, return user, else undefined
 	console.log("found is: " + found)
 	//if user passed to function is in that array, return true, else false
-	if (found != 'undefined') { return true } else { return false }
+	if (typeof found !== 'undefined') { return true } else { return false }
 }//end function validuser
 
 //check if the role mentioned is one of the valid home teams
