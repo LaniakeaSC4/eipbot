@@ -354,7 +354,7 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 //=======================================
 
 //check if the user is on one of the home teams
-function validuser(message, user) {
+async function validuser(message, user) {
 
 	//var validusers = [];//blank the validusers array
 
@@ -368,6 +368,7 @@ function validuser(message, user) {
 
 	//combine all
 	//var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
+	await rebuildteamobj(message)
 	var teammembervalues = Object.values(teammembers)
 	console.log(teammembers)
 	console.log(user)
