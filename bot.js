@@ -497,7 +497,7 @@ client.on('message', async message => {
 
 			let placedEmbed = new Discord.MessageEmbed()
 				.setTitle("EiP Status Board for contract: " + eggcommand2)
-				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n👎 if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🟧 - Player offered coop (set this with !orange @user or !orange @team)\n🟩 - Player is confirmed in coop (set this with !green @user or !green @team)')
+				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n👎 if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🟧 - Player offered coop (set this with !orange @user or !orange @team)\n🟩 - Player is confirmed in coop (set this with !green @user or !green @team)\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC\n⬇️ Please add a reaction below ⬇️')
 
