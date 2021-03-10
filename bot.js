@@ -10,9 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-
 		console.log(statusboardmessages)
-
 	}
 });//end client on message 
 
@@ -513,7 +511,7 @@ client.on('message', async message => {
 
 				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
 				statusboardmessages.push(msg.id);
-				console.log(statusboardmessages)
+				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
 
 				await msg.pin();
 				//add reactions for clicking
@@ -625,6 +623,7 @@ client.on('message', async message => {
 				updatedEmbed.setFooter('Bot created by LaniakeaSC\nThis coop is closed')
 				updatedEmbed.setColor('#FF0000')
 				statusboard.edit(updatedEmbed)
+				statusboard.unpin()
 				arraystatusboards()
 			})
 
