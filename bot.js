@@ -372,9 +372,9 @@ async function validuser(message, user) {
 	var teammembervalues = Object.values(teammembers)
 	var merged = [].concat.apply([], teammembervalues);
 	console.log(merged)
-
+console.log(merged.indexOf(user) > -1)
 	//if user passed to function is in that array, return true, else false
-	if (merged.includes(user)) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
+	if (merged.indexOf(user) > -1 ) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
 
 }//end function validuser
 
