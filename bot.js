@@ -365,9 +365,12 @@ async function checkifvaliduser(message, user) {
 }//end function validuser
 
 //check if the role mentioned is one of the valid home teams
-function validteam(team) {
+async function validteam(team) {
+	await rebuildteamobj(message)
+	var validteams = teams.keys()
+	console.log(validteams)
 	//this uses teams arrary establised for the team card bot
-	if (teams.includes(team)) { return true } else { return false }
+	if (validteams.includes(team)) { return true } else { return false }
 }//end function validteam
 
 //function to get displayname for those that have changed thiers. Returns regular username if they dont have a nickname
