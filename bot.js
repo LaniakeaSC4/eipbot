@@ -356,21 +356,21 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 //check if the user is on one of the home teams
 function validuser(message, user) {
 
-	var validusers = [];//blank the validusers array
+	//var validusers = [];//blank the validusers array
 
 	//fill validusers with all the members. vars declared local to this function
-	var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
-	var overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
-	var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
-	var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
-	var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
-	var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
+	//var eggstremeMem = message.guild.roles.cache.get('717392493682884648').members.map(m => m.displayName);
+	//var overeasyMem = message.guild.roles.cache.get('717392318017175643').members.map(m => m.displayName);
+	//var yolkstersMem = message.guild.roles.cache.get('717391863287644251').members.map(m => m.displayName);
+	//var sunnysideMem = message.guild.roles.cache.get('717392245761900545').members.map(m => m.displayName);
+	//var fowlplayMem = message.guild.roles.cache.get('717392169861644339').members.map(m => m.displayName);
+	//var hardboiledMem = message.guild.roles.cache.get('717392100043390977').members.map(m => m.displayName);
 
 	//combine all
-	var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
+	//var validusers = validusers.concat(eggstremeMem, overeasyMem, yolkstersMem, sunnysideMem, fowlplayMem, hardboiledMem);
 
 	//if user passed to function is in that array, return true, else false
-	if (validusers.includes(user)) { return true } else { return false }
+	if (Object.values(teammembers).includes(user)) { console.log("user was VALID"); return true } else { console.log("user was NOT VALID"); return false }
 
 }//end function validuser
 
