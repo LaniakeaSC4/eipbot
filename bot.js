@@ -30,56 +30,42 @@ var teammembers = {};//the main data storage for the status board. Team titles a
 
 //function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
-
 	//not sure if this will ever trigger. Here as a safety net. If this goes off, we might have problems. 
 	if (message.partial) { console.log("Partial message!!!!") }
-
 	//get array of all server roles
 	var roles = message.guild.roles.cache.map((role) => role.name);
-
 	//get discord category channels (e.g 🏠 Home Teams)
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
-
 	//blank array which will hold the channel names of the child channels under the home team category
 	var homechannels = [];
-
 	//push name of each child channel in "🏠 Home Teams" into array
 	categoryChannels.forEach(channel => {
 		var LCchan = channel.name.toLowerCase()
 		if (LCchan.includes('home') == true) {
 			channel.children.forEach((channel) => {
-
 				//push the child channels under the home category into array
 				homechannels.push(channel.name);
-
 			})//end forEach child channel
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
 
 	//define teams array, team names will be stored here for use by other functions
 	var teamnames = [];
-
 	//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
 	for (var i = 0; i < homechannels.length; i++) {
 		for (var j = 0; j < roles.length; j++) {
 			//if a channel has a role/team match
 			if (homechannels[i].includes(roles[j])) {
-
 				//first lets save the team name itself for use by other functions
 				teamnames.push(roles[j])
-
 				//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 				var cleanrole = roles[j].replace(/[^a-zA-Z ]/g, "");
-
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
 				let role = message.guild.roles.cache.find(r => r.name === roles[j]);
-
 				//search by role ID to get all members with that role
 				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
-
 				//store members in the team members object, keyed by cleaned team name
 				teammembers[cleanrole] = thesemembers;
-
 			}//end if match
 		}//end for roles
 	}//end for homechannels
@@ -114,39 +100,37 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			console.error('Something went wrong when fetching the message: ', error);
 			// Return as `reaction.message.author` may be undefined/null
 			return;
-		}
-	}
+		}//end catch
+	}//end if reaction.partial
 
 	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
-
 			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
 			var thischannel = reaction.message.channel.id
 			var thismessage = reaction.message.id
 
 			//get displayname from userid. Need this for the string match in the status board/teammembers object
 			//check if they have a nickname set
-			const member = await client.users.fetch(user.id);//retrieve the user from ID
+			const member = await client.users.fetch(user.id)//retrieve the user from ID
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
 			//if they dont have a nickname, thier username is what is displayed by discord.
-			var uName = member.username;
+			var uName = member.username
 
 			var thisuser = ""
 			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
 			if (dName !== undefined && uName !== undefined) {
 				thisuser = dName
-			} else { thisuser = uName };
+			} else { thisuser = uName }
 
-			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id); }
+			//if user is not the bot, log whats going to happen
+			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
 
 			//we are only going further into the function with one of these 4 emoji
 			var allowedemoji = ['👍', '👎', '🥚', '💤']
-
 			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
 				//get the message object for the status board which recieved the reaction, then...
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-
 					try {
 						reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
 						await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
@@ -157,10 +141,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 						await msg.react('👎');
 						await msg.react('🥚');
 						await msg.react('💤');
-
 						//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
 						arraystatusboards()
-
 					} catch (err) {
 						console.log(err)
 					}//end catch error
@@ -177,21 +159,18 @@ var statusboardmessages = [];
 function arraystatusboards() {
 	//clear array before rebuild
 	statusboardmessages = []
-
 	//get all text channels
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
 	categoryChannels.forEach(channel => {//for each non-deleted test channel
 
 		channel.messages.fetchPinned().then(messages => {//fetch pinned messsages
 			messages.forEach(msg => {//for each pinned message
-				
-				let embed = msg.embeds[0];//embed[0] is first/only embed in message. Copy it to embed variable
-
-				if (embed != undefined && embed.footer.text.includes('LaniakeaSC') && !embed.footer.text.includes('This coop is closed')) { //find the right pinned message
+				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = msg.embeds[0]
+				//find the right pinned message
+				if (embed != undefined && embed.footer.text.includes('LaniakeaSC') && !embed.footer.text.includes('This coop is closed')) {
 					console.log('found a pinned statusboard message with ID: ' + msg.id)
-
 					statusboardmessages.push(msg.id);//push this message ID into the statusboardmessages array if it is not closed
-
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
@@ -202,17 +181,13 @@ function arraystatusboards() {
 
 // 3. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
 function changeplayerstatus(newemoji, user) {
-
-	console.log('user: ' + user + 'just changed thier status to: ' + newemoji)//log the change we are making
-
+	//log the change we are making
+	console.log('user: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
 		var oldemoji = ['👍', '👎', '🥚', '💤']//these are the possible emoji that we will be replacing
-
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
 		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
-
 			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
-
 			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
 			for (var j = 0; j < teammembers[cleanrole].length; j++) {
 				if (teammembers[cleanrole][j].includes(user)) {
@@ -237,17 +212,15 @@ function changeplayerstatus(newemoji, user) {
 
 // 1. Returns promise of statusboard message object in the channel the command was sent
 function findstatusboard(message) {
-
 	return new Promise((resolve, reject) => {
 		//get the status board		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message 
 			messages.forEach(msg => {
-
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = msg.embeds[0];
-
-				if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				//find the right pinned message
+				if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) {
 					console.log('found a pinned statusboard message with ID: ' + msg.id)
 					resolve(msg)
 				}//end if embed and footer text contains
@@ -262,19 +235,16 @@ function rebuildteamobj(message) {
 		console.log('entered rebuildteamobj function')
 		//clear object for rebuilding it
 		teammembers = {};
-
 		//define teams array, team names will be stored here for use by other functions
 		var teamnames = [];
-
-		//get the status board		//fetch pinned messages
+		//fetch pinned messages from this channel then...
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message 
 			messages.forEach(message => {
-
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = message.embeds[0];
-
-				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
+				//find the right pinned message
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { 
 					console.log('found message with footer in rebuild obj function');
 					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
 						//get the values (team members). Is loaded as string with \n after each player
@@ -297,18 +267,15 @@ function rebuildteamobj(message) {
 
 		//store the teams (roles) in the object
 		teams['teams'] = teamnames;
-
 	})//end promise
 }//end function rebuildteamobj 
 
 // 3a. function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	return new Promise((resolve, reject) => {
-		console.log('entered changerusersquare function')
 		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
-
-			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
-
+			//teammebers object is keyed with a cleaned version of role (no hyphen) 
+			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")
 			//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 			for (var j = 0; j < teammembers[cleanrole].length; j++) {
 				if (teammembers[cleanrole][j].includes(user)) {
@@ -323,9 +290,8 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 // 3b. function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 	return new Promise((resolve, reject) => {
-
-		var cleanrole = team.replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
-
+		//teammebers object is keyed with a cleaned version of role (no hyphen)
+		var cleanrole = team.replace(/[^a-zA-Z ]/g, "")
 		//access teammembers object at cleaned teamname provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 		for (var i = 0; i < teammembers[cleanrole].length; i++) {
 			let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
@@ -342,59 +308,44 @@ function updateplayerboard(message) {
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message
 			messages.forEach(message => {
-
 				//embed[0] is first/only embed in message. Copy it to embed variable
 				let embed = message.embeds[0];
-
-				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { //find the right pinned message
-
+				//find the right pinned message
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) { 
 					var receivedEmbed = message.embeds[0]; //copy embeds from it
-					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed); //make new embed for updating in this block with old as template
-
-					//clear fields
-					updatedEmbed.fields = [];
-
+					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
+					updatedEmbed.fields = []//clear fields
 					//add teams and players for embed from teams/teammeber objects
 					for (var i = 0; i < teams.teams.length; i++) {
-
 						var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
 						updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
-
 					}//end loop through teams updating from memory teammembers object
 
 					//send the updated embed
 					message.edit(updatedEmbed);
 					resolve(true);
 				}//end if embed and footer text contains
-
 			})//end message.forEach
-
 		})//end .then after fetchPinned 
 	})//end promise
 }//end function updateplayerboard
 
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
-
 	try {
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
-	} catch (err) {
-		console.log(err)
-	}
+	} catch (err) {console.log(err)}
 }//end function
 
 // 5b. async function to chain rebuild functions to follow each other - for team
 async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
-
 	try {
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
-	} catch (err) {
-		console.log(err)
-	}
+	} catch (err) {console.log(err)}
 }//end function
 
 //=======================================
