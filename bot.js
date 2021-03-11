@@ -333,6 +333,8 @@ async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
+			processing = false
+			message.channel.stopTyping()
 		} catch (err) { console.log(err) }
 }//end function
 
@@ -342,6 +344,8 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
+			processing = false
+			message.channel.stopTyping()
 		} catch (err) { console.log(err) }
 }//end function
 
@@ -576,8 +580,6 @@ client.on('message', async message => {
 		if (isuser == true && checkeduser == true) {
 			await thankyou(message.member.displayName, mentioneduser, "green", message);
 			await updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
-			processing = false
-			message.channel.startTyping()
 		}//end if isuser = true
 
 		//if mentioned is a valid team
@@ -585,8 +587,7 @@ client.on('message', async message => {
 
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
 			thankyou(message.member.displayName, mentionedrole, "green", message);
-			processing = false
-			message.channel.startTyping()
+
 		}//end if isteam = true
 
 	}//end !green
