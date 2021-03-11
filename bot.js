@@ -352,16 +352,16 @@ async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 
 // 5b. async function to chain rebuild functions to follow each other - for team
 async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
-	try {
-		if (processing === false) {
+	if (processing === false) {
+		try {
 			processing = true
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
 			processing = false
-		}
-		if (processing === true) { console.log("currently processing! Command rejected") }
-	} catch (err) { console.log(err) }
+		} catch (err) { console.log(err) }
+	}
+	if (processing === true) { console.log("currently processing! Command rejected") }
 }//end function
 
 //=======================================
@@ -591,11 +591,13 @@ client.on('message', async message => {
 		} else { console.log('did not find either'); }
 
 		console.log("user? " + isuser + ". team? " + isteam)
-		if (isuser == true) {checkeduser = await checkifvaliduser(message, mentioneduser);console.log("sending check for valid user")}
-		if (isteam == true) {checkedteam = await checkifvalidteam(message, mentionedrole);console.log("sending check for valid team")}
+		console.log("mentioned user is: " + mentioneduser)
+		console.log("mentioned role is: " + mentionedrole)
+		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser); console.log("sending check for valid user") }
+		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole); console.log("sending check for valid team") }
 
 		console.log("checkuser is: " + checkeduser)
-		console.log("checkteam is: "+ checkedteam)
+		console.log("checkteam is: " + checkedteam)
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
