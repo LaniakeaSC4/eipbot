@@ -402,7 +402,7 @@ function thankyou(author, updatedthis, color, message, url) {
 
 //!coop (including !coop open [name])
 client.on('message', async message => {
-	if (message.content.startsWith("!coop")) {
+	if (message.content.startsWith("!coop") && processing == false) {
 
 		//first lets split up commands
 		//transfer message contents into msg
