@@ -368,9 +368,10 @@ async function checkifvaliduser(message, user) {
 async function validteam(message,team) {
 	await rebuildteamobj(message)
 	var validteams = Object.values(teams)
-	console.log(validteams)
+	var merged = [].concat.apply([], validteams)//merge all values into 1 dimensional array
+	console.log(merged)
 	//this uses teams arrary establised for the team card bot
-	if (validteams.includes(team)) { return true } else { return false }
+	if (merged.includes(team)) { return true } else { return false }
 }//end function validteam
 
 //function to get displayname for those that have changed thiers. Returns regular username if they dont have a nickname
