@@ -578,8 +578,10 @@ client.on('message', async message => {
 	if (message.content.startsWith("!green")) {
 
 		//initalise isuser and isteam as false
-		var isuser = false;
-		var isteam = false;
+		var isuser = false
+		var isteam = false
+		var checkeduser = false
+		var checkedteam = false
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
@@ -588,8 +590,9 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
-		var checkeduser = await checkifvaliduser(message, mentioneduser)
-		var checkedteam = await checkifvalidteam(message, mentionedrole)
+		console.log("user? " + isuser + ". team? " + isteam)
+		if (isuser == true) {checkeduser = await checkifvaliduser(message, mentioneduser)}
+		if (isteam == true) {checkedteam = await checkifvalidteam(message, mentionedrole)}
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
