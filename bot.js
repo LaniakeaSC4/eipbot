@@ -373,10 +373,13 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 
 // 1. check if the user is on one of the home teams
 async function checkifvaliduser(message, user) {
+	console.log("checking if valid user")
 	await rebuildteamobj(message)//rebuild team object so we can search through valid users
+	console.log("back from rebuild teamobj function")
 	var teammembervalues = Object.values(teammembers)//get all the values from the object
 	var merged = [].concat.apply([], teammembervalues)//merge all values into 1 dimensional array
 	var found = merged.find(element => element.includes(user))//search merged array for user passed to function. If there, return user, else undefined
+	console.log("found: " + found)
 	//if user passed to function is in that array, return true, else false
 	if (typeof found !== 'undefined') { return true } else { return false }
 }//end function validuser
