@@ -348,9 +348,9 @@ async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
+			processing = false
+			console.log("15. processing should now be false: " + processing)
 		} catch (err) { console.log(err) }
-		processing = false
-		console.log("15. processing should now be false: " + processing)
 	}//endif
 	if (processing === true) { console.log("currently processing! Command rejected") }
 
@@ -600,8 +600,8 @@ client.on('message', async message => {
 		console.log("1. user? " + isuser + ". team? " + isteam)
 		console.log("2u. mentioned user is: " + mentioneduser)
 		console.log("2t. mentioned role is: " + mentionedrole)
-		if (isuser == true) { console.log("3. sending check for valid user"); checkeduser = await checkifvaliduser(message, mentioneduser)}
-		if (isteam == true) { console.log("3. sending check for valid team"); checkedteam = await checkifvalidteam(message, mentionedrole)}
+		if (isuser == true) { console.log("3. sending check for valid user"); checkeduser = await checkifvaliduser(message, mentioneduser) }
+		if (isteam == true) { console.log("3. sending check for valid team"); checkedteam = await checkifvalidteam(message, mentionedrole) }
 
 		console.log("10u. checkuser is: " + checkeduser)
 		console.log("10t. checkteam is: " + checkedteam)
