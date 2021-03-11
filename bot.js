@@ -367,10 +367,12 @@ async function checkifvaliduser(message, user) {
 //check if the role mentioned is one of the valid home teams
 async function checkifvalidteam(message,team) {
 	await rebuildteamobj(message)
+	console.log("team:" + team)
 	var validteams = Object.values(teams)
 	var merged = [].concat.apply([], validteams)//merge all values into 1 dimensional array
+	console.log("merged: " + merged)
 	var found = merged.find(element => element.includes(team))//search merged array for user passed to function. If there, r
-	console.log(found)
+	console.log("found: " + found)
 	//this uses teams arrary establised for the team card bot
 	if (typeof found !== 'undefined') { return true } else { return false }
 }//end function validteam
