@@ -335,11 +335,14 @@ function updateplayerboard(message) {
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 	try {
 		if (processing === false) {
+			console.log("processing was " + processing + " entering function")
 			processing = true
+			console.log("processing should now be true: " + processing)
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
 			processing = false
+			console.log("processing should now be false: " + processing)
 		}
 		if (processing === true){console.log("currently processing! Command rejected")}
 	} catch (err) { console.log(err) }
