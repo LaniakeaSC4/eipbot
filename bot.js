@@ -591,8 +591,11 @@ client.on('message', async message => {
 		} else { console.log('did not find either'); }
 
 		console.log("user? " + isuser + ". team? " + isteam)
-		if (isuser == true) {checkeduser = await checkifvaliduser(message, mentioneduser)}
-		if (isteam == true) {checkedteam = await checkifvalidteam(message, mentionedrole)}
+		if (isuser == true) {checkeduser = await checkifvaliduser(message, mentioneduser);console.log("sending check for valid user")}
+		if (isteam == true) {checkedteam = await checkifvalidteam(message, mentionedrole);console.log("sending check for valid team")}
+
+		console.log("checkuser is: " + checkeduser)
+		console.log("checkteam is: "+ checkedteam)
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
