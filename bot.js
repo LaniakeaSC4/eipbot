@@ -334,6 +334,7 @@ function updateplayerboard(message) {
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 	try {
+		console.log("before function, processing is: " + processing)
 		if (processing === false) {
 			console.log("processing was " + processing + " entering function")
 			processing = true
