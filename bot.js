@@ -233,10 +233,10 @@ function findstatusboard(message) {
 // 2. Function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
-		console.log("rebuild team object status of processing is at start: " + processing)
+		console.log("6. rebuild team object status of processing is at start: " + processing)
 		if (processing === false) {
 			processing = true
-			console.log('entered rebuildteamobj function')
+			console.log('7. entered rebuildteamobj function')
 			//clear object for rebuilding it
 			teammembers = {};
 			//define teams array, team names will be stored here for use by other functions
@@ -249,7 +249,7 @@ function rebuildteamobj(message) {
 					let embed = message.embeds[0];
 					//find the right pinned message
 					if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
-						console.log('found message with footer in rebuild obj function');
+						console.log('8. found message with footer in rebuild obj function');
 						for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
 							//get the values (team members). Is loaded as string with \n after each player
 							var thesemembers = embed.fields[i].value
@@ -339,18 +339,18 @@ function updateplayerboard(message) {
 
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
-	console.log("before function, processing is: " + processing)
+	console.log("13. before function, processing is: " + processing)
 	if (processing === false) {
-		console.log("processing was " + processing + " entering function")
+		console.log("14. processing was " + processing + " entering function")
 		processing = true
-		console.log("processing should now be true: " + processing)
+		console.log("15. (16 next?) processing should now be true: " + processing)
 		try {
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
 		} catch (err) { console.log(err) }
 		processing = false
-		console.log("processing should now be false: " + processing)
+		console.log("16. processing should now be false: " + processing)
 	}//endif
 	if (processing === true) { console.log("currently processing! Command rejected") }
 
@@ -379,13 +379,13 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 
 // 1. check if the user is on one of the home teams
 async function checkifvaliduser(message, user) {
-	console.log("checking if valid user")
+	console.log("5. checking if valid user")
 	await rebuildteamobj(message)//rebuild team object so we can search through valid users
-	console.log("back from rebuild teamobj function")
+	console.log("9. back from rebuild teamobj function")
 	var teammembervalues = Object.values(teammembers)//get all the values from the object
 	var merged = [].concat.apply([], teammembervalues)//merge all values into 1 dimensional array
 	var found = merged.find(element => element.includes(user))//search merged array for user passed to function. If there, return user, else undefined
-	console.log("found: " + found)
+	console.log("10. found: " + found)
 	//if user passed to function is in that array, return true, else false
 	if (typeof found !== 'undefined') { return true } else { return false }
 }//end function validuser
@@ -596,14 +596,14 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
-		console.log("user? " + isuser + ". team? " + isteam)
-		console.log("mentioned user is: " + mentioneduser)
-		console.log("mentioned role is: " + mentionedrole)
-		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser); console.log("sending check for valid user") }
-		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole); console.log("sending check for valid team") }
+		console.log("1. user? " + isuser + ". team? " + isteam)
+		console.log("2. mentioned user is: " + mentioneduser)
+		console.log("2. mentioned role is: " + mentionedrole)
+		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser); console.log("3. sending check for valid user") }
+		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole); console.log("3. sending check for valid team") }
 
-		console.log("checkuser is: " + checkeduser)
-		console.log("checkteam is: " + checkedteam)
+		console.log("11. checkuser is: " + checkeduser)
+		console.log("11. checkteam is: " + checkedteam)
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
