@@ -28,6 +28,7 @@ client.on('ready', () => {
 var teams = {}//this one is for just the teams/roles that match the home team channels
 var teammembers = {}//the main data storage for the status board. Team titles and team members with squares and farming status
 var processing = false
+var subtaskprocessing = false
 
 //function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
@@ -233,9 +234,10 @@ function findstatusboard(message) {
 // 2. Function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
+		if (subtaskprocessing === true) { console.log("currently rebuilding a team object. skipping this rebuild request") }
 		console.log("5. rebuild team object status of processing is at start: " + processing)
-		if (processing === false) {
-			processing = true
+		if (subtaskprocessing === false) {
+			subtaskprocessing = true
 			console.log('6. entered rebuildteamobj function')
 			//clear object for rebuilding it
 			teammembers = {};
@@ -264,7 +266,7 @@ function rebuildteamobj(message) {
 							//store members in the team members object, keyed by cleaned team name
 							teammembers[cleanrole] = thesemembers;
 						}//end for loop
-						processing = false
+						subtaskprocessing = false
 						resolve(true);
 					}//end if embed and footer text contains
 				})//end message.forEach
@@ -273,7 +275,7 @@ function rebuildteamobj(message) {
 			//store the teams (roles) in the object
 			teams['teams'] = teamnames;
 		}//end if processing = false
-		if (processing === true) { console.log("currently rebuilding a team object. skipping this rebuild request") }
+
 	})//end promise
 }//end function rebuildteamobj 
 
@@ -340,34 +342,34 @@ function updateplayerboard(message) {
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 	console.log("12. before function, processing is: " + processing)
-	if (processing === false) {
+	if (subtaskprocessing === false) {
 		console.log("13. processing was " + processing + " entering function")
-		processing = true
+		subtaskprocessing = true
 		console.log("14. (15 next?) processing should now be true: " + processing)
 		try {
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
-			processing = false
+			subtaskprocessing = false
 			console.log("15. processing should now be false: " + processing)
 		} catch (err) { console.log(err) }
 	}//endif
-	if (processing === true) { console.log("currently processing! Command rejected") }
+	if (subtaskprocessing === true) { console.log("currently processing! Command rejected") }
 
 }//end function
 
 // 5b. async function to chain rebuild functions to follow each other - for team
 async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
-	if (processing === false) {
+	if (subtaskprocessing === false) {
 		try {
-			processing = true
+			subtaskprocessing = true
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
-			processing = false
+			subtaskprocessing = false
 		} catch (err) { console.log(err) }
 	}
-	if (processing === true) { console.log("currently processing! Command rejected") }
+	if (subtaskprocessing === true) { console.log("currently processing! Command rejected") }
 }//end function
 
 //=======================================
@@ -582,8 +584,9 @@ client.on('message', async message => {
 	}//end !orange
 
 	//!green 🟩
-	if (message.content.startsWith("!green")) {
+	if (message.content.startsWith("!green") && processing == false) {
 
+		processing = true
 		//initalise isuser and isteam as false
 		var isuser = false
 		var isteam = false
@@ -612,7 +615,7 @@ client.on('message', async message => {
 			console.log("11. Entered actual update function in !green")
 			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			thankyou(message.member.displayName, mentioneduser, "green", message);
-
+			processing = false
 		}//end if isuser = true
 
 		//if mentioned is a valid team
