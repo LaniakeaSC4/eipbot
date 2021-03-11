@@ -9,7 +9,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 
 //!test command for testing things
 client.on('message', async message => {
-	if (message.content.startsWith("!test")) {
+	if (message.content.startsWith("!test") && processing == false) {
 		message.channel.send(processing)
 	}
 });//end client on message 
@@ -479,7 +479,7 @@ client.on('message', async message => {
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
 	//!red 🟥
-	if (message.content.startsWith("!red")) {
+	if (message.content.startsWith("!red") && processing == false) {
 		message.channel.startTyping()
 		processing = true
 		//initalise isuser and isteam as false
@@ -510,7 +510,7 @@ client.on('message', async message => {
 			thankyou(message.member.displayName, mentionedrole, "red", message)
 			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message)
 		}//end if isteam = true
-		
+
 		processing = false
 		message.channel.stopTyping()
 	}//end !red
