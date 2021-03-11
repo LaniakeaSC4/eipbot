@@ -233,6 +233,8 @@ function findstatusboard(message) {
 // 2. Function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
+		if (processing === false) {
+		processing = true
 		console.log('entered rebuildteamobj function')
 		//clear object for rebuilding it
 		teammembers = {};
@@ -261,6 +263,7 @@ function rebuildteamobj(message) {
 						//store members in the team members object, keyed by cleaned team name
 						teammembers[cleanrole] = thesemembers;
 					}//end for loop
+					processing = false
 					resolve(true);
 				}//end if embed and footer text contains
 			})//end message.forEach
@@ -268,6 +271,8 @@ function rebuildteamobj(message) {
 
 		//store the teams (roles) in the object
 		teams['teams'] = teamnames;
+	}//end if processing = false
+	if (processing === true) {console.log("currently rebuilding a team object. skipping this rebuild request")}
 	})//end promise
 }//end function rebuildteamobj 
 
