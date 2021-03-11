@@ -233,7 +233,6 @@ function findstatusboard(message) {
 // 2. Function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
-			console.log('6. entered rebuildteamobj function')
 			//clear object for rebuilding it
 			teammembers = {};
 			//define teams array, team names will be stored here for use by other functions
@@ -246,7 +245,6 @@ function rebuildteamobj(message) {
 					let embed = message.embeds[0];
 					//find the right pinned message
 					if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
-						console.log('7. found message with footer in rebuild obj function');
 						for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
 							//get the values (team members). Is loaded as string with \n after each player
 							var thesemembers = embed.fields[i].value
@@ -303,7 +301,6 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 // 4. function to republish the player status board from current state of arrays
 function updateplayerboard(message) {
 	return new Promise((resolve, reject) => {
-		console.log('17. entered updateplayerboard function')
 		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message
@@ -357,13 +354,10 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 
 // 1. check if the user is on one of the home teams
 async function checkifvaliduser(message, user) {
-	console.log("4. checking if valid user")
 	await rebuildteamobj(message)//rebuild team object so we can search through valid users
-	console.log("8. back from rebuild teamobj function")
 	var teammembervalues = Object.values(teammembers)//get all the values from the object
 	var merged = [].concat.apply([], teammembervalues)//merge all values into 1 dimensional array
 	var found = merged.find(element => element.includes(user))//search merged array for user passed to function. If there, return user, else undefined
-	console.log("9. found: " + found)
 	//if user passed to function is in that array, return true, else false
 	if (typeof found !== 'undefined') { return true } else { return false }
 }//end function validuser
@@ -394,7 +388,6 @@ function getname(message) {
 
 //function to delete color change input command and reply with a thank you/wait message
 function thankyou(author, updatedthis, color, message, url) {
-	console.log("19. thank you message and delete command")
 	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in ~5 seconds. Please wait.' + url)
 	message.delete()//delete the input message
 }//end thankyou function
@@ -561,7 +554,7 @@ client.on('message', async message => {
 
 	//!green 🟩
 	if (message.content.startsWith("!green") && processing == false) {
-
+		message.channel.startTyping()
 		processing = true
 		//initalise isuser and isteam as false
 		var isuser = false
@@ -581,9 +574,10 @@ client.on('message', async message => {
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
-			await updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			await thankyou(message.member.displayName, mentioneduser, "green", message);
+			await updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			processing = false
+			message.channel.startTyping()
 		}//end if isuser = true
 
 		//if mentioned is a valid team
@@ -591,7 +585,8 @@ client.on('message', async message => {
 
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
 			thankyou(message.member.displayName, mentionedrole, "green", message);
-
+			processing = false
+			message.channel.startTyping()
 		}//end if isteam = true
 
 	}//end !green
