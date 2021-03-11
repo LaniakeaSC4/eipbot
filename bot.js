@@ -25,8 +25,9 @@ client.on('ready', () => {
 });
 
 //define global storage objects
-var teams = {};//this one is for just the teams/roles that match the home team channels
-var teammembers = {};//the main data storage for the status board. Team titles and team members with squares and farming status
+var teams = {}//this one is for just the teams/roles that match the home team channels
+var teammembers = {}//the main data storage for the status board. Team titles and team members with squares and farming status
+var processing = false
 
 //function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
@@ -333,18 +334,28 @@ function updateplayerboard(message) {
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 	try {
-		await rebuildteamobj(message)//rebuild memory object from message passed to function
-		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
-		await updateplayerboard(message)//update player board from memory object
+		if (processing = false) {
+			processing = true
+			await rebuildteamobj(message)//rebuild memory object from message passed to function
+			await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
+			await updateplayerboard(message)//update player board from memory object
+			processing = false
+		}
+		if (processing = true){console.log("currently processing! Command rejected")}
 	} catch (err) { console.log(err) }
 }//end function
 
 // 5b. async function to chain rebuild functions to follow each other - for team
 async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 	try {
+		if (processing = false){
+			processing = true
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
+		processing = false
+		}
+		if (processing = true){console.log("currently processing! Command rejected")}
 	} catch (err) { console.log(err) }
 }//end function
 
@@ -390,7 +401,7 @@ function getname(message) {
 }//end getname function
 
 //function to delete color change input command and reply with a thank you/wait message
-function thankyou(author, updatedthis, color, message,url) {
+function thankyou(author, updatedthis, color, message, url) {
 	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in ~5 seconds. Please wait.' + url)
 	message.delete()//delete the input message
 }//end thankyou function
