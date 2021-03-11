@@ -600,7 +600,7 @@ client.on('message', async message => {
 		} else { console.log('did not find either'); }
 
 		var checkeduser = await checkifvaliduser(message, mentioneduser)
-		var checkedteam = await checkifvalidteam(message, mentioneduser)
+		var checkedteam = await checkifvalidteam(message, mentionedrole)
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
@@ -635,7 +635,7 @@ client.on('message', async message => {
 		} else { console.log('did not find either'); }
 
 		var checkeduser = await checkifvaliduser(message, mentioneduser)
-		var checkedteam = await checkifvalidteam(message, mentioneduser)
+		var checkedteam = await checkifvalidteam(message, mentionedrole)
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
@@ -670,7 +670,7 @@ client.on('message', async message => {
 		} else { console.log('did not find either'); }
 
 		var checkeduser = await checkifvaliduser(message, mentioneduser)
-		var checkedteam = await checkifvalidteam(message, mentioneduser)
+		var checkedteam = await checkifvalidteam(message, mentionedrole)
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
