@@ -282,17 +282,24 @@ function rebuildteamobj(message) {
 // 3a. function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	return new Promise((resolve, reject) => {
-		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
-			//teammebers object is keyed with a cleaned version of role (no hyphen) 
-			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")
-			//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
-			for (var j = 0; j < teammembers[cleanrole].length; j++) {
-				if (teammembers[cleanrole][j].includes(user)) {
-					let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
-				} //end replace square core function
-			}//end for this team loop
-		}//end teams for loop
-		resolve(true);
+		if (subtaskprocessing === true) { console.log("currently changing a user square. skipping this rebuild request") }
+		console.log("15. start of change user square function")
+		if (subtaskprocessing === false) {
+			subtaskprocessing = true
+			for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
+				//teammebers object is keyed with a cleaned version of role (no hyphen) 
+				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")
+				//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+				for (var j = 0; j < teammembers[cleanrole].length; j++) {
+					if (teammembers[cleanrole][j].includes(user)) {
+						let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
+					} //end replace square core function
+				}//end for this team loop
+			}//end teams for loop
+			subtaskprocessing = false
+			console.log("16. end of change user square function")
+			resolve(true);
+		}
 	})//end promise
 }//end of changeusersquare function
 
@@ -312,7 +319,7 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 // 4. function to republish the player status board from current state of arrays
 function updateplayerboard(message) {
 	return new Promise((resolve, reject) => {
-		console.log('entered updateplayerboard function')
+		console.log('17. entered updateplayerboard function')
 		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message
@@ -344,13 +351,13 @@ async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 	console.log("12. before function, processing is: " + processing)
 	if (subtaskprocessing === false) {
 		console.log("13. processing was " + processing + " entering function")
-		subtaskprocessing = true
-		console.log("14. (15 next?) processing should now be true: " + processing)
+		//subtaskprocessing = true
+		console.log("14. (back to 5-7 before 15) processing should now be true: " + processing)
 		try {
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
-			subtaskprocessing = false
+			//subtaskprocessing = false
 			console.log("15. processing should now be false: " + processing)
 		} catch (err) { console.log(err) }
 	}//endif
@@ -418,7 +425,7 @@ function getname(message) {
 
 //function to delete color change input command and reply with a thank you/wait message
 function thankyou(author, updatedthis, color, message, url) {
-	console.log("16. thank you message and delete command")
+	console.log("19. thank you message and delete command")
 	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in ~5 seconds. Please wait.' + url)
 	message.delete()//delete the input message
 }//end thankyou function
@@ -615,7 +622,9 @@ client.on('message', async message => {
 			console.log("11. Entered actual update function in !green")
 			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 			thankyou(message.member.displayName, mentioneduser, "green", message);
+			console.log("20. processing should be true (" + processing + ") and subtaskprocessing should be false (" + subtaskprocessing + ").")
 			processing = false
+			console.log("21. processing should be false (" + processing + ") and subtaskprocessing should be false (" + subtaskprocessing + ").")
 		}//end if isuser = true
 
 		//if mentioned is a valid team
