@@ -10,7 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-		console.log(statusboardmessages)
+		message.channel.send(processing)
 	}
 });//end client on message 
 
