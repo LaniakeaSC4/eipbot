@@ -333,33 +333,34 @@ function updateplayerboard(message) {
 
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
-	try {
-		console.log("before function, processing is: " + processing)
-		if (processing === false) {
-			console.log("processing was " + processing + " entering function")
-			processing = true
-			console.log("processing should now be true: " + processing)
+	console.log("before function, processing is: " + processing)
+	if (processing === false) {
+		console.log("processing was " + processing + " entering function")
+		processing = true
+		console.log("processing should now be true: " + processing)
+		try {
 			await rebuildteamobj(message)//rebuild memory object from message passed to function
 			await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 			await updateplayerboard(message)//update player board from memory object
-			processing = false
-			console.log("processing should now be false: " + processing)
-		}
-		if (processing === true){console.log("currently processing! Command rejected")}
-	} catch (err) { console.log(err) }
+		} catch (err) { console.log(err) }
+		processing = false
+		console.log("processing should now be false: " + processing)
+	}//endif
+	if (processing === true) { console.log("currently processing! Command rejected") }
+
 }//end function
 
 // 5b. async function to chain rebuild functions to follow each other - for team
 async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 	try {
-		if (processing === false){
+		if (processing === false) {
 			processing = true
-		await rebuildteamobj(message)//rebuild memory object from message passed to function
-		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
-		await updateplayerboard(message)//update player board from memory object
-		processing = false
+			await rebuildteamobj(message)//rebuild memory object from message passed to function
+			await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
+			await updateplayerboard(message)//update player board from memory object
+			processing = false
 		}
-		if (processing === true){console.log("currently processing! Command rejected")}
+		if (processing === true) { console.log("currently processing! Command rejected") }
 	} catch (err) { console.log(err) }
 }//end function
 
