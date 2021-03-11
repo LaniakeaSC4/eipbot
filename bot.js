@@ -351,12 +351,13 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 //=======================================
 // Coop bot | Functions | other
 // 1. Check if user is valid
+// 2. Check if the team is valid
+// 3. Get displayname for those that have changed thiers
 //=======================================
 
 // 1. check if the user is on one of the home teams
 async function checkifvaliduser(message, user) {
-	//rebuild team object so we can search through valid users
-	await rebuildteamobj(message)
+	await rebuildteamobj(message)//rebuild team object so we can search through valid users
 	var teammembervalues = Object.values(teammembers)//get all the values from the object
 	var merged = [].concat.apply([], teammembervalues)//merge all values into 1 dimensional array
 	var found = merged.find(element => element.includes(user))//search merged array for user passed to function. If there, return user, else undefined
@@ -364,45 +365,33 @@ async function checkifvaliduser(message, user) {
 	if (typeof found !== 'undefined') { return true } else { return false }
 }//end function validuser
 
-//check if the role mentioned is one of the valid home teams
-async function checkifvalidteam(message,team) {
+// 2. check if the role/team mentioned is one of the valid home teams
+async function checkifvalidteam(message, team) {
 	await rebuildteamobj(message)
-	console.log("team:" + team)
-	var validteams = Object.values(teams)
+	console.log("team:" + team)//rebuild team object so we can search through valid users
+	var validteams = Object.values(teams)//get all the values from the object
 	var merged = [].concat.apply([], validteams)//merge all values into 1 dimensional array
-	console.log("merged: " + merged)
 	var found = merged.find(element => element.includes(team))//search merged array for user passed to function. If there, r
-	console.log("found: " + found)
-	//this uses teams arrary establised for the team card bot
+	//if team passed to function is in that array, return true, else false
 	if (typeof found !== 'undefined') { return true } else { return false }
 }//end function validteam
 
-//function to get displayname for those that have changed thiers. Returns regular username if they dont have a nickname
+// 3. function to get displayname for those that have changed thiers. Returns regular username if they dont have a nickname
 function getname(message) {
-
 	if (message.mentions.users.size !== 0) {//first check if there were indeed any mentioned users
-
 		var userid = message.mentions.users.first().id;//get the ID of the first mention
-
 		//check if they have a nickname set
 		const member = message.guild.member(userid);//retrieve the user from ID
 		var dName = member.nickname;//set dName (displayName) to the member object's nickname
-
-		//if they dont have a nickname, thier username is what is displayed by discord.
-		var uName = message.mentions.users.first().username;
-
+		var uName = message.mentions.users.first().username;//if they dont have a nickname, thier username is what is displayed by discord.
 		//if both dname and uName are not null, we must have found a nickame. Therefore return it, or instead return the username
-		if (dName !== null && uName !== null) {
-			return dName
-		} else { return uName };
-
+		if (dName !== null && uName !== null) { return dName } else { return uName };
 	}//end if mentions size !== 0
-
 }//end getname function
 
 //function to delete color change input command and reply with a thank you/wait message
-function thankyou(author, updatedthis, color, message) {
-	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + '. Statusboard will update in ~5 seconds. Please wait.')
+function thankyou(author, updatedthis, color, message,url) {
+	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in ~5 seconds. Please wait.' + url)
 	message.delete()//delete the input message
 }//end thankyou function
 
@@ -434,10 +423,6 @@ client.on('message', async message => {
 			//unpin all messages - update to unpin only the specific messages
 			message.channel.messages.fetchPinned().then(messages => { messages.forEach(message => { message.unpin() }) });
 
-			//===============================
-			// block 1 - Status board block
-			//===============================
-
 			//initialise teams object (becasue this is the !coop open command)
 			buildteamobj(message);
 
@@ -461,15 +446,13 @@ client.on('message', async message => {
 				statusboardmessages.push(msg.id);
 				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
 
-				await msg.pin();
 				//add reactions for clicking
 				await msg.react('👍');
 				await msg.react('👎');
 				await msg.react('🥚');
 				await msg.react('💤');
-
+				await msg.pin();
 			})//end pin placed user embed
-
 		};//end the if !open
 
 		//open a new coop
@@ -518,8 +501,12 @@ client.on('message', async message => {
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
 
-			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
-			thankyou(message.member.displayName, mentioneduser, "red", message);
+			findstatusboard(message).then(msg => {
+				console.log(msg.url)
+				thankyou(message.member.displayName, mentioneduser, "red", message, msg.url);
+				updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
+			})
+
 
 		}//end if isuser = true
 
