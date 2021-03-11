@@ -393,8 +393,8 @@ function getname(message) {
 }//end getname function
 
 //function to delete color change input command and reply with a thank you/wait message
-function thankyou(author, updatedthis, color, message, url) {
-	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in ~5 seconds. Please wait.' + url)
+function thankyou(author, updatedthis, color, message) {
+	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in ~5 seconds. Please wait.')
 	message.delete()//delete the input message
 }//end thankyou function
 
@@ -507,7 +507,7 @@ client.on('message', async message => {
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
-			thankyou(message.member.displayName, mentioneduser, "red", message, msg.url)
+			thankyou(message.member.displayName, mentioneduser, "red", message)
 			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message)
 
 		}//end if isuser = true
