@@ -581,8 +581,8 @@ client.on('message', async message => {
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
-			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
-			thankyou(message.member.displayName, mentioneduser, "green", message);
+			await updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
+			await thankyou(message.member.displayName, mentioneduser, "green", message);
 			processing = false
 		}//end if isuser = true
 
