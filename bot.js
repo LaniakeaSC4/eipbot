@@ -233,46 +233,47 @@ function findstatusboard(message) {
 // 2. Function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
+		console.log("rebuild team object status of processing is at start: " + processing)
 		if (processing === false) {
-		processing = true
-		console.log('entered rebuildteamobj function')
-		//clear object for rebuilding it
-		teammembers = {};
-		//define teams array, team names will be stored here for use by other functions
-		var teamnames = [];
-		//fetch pinned messages from this channel then...
-		message.channel.messages.fetchPinned().then(messages => {
-			//for each pinned message 
-			messages.forEach(message => {
-				//embed[0] is first/only embed in message. Copy it to embed variable
-				let embed = message.embeds[0];
-				//find the right pinned message
-				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
-					console.log('found message with footer in rebuild obj function');
-					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
-						//get the values (team members). Is loaded as string with \n after each player
-						var thesemembers = embed.fields[i].value
-						//split into array. thesemembers is now array of team members with thier current status square
-						thesemembers = thesemembers.split('\n');
-						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
-						var thisteam = embed.fields[i].name.split(' ').pop()
-						//save the team (role) name itself for use by other functions
-						teamnames.push(thisteam)
-						//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
-						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
-						//store members in the team members object, keyed by cleaned team name
-						teammembers[cleanrole] = thesemembers;
-					}//end for loop
-					processing = false
-					resolve(true);
-				}//end if embed and footer text contains
-			})//end message.forEach
-		})//end .then after fetchPinned
+			processing = true
+			console.log('entered rebuildteamobj function')
+			//clear object for rebuilding it
+			teammembers = {};
+			//define teams array, team names will be stored here for use by other functions
+			var teamnames = [];
+			//fetch pinned messages from this channel then...
+			message.channel.messages.fetchPinned().then(messages => {
+				//for each pinned message 
+				messages.forEach(message => {
+					//embed[0] is first/only embed in message. Copy it to embed variable
+					let embed = message.embeds[0];
+					//find the right pinned message
+					if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+						console.log('found message with footer in rebuild obj function');
+						for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
+							//get the values (team members). Is loaded as string with \n after each player
+							var thesemembers = embed.fields[i].value
+							//split into array. thesemembers is now array of team members with thier current status square
+							thesemembers = thesemembers.split('\n');
+							//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
+							var thisteam = embed.fields[i].name.split(' ').pop()
+							//save the team (role) name itself for use by other functions
+							teamnames.push(thisteam)
+							//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
+							var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
+							//store members in the team members object, keyed by cleaned team name
+							teammembers[cleanrole] = thesemembers;
+						}//end for loop
+						processing = false
+						resolve(true);
+					}//end if embed and footer text contains
+				})//end message.forEach
+			})//end .then after fetchPinned
 
-		//store the teams (roles) in the object
-		teams['teams'] = teamnames;
-	}//end if processing = false
-	if (processing === true) {console.log("currently rebuilding a team object. skipping this rebuild request")}
+			//store the teams (roles) in the object
+			teams['teams'] = teamnames;
+		}//end if processing = false
+		if (processing === true) { console.log("currently rebuilding a team object. skipping this rebuild request") }
 	})//end promise
 }//end function rebuildteamobj 
 
