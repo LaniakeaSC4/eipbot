@@ -365,7 +365,7 @@ async function checkifvaliduser(message, user) {
 }//end function validuser
 
 //check if the role mentioned is one of the valid home teams
-async function validteam(message,team) {
+async function checkifvalidteam(message,team) {
 	await rebuildteamobj(message)
 	var validteams = Object.values(teams)
 	var merged = [].concat.apply([], validteams)//merge all values into 1 dimensional array
@@ -598,6 +598,7 @@ client.on('message', async message => {
 		} else { console.log('did not find either'); }
 
 		var checkeduser = await checkifvaliduser(message, mentioneduser)
+		var checkedteam = await checkifvalidteam(message, mentioneduser)
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
@@ -608,7 +609,7 @@ client.on('message', async message => {
 		}//end if isuser = true
 
 		//if mentioned is a valid team
-		if (isteam == true && validteam(message, mentionedrole) == true) {
+		if (isteam == true && checkedteam == true) {
 
 			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
 			thankyou(message.member.displayName, mentionedrole, "red", message);
@@ -632,6 +633,7 @@ client.on('message', async message => {
 		} else { console.log('did not find either'); }
 
 		var checkeduser = await checkifvaliduser(message, mentioneduser)
+		var checkedteam = await checkifvalidteam(message, mentioneduser)
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
@@ -642,7 +644,7 @@ client.on('message', async message => {
 		}//end if isuser = true
 
 		//if mentioned is a valid team
-		if (isteam == true && validteam(message, mentionedrole) == true) {
+		if (isteam == true && checkedteam == true) {
 
 			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
 			thankyou(message.member.displayName, mentionedrole, "orange", message);
@@ -666,7 +668,8 @@ client.on('message', async message => {
 		} else { console.log('did not find either'); }
 
 		var checkeduser = await checkifvaliduser(message, mentioneduser)
-		console.log(checkeduser)
+		var checkedteam = await checkifvalidteam(message, mentioneduser)
+
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
 
@@ -676,7 +679,7 @@ client.on('message', async message => {
 		}//end if isuser = true
 
 		//if mentioned is a valid team
-		if (isteam == true && validteam(message, mentionedrole) == true) {
+		if (isteam == true && checkedteam == true) {
 
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
 			thankyou(message.member.displayName, mentionedrole, "green", message);
