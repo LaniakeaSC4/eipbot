@@ -333,6 +333,8 @@ async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
+		processing = false
+		message.channel.stopTyping()
 	} catch (err) { console.log(err) }
 }//end function
 
@@ -342,6 +344,8 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
+		processing = false
+		message.channel.stopTyping()
 	} catch (err) { console.log(err) }
 }//end function
 
@@ -453,7 +457,7 @@ client.on('message', async message => {
 		};//end the if !open
 
 		//open a new coop
-		if (eggcommand1 == 'close') {
+		if (eggcommand1 == 'close' && processing == false) {
 
 
 			await findstatusboard(message).then((statusboard) => {
@@ -478,6 +482,7 @@ client.on('message', async message => {
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
+
 	//!red 🟥
 	if (message.content.startsWith("!red") && processing == false) {
 		message.channel.startTyping()
@@ -511,8 +516,6 @@ client.on('message', async message => {
 			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message)
 		}//end if isteam = true
 
-		processing = false
-		message.channel.stopTyping()
 	}//end !red
 
 	//!orange 🟧
@@ -547,8 +550,6 @@ client.on('message', async message => {
 			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message)
 		}//end if isteam = true
 
-		processing = false
-		message.channel.stopTyping()
 	}//end !orange
 
 	//!green 🟩
@@ -583,8 +584,6 @@ client.on('message', async message => {
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
 		}//end if isteam = true
 
-		processing = false
-		message.channel.stopTyping()
 	}//end !green
 
 });//end client on message
