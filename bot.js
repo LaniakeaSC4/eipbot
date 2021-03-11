@@ -416,7 +416,7 @@ function getname(message) {
 
 //function to delete color change input command and reply with a thank you/wait message
 function thankyou(author, updatedthis, color, message, url) {
-	conssole.log("16. thank you message and delete command")
+	console.log("16. thank you message and delete command")
 	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in ~5 seconds. Please wait.' + url)
 	message.delete()//delete the input message
 }//end thankyou function
