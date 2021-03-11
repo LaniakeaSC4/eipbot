@@ -233,55 +233,55 @@ function findstatusboard(message) {
 // 2. Function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
-			//clear object for rebuilding it
-			teammembers = {};
-			//define teams array, team names will be stored here for use by other functions
-			var teamnames = [];
-			//fetch pinned messages from this channel then...
-			message.channel.messages.fetchPinned().then(messages => {
-				//for each pinned message 
-				messages.forEach(message => {
-					//embed[0] is first/only embed in message. Copy it to embed variable
-					let embed = message.embeds[0];
-					//find the right pinned message
-					if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
-						for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
-							//get the values (team members). Is loaded as string with \n after each player
-							var thesemembers = embed.fields[i].value
-							//split into array. thesemembers is now array of team members with thier current status square
-							thesemembers = thesemembers.split('\n');
-							//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
-							var thisteam = embed.fields[i].name.split(' ').pop()
-							//save the team (role) name itself for use by other functions
-							teamnames.push(thisteam)
-							//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
-							var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
-							//store members in the team members object, keyed by cleaned team name
-							teammembers[cleanrole] = thesemembers;
-						}//end for loop
-						resolve(true);
-					}//end if embed and footer text contains
-				})//end message.forEach
-			})//end .then after fetchPinned
-			//store the teams (roles) in the object
-			teams['teams'] = teamnames;
+		//clear object for rebuilding it
+		teammembers = {};
+		//define teams array, team names will be stored here for use by other functions
+		var teamnames = [];
+		//fetch pinned messages from this channel then...
+		message.channel.messages.fetchPinned().then(messages => {
+			//for each pinned message 
+			messages.forEach(message => {
+				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = message.embeds[0];
+				//find the right pinned message
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
+						//get the values (team members). Is loaded as string with \n after each player
+						var thesemembers = embed.fields[i].value
+						//split into array. thesemembers is now array of team members with thier current status square
+						thesemembers = thesemembers.split('\n');
+						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
+						var thisteam = embed.fields[i].name.split(' ').pop()
+						//save the team (role) name itself for use by other functions
+						teamnames.push(thisteam)
+						//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
+						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
+						//store members in the team members object, keyed by cleaned team name
+						teammembers[cleanrole] = thesemembers;
+					}//end for loop
+					resolve(true);
+				}//end if embed and footer text contains
+			})//end message.forEach
+		})//end .then after fetchPinned
+		//store the teams (roles) in the object
+		teams['teams'] = teamnames;
 	})//end promise
 }//end function rebuildteamobj 
 
 // 3a. function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	return new Promise((resolve, reject) => {
-			for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
-				//teammebers object is keyed with a cleaned version of role (no hyphen) 
-				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")
-				//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
-				for (var j = 0; j < teammembers[cleanrole].length; j++) {
-					if (teammembers[cleanrole][j].includes(user)) {
-						let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
-					} //end replace square core function
-				}//end for this team loop
-			}//end teams for loop
-			resolve(true);
+		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
+			//teammebers object is keyed with a cleaned version of role (no hyphen) 
+			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")
+			//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+			for (var j = 0; j < teammembers[cleanrole].length; j++) {
+				if (teammembers[cleanrole][j].includes(user)) {
+					let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
+				} //end replace square core function
+			}//end for this team loop
+		}//end teams for loop
+		resolve(true);
 	})//end promise
 }//end of changeusersquare function
 
@@ -329,24 +329,20 @@ function updateplayerboard(message) {
 
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
-		try {
-			await rebuildteamobj(message)//rebuild memory object from message passed to function
-			await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
-			await updateplayerboard(message)//update player board from memory object
-			processing = false
-			message.channel.stopTyping()
-		} catch (err) { console.log(err) }
+	try {
+		await rebuildteamobj(message)//rebuild memory object from message passed to function
+		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
+		await updateplayerboard(message)//update player board from memory object
+	} catch (err) { console.log(err) }
 }//end function
 
 // 5b. async function to chain rebuild functions to follow each other - for team
 async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
-		try {
-			await rebuildteamobj(message)//rebuild memory object from message passed to function
-			await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
-			await updateplayerboard(message)//update player board from memory object
-			processing = false
-			message.channel.stopTyping()
-		} catch (err) { console.log(err) }
+	try {
+		await rebuildteamobj(message)//rebuild memory object from message passed to function
+		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
+		await updateplayerboard(message)//update player board from memory object
+	} catch (err) { console.log(err) }
 }//end function
 
 //=======================================
@@ -484,10 +480,13 @@ client.on('message', async message => {
 client.on('message', async message => {
 	//!red 🟥
 	if (message.content.startsWith("!red")) {
-
+		message.channel.startTyping()
+		processing = true
 		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
+		var checkeduser = false
+		var checkedteam = false
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
@@ -496,37 +495,35 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
-		var checkeduser = await checkifvaliduser(message, mentioneduser)
-		var checkedteam = await checkifvalidteam(message, mentionedrole)
+		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }
+		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
-
-			findstatusboard(message).then(msg => {
-				console.log(msg.url)
-				thankyou(message.member.displayName, mentioneduser, "red", message, msg.url);
-				updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message);
-			})
-
+			thankyou(message.member.displayName, mentioneduser, "red", message, msg.url)
+			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message)
 
 		}//end if isuser = true
 
 		//if mentioned is a valid team
 		if (isteam == true && checkedteam == true) {
-
-			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message);
-			thankyou(message.member.displayName, mentionedrole, "red", message);
-
+			thankyou(message.member.displayName, mentionedrole, "red", message)
+			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message)
 		}//end if isteam = true
-
+		
+		processing = false
+		message.channel.stopTyping()
 	}//end !red
 
 	//!orange 🟧
-	if (message.content.startsWith("!orange")) {
-
+	if (message.content.startsWith("!orange") && processing == false) {
+		message.channel.startTyping()
+		processing = true
 		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
+		var checkeduser = false
+		var checkedteam = false
 
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {
@@ -535,25 +532,23 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
-		var checkeduser = await checkifvaliduser(message, mentioneduser)
-		var checkedteam = await checkifvalidteam(message, mentionedrole)
+		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }
+		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
-
-			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message);
-			thankyou(message.member.displayName, mentioneduser, "orange", message);
-
+			thankyou(message.member.displayName, mentioneduser, "orange", message)
+			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message)
 		}//end if isuser = true
 
 		//if mentioned is a valid team
 		if (isteam == true && checkedteam == true) {
-
-			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message);
-			thankyou(message.member.displayName, mentionedrole, "orange", message);
-
+			thankyou(message.member.displayName, mentionedrole, "orange", message)
+			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message)
 		}//end if isteam = true
 
+		processing = false
+		message.channel.stopTyping()
 	}//end !orange
 
 	//!green 🟩
@@ -573,23 +568,23 @@ client.on('message', async message => {
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }
 
-		if (isuser == true) {checkeduser = await checkifvaliduser(message, mentioneduser) }
-		if (isteam == true) {checkedteam = await checkifvalidteam(message, mentionedrole) }
+		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }
+		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }
 
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
-			await thankyou(message.member.displayName, mentioneduser, "green", message);
-			await updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
+			thankyou(message.member.displayName, mentioneduser, "green", message);
+			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 		}//end if isuser = true
 
 		//if mentioned is a valid team
 		if (isteam == true && checkedteam == true) {
-
-			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message);
-			thankyou(message.member.displayName, mentionedrole, "green", message);
-
+			thankyou(message.member.displayName, mentionedrole, "green", message)
+			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
 		}//end if isteam = true
 
+		processing = false
+		message.channel.stopTyping()
 	}//end !green
 
 });//end client on message
