@@ -19,6 +19,7 @@ client.on('message', async message => {
 //=======================================
 
 client.on('ready', () => {
+	processing = true
 	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!');
@@ -174,6 +175,7 @@ function arraystatusboards() {
 					statusboardmessages.push(msg.id);//push this message ID into the statusboardmessages array if it is not closed
 				}//end if embed and footer text contains
 			})//end message.forEach
+			processing = false
 		})//end .then after fetchPinned
 			.catch((err) => { });
 	});//end categoryChannels.forEach
