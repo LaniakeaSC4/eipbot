@@ -14,19 +14,11 @@ client.on('message', async message => {
 	}
 });//end client on message 
 
-function startthinking(message, x) {
+const startthinking = async (message, x) => {
 	message.channel.send("Starting to think")
-	setTimeout(function () {
-		message.channel.sent("stopped thinking");
-    }, x);
-}
+	await delay(x)
 
-function stateChange(newState) {
-    setTimeout(function () {
-        if (newState == -1) {
-            alert('VIDEO HAS STOPPED');
-        }
-    }, 5000);
+	message.channel.send("Done thinking")
 }
 
 //=======================================
