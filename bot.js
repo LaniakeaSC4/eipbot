@@ -10,7 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-		startthinking(message, 5000)
+		startthinking(5000,message)
 	}
 });//end client on message 
 
@@ -52,7 +52,7 @@ const startthinking = async (x, message) => {
 //=======================================
 
 client.on('ready', () => {
-	startthinking(5000, false)
+	startthinking(10000, false)
 	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!');
@@ -125,7 +125,7 @@ function buildteamobj(message) {
 // 1. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
 	if (processing === false) {
-		startthinking(5000,false)
+		startthinking(15000,false)
 		// When we receive a reaction we check if the reaction is partial or not
 		if (reaction.partial) {
 			// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
@@ -436,7 +436,7 @@ function thankyou(author, updatedthis, color, message) {
 client.on('message', async message => {
 	if (message.content.startsWith("!coop") && processing === false) {
 		
-		startthinking(5000,message)
+		startthinking(15000,message)
 
 		//first lets split up commands
 		//transfer message contents into msg
@@ -494,7 +494,7 @@ client.on('message', async message => {
 		//open a new coop
 		if (eggcommand1 == 'close' && processing === false) {
 
-			startthinking(5000,message)
+			startthinking(15000,message)
 
 			await findstatusboard(message).then((statusboard) => {
 				console.log('Closing statusboard: ' + statusboard)
@@ -522,7 +522,7 @@ client.on('message', async message => {
 	//!red 🟥
 	if (message.content.startsWith("!red") && processing === false) {
 
-		startthinking(5000,message)
+		startthinking(15000,message)
 
 		//initalise isuser and isteam as false
 		var isuser = false;
@@ -558,7 +558,7 @@ client.on('message', async message => {
 	//!orange 🟧
 	if (message.content.startsWith("!orange") && processing === false) {
 
-		startthinking(5000,message)
+		startthinking(15000,message)
 
 		//initalise isuser and isteam as false
 		var isuser = false;
@@ -593,7 +593,7 @@ client.on('message', async message => {
 	//!green 🟩
 	if (message.content.startsWith("!green") && processing == false) {
 
-		startthinking(5000,message)
+		startthinking(15000,message)
 
 		//initalise isuser and isteam as false
 		var isuser = false
