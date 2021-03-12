@@ -19,7 +19,7 @@ var processing = false//initalise on false
 const delay = async (ms) => new Promise(res => setTimeout(res, ms));//delay function used by startthinkin function
 //delays for x millisecods
 const startthinking = async (x, message) => {
-	if (message === false) {
+	if (message !== false) {
 		//do this first
 		processing = true
 		message.channel.send("I will be thinking for "+ x/1000 + " seconds")
@@ -34,7 +34,7 @@ const startthinking = async (x, message) => {
 
 	}
 
-	if (message !== false) {
+	if (message === false) {
 		//do this first
 		processing = true
 		console.log("No message recieved. Starting to think for " + x / 1000 + " seconds. Processing var is: " + processing)
@@ -594,7 +594,7 @@ client.on('message', async message => {
 	if (message.content.startsWith("!green") && processing == false) {
 
 		startthinking(5000,message)
-		
+
 		//initalise isuser and isteam as false
 		var isuser = false
 		var isteam = false
