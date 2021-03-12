@@ -10,15 +10,24 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-	startthinking(message,5000)
+		startthinking(message, 5000)
 	}
 });//end client on message 
-const delay = async (ms) => new Promise(res => setTimeout(res, ms));
-const startthinking = async (message, x) => {
-	message.channel.send("Starting to think")
-	await delay(x)
 
-	message.channel.send("Done thinking")
+// Global lockout - when processing is true, nothing else should run
+var processing = false//initalise on false
+const delay = async (ms) => new Promise(res => setTimeout(res, ms));//delay function used by startthinkin function
+//delays for x millisecods
+const startthinking = async (message, x) => {
+	//do this first
+	processing = true
+	message.channel.send("Starting to think for " + x/1000 + " seconds. Processing var is: " + processing)
+
+	await delay(x)//wait for x milliseconds
+
+	//then do this
+	processing = false
+	message.channel.send("Done thinking for " + x/1000 + " seconds. Processing va is: " + processing)
 }
 
 //=======================================
@@ -35,7 +44,6 @@ client.on('ready', () => {
 //define global storage objects
 var teams = {}//this one is for just the teams/roles that match the home team channels
 var teammembers = {}//the main data storage for the status board. Team titles and team members with squares and farming status
-var processing = false
 
 //function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
