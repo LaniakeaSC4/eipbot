@@ -22,30 +22,25 @@ const startthinking = async (x, message) => {
 	if (message !== false) {
 		//do this first
 		processing = true
-		message.channel.startTyping()
+		message.channel.startTyping()//start discord typing signifier
 		console.log("Starting to think for " + x / 1000 + " seconds. Processing var is: " + processing)
-
 		await delay(x)//wait for x milliseconds
-
 		//then do this
-		message.channel.stopTyping()
+		message.channel.stopTyping()//stop discord typing signifier
 		processing = false
 		console.log("Done thinking for " + x / 1000 + " seconds. Processing var is: " + processing)
-
-	}
+	}//end if not false
 
 	if (message === false) {
 		//do this first
 		processing = true
 		console.log("No message recieved. Starting to think for " + x / 1000 + " seconds. Processing var is: " + processing)
-
 		await delay(x)//wait for x milliseconds
-
 		//then do this
 		processing = false
 		console.log("No message recieved. Done thinking for " + x / 1000 + " seconds. Processing var is: " + processing)
-	}
-}
+	}//end if false
+}//end start thinking function
 
 //=======================================
 // Coop bot | Functions | Initalise
@@ -428,8 +423,8 @@ function getname(message) {
 //function to delete color change input command and reply with a thank you/wait message
 function thankyou(author, updatedthis, color, message) {
 	thanksembed = new Discord.MessageEmbed()
-	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in 15 seconds. You cannot enterr another command during this time (will be ignored). Please wait.')
-	thanksembed.addField("Jump to coop board","[Click here] ("+thismessage.url+")")
+	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Coop board will update in ~12 seconds. You can not enter another command during this time (will be ignored).')
+	thanksembed.addField("Jump to coop board",thismessage.url)
 	message.channel.send(thanksembed)
 	message.delete()//delete the input message
 }//end thankyou function
