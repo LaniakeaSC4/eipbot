@@ -18,16 +18,33 @@ client.on('message', async message => {
 var processing = false//initalise on false
 const delay = async (ms) => new Promise(res => setTimeout(res, ms));//delay function used by startthinkin function
 //delays for x millisecods
-const startthinking = async (message, x) => {
-	//do this first
-	processing = true
-	message.channel.send("Starting to think for " + x/1000 + " seconds. Processing var is: " + processing)
+const startthinking = async (x, message) => {
+	if (message === false) {
+		//do this first
+		processing = true
+		message.channel.send("I will be thinking for "+ x/1000 + " seconds")
+		console.log("Starting to think for " + x / 1000 + " seconds. Processing var is: " + processing)
 
-	await delay(x)//wait for x milliseconds
+		await delay(x)//wait for x milliseconds
 
-	//then do this
-	processing = false
-	message.channel.send("Done thinking for " + x/1000 + " seconds. Processing va is: " + processing)
+		//then do this
+		processing = false
+		message.channel.send("I am done thinking")
+		console.log("Done thinking for " + x / 1000 + " seconds. Processing var is: " + processing)
+
+	}
+
+	if (message !== false) {
+		//do this first
+		processing = true
+		console.log("No message recieved. Starting to think for " + x / 1000 + " seconds. Processing var is: " + processing)
+
+		await delay(x)//wait for x milliseconds
+
+		//then do this
+		processing = false
+		console.log("No message recieved. Done thinking for " + x / 1000 + " seconds. Processing var is: " + processing)
+	}
 }
 
 //=======================================
@@ -35,7 +52,7 @@ const startthinking = async (message, x) => {
 //=======================================
 
 client.on('ready', () => {
-	processing = true
+	startthinking(5000, false)
 	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!');
@@ -107,66 +124,69 @@ function buildteamobj(message) {
 
 // 1. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
-	// When we receive a reaction we check if the reaction is partial or not
-	if (reaction.partial) {
-		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
-		try {
-			await reaction.fetch();
-			console.log('a partial reaction was fetched')
-		} catch (error) {
-			console.error('Something went wrong when fetching the message: ', error);
-			// Return as `reaction.message.author` may be undefined/null
-			return;
-		}//end catch
-	}//end if reaction.partial
+	if (processing === false) {
+		startthinking(5000,false)
+		// When we receive a reaction we check if the reaction is partial or not
+		if (reaction.partial) {
+			// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
+			try {
+				await reaction.fetch();
+				console.log('a partial reaction was fetched')
+			} catch (error) {
+				console.error('Something went wrong when fetching the message: ', error);
+				// Return as `reaction.message.author` may be undefined/null
+				return;
+			}//end catch
+		}//end if reaction.partial
 
-	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
-	for (var i = 0; i < statusboardmessages.length; i++) {
-		if (statusboardmessages[i].includes(reaction.message.id) && processing == false) {
-			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
-			var thischannel = reaction.message.channel.id
-			var thismessage = reaction.message.id
+		//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
+		for (var i = 0; i < statusboardmessages.length; i++) {
+			if (statusboardmessages[i].includes(reaction.message.id)) {
+				//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
+				var thischannel = reaction.message.channel.id
+				var thismessage = reaction.message.id
 
-			//get displayname from userid. Need this for the string match in the status board/teammembers object
-			//check if they have a nickname set
-			const member = await client.users.fetch(user.id)//retrieve the user from ID
-			var dName = member.nickname;//set dName (displayName) to the member object's nickname
-			//if they dont have a nickname, thier username is what is displayed by discord.
-			var uName = member.username
+				//get displayname from userid. Need this for the string match in the status board/teammembers object
+				//check if they have a nickname set
+				const member = await client.users.fetch(user.id)//retrieve the user from ID
+				var dName = member.nickname;//set dName (displayName) to the member object's nickname
+				//if they dont have a nickname, thier username is what is displayed by discord.
+				var uName = member.username
 
-			var thisuser = ""
-			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
-			if (dName !== undefined && uName !== undefined) {
-				thisuser = dName
-			} else { thisuser = uName }
+				var thisuser = ""
+				//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
+				if (dName !== undefined && uName !== undefined) {
+					thisuser = dName
+				} else { thisuser = uName }
 
-			//if user is not the bot, log whats going to happen
-			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
+				//if user is not the bot, log whats going to happen
+				if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
 
-			//we are only going further into the function with one of these 4 emoji
-			var allowedemoji = ['👍', '👎', '🥚', '💤']
-			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
-				//get the message object for the status board which recieved the reaction, then...
-				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-					try {
-						reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
-						await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
-						await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
-						await updateplayerboard(msg)//now the teammembers object is updated, republish the status board
-						//add the reactions back in ready for the next person
-						await msg.react('👍');
-						await msg.react('👎');
-						await msg.react('🥚');
-						await msg.react('💤');
-						//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
-						arraystatusboards()
-					} catch (err) {
-						console.log(err)
-					}//end catch error
-				})//end .then after fetching statusboard
-			}//end if EIP Bot and allowed reaction
-		}//end if reaction message is a statusboard message
-	}//end for loop checking through stored reaction board message ids for a match for this reaction add
+				//we are only going further into the function with one of these 4 emoji
+				var allowedemoji = ['👍', '👎', '🥚', '💤']
+				if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
+					//get the message object for the status board which recieved the reaction, then...
+					await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
+						try {
+							reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
+							await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
+							await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
+							await updateplayerboard(msg)//now the teammembers object is updated, republish the status board
+							//add the reactions back in ready for the next person
+							await msg.react('👍');
+							await msg.react('👎');
+							await msg.react('🥚');
+							await msg.react('💤');
+							//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
+							arraystatusboards()
+						} catch (err) {
+							console.log(err)
+						}//end catch error
+					})//end .then after fetching statusboard
+				}//end if EIP Bot and allowed reaction
+			}//end if reaction message is a statusboard message
+		}//end for loop checking through stored reaction board message ids for a match for this reaction add
+	}//end if processing is false
 });//end client on reaction add 
 
 //global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuilt on startup and when any reaction is added to a status board message
@@ -190,7 +210,6 @@ function arraystatusboards() {
 					statusboardmessages.push(msg.id);//push this message ID into the statusboardmessages array if it is not closed
 				}//end if embed and footer text contains
 			})//end message.forEach
-			processing = false
 		})//end .then after fetchPinned
 			.catch((err) => { });
 	});//end categoryChannels.forEach
@@ -350,8 +369,6 @@ async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
-		processing = false
-		message.channel.stopTyping()
 	} catch (err) { console.log(err) }
 }//end function
 
@@ -361,8 +378,6 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
-		processing = false
-		message.channel.stopTyping()
 	} catch (err) { console.log(err) }
 }//end function
 
@@ -419,7 +434,9 @@ function thankyou(author, updatedthis, color, message) {
 
 //!coop (including !coop open [name])
 client.on('message', async message => {
-	if (message.content.startsWith("!coop") && processing == false) {
+	if (message.content.startsWith("!coop") && processing === false) {
+		
+		startthinking(5000,message)
 
 		//first lets split up commands
 		//transfer message contents into msg
@@ -462,6 +479,7 @@ client.on('message', async message => {
 
 				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
 				statusboardmessages.push(msg.id);
+
 				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
 
 				//add reactions for clicking
@@ -474,8 +492,9 @@ client.on('message', async message => {
 		};//end the if !open
 
 		//open a new coop
-		if (eggcommand1 == 'close' && processing == false) {
+		if (eggcommand1 == 'close' && processing === false) {
 
+			startthinking(5000,message)
 
 			await findstatusboard(message).then((statusboard) => {
 				console.log('Closing statusboard: ' + statusboard)
@@ -501,9 +520,10 @@ client.on('message', async message => {
 client.on('message', async message => {
 
 	//!red 🟥
-	if (message.content.startsWith("!red") && processing == false) {
-		message.channel.startTyping()
-		processing = true
+	if (message.content.startsWith("!red") && processing === false) {
+
+		startthinking(5000,message)
+
 		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
@@ -536,9 +556,10 @@ client.on('message', async message => {
 	}//end !red
 
 	//!orange 🟧
-	if (message.content.startsWith("!orange") && processing == false) {
-		message.channel.startTyping()
-		processing = true
+	if (message.content.startsWith("!orange") && processing === false) {
+
+		startthinking(5000,message)
+
 		//initalise isuser and isteam as false
 		var isuser = false;
 		var isteam = false;
@@ -571,8 +592,9 @@ client.on('message', async message => {
 
 	//!green 🟩
 	if (message.content.startsWith("!green") && processing == false) {
-		message.channel.startTyping()
-		processing = true
+
+		startthinking(5000,message)
+		
 		//initalise isuser and isteam as false
 		var isuser = false
 		var isteam = false
