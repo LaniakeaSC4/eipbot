@@ -22,14 +22,14 @@ const startthinking = async (x, message) => {
 	if (message !== false) {
 		//do this first
 		processing = true
-		message.channel.send("I will be thinking for "+ x/1000 + " seconds")
+		message.channel.startTyping()
 		console.log("Starting to think for " + x / 1000 + " seconds. Processing var is: " + processing)
 
 		await delay(x)//wait for x milliseconds
 
 		//then do this
+		message.channel.stopTyping()
 		processing = false
-		message.channel.send("I am done thinking")
 		console.log("Done thinking for " + x / 1000 + " seconds. Processing var is: " + processing)
 
 	}
@@ -61,6 +61,7 @@ client.on('ready', () => {
 //define global storage objects
 var teams = {}//this one is for just the teams/roles that match the home team channels
 var teammembers = {}//the main data storage for the status board. Team titles and team members with squares and farming status
+var lastmessage = {}//store the last retrieved message for last access.
 
 //function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
 function buildteamobj(message) {
@@ -294,6 +295,8 @@ function rebuildteamobj(message) {
 						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
 						//store members in the team members object, keyed by cleaned team name
 						teammembers[cleanrole] = thesemembers;
+						//store message to get URL
+						thismessage = message
 					}//end for loop
 					resolve(true);
 				}//end if embed and footer text contains
@@ -424,7 +427,7 @@ function getname(message) {
 
 //function to delete color change input command and reply with a thank you/wait message
 function thankyou(author, updatedthis, color, message) {
-	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in 15 seconds. You cannot enterr another command during this time (will be ignored). Please wait.')
+	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in 15 seconds. You cannot enterr another command during this time (will be ignored). Please wait.' + thismessage.url)
 	message.delete()//delete the input message
 }//end thankyou function
 
