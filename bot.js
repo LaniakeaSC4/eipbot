@@ -429,7 +429,7 @@ function getname(message) {
 function thankyou(author, updatedthis, color, message) {
 	thanksembed = new Discord.MessageEmbed()
 	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in 15 seconds. You cannot enterr another command during this time (will be ignored). Please wait.')
-	thanksembed.setFooter("[Jump to coop board]("+thismessage.url+")")
+	thanksembed.addField("Jump to coop board","[Click here] ("+thismessage.url+")")
 	message.channel.send(thanksembed)
 	message.delete()//delete the input message
 }//end thankyou function
