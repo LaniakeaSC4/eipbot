@@ -13,7 +13,7 @@ client.on('message', async message => {
 	startthinking(message,5000)
 	}
 });//end client on message 
-const delay = async (ms: number) => new Promise(res => setTimeout(res, ms));
+const delay = async (ms) => new Promise(res => setTimeout(res, ms));
 const startthinking = async (message, x) => {
 	message.channel.send("Starting to think")
 	await delay(x)
