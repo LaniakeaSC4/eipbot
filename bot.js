@@ -424,7 +424,7 @@ function getname(message) {
 
 //function to delete color change input command and reply with a thank you/wait message
 function thankyou(author, updatedthis, color, message) {
-	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in ~5 seconds. Please wait.')
+	message.channel.send('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Statusboard will update in 15 seconds. You cannot enterr another command during this time (will be ignored). Please wait.')
 	message.delete()//delete the input message
 }//end thankyou function
 
