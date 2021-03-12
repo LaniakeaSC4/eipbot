@@ -9,10 +9,25 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 
 //!test command for testing things
 client.on('message', async message => {
-	if (message.content.startsWith("!test") && processing == false) {
-		message.channel.send(processing)
+	if (message.content.startsWith("!test")) {
+	startthinking(message,5000)
 	}
 });//end client on message 
+
+function startthinking(message, x) {
+	message.channel.send("Starting to think")
+	setTimeout(function () {
+		message.channel.sent("stopped thinking");
+    }, x);
+}
+
+function stateChange(newState) {
+    setTimeout(function () {
+        if (newState == -1) {
+            alert('VIDEO HAS STOPPED');
+        }
+    }, 5000);
+}
 
 //=======================================
 // Coop bot | Functions | Initalise
