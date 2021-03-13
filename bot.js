@@ -495,7 +495,7 @@ client.on('message', async message => {
 			//lock out any more commands for x milliseconds
 			startthinking(15000, message)
 
-			await findstatusboard(message).then(statusboard => {
+			findstatusboard(message).then(statusboard => {
 				console.log('Closing statusboard: ' + statusboard)
 				statusboard.reactions.removeAll()
 				var receivedEmbed = statusboard.embeds[0] //copy embeds from it
