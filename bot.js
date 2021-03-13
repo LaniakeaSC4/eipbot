@@ -47,7 +47,7 @@ const startthinking = async (x, message) => {
 //=======================================
 
 client.on('ready', () => {
-	startthinking(10000, false)
+	startthinking(6000, false)
 	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!');
@@ -245,7 +245,6 @@ function changeplayerstatus(newemoji, user) {
 
 // 1. Returns promise of statusboard message object in the channel the command was sent
 function findstatusboard(message) {
- console.log(message)
 	return new Promise((resolve, reject) => {
 		//get the status board		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
@@ -452,7 +451,7 @@ client.on('message', async message => {
 		//open a new coop
 		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
 		  		//lock out any more commands for x milliseconds
-		startthinking(15000, message) 
+		startthinking(6000, message) 
 			//unpin status board message
 			message.channel.messages.fetchPinned().then(messages => {
 				messages.forEach(message => {
@@ -463,7 +462,7 @@ client.on('message', async message => {
 						message.unpin()
 					}//end if embed and footer text contains
 				})//end message.forEach
-			})//end .then messages
+			})//end .then messages:
 
 			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
 			buildteamobj(message);
@@ -493,7 +492,7 @@ client.on('message', async message => {
 		//close coop
 		if (eggcommand1 == 'close' && processing === false) {
 			//lock out any more commands for x milliseconds
-			startthinking(15000, message)
+			startthinking(6000, message)
 
 			await findstatusboard(message).then(statusboard => {
 				console.log('Closing statusboard: ' + statusboard)
@@ -523,110 +522,98 @@ client.on('message', async message => {
 
 	//!red 🟥
 	if (message.content.startsWith("!red") && processing === false) {
-
+			//lock out any more commands for x millisecond
 		startthinking(15000, message)
-
 		//initalise isuser and isteam as false
-		var isuser = false;
-		var isteam = false;
-		var checkeduser = false
-		var checkedteam = false
-
+		var isuser = false;//is the command about a user
+		var isteam = false;//is the command about a team
+		var checkeduser = false//is the user a valid user?
+		var checkedteam = false//is the team a valid team? 
+		
 		//what user or team was mentioned?
-		if (message.mentions.users.size !== 0) {
+		if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
 			var mentioneduser = getname(message); isuser = true;
-		} else if (message.mentions.roles.size !== 0) {
+		} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
-		} else { console.log('did not find either'); }
-
-		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }
-		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }
-
+		} else { console.log('did not find either'); }//else do nothing
+		
+		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
+		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
+		
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
 			thankyou(message.member.displayName, mentioneduser, "red", message)
 			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message)
-
 		}//end if isuser = true
-
 		//if mentioned is a valid team
 		if (isteam == true && checkedteam == true) {
 			thankyou(message.member.displayName, mentionedrole, "red", message)
 			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message)
 		}//end if isteam = true
-
 	}//end !red
 
 	//!orange 🟧
 	if (message.content.startsWith("!orange") && processing === false) {
-
+			//lock out any more commands for x millisecond
 		startthinking(15000, message)
-
 		//initalise isuser and isteam as false
-		var isuser = false;
-		var isteam = false;
-		var checkeduser = false
-		var checkedteam = false
-
+		var isuser = false;//is the command about a user
+		var isteam = false;//is the command about a team
+		var checkeduser = false//is the user a valid user?
+		var checkedteam = false//is the team a valid team? 
+		
 		//what user or team was mentioned?
-		if (message.mentions.users.size !== 0) {
+		if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
 			var mentioneduser = getname(message); isuser = true;
-		} else if (message.mentions.roles.size !== 0) {
+		} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
-		} else { console.log('did not find either'); }
-
-		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }
-		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }
-
+		} else { console.log('did not find either'); }//else do nothing
+		
+		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
+		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
+		
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
 			thankyou(message.member.displayName, mentioneduser, "orange", message)
 			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message)
 		}//end if isuser = true
-
 		//if mentioned is a valid team
 		if (isteam == true && checkedteam == true) {
 			thankyou(message.member.displayName, mentionedrole, "orange", message)
 			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message)
 		}//end if isteam = true
-
 	}//end !orange
 
 	//!green 🟩
 	if (message.content.startsWith("!green") && processing == false) {
-
+			//lock out any more commands for x millisecond
 		startthinking(15000, message)
-
 		//initalise isuser and isteam as false
-		var isuser = false
-		var isteam = false
-		var checkeduser = false
-		var checkedteam = false
-
+		var isuser = false;//is the command about a user
+		var isteam = false;//is the command about a team
+		var checkeduser = false//is the user a valid user?
+		var checkedteam = false//is the team a valid team? 
+		
 		//what user or team was mentioned?
-		if (message.mentions.users.size !== 0) {
+		if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
 			var mentioneduser = getname(message); isuser = true;
-		} else if (message.mentions.roles.size !== 0) {
+		} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
-		} else { console.log('did not find either'); }
-
-		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }
-		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }
-
+		} else { console.log('did not find either'); }//else do nothing
+		
+		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
+		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
 			thankyou(message.member.displayName, mentioneduser, "green", message);
 			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
 		}//end if isuser = true
-
 		//if mentioned is a valid team
 		if (isteam == true && checkedteam == true) {
 			thankyou(message.member.displayName, mentionedrole, "green", message)
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
 		}//end if isteam = true
-
 	}//end !green
-
 });//end client on message
 
 //delete all bot pin notifications (this is for all bot pins, accross the whole server)
