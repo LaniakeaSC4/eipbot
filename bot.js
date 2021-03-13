@@ -384,6 +384,7 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 // 1. Check if user is valid
 // 2. Check if the team is valid
 // 3. Get displayname for those that have changed thiers
+// 4. Thank you message for colour change 
 //=======================================
 
 // 1. check if the user is on one of the home teams
@@ -420,8 +421,9 @@ function getname(message) {
 	}//end if mentions size !== 0
 }//end getname function
 
-//function to delete color change input command and reply with a thank you/wait message
+// 4. function to delete color change input command and reply with a thank you/wait message
 function thankyou(author, updatedthis, color, message) {
+  //make new discord embed. Tidier than normal message
 	thanksembed = new Discord.MessageEmbed()
 	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Coop board will update in ~12 seconds. You can not enter another command during this time (will be ignored).')
 	thanksembed.addField("Jump to coop board",thismessage.url)
