@@ -431,39 +431,49 @@ function thankyou(author, updatedthis, color, message) {
 	message.delete()//delete the input message
 }//end thankyou function
 
-//=======================================
-//		Coop bot	|	User Commands
-//=======================================
+//==========================================
+// Coop bot	|	User Commands | open and close
+// 1. !Coop (which has open and close)
+//==========================================
 
-//!coop (including !coop open [name])
+// 1. !coop (including !coop open [name] and !coop close)
 client.on('message', async message => {
 	if (message.content.startsWith("!coop") && processing === false) {
 		
+		//lock out any more commands for x milliseconds
 		startthinking(15000,message)
 
 		//first lets split up commands
 		//transfer message contents into msg
 		let msg = message.content;
-		//make substring from first space onwards
+		//make substring from first space onwards (after!coop)
 		let argString = msg.substr(msg.indexOf(' ') + 1);
 		//split into multiple parts and store in array - might get errors if more then 3 parts?
 		let argArr = argString.split(' ');
 		//for each element in array, make into variable
 		let [eggcommand1, eggcommand2, eggcommand3] = argArr;
 
-		console.log('commmand 1 is: ' + eggcommand1);
-		console.log('commmand 2 is: ' + eggcommand2);
-		console.log('commmand 3 is: ' + eggcommand3);
+		console.log('!coop detected. Commmand 1 is: ' + eggcommand1 + '. Command 2 is: ' + eggcommand2 + '. Command 3 is: ' + eggcommand3);
 
 		//open a new coop
 		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
 
-			//unpin all messages - update to unpin only the specific messages
-			message.channel.messages.fetchPinned().then(messages => { messages.forEach(message => { message.unpin() }) });
+			//unpin status board message
+			message.channel.messages.fetchPinned().then(messages => { messages.forEach(message => {
+			  
+			  				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = message.embeds[0];
+				//find the right pinned message
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+					message.unpin()
+				}//end if embed and footer text contains
+			})//end message.forEach
+			    })//end .then messages
 
-			//initialise teams object (becasue this is the !coop open command)
+			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
 			buildteamobj(message);
 
+//build initial embed
 			let placedEmbed = new Discord.MessageEmbed()
 				.setTitle("EiP Status Board for contract: " + eggcommand2)
 				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n👎 if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🟧 - Player offered coop (set this with !orange @user or !orange @team)\n🟩 - Player is confirmed in coop (set this with !green @user or !green @team)\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
@@ -472,15 +482,11 @@ client.on('message', async message => {
 
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < teams.teams.length; i++) {
-
-				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
+				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
 				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
-
-			}
-
-			message.channel.send(placedEmbed).then(async msg => {
-
-				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs. Rebuild this array by big search on startup?
+			}//end loop to add team fields to embed
+			message.channel.send(placedEmbed).then(async msg => {//send the embed then
+				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
 				statusboardmessages.push(msg.id);
 
 				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
