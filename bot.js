@@ -245,6 +245,7 @@ function changeplayerstatus(newemoji, user) {
 
 // 1. Returns promise of statusboard message object in the channel the command was sent
 function findstatusboard(message) {
+ console.log(message)
 	return new Promise((resolve, reject) => {
 		//get the status board		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
