@@ -440,8 +440,6 @@ function thankyou(author, updatedthis, color, message) {
 // 1. !coop (including !coop open [name] and !coop close)
 client.on('message', async message => {
 	if (message.content.startsWith("!coop") && processing === false) {
-		//lock out any more commands for x milliseconds
-		startthinking(15000, message)
 
 		//first lets split up commands
 		let msg = message.content;//transfer message contents into msg
@@ -453,6 +451,8 @@ client.on('message', async message => {
 
 		//open a new coop
 		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
+		  		//lock out any more commands for x milliseconds
+		startthinking(15000, message) 
 			//unpin status board message
 			message.channel.messages.fetchPinned().then(messages => {
 				messages.forEach(message => {
@@ -495,7 +495,7 @@ client.on('message', async message => {
 			//lock out any more commands for x milliseconds
 			startthinking(15000, message)
 
-			findstatusboard(message).then(statusboard => {
+			await findstatusboard(message).then(statusboard => {
 				console.log('Closing statusboard: ' + statusboard)
 				statusboard.reactions.removeAll()
 				var receivedEmbed = statusboard.embeds[0] //copy embeds from it
