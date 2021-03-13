@@ -10,7 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-		startthinking(5000,message)
+		startthinking(5000, message)
 	}
 });//end client on message 
 
@@ -121,7 +121,7 @@ function buildteamobj(message) {
 // 1. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
 	if (processing === false) {
-		startthinking(15000,false)
+		startthinking(15000, false)
 		// When we receive a reaction we check if the reaction is partial or not
 		if (reaction.partial) {
 			// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
@@ -379,13 +379,13 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 	} catch (err) { console.log(err) }
 }//end function
 
-//=======================================
+//=======================================================
 // Coop bot | Functions | other
 // 1. Check if user is valid
 // 2. Check if the team is valid
 // 3. Get displayname for those that have changed thiers
 // 4. Thank you message for colour change 
-//=======================================
+//=======================================================
 
 // 1. check if the user is on one of the home teams
 async function checkifvaliduser(message, user) {
@@ -423,57 +423,51 @@ function getname(message) {
 
 // 4. function to delete color change input command and reply with a thank you/wait message
 function thankyou(author, updatedthis, color, message) {
-  //make new discord embed. Tidier than normal message
+	//make new discord embed. Tidier than normal message
 	thanksembed = new Discord.MessageEmbed()
 	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Coop board will update in ~12 seconds. You can not enter another command during this time (will be ignored).')
-	thanksembed.addField("Jump to coop board",thismessage.url)
+	thanksembed.addField("Jump to coop board", thismessage.url)
 	message.channel.send(thanksembed)
 	message.delete()//delete the input message
 }//end thankyou function
 
 //==========================================
-// Coop bot	|	User Commands | open and close
+// Coop bot	| User Commands | open and close
 // 1. !Coop (which has open and close)
 //==========================================
 
 // 1. !coop (including !coop open [name] and !coop close)
 client.on('message', async message => {
 	if (message.content.startsWith("!coop") && processing === false) {
-		
 		//lock out any more commands for x milliseconds
-		startthinking(15000,message)
+		startthinking(15000, message)
 
 		//first lets split up commands
-		//transfer message contents into msg
-		let msg = message.content;
-		//make substring from first space onwards (after!coop)
-		let argString = msg.substr(msg.indexOf(' ') + 1);
-		//split into multiple parts and store in array - might get errors if more then 3 parts?
-		let argArr = argString.split(' ');
-		//for each element in array, make into variable
-		let [eggcommand1, eggcommand2, eggcommand3] = argArr;
+		let msg = message.content;//transfer message contents into msg
+		let argString = msg.substr(msg.indexOf(' ') + 1);//make substring from first space onwards (after!coop)
+		let argArr = argString.split(' ');//split into multiple parts and store in array - might get errors if more then 3 parts?
+		let [eggcommand1, eggcommand2, eggcommand3] = argArr;//for each element in array, make into variable
 
 		console.log('!coop detected. Commmand 1 is: ' + eggcommand1 + '. Command 2 is: ' + eggcommand2 + '. Command 3 is: ' + eggcommand3);
 
 		//open a new coop
 		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
-
 			//unpin status board message
-			message.channel.messages.fetchPinned().then(messages => { messages.forEach(message => {
-			  
-			  				//embed[0] is first/only embed in message. Copy it to embed variable
-				let embed = message.embeds[0];
-				//find the right pinned message
-				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
-					message.unpin()
-				}//end if embed and footer text contains
-			})//end message.forEach
-			    })//end .then messages
+			message.channel.messages.fetchPinned().then(messages => {
+				messages.forEach(message => {
+					//embed[0] is first/only embed in message. Copy it to embed variable
+					let embed = message.embeds[0];
+					//find the right pinned message
+					if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+						message.unpin()
+					}//end if embed and footer text contains
+				})//end message.forEach
+			})//end .then messages
 
 			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
 			buildteamobj(message);
 
-//build initial embed
+			//build initial embed
 			let placedEmbed = new Discord.MessageEmbed()
 				.setTitle("EiP Status Board for contract: " + eggcommand2)
 				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n👎 if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🟧 - Player offered coop (set this with !orange @user or !orange @team)\n🟩 - Player is confirmed in coop (set this with !green @user or !green @team)\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
@@ -485,25 +479,20 @@ client.on('message', async message => {
 				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
 				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
 			}//end loop to add team fields to embed
+
 			message.channel.send(placedEmbed).then(async msg => {//send the embed then
 				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
 				statusboardmessages.push(msg.id);
-
 				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
-
-				//add reactions for clicking
-				await msg.react('👍');
-				await msg.react('👎');
-				await msg.react('🥚');
-				await msg.react('💤');
-				await msg.pin();
+				await msg.react('👍'); await msg.react('👎'); await msg.react('🥚'); await msg.react('💤');//add reactions for clicking
+				await msg.pin();//pin message
 			})//end pin placed user embed
 		};//end the if !open
 
-		//open a new coop
+		//close coop
 		if (eggcommand1 == 'close' && processing === false) {
-
-			startthinking(15000,message)
+			//lock out any more commands for x milliseconds
+			startthinking(15000, message)
 
 			await findstatusboard(message).then((statusboard) => {
 				console.log('Closing statusboard: ' + statusboard)
@@ -515,15 +504,18 @@ client.on('message', async message => {
 				statusboard.edit(updatedEmbed)
 				statusboard.unpin()
 				arraystatusboards()
-			})
-
+			})//end .then after find status board
 		};//end the if !close
-
-		message.delete();//delete input command
-
+		message.delete();//delete input !close command
 	};//end if !coop block
-
 });//end client on message
+
+//=======================================
+// Coop bot | commands | color change 
+// 1. red 🟥
+// 2. orange 🟧
+// 3. green 🟩
+//=======================================
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
@@ -531,7 +523,7 @@ client.on('message', async message => {
 	//!red 🟥
 	if (message.content.startsWith("!red") && processing === false) {
 
-		startthinking(15000,message)
+		startthinking(15000, message)
 
 		//initalise isuser and isteam as false
 		var isuser = false;
@@ -567,7 +559,7 @@ client.on('message', async message => {
 	//!orange 🟧
 	if (message.content.startsWith("!orange") && processing === false) {
 
-		startthinking(15000,message)
+		startthinking(15000, message)
 
 		//initalise isuser and isteam as false
 		var isuser = false;
@@ -602,7 +594,7 @@ client.on('message', async message => {
 	//!green 🟩
 	if (message.content.startsWith("!green") && processing == false) {
 
-		startthinking(15000,message)
+		startthinking(15000, message)
 
 		//initalise isuser and isteam as false
 		var isuser = false
