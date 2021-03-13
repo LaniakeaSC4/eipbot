@@ -450,8 +450,8 @@ client.on('message', async message => {
 
 		//open a new coop
 		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
-		  		//lock out any more commands for x milliseconds
-		startthinking(6000, message) 
+			//lock out any more commands for x milliseconds
+			startthinking(6000, message)
 			//unpin status board message
 			message.channel.messages.fetchPinned().then(messages => {
 				messages.forEach(message => {
@@ -522,24 +522,24 @@ client.on('message', async message => {
 
 	//!red 🟥
 	if (message.content.startsWith("!red") && processing === false) {
-			//lock out any more commands for x millisecond
+		//lock out any more commands for x millisecond
 		startthinking(15000, message)
 		//initalise isuser and isteam as false
 		var isuser = false;//is the command about a user
 		var isteam = false;//is the command about a team
 		var checkeduser = false//is the user a valid user?
 		var checkedteam = false//is the team a valid team? 
-		
+
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
 			var mentioneduser = getname(message); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }//else do nothing
-		
+
 		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
 		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
-		
+
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
 			thankyou(message.member.displayName, mentioneduser, "red", message)
@@ -554,24 +554,24 @@ client.on('message', async message => {
 
 	//!orange 🟧
 	if (message.content.startsWith("!orange") && processing === false) {
-			//lock out any more commands for x millisecond
+		//lock out any more commands for x millisecond
 		startthinking(15000, message)
 		//initalise isuser and isteam as false
 		var isuser = false;//is the command about a user
 		var isteam = false;//is the command about a team
 		var checkeduser = false//is the user a valid user?
 		var checkedteam = false//is the team a valid team? 
-		
+
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
 			var mentioneduser = getname(message); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }//else do nothing
-		
+
 		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
 		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
-		
+
 		//if mention is a valid user
 		if (isuser == true && checkeduser == true) {
 			thankyou(message.member.displayName, mentioneduser, "orange", message)
@@ -586,21 +586,21 @@ client.on('message', async message => {
 
 	//!green 🟩
 	if (message.content.startsWith("!green") && processing == false) {
-			//lock out any more commands for x millisecond
+		//lock out any more commands for x millisecond
 		startthinking(15000, message)
 		//initalise isuser and isteam as false
 		var isuser = false;//is the command about a user
 		var isteam = false;//is the command about a team
 		var checkeduser = false//is the user a valid user?
 		var checkedteam = false//is the team a valid team? 
-		
+
 		//what user or team was mentioned?
 		if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
 			var mentioneduser = getname(message); isuser = true;
 		} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 			var mentionedrole = message.mentions.roles.first().name; isteam = true;
 		} else { console.log('did not find either'); }//else do nothing
-		
+
 		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
 		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
 		//if mention is a valid user
