@@ -517,16 +517,23 @@ client.on('message', async message => {
 // 3. green 🟩
 //=======================================
 
+var queue = 0
+
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
   
   
-  if (message.content.startsWith("!red") || message.content.startsWith("!green") && processing === true) {
-  console.log('processing was: ' + processing)
+  if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 0) {
+    queue = queue + 1
+    console.log('queue was: ' + queue)
+    console.log('processing was: ' + processing)
 do {
-  console.log('waiting')
+  console.log('queue is:' + queue + '. waiting')
   await delay (1500)
-} while (processing === true) 
+} while (processing === true)
+console.log('queue was ' + queue)
+queue = queue - 1
+console.log('queue now is ' + queue)
 } 
 
 	//!red 🟥
