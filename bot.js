@@ -364,11 +364,11 @@ function updateplayerboard(message) {
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 	try {
-	  console.log('user ' + user + ' started being updated to ' + newsq)
+		console.log('user ' + user + ' started being updated to ' + newsq)
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
-		console.log('user ' + user + ' finished being updated to ' + newsq) 
+		console.log('user ' + user + ' finished being updated to ' + newsq)
 	} catch (err) { console.log(err) }
 }//end function
 
@@ -526,166 +526,166 @@ var q3locked = false
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
-  if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
-    
-      //queue 3
-  if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 2) {
-    q3locked = true
-    console.log(message.content + ' is now entering queue 3. Currently queue var is ' + queue + ' we are about to add +1 to queue') 
-    var keepmessage = message
-    queue = queue + 1
-    console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 3 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
-do {
-  console.log('for this loop in queue 3, queue var was:' + queue)
-  await delay (1517)
-} while (processing === true && q2locked === true )
-console.log('before subtraction at the end of queue 3, queue var was: ' + queue)
-queue = queue - 1
-console.log('after subtraction at end of queue 3, queue var was: ' + queue)
-await delay(1400)
-message = keepmessage
-q3locked = false
-} 
-    
-   //queue 2
-  if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 1) {
-    q2locked = true
-    console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-    var keepmessage = message
-    queue = queue + 1
-    console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 2 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
-do {
-  console.log('for this loop in queue 2, queue var was:' + queue)
-  await delay (1381)
-} while (processing === true && q1locked === true)
-console.log('before subtraction at the end of queue 2, queue var was: ' + queue)
-queue = queue - 1
-console.log('after subtraction at end of queue 2, queue var was: ' + queue)
-await delay(1000)
-message = keepmessage
-q2locked = false
-} 
-  
-  //queue 1
-  if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
-    q1locked = true
-    console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue') 
-    var keepmessage = message
-    queue = queue + 1
-    console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 1 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
-do {
-  console.log('for this loop in queue 1, queue var was:' + queue)
-  await delay (1117)
-} while (processing === true)
-console.log('before subtraction at the end of queue 1, queue var was: ' + queue)
-queue = queue - 1
-console.log('after subtraction at end of queue 1, queue var was: ' + queue)
-await delay(600)
-message = keepmessage
-q1locked = false
-} 
+	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 
-console.log('this message has passed the queue')
-console.log(message.content)
+		//queue 3
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 2) {
+			q3locked = true
+			console.log(message.content + ' is now entering queue 3. Currently queue var is ' + queue + ' we are about to add +1 to queue')
+			var keepmessage = message
+			queue = queue + 1
+			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 3 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
+			do {
+				console.log('for this loop in queue 3, queue var was:' + queue)
+				await delay(1517)
+			} while (processing === true && q2locked === true)
+			console.log('before subtraction at the end of queue 3, queue var was: ' + queue)
+			queue = queue - 1
+			console.log('after subtraction at end of queue 3, queue var was: ' + queue)
+			await delay(1400)
+			message = keepmessage
+			q3locked = false
+		}
 
-	//!red 🟥
-	if (message.content.startsWith("!red") && processing === false) {
-	  
-		//lock out any more commands for x millisecond
-		startthinking(20000, message)
-		//initalise isuser and isteam as false
-		var isuser = false;//is the command about a user
-		var isteam = false;//is the command about a team
-		var checkeduser = false//is the user a valid user?
-		var checkedteam = false//is the team a valid team? 
+		//queue 2
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 1) {
+			q2locked = true
+			console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
+			var keepmessage = message
+			queue = queue + 1
+			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 2 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
+			do {
+				console.log('for this loop in queue 2, queue var was:' + queue)
+				await delay(1381)
+			} while (processing === true && q1locked === true)
+			console.log('before subtraction at the end of queue 2, queue var was: ' + queue)
+			queue = queue - 1
+			console.log('after subtraction at end of queue 2, queue var was: ' + queue)
+			await delay(1000)
+			message = keepmessage
+			q2locked = false
+		}
 
-		//what user or team was mentioned?
-		if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
-			var mentioneduser = getname(message); isuser = true;
-		} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
-			var mentionedrole = message.mentions.roles.first().name; isteam = true;
-		} else { console.log('did not find either'); }//else do nothing
+		//queue 1
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
+			q1locked = true
+			console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue')
+			var keepmessage = message
+			queue = queue + 1
+			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 1 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
+			do {
+				console.log('for this loop in queue 1, queue var was:' + queue)
+				await delay(1117)
+			} while (processing === true)
+			console.log('before subtraction at the end of queue 1, queue var was: ' + queue)
+			queue = queue - 1
+			console.log('after subtraction at end of queue 1, queue var was: ' + queue)
+			await delay(600)
+			message = keepmessage
+			q1locked = false
+		}
 
-		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
-		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
+		console.log('this message has passed the queue')
+		console.log(message.content)
 
-		//if mention is a valid user
-		if (isuser == true && checkeduser == true) {
-			thankyou(message.member.displayName, mentioneduser, "red", message)
-			updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message)
-		}//end if isuser = true
-		//if mentioned is a valid team
-		if (isteam == true && checkedteam == true) {
-			thankyou(message.member.displayName, mentionedrole, "red", message)
-			updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message)
-		}//end if isteam = true
-	}//end !red
+		//!red 🟥
+		if (message.content.startsWith("!red") && processing === false) {
 
-	//!orange 🟧
-	if (message.content.startsWith("!orange") && processing === false){
-	 
-		//lock out any more commands for x millisecond
-		startthinking(20000, message)
-		//initalise isuser and isteam as false
-		var isuser = false;//is the command about a user
-		var isteam = false;//is the command about a team
-		var checkeduser = false//is the user a valid user?
-		var checkedteam = false//is the team a valid team? 
+			//lock out any more commands for x millisecond
+			startthinking(20000, message)
+			//initalise isuser and isteam as false
+			var isuser = false;//is the command about a user
+			var isteam = false;//is the command about a team
+			var checkeduser = false//is the user a valid user?
+			var checkedteam = false//is the team a valid team? 
 
-		//what user or team was mentioned?
-		if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
-			var mentioneduser = getname(message); isuser = true;
-		} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
-			var mentionedrole = message.mentions.roles.first().name; isteam = true;
-		} else { console.log('did not find either'); }//else do nothing
+			//what user or team was mentioned?
+			if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
+				var mentioneduser = getname(message); isuser = true;
+			} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
+				var mentionedrole = message.mentions.roles.first().name; isteam = true;
+			} else { console.log('did not find either'); }//else do nothing
 
-		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
-		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
+			if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
+			if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
 
-		//if mention is a valid user
-		if (isuser == true && checkeduser == true) {
-			thankyou(message.member.displayName, mentioneduser, "orange", message)
-			updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message)
-		}//end if isuser = true
-		//if mentioned is a valid team
-		if (isteam == true && checkedteam == true) {
-			thankyou(message.member.displayName, mentionedrole, "orange", message)
-			updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message)
-		}//end if isteam = true
-	}//end !orange
+			//if mention is a valid user
+			if (isuser == true && checkeduser == true) {
+				thankyou(message.member.displayName, mentioneduser, "red", message)
+				updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message)
+			}//end if isuser = true
+			//if mentioned is a valid team
+			if (isteam == true && checkedteam == true) {
+				thankyou(message.member.displayName, mentionedrole, "red", message)
+				updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message)
+			}//end if isteam = true
+		}//end !red
 
-	//!green 🟩
-	if (message.content.startsWith("!green") && processing == false) {
-	 
-		//lock out any more commands for x millisecond
-		startthinking(20000, message)
-		//initalise isuser and isteam as false
-		var isuser = false;//is the command about a user
-		var isteam = false;//is the command about a team
-		var checkeduser = false//is the user a valid user?
-		var checkedteam = false//is the team a valid team? 
+		//!orange 🟧
+		if (message.content.startsWith("!orange") && processing === false) {
 
-		//what user or team was mentioned?
-		if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
-			var mentioneduser = getname(message); isuser = true;
-		} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
-			var mentionedrole = message.mentions.roles.first().name; isteam = true;
-		} else { console.log('did not find either'); }//else do nothing
+			//lock out any more commands for x millisecond
+			startthinking(20000, message)
+			//initalise isuser and isteam as false
+			var isuser = false;//is the command about a user
+			var isteam = false;//is the command about a team
+			var checkeduser = false//is the user a valid user?
+			var checkedteam = false//is the team a valid team? 
 
-		if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
-		if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
-		//if mention is a valid user
-		if (isuser == true && checkeduser == true) {
-			thankyou(message.member.displayName, mentioneduser, "green", message);
-			updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
-		}//end if isuser = true
-		//if mentioned is a valid team
-		if (isteam == true && checkedteam == true) {
-			thankyou(message.member.displayName, mentionedrole, "green", message)
-			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
-		}//end if isteam = true
-	}//end !green
-  }//end if red green orange
+			//what user or team was mentioned?
+			if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
+				var mentioneduser = getname(message); isuser = true;
+			} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
+				var mentionedrole = message.mentions.roles.first().name; isteam = true;
+			} else { console.log('did not find either'); }//else do nothing
+
+			if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
+			if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
+
+			//if mention is a valid user
+			if (isuser == true && checkeduser == true) {
+				thankyou(message.member.displayName, mentioneduser, "orange", message)
+				updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message)
+			}//end if isuser = true
+			//if mentioned is a valid team
+			if (isteam == true && checkedteam == true) {
+				thankyou(message.member.displayName, mentionedrole, "orange", message)
+				updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message)
+			}//end if isteam = true
+		}//end !orange
+
+		//!green 🟩
+		if (message.content.startsWith("!green") && processing == false) {
+
+			//lock out any more commands for x millisecond
+			startthinking(20000, message)
+			//initalise isuser and isteam as false
+			var isuser = false;//is the command about a user
+			var isteam = false;//is the command about a team
+			var checkeduser = false//is the user a valid user?
+			var checkedteam = false//is the team a valid team? 
+
+			//what user or team was mentioned?
+			if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
+				var mentioneduser = getname(message); isuser = true;
+			} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
+				var mentionedrole = message.mentions.roles.first().name; isteam = true;
+			} else { console.log('did not find either'); }//else do nothing
+
+			if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
+			if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
+			//if mention is a valid user
+			if (isuser == true && checkeduser == true) {
+				thankyou(message.member.displayName, mentioneduser, "green", message);
+				updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
+			}//end if isuser = true
+			//if mentioned is a valid team
+			if (isteam == true && checkedteam == true) {
+				thankyou(message.member.displayName, mentionedrole, "green", message)
+				updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
+			}//end if isteam = true
+		}//end !green
+	}//end if red green orange
 });//end client on message
 
 //delete all bot pin notifications (this is for all bot pins, accross the whole server)
