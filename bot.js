@@ -526,33 +526,33 @@ client.on('message', async message => {
     
    //queue 2
   if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 1) {
+    console.log(message.content + 'entering queue 2')
     var keepmessage = message
     queue = queue + 1
-    console.log('queue was: ' + queue)
-    console.log('processing was: ' + processing)
+    console.log(' when ' + message.content + ' entered queue 2, queue var was: ' + queue + ' and processing var was ' + processing)
 do {
-  console.log('queue 2 loop is:' + queue + '. waiting')
+  console.log('for this loop in queue 2, queue var was:' + queue)
   await delay (1381)
 } while (processing === true)
-console.log('queue was ' + queue)
+console.log('before subtraction at the end of queue 2, queue var was: ' + queue)
 queue = queue - 1
-console.log('queue now is ' + queue)
+console.log('after subtraction at end of queue 2, queue var was: ' + queue)
 message = keepmessage
 } 
   
   //queue 1
   if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 0) {
+    console.log(message.content + 'entering queue 1')
     var keepmessage = message
     queue = queue + 1
-    console.log('queue was: ' + queue)
-    console.log('processing was: ' + processing)
+    console.log(' when ' + message.content + ' entered queue 1, queue var was: ' + queue + ' and processing var was ' + processing)
 do {
-  console.log('queue 1 loop is:' + queue + '. waiting')
+  console.log('for this loop in queue 1, queue var was:' + queue)
   await delay (1117)
 } while (processing === true)
-console.log('queue was ' + queue)
+console.log('before subtraction at the end of queue 1, queue var was: ' + queue)
 queue = queue - 1
-console.log('queue now is ' + queue)
+console.log('after subtraction at end of queue 1, queue var was: ' + queue)
 message = keepmessage
 } 
 
