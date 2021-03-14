@@ -364,6 +364,7 @@ function updateplayerboard(message) {
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 	try {
+	  console.log('user ' + user + ' being updated to ' + newsq)
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
