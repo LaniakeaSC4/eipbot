@@ -520,8 +520,8 @@ client.on('message', async message => {
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
   
-console.log('processing was: ' + processing)
-if (processing === true){
+  
+  if (message.content.startsWith("!red") || message.content.startsWith("!green") && processing === true) {
   console.log('processing was: ' + processing)
 do {
   console.log('waiting')
@@ -531,7 +531,7 @@ do {
 
 	//!red 🟥
 	if (message.content.startsWith("!red") && processing === false) {
-	  await delay (300)
+	  
 		//lock out any more commands for x millisecond
 		startthinking(15000, message)
 		//initalise isuser and isteam as false
@@ -564,7 +564,7 @@ do {
 
 	//!orange 🟧
 	if (message.content.startsWith("!orange") && processing === false){
-	  await delay (300)
+	 
 		//lock out any more commands for x millisecond
 		startthinking(15000, message)
 		//initalise isuser and isteam as false
@@ -597,7 +597,7 @@ do {
 
 	//!green 🟩
 	if (message.content.startsWith("!green") && processing == false) {
-	  await delay (300)
+	 
 		//lock out any more commands for x millisecond
 		startthinking(15000, message)
 		//initalise isuser and isteam as false
