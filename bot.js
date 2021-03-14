@@ -537,6 +537,7 @@ do {
 console.log('before subtraction at the end of queue 2, queue var was: ' + queue)
 queue = queue - 1
 console.log('after subtraction at end of queue 2, queue var was: ' + queue)
+await delay(1000)
 message = keepmessage
 } 
   
@@ -553,6 +554,7 @@ do {
 console.log('before subtraction at the end of queue 1, queue var was: ' + queue)
 queue = queue - 1
 console.log('after subtraction at end of queue 1, queue var was: ' + queue)
+await delay(1000)
 message = keepmessage
 } 
 
