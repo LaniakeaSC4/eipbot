@@ -364,10 +364,11 @@ function updateplayerboard(message) {
 // 5a. async function to chain rebuild functions to follow each other - for single user
 async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 	try {
-	  console.log('user ' + user + ' being updated to ' + newsq)
+	  console.log('user ' + user + ' started being updated to ' + newsq)
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
+		console.log('user ' + user + ' finished being updated to ' + newsq) 
 	} catch (err) { console.log(err) }
 }//end function
 
@@ -532,7 +533,7 @@ client.on('message', async message => {
     console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 3 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 do {
   console.log('for this loop in queue 3, queue var was:' + queue)
-  await delay (1117)
+  await delay (1517)
 } while (processing === true)
 console.log('before subtraction at the end of queue 3, queue var was: ' + queue)
 queue = queue - 1
