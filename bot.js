@@ -10,7 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-		startthinking(5000, message)
+		console.log('testing queue var. It is:' + queue)
 	}
 });//end client on message 
 
