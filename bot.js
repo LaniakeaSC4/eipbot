@@ -375,9 +375,11 @@ async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
 // 5b. async function to chain rebuild functions to follow each other - for team
 async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
 	try {
+	  console.log('team ' + team + ' started being updated to ' + newsq)
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
 		await updateplayerboard(message)//update player board from memory object
+		console.log('team ' + team + ' finished being updated to ' + newsq)
 	} catch (err) { console.log(err) }
 }//end function
 
@@ -591,6 +593,7 @@ client.on('message', async message => {
 		console.log('this message has passed the queue')
 		console.log(message.content)
     message.delete()
+    
 		//!red 🟥
 		if (message.content.startsWith("!red") && processing === false) {
 
