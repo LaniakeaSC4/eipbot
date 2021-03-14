@@ -526,10 +526,10 @@ client.on('message', async message => {
     
    //queue 2
   if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 1) {
-    console.log(message.content + 'entering queue 2')
+    console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
     var keepmessage = message
     queue = queue + 1
-    console.log(' when ' + message.content + ' entered queue 2, queue var was: ' + queue + ' and processing var was ' + processing)
+    console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 2 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 do {
   console.log('for this loop in queue 2, queue var was:' + queue)
   await delay (1381)
@@ -542,10 +542,10 @@ message = keepmessage
   
   //queue 1
   if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 0) {
-    console.log(message.content + 'entering queue 1')
+    console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue') 
     var keepmessage = message
     queue = queue + 1
-    console.log(' when ' + message.content + ' entered queue 1, queue var was: ' + queue + ' and processing var was ' + processing)
+    console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 1 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 do {
   console.log('for this loop in queue 1, queue var was:' + queue)
   await delay (1117)
