@@ -520,8 +520,13 @@ client.on('message', async message => {
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
 
-do {console.log('waiting')} while (processing === true) 
-
+if (processing === true){
+do {
+  await delay (1000)
+  console.log('waiting')
+  
+} while (processing === true) 
+} 
 
 	//!red 🟥
 	if (message.content.startsWith("!red") && processing === false) {
