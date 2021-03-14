@@ -522,6 +522,7 @@ client.on('message', async message => {
 
 do {console.log('waiting')} while (processing === true) 
 
+
 	//!red 🟥
 	if (message.content.startsWith("!red") && processing === false) {
 		//lock out any more commands for x millisecond
