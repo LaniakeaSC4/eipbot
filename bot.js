@@ -519,12 +519,12 @@ client.on('message', async message => {
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
-
+console.log('processing was: ' + processing)
 if (processing === true){
+  console.log('processing was: ' + processing)
 do {
-  await delay (1000)
   console.log('waiting')
-  
+  await delay (1500)
 } while (processing === true) 
 } 
 
