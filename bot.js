@@ -565,7 +565,7 @@ console.log(message.content)
 	if (message.content.startsWith("!red") && processing === false) {
 	  
 		//lock out any more commands for x millisecond
-		startthinking(15000, message)
+		startthinking(20000, message)
 		//initalise isuser and isteam as false
 		var isuser = false;//is the command about a user
 		var isteam = false;//is the command about a team
@@ -598,7 +598,7 @@ console.log(message.content)
 	if (message.content.startsWith("!orange") && processing === false){
 	 
 		//lock out any more commands for x millisecond
-		startthinking(15000, message)
+		startthinking(20000, message)
 		//initalise isuser and isteam as false
 		var isuser = false;//is the command about a user
 		var isteam = false;//is the command about a team
@@ -631,7 +631,7 @@ console.log(message.content)
 	if (message.content.startsWith("!green") && processing == false) {
 	 
 		//lock out any more commands for x millisecond
-		startthinking(15000, message)
+		startthinking(20000, message)
 		//initalise isuser and isteam as false
 		var isuser = false;//is the command about a user
 		var isteam = false;//is the command about a team
