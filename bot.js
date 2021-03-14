@@ -525,7 +525,7 @@ client.on('message', async message => {
   if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
     
    //queue 2
-  if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 1) {
+  if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue == 1) {
     console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
     var keepmessage = message
     queue = queue + 1
@@ -541,7 +541,7 @@ message = keepmessage
 } 
   
   //queue 1
-  if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 0) {
+  if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue == 0) {
     console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue') 
     var keepmessage = message
     queue = queue + 1
