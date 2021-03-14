@@ -521,7 +521,8 @@ var queue = 0
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
- 
+  if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
+    
    //queue 2
   if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 1) {
     var keepmessage = message
@@ -654,6 +655,7 @@ console.log(message)
 			updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
 		}//end if isteam = true
 	}//end !green
+  }//end if red green orange
 });//end client on message
 
 //delete all bot pin notifications (this is for all bot pins, accross the whole server)
