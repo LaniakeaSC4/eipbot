@@ -528,7 +528,7 @@ client.on('message', async message => {
     console.log('queue was: ' + queue)
     console.log('processing was: ' + processing)
 do {
-  console.log('queue is:' + queue + '. waiting')
+  console.log('queue 2 loop is:' + queue + '. waiting')
   await delay (1381)
 } while (processing === true)
 console.log('queue was ' + queue)
@@ -542,7 +542,7 @@ console.log('queue now is ' + queue)
     console.log('queue was: ' + queue)
     console.log('processing was: ' + processing)
 do {
-  console.log('queue is:' + queue + '. waiting')
+  console.log('queue 1 loop is:' + queue + '. waiting')
   await delay (1117)
 } while (processing === true)
 console.log('queue was ' + queue)
