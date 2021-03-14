@@ -520,6 +520,9 @@ client.on('message', async message => {
 //=======================================
 
 var queue = 0
+var q1locked = false
+var q2locked = false
+var q3locked = false
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
@@ -527,6 +530,7 @@ client.on('message', async message => {
     
       //queue 3
   if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 2) {
+    q3locked = true
     console.log(message.content + ' is now entering queue 3. Currently queue var is ' + queue + ' we are about to add +1 to queue') 
     var keepmessage = message
     queue = queue + 1
@@ -534,16 +538,18 @@ client.on('message', async message => {
 do {
   console.log('for this loop in queue 3, queue var was:' + queue)
   await delay (1517)
-} while (processing === true)
+} while (processing === true && q2locked === true )
 console.log('before subtraction at the end of queue 3, queue var was: ' + queue)
 queue = queue - 1
 console.log('after subtraction at end of queue 3, queue var was: ' + queue)
 await delay(1400)
 message = keepmessage
+q3locked = false
 } 
     
    //queue 2
   if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 1) {
+    q2locked = true
     console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
     var keepmessage = message
     queue = queue + 1
@@ -551,16 +557,18 @@ message = keepmessage
 do {
   console.log('for this loop in queue 2, queue var was:' + queue)
   await delay (1381)
-} while (processing === true)
+} while (processing === true && q1locked === true)
 console.log('before subtraction at the end of queue 2, queue var was: ' + queue)
 queue = queue - 1
 console.log('after subtraction at end of queue 2, queue var was: ' + queue)
 await delay(1000)
 message = keepmessage
+q2locked = false
 } 
   
   //queue 1
   if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
+    q1locked = true
     console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue') 
     var keepmessage = message
     queue = queue + 1
@@ -574,6 +582,7 @@ queue = queue - 1
 console.log('after subtraction at end of queue 1, queue var was: ' + queue)
 await delay(600)
 message = keepmessage
+q1locked = false
 } 
 
 console.log('this message has passed the queue')
