@@ -556,7 +556,7 @@ message = keepmessage
 } 
 
 console.log('this message has passed the queue')
-console.log(message)
+console.log(message.content)
 
 	//!red 🟥
 	if (message.content.startsWith("!red") && processing === false) {
