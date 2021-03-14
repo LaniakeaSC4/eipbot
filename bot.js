@@ -525,10 +525,54 @@ var queue = 0
 var q1locked = false
 var q2locked = false
 var q3locked = false
+var q4locked = false
+var q5locked = false
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
+
+		//queue 5
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 4) {
+			q3locked = true
+			console.log(message.content + ' is now entering queue 5. Currently queue var is ' + queue + ' we are about to add +1 to queue')
+			var keepmessage = message
+			message.delete()
+			queue = queue + 1
+			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 5 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
+			do {
+				console.log('for this loop in queue 5, queue var was:' + queue)
+				await delay(1117)
+			} while (processing === true && q4locked === true)
+			console.log('before subtraction at the end of queue 5, queue var was: ' + queue)
+			queue = queue - 1
+			console.log('after subtraction at end of queue 5, queue var was: ' + queue)
+			await delay(1400)
+			message = keepmessage
+			q5locked = false
+		}
+
+
+		//queue 4
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 3) {
+			q3locked = true
+			console.log(message.content + ' is now entering queue 4. Currently queue var is ' + queue + ' we are about to add +1 to queue')
+			var keepmessage = message
+			message.delete()
+			queue = queue + 1
+			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 4 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
+			do {
+				console.log('for this loop in queue 4, queue var was:' + queue)
+				await delay(1517)
+			} while (processing === true && q3locked === true)
+			console.log('before subtraction at the end of queue 4, queue var was: ' + queue)
+			queue = queue - 1
+			console.log('after subtraction at end of queue 4, queue var was: ' + queue)
+			await delay(1237)
+			message = keepmessage
+			q4locked = false
+		}
+
 
 		//queue 3
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 2) {
