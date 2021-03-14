@@ -524,6 +524,7 @@ client.on('message', async message => {
  
    //queue 2
   if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 1) {
+    var keepmessage = message
     queue = queue + 1
     console.log('queue was: ' + queue)
     console.log('processing was: ' + processing)
@@ -534,10 +535,12 @@ do {
 console.log('queue was ' + queue)
 queue = queue - 1
 console.log('queue now is ' + queue)
+message = keepmessage
 } 
   
   //queue 1
   if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange") && processing === true && queue === 0) {
+    var keepmessage = message
     queue = queue + 1
     console.log('queue was: ' + queue)
     console.log('processing was: ' + processing)
@@ -548,6 +551,7 @@ do {
 console.log('queue was ' + queue)
 queue = queue - 1
 console.log('queue now is ' + queue)
+message = keepmessage
 } 
 
 	//!red 🟥
