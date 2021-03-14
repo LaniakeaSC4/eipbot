@@ -430,7 +430,7 @@ function thankyou(author, updatedthis, color, message) {
 	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Coop board will update in ~12 seconds. You can not enter another command during this time (will be ignored).')
 	thanksembed.addField("Jump to coop board", thismessage.url)
 	message.channel.send(thanksembed)
-	message.delete()//delete the input message
+	//message.delete()//delete the input message
 }//end thankyou function
 
 //==========================================
@@ -533,6 +533,7 @@ client.on('message', async message => {
 			q3locked = true
 			console.log(message.content + ' is now entering queue 3. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
+			message.delete()
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 3 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -552,6 +553,7 @@ client.on('message', async message => {
 			q2locked = true
 			console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
+			message.delete()
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 2 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -571,6 +573,7 @@ client.on('message', async message => {
 			q1locked = true
 			console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
+			message.delete()
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 1 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -587,7 +590,7 @@ client.on('message', async message => {
 
 		console.log('this message has passed the queue')
 		console.log(message.content)
-
+    message.delete()
 		//!red 🟥
 		if (message.content.startsWith("!red") && processing === false) {
 
