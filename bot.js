@@ -540,7 +540,7 @@ client.on('message', async message => {
 			do {
 				console.log('for this loop in queue 6, queue var was:' + queue)
 				await delay(1933)
-			} while (q5locked === true)
+			} while (q5locked === true && processing === true)
 			console.log('before subtraction at the end of queue 6, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 6, queue var was: ' + queue)
@@ -560,7 +560,7 @@ client.on('message', async message => {
 			do {
 				console.log('for this loop in queue 5, queue var was:' + queue)
 				await delay(1697)
-			} while (q4locked === true)
+			} while (q4locked === true && processing === true)
 			console.log('before subtraction at the end of queue 5, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 5, queue var was: ' + queue)
@@ -580,7 +580,7 @@ client.on('message', async message => {
 			do {
 				console.log('for this loop in queue 4, queue var was:' + queue)
 				await delay(1483)
-			} while (q3locked === true)
+			} while (q3locked === true && processing === true)
 			console.log('before subtraction at the end of queue 4, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 4, queue var was: ' + queue)
@@ -601,7 +601,7 @@ client.on('message', async message => {
 			do {
 				console.log('for this loop in queue 3, queue var was:' + queue)
 				await delay(1259)
-			} while (q2locked === true)
+			} while (q2locked === true && processing === true)
 			console.log('before subtraction at the end of queue 3, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 3, queue var was: ' + queue)
@@ -622,7 +622,7 @@ client.on('message', async message => {
 			do {
 				console.log('for this loop in queue 2, queue var was:' + queue)
 				await delay(1039)
-			} while (q1locked === true)
+			} while (q1locked === true && processing === true)
 			console.log('before subtraction at the end of queue 2, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 2, queue var was: ' + queue)
@@ -642,7 +642,7 @@ client.on('message', async message => {
 			do {
 				console.log('for this loop in queue 1, queue var was:' + queue)
 				await delay(829)
-			} while (q0locked === true)
+			} while (q0locked === true && processing === true)
 			console.log('before subtraction at the end of queue 1, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 1, queue var was: ' + queue)
