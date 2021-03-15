@@ -432,7 +432,7 @@ function thankyou(author, updatedthis, color, message) {
 	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Coop board will update in ~12 seconds. You can not enter another command during this time (will be ignored).')
 	thanksembed.addField("Jump to coop board", thismessage.url)
 	message.channel.send(thanksembed)
-	//message.delete()//delete the input message
+	message.delete()//delete the input message
 }//end thankyou function
 
 //==========================================
@@ -534,7 +534,7 @@ client.on('message', async message => {
 			q6locked = true
 			console.log(message.content + ' is now entering queue 6. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q6storage = message
-			try { message.delete() } catch (err) { console.log(err) }
+			//try { message.delete() } catch (err) { console.log(err) }
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 6 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -554,7 +554,7 @@ client.on('message', async message => {
 			q5locked = true
 			console.log(message.content + ' is now entering queue 5. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q5storage = message
-			try { message.delete() } catch (err) { console.log(err) }
+			//try { message.delete() } catch (err) { console.log(err) }
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 5 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -574,7 +574,7 @@ client.on('message', async message => {
 			q4locked = true
 			console.log(message.content + ' is now entering queue 4. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q4storage = message
-			try { message.delete() } catch (err) { console.log(err) }
+			//try { message.delete() } catch (err) { console.log(err) }
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 4 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -595,7 +595,7 @@ client.on('message', async message => {
 			q3locked = true
 			console.log(message.content + ' is now entering queue 3. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q3storage = message
-			try { message.delete() } catch (err) { console.log(err) }
+			//try { message.delete() } catch (err) { console.log(err) }
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 3 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -616,7 +616,7 @@ client.on('message', async message => {
 			q2locked = true
 			console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q2storage = message
-			try { message.delete() } catch (err) { console.log(err) }
+			//try { message.delete() } catch (err) { console.log(err) }
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 2 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -636,7 +636,7 @@ client.on('message', async message => {
 			q1locked = true
 			console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q1storage = message
-			try { message.delete() } catch (err) { console.log(err) }
+			//try { message.delete() } catch (err) { console.log(err) }
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 1 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -656,7 +656,7 @@ client.on('message', async message => {
 			q0locked = true
 			console.log(message.content + ' is now entering queue 0. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q0storage = message
-			try { message.delete() } catch (err) { console.log(err) }
+			//try { message.delete() } catch (err) { console.log(err) }
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 0 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -673,7 +673,7 @@ client.on('message', async message => {
 
 		console.log('this message has passed the queue')
 		console.log(message.content)
-		try { message.delete() } catch (err) { console.log(err) }
+		//try { message.delete() } catch (err) { console.log(err) }
 
 		//!red 🟥
 		if (message.content.startsWith("!red") && processing === false) {
