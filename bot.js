@@ -533,7 +533,7 @@ client.on('message', async message => {
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 6) {
 			q6locked = true
 			console.log(message.content + ' is now entering queue 6. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			q6storage = message
+			//q6storage = message
 			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 6 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
@@ -545,7 +545,7 @@ client.on('message', async message => {
 			queue = queue - 1
 			console.log('after subtraction at end of queue 6, queue var was: ' + queue)
 			await delay(809)
-			message = q6storage
+			//message = q6storage
 			q6locked = false
 		}
 
@@ -553,7 +553,7 @@ client.on('message', async message => {
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 5) {
 			q5locked = true
 			console.log(message.content + ' is now entering queue 5. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			q5storage = message
+			//q5storage = message
 			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 5 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
@@ -565,7 +565,7 @@ client.on('message', async message => {
 			queue = queue - 1
 			console.log('after subtraction at end of queue 5, queue var was: ' + queue)
 			await delay(709)
-			message = q5storage
+			//message = q5storage
 			q5locked = false
 		}
 
@@ -573,7 +573,7 @@ client.on('message', async message => {
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 4) {
 			q4locked = true
 			console.log(message.content + ' is now entering queue 4. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			q4storage = message
+			//q4storage = message
 			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 4 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
@@ -585,7 +585,7 @@ client.on('message', async message => {
 			queue = queue - 1
 			console.log('after subtraction at end of queue 4, queue var was: ' + queue)
 			await delay(607)
-			message = q4storage
+			//message = q4storage
 			q4locked = false
 		}
 
@@ -594,7 +594,7 @@ client.on('message', async message => {
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 3) {
 			q3locked = true
 			console.log(message.content + ' is now entering queue 3. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			q3storage = message
+			//q3storage = message
 			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 3 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
@@ -606,7 +606,7 @@ client.on('message', async message => {
 			queue = queue - 1
 			console.log('after subtraction at end of queue 3, queue var was: ' + queue)
 			await delay(521)
-			message = q3storage
+			//message = q3storage
 			q3locked = false
 		}
 
@@ -615,7 +615,7 @@ client.on('message', async message => {
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 2) {
 			q2locked = true
 			console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			q2storage = message
+			//q2storage = message
 			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 2 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
@@ -627,7 +627,7 @@ client.on('message', async message => {
 			queue = queue - 1
 			console.log('after subtraction at end of queue 2, queue var was: ' + queue)
 			await delay(419)
-			message = q2storage
+			//message = q2storage
 			q2locked = false
 		}
 
@@ -635,7 +635,7 @@ client.on('message', async message => {
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 1) {
 			q1locked = true
 			console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			q1storage = message
+			//q1storage = message
 			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 1 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
@@ -647,7 +647,7 @@ client.on('message', async message => {
 			queue = queue - 1
 			console.log('after subtraction at end of queue 1, queue var was: ' + queue)
 			await delay(331)
-			message = q1storage
+			//message = q1storage
 			q1locked = false
 		}
 
@@ -655,7 +655,7 @@ client.on('message', async message => {
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
 			q0locked = true
 			console.log(message.content + ' is now entering queue 0. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			q0storage = message
+			//q0storage = message
 			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 0 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
@@ -667,7 +667,7 @@ client.on('message', async message => {
 			queue = queue - 1
 			console.log('after subtraction at end of queue 0, queue var was: ' + queue)
 			await delay(251)
-			message = q0storage
+			//message = q0storage
 			q0locked = false
 		}
 
