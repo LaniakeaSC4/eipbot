@@ -628,7 +628,7 @@ client.on('message', async message => {
 			console.log('after subtraction at end of queue 2, queue var was: ' + queue)
 			await delay(419)
 			message = q2storage
-			q2ocked = false
+			q2locked = false
 		}
 
 		//queue 1
