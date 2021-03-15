@@ -653,7 +653,7 @@ client.on('message', async message => {
 
 		//queue 0
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
-			q1locked = true
+			q0locked = true
 			console.log(message.content + ' is now entering queue 0. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			q0storage = message
 			try {message.delete()}catch(err){console.log(err)}
