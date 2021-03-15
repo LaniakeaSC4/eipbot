@@ -537,7 +537,7 @@ client.on('message', async message => {
 			q6locked = true
 			console.log(message.content + ' is now entering queue 7. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
-			message.delete()
+			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 7 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -557,7 +557,7 @@ client.on('message', async message => {
 			q6locked = true
 			console.log(message.content + ' is now entering queue 6. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
-			message.delete()
+			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 6 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -577,7 +577,7 @@ client.on('message', async message => {
 			q5locked = true
 			console.log(message.content + ' is now entering queue 5. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
-			message.delete()
+			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 5 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -598,7 +598,7 @@ client.on('message', async message => {
 			q3locked = true
 			console.log(message.content + ' is now entering queue 4. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
-			message.delete()
+			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 4 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -619,7 +619,7 @@ client.on('message', async message => {
 			q3locked = true
 			console.log(message.content + ' is now entering queue 3. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
-			message.delete()
+			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 3 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -639,7 +639,7 @@ client.on('message', async message => {
 			q2locked = true
 			console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
-			message.delete()
+			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 2 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -659,7 +659,7 @@ client.on('message', async message => {
 			q1locked = true
 			console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			var keepmessage = message
-			message.delete()
+			try {message.delete()}catch(err){console.log(err)}
 			queue = queue + 1
 			console.log('Now we have added one to queue var message: ' + message.content + ' is about to go into the queue 1 waiting loop. Queue var was: ' + queue + ' and processing var was ' + processing)
 			do {
@@ -676,7 +676,7 @@ client.on('message', async message => {
 
 		console.log('this message has passed the queue')
 		console.log(message.content)
-		message.delete()
+		try {message.delete()}catch(err){console.log(err)}
 
 		//!red 🟥
 		if (message.content.startsWith("!red") && processing === false) {
