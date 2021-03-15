@@ -528,7 +528,7 @@ var q6storage = {}; var q5storage = {}; var q4storage = {}; var q3storage = {}; 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
-
+console.log(message.content + 'just entered the top of the stack above q6')
 		//queue 6
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 6) {
 			q6locked = true
@@ -548,7 +548,7 @@ client.on('message', async message => {
 			//message = q6storage
 			q6locked = false
 		}
-
+console.log(message.content + 'has just passed between q6 and q5')
 		//queue 5
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 5) {
 			q5locked = true
@@ -568,7 +568,7 @@ client.on('message', async message => {
 			//message = q5storage
 			q5locked = false
 		}
-
+console.log(message.content + 'has just passed between q5 and q4')
 		//queue 4
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 4) {
 			q4locked = true
@@ -589,7 +589,7 @@ client.on('message', async message => {
 			q4locked = false
 		}
 
-
+console.log(message.content + 'has just passed between q4 and q3')
 		//queue 3
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 3) {
 			q3locked = true
@@ -610,7 +610,7 @@ client.on('message', async message => {
 			q3locked = false
 		}
 
-
+console.log(message.content + 'has just passed between q3 and q2')
 		//queue 2
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 2) {
 			q2locked = true
@@ -630,7 +630,7 @@ client.on('message', async message => {
 			//message = q2storage
 			q2locked = false
 		}
-
+console.log(message.content + 'has just passed between q2 and q1')
 		//queue 1
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 1) {
 			q1locked = true
@@ -650,7 +650,7 @@ client.on('message', async message => {
 			//message = q1storage
 			q1locked = false
 		}
-
+console.log(message.content + 'has just passed between q1 and q0')
 		//queue 0
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
 			q0locked = true
@@ -671,8 +671,7 @@ client.on('message', async message => {
 			q0locked = false
 		}
 
-		console.log('this message has passed the queue')
-		console.log(message.content)
+		console.log(message.content + 'has just passed all queues')
 		//try { message.delete() } catch (err) { console.log(err) }
 
 		//!red 🟥
