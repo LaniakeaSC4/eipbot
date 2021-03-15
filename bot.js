@@ -544,7 +544,7 @@ client.on('message', async message => {
 			console.log('before subtraction at the end of queue 6, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 6, queue var was: ' + queue)
-			await delay(2000)
+			await delay(5000)
 			//message = q6storage
 			q6locked = false
 		}
@@ -564,7 +564,7 @@ client.on('message', async message => {
 			console.log('before subtraction at the end of queue 5, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 5, queue var was: ' + queue)
-			await delay(2000)
+			await delay(4500)
 			//message = q5storage
 			q5locked = false
 		}
@@ -584,7 +584,7 @@ client.on('message', async message => {
 			console.log('before subtraction at the end of queue 4, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 4, queue var was: ' + queue)
-			await delay(2000)
+			await delay(4000)
 			//message = q4storage
 			q4locked = false
 		}
@@ -605,7 +605,7 @@ client.on('message', async message => {
 			console.log('before subtraction at the end of queue 3, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 3, queue var was: ' + queue)
-			await delay(2000)
+			await delay(3500)
 			//message = q3storage
 			q3locked = false
 		}
@@ -626,7 +626,7 @@ client.on('message', async message => {
 			console.log('before subtraction at the end of queue 2, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 2, queue var was: ' + queue)
-			await delay(2000)
+			await delay(3000)
 			//message = q2storage
 			q2locked = false
 		}
@@ -646,7 +646,7 @@ client.on('message', async message => {
 			console.log('before subtraction at the end of queue 1, queue var was: ' + queue)
 			queue = queue - 1
 			console.log('after subtraction at end of queue 1, queue var was: ' + queue)
-			await delay(2000)
+			await delay(2500)
 			//message = q1storage
 			q1locked = false
 		}
