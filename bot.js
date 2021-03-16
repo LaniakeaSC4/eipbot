@@ -522,10 +522,27 @@ client.on('message', async message => {
 //=======================================
 
 var queue = 0
-var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false;
+var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false;q7locked = false;
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
+  
+  function bucket(message, thislock, nextlock, loopdelay, enddelay){
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && nextlock === true) {
+			thislock = true; console.log(thislock + " locked")
+			console.log('Message: ' + message.content + ' is about to go into the' + thislock + ' waiting loop. Processing var was ' + processing)
+			do {
+				console.log('One loop in queue ' + thislock)
+				await delay(loopdelay)
+			} while (nextlock === true && processing === true)
+			await delay(enddelay)
+			thislock = false; console.log(thislock + " unlocked")
+		}
+return message
+  }
+  
+  bucket(message, q7locked, q6locked, 1000, 200)
+  
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 		console.log(message.content + 'just entered the top of the stack above q6')
 		//queue 6
