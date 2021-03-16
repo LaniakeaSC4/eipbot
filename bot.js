@@ -527,7 +527,7 @@ var q0locked = false; var q1locked = false; var q2locked = false; var q3locked =
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
   
-  function bucket(message, thislock, nextlock, loopdelay, enddelay){
+async function bucket(message, thislock, nextlock, loopdelay, enddelay){
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && nextlock === true) {
 			thislock = true; console.log(thislock + " locked")
 			console.log('Message: ' + message.content + ' is about to go into the' + thislock + ' waiting loop. Processing var was ' + processing)
