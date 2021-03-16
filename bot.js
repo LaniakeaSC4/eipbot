@@ -541,10 +541,11 @@ client.on('message', async message => {
 return message
   }
   
-  bucket(message, q7locked, q6locked, 1000, 200)
-  
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
-		console.log(message.content + 'just entered the top of the stack above q6')
+		console.log(message.content + 'just entered the top of the stack above q7')
+		
+		bucket(message, q7locked, q6locked, 1000, 200) 
+		
 		//queue 6
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && q5locked === true) {
 			q6locked = true; console.log("q6 locked")
