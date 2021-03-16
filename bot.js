@@ -523,7 +523,6 @@ client.on('message', async message => {
 
 var queue = 0
 var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false;
-var q6storage = {}; var q5storage = {}; var q4storage = {}; var q3storage = {}; var q2storage = {}; var q1storage = {}; var q0storage = {};
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
@@ -539,12 +538,12 @@ client.on('message', async message => {
 			console.log('Message: ' + message.content + ' is about to go into the queue 6 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 6')
-				await delay(1933)
+				await delay(1000)
 			} while (q5locked === true && processing === true)
 			//console.log('before subtraction at the end of queue 6, queue var was: ' + queue)
 			//queue = queue - 1
 			//console.log('after subtraction at end of queue 6, queue var was: ' + queue)
-			await delay(5000)
+			await delay(200)
 			//message = q6storage
 			q6locked = false; console.log("q6 unlocked")
 		}
@@ -561,12 +560,12 @@ client.on('message', async message => {
 			console.log('Message: ' + message.content + ' is about to go into the queue 5 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 5')
-				await delay(1697)
+				await delay(1000)
 			} while (q4locked === true && processing === true)
 			//console.log('before subtraction at the end of queue 5, queue var was: ' + queue)
 			//queue = queue - 1
 			//console.log('after subtraction at end of queue 5, queue var was: ' + queue)
-			await delay(4500)
+			await delay(200)
 			//message = q5storage
 			q5locked = false; console.log("q5 unlocked")
 		}
@@ -583,12 +582,12 @@ client.on('message', async message => {
 			console.log('Message: ' + message.content + ' is about to go into the queue 4 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 4')
-				await delay(1483)
+				await delay(1000)
 			} while (q3locked === true && processing === true)
 			//console.log('before subtraction at the end of queue 4, queue var was: ' + queue)
 			//queue = queue - 1
 			//console.log('after subtraction at end of queue 4, queue var was: ' + queue)
-			await delay(4000)
+			await delay(200)
 			//message = q4storage
 			q4locked = false; console.log("q4 unlocked")
 		}
@@ -605,12 +604,12 @@ client.on('message', async message => {
 			console.log('Message: ' + message.content + ' is about to go into the queue 3 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 3')
-				await delay(1259)
+				await delay(1000)
 			} while (q2locked === true && processing === true)
 			//console.log('before subtraction at the end of queue 3, queue var was: ' + queue)
 			//queue = queue - 1
 			//console.log('after subtraction at end of queue 3, queue var was: ' + queue)
-			await delay(3500)
+			await delay(200)
 			//message = q3storage
 			q3locked = false; console.log("q3 unlocked")
 		}
@@ -627,12 +626,12 @@ client.on('message', async message => {
 			console.log('Message: ' + message.content + ' is about to go into the queue 2 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 2')
-				await delay(1039)
+				await delay(1000)
 			} while (q1locked === true && processing === true)
 			//console.log('before subtraction at the end of queue 2, queue var was: ' + queue)
 			//queue = queue - 1
 			//console.log('after subtraction at end of queue 2, queue var was: ' + queue)
-			await delay(3000)
+			await delay(200)
 			//message = q2storage
 			q2locked = false; console.log("q2 unlocked")
 		}
@@ -649,12 +648,12 @@ client.on('message', async message => {
 			console.log('Message: ' + message.content + ' is about to go into the queue 1 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 1')
-				await delay(829)
+				await delay(1000)
 			} while (q0locked === true && processing === true)
 			//console.log('before subtraction at the end of queue 1, queue var was: ' + queue)
 			//queue = queue - 1
 			//console.log('after subtraction at end of queue 1, queue var was: ' + queue)
-			await delay(2500)
+			await delay(200)
 			//message = q1storage
 			q1locked = false; console.log("q1 unlocked")
 		}
@@ -672,12 +671,12 @@ client.on('message', async message => {
 			console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 0')
-				await delay(631)
+				await delay(1000)
 			} while (processing === true)
 			//console.log('before subtraction at the end of queue 0, queue var was: ' + queue)
 			//queue = queue - 1
 			//console.log('after subtraction at end of queue 0, queue var was: ' + queue)
-			await delay(2000)
+			//await delay(200)
 			//message = q0storage
 			q0locked = false; console.log("q0 unlocked")
 		}
