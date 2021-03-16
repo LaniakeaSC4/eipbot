@@ -689,7 +689,7 @@ client.on('message', async message => {
 		if (message.content.startsWith("!red") && processing === false) {
 
 			//lock out any more commands for x millisecond
-			startthinking(20000, message)
+			startthinking(30000, message)
 			//initalise isuser and isteam as false
 			var isuser = false;//is the command about a user
 			var isteam = false;//is the command about a team
