@@ -531,20 +531,12 @@ client.on('message', async message => {
 		//queue 6
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && q5locked === true) {
 			q6locked = true; console.log("q6 locked")
-			//console.log(message.content + ' is now entering queue 6. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			//q6storage = message
-			//try { message.delete() } catch (err) { console.log(err) }
-			//queue = queue + 1
 			console.log('Message: ' + message.content + ' is about to go into the queue 6 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 6')
 				await delay(1000)
 			} while (q5locked === true && processing === true)
-			//console.log('before subtraction at the end of queue 6, queue var was: ' + queue)
-			//queue = queue - 1
-			//console.log('after subtraction at end of queue 6, queue var was: ' + queue)
 			await delay(200)
-			//message = q6storage
 			q6locked = false; console.log("q6 unlocked")
 		}
 
@@ -553,20 +545,12 @@ client.on('message', async message => {
 		//queue 5
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && q4locked === true) {
 			q5locked = true; console.log("q5 locked")
-			//console.log(message.content + ' is now entering queue 5. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			//q5storage = message
-			//try { message.delete() } catch (err) { console.log(err) }
-			//queue = queue + 1
 			console.log('Message: ' + message.content + ' is about to go into the queue 5 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 5')
 				await delay(1000)
 			} while (q4locked === true && processing === true)
-			//console.log('before subtraction at the end of queue 5, queue var was: ' + queue)
-			//queue = queue - 1
-			//console.log('after subtraction at end of queue 5, queue var was: ' + queue)
 			await delay(200)
-			//message = q5storage
 			q5locked = false; console.log("q5 unlocked")
 		}
 
@@ -575,20 +559,12 @@ client.on('message', async message => {
 		//queue 4
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && q3locked === true) {
 			q4locked = true; console.log("q4 locked")
-			//console.log(message.content + ' is now entering queue 4. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			//q4storage = message
-			//try { message.delete() } catch (err) { console.log(err) }
-			//queue = queue + 1
 			console.log('Message: ' + message.content + ' is about to go into the queue 4 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 4')
 				await delay(1000)
 			} while (q3locked === true && processing === true)
-			//console.log('before subtraction at the end of queue 4, queue var was: ' + queue)
-			//queue = queue - 1
-			//console.log('after subtraction at end of queue 4, queue var was: ' + queue)
 			await delay(200)
-			//message = q4storage
 			q4locked = false; console.log("q4 unlocked")
 		}
 
@@ -597,20 +573,12 @@ client.on('message', async message => {
 		//queue 3
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && q2locked === true) {
 			q3locked = true; console.log("q3 locked")
-			//console.log(message.content + ' is now entering queue 3. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			//q3storage = message
-			//try { message.delete() } catch (err) { console.log(err) }
-			//queue = queue + 1
 			console.log('Message: ' + message.content + ' is about to go into the queue 3 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 3')
 				await delay(1000)
 			} while (q2locked === true && processing === true)
-			//console.log('before subtraction at the end of queue 3, queue var was: ' + queue)
-			//queue = queue - 1
-			//console.log('after subtraction at end of queue 3, queue var was: ' + queue)
 			await delay(200)
-			//message = q3storage
 			q3locked = false; console.log("q3 unlocked")
 		}
 
@@ -619,20 +587,12 @@ client.on('message', async message => {
 		//queue 2
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && q1locked === true) {
 			q2locked = true; console.log("q2 locked")
-			//console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			//q2storage = message
-			//try { message.delete() } catch (err) { console.log(err) }
-			//queue = queue + 1
 			console.log('Message: ' + message.content + ' is about to go into the queue 2 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 2')
 				await delay(1000)
 			} while (q1locked === true && processing === true)
-			//console.log('before subtraction at the end of queue 2, queue var was: ' + queue)
-			//queue = queue - 1
-			//console.log('after subtraction at end of queue 2, queue var was: ' + queue)
 			await delay(200)
-			//message = q2storage
 			q2locked = false; console.log("q2 unlocked")
 		}
 
@@ -641,20 +601,12 @@ client.on('message', async message => {
 		//queue 1
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && q0locked === true) {
 			q1locked = true; console.log("q1 locked")
-			//console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			//q1storage = message
-			//try { message.delete() } catch (err) { console.log(err) }
-			//queue = queue + 1
 			console.log('Message: ' + message.content + ' is about to go into the queue 1 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 1')
 				await delay(1000)
 			} while (q0locked === true && processing === true)
-			//console.log('before subtraction at the end of queue 1, queue var was: ' + queue)
-			//queue = queue - 1
-			//console.log('after subtraction at end of queue 1, queue var was: ' + queue)
 			await delay(200)
-			//message = q1storage
 			q1locked = false; console.log("q1 unlocked")
 		}
 
@@ -664,31 +616,21 @@ client.on('message', async message => {
 		//queue 0
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
 			q0locked = true; console.log("q0 locked")
-			//console.log(message.content + ' is now entering queue 0. Currently queue var is ' + queue + ' we are about to add +1 to queue')
-			//q0storage = message
-			//try { message.delete() } catch (err) { console.log(err) }
-			//queue = queue + 1
 			console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 0')
 				await delay(1000)
 			} while (processing === true)
-			//console.log('before subtraction at the end of queue 0, queue var was: ' + queue)
-			//queue = queue - 1
-			//console.log('after subtraction at end of queue 0, queue var was: ' + queue)
-			//await delay(200)
-			//message = q0storage
 			q0locked = false; console.log("q0 unlocked")
 		}
 
 		console.log(message.content + 'has just passed all queues')
-		//try { message.delete() } catch (err) { console.log(err) }
 
 		//!red 🟥
 		if (message.content.startsWith("!red") && processing === false) {
 
 			//lock out any more commands for x millisecond
-			startthinking(30000, message)
+			startthinking(18000, message)
 			//initalise isuser and isteam as false
 			var isuser = false;//is the command about a user
 			var isteam = false;//is the command about a team
