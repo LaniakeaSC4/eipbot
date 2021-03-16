@@ -538,13 +538,20 @@ async function bucket(message, thislock, nextlock, loopdelay, enddelay){
 			await delay(enddelay)
 			thislock = false; console.log(thislock + " unlocked")
 		}
+		console.log('returning message from ' + thislock)
 return message
   }
   
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 		console.log(message.content + 'just entered the top of the stack above q7')
 		
-		bucket(message, q7locked, q6locked, 1000, 200) 
+		bucket(message, q7locked, q6locked, 1000, 200)
+		bucket(message, q6locked, q5locked, 1000, 200)  
+		bucket(message, q5locked, q4locked, 1000, 200) 
+		bucket(message, q4locked, q3locked, 1000, 200) 
+		bucket(message, q3locked, q2locked, 1000, 200) 
+		bucket(message, q2locked, q1locked, 1000, 200) 
+		bucket(message, q1locked, q0locked, 1000, 200) 
 		
 		//queue 6
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && q5locked === true) {
