@@ -528,9 +528,9 @@ var q6storage = {}; var q5storage = {}; var q4storage = {}; var q3storage = {}; 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
-console.log(message.content + 'just entered the top of the stack above q6' )
+		console.log(message.content + 'just entered the top of the stack above q6')
 		//queue 6
-		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 6 && q5locked === true) {
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && (q5locked === true || q4locked === true || q3locked === true || q2locked === true || q1locked === true || q0locked === true)) {
 			q6locked = true
 			console.log(message.content + ' is now entering queue 6. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q6storage = message
@@ -548,9 +548,11 @@ console.log(message.content + 'just entered the top of the stack above q6' )
 			//message = q6storage
 			q6locked = false
 		}
-console.log(message.content + 'has just passed between q6 and q5')
+
+		console.log(message.content + 'has just passed between q6 and q5')
+
 		//queue 5
-		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 5 && q4locked === true) {
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && (q4locked === true || q3locked === true || q2locked === true || q1locked === true || q0locked === true)) {
 			q5locked = true
 			console.log(message.content + ' is now entering queue 5. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q5storage = message
@@ -568,9 +570,11 @@ console.log(message.content + 'has just passed between q6 and q5')
 			//message = q5storage
 			q5locked = false
 		}
-console.log(message.content + 'has just passed between q5 and q4')
+
+		console.log(message.content + 'has just passed between q5 and q4')
+
 		//queue 4
-		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 4 && q3locked === true) {
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && (q3locked === true || q2locked === true || q1locked === true || q0locked === true)) {
 			q4locked = true
 			console.log(message.content + ' is now entering queue 4. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q4storage = message
@@ -589,9 +593,10 @@ console.log(message.content + 'has just passed between q5 and q4')
 			q4locked = false
 		}
 
-console.log(message.content + 'has just passed between q4 and q3')
+		console.log(message.content + 'has just passed between q4 and q3')
+
 		//queue 3
-		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 3 && q2locked === true) {
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && (q2locked === true || q1locked === true || q0locked === true)) {
 			q3locked = true
 			console.log(message.content + ' is now entering queue 3. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q3storage = message
@@ -610,9 +615,10 @@ console.log(message.content + 'has just passed between q4 and q3')
 			q3locked = false
 		}
 
-console.log(message.content + 'has just passed between q3 and q2')
+		console.log(message.content + 'has just passed between q3 and q2')
+
 		//queue 2
-		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 2 && q1locked === true) {
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && (q1locked === true || q0locked === true)) {
 			q2locked = true
 			console.log(message.content + ' is now entering queue 2. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q2storage = message
@@ -630,9 +636,11 @@ console.log(message.content + 'has just passed between q3 and q2')
 			//message = q2storage
 			q2locked = false
 		}
-console.log(message.content + 'has just passed between q2 and q1')
+
+		console.log(message.content + 'has just passed between q2 and q1')
+
 		//queue 1
-		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 1 && q0locked === true) {
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && q0locked === true) {
 			q1locked = true
 			console.log(message.content + ' is now entering queue 1. Currently queue var is ' + queue + ' we are about to add +1 to queue')
 			//q1storage = message
@@ -650,7 +658,9 @@ console.log(message.content + 'has just passed between q2 and q1')
 			//message = q1storage
 			q1locked = false
 		}
-console.log(message.content + 'has just passed between q1 and q0')
+
+		console.log(message.content + 'has just passed between q1 and q0')
+
 		//queue 0
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
 			q0locked = true
