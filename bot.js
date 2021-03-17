@@ -528,8 +528,7 @@ client.on('message', async message => {
 
 	async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
 
-		await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename)
-		return message
+		await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename).then(message => { return message })
 
 	}//end bucket function
 
@@ -563,7 +562,7 @@ client.on('message', async message => {
 		if (q1locked === false) { await bucket(message, q1locked, q0locked, 1000, 200, 'q1') }; console.log(message.content + ' passed from q1 to q0')
 
 		//queue 0
-		if (processing === true) {
+		if (processing === true && q0locked === false) {
 			q0locked = true; console.log("q0 locked")
 			console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
 			do {
