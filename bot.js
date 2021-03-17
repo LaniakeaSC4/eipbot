@@ -522,53 +522,53 @@ client.on('message', async message => {
 //=======================================
 
 var queue = 0
-var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false;q7locked = false;
+var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false; q7locked = false;
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
-  
-async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename){
-  
+
+	async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
+
 		return await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename)
-		
-  }//end bucket function
-  
-  async function bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename){
-		    if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && nextlock === true) {
+
+	}//end bucket function
+
+	async function bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename) {
+		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && nextlock === true) {
 			thislock = true; console.log(queuename + " locked")
 			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
-		
+
 			while (nextlock === true) {
-			  console.log('One loop in queue ' + queuename+ ' for message ' + message.content);
+				console.log('One loop in queue ' + queuename + ' for message ' + message.content);
 				await delay(loopdelay)
-			  
-			} 
-				
+
+			}
+
 			await delay(enddelay)
 			thislock = false; console.log(queuename + " unlocked")
 			console.log('returning message from ' + queuename)
 			return message
-		  }//end if
-		}//end bucketloop function 
-  
+		}//end if
+	}//end bucketloop function 
+
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 		console.log(message.content + 'just entered the top of the stack above q7')
-		
-		if (q6locked === true) {bucket(message, q7locked, q6locked, 1000, 200, 'q7')};console.log(message.content + ' passed from q7 to q6')
-		if (q5locked === true) {bucket(message, q6locked, q5locked, 1000, 200, 'q6')};console.log(message.content + ' passed from q6 to q5')  
-		if (q4locked === true) {bucket(message, q5locked, q4locked, 1000, 200, 'q5')};console.log(message.content + ' passed from q5 to q4') 
-		if (q3locked === true) {bucket(message, q4locked, q3locked, 1000, 200, 'q4')};console.log(message.content + ' passed from q4 to q3') 
-		if (q2locked === true) {bucket(message, q3locked, q2locked, 1000, 200, 'q3')};console.log(message.content + ' passed from q3 to q2') 
-		if (q1locked === true) {bucket(message, q2locked, q1locked, 1000, 200, 'q2')};console.log(message.content + ' passed from q2 to q1') 
-		if (q0locked === true) {bucket(message, q1locked, q0locked, 1000, 200, 'q1')};console.log(message.content + ' passed from q1 to q0')
-		
-		
+
+		if (q6locked === true) { bucket(message, q7locked, q6locked, 1000, 200, 'q7') }; console.log(message.content + ' passed from q7 to q6')
+		if (q5locked === true) { bucket(message, q6locked, q5locked, 1000, 200, 'q6') }; console.log(message.content + ' passed from q6 to q5')
+		if (q4locked === true) { bucket(message, q5locked, q4locked, 1000, 200, 'q5') }; console.log(message.content + ' passed from q5 to q4')
+		if (q3locked === true) { bucket(message, q4locked, q3locked, 1000, 200, 'q4') }; console.log(message.content + ' passed from q4 to q3')
+		if (q2locked === true) { bucket(message, q3locked, q2locked, 1000, 200, 'q3') }; console.log(message.content + ' passed from q3 to q2')
+		if (q1locked === true) { bucket(message, q2locked, q1locked, 1000, 200, 'q2') }; console.log(message.content + ' passed from q2 to q1')
+		if (q0locked === true) { bucket(message, q1locked, q0locked, 1000, 200, 'q1') }; console.log(message.content + ' passed from q1 to q0')
+
+
 		//queue 0
 		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
 			q0locked = true; console.log("q0 locked")
 			console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
 			do {
-				console.log('One loop in queue 0')
+				console.log('One loop in queue 0 for ' + message.content)
 				await delay(1000)
 			} while (processing === true)
 			q0locked = false; console.log("q0 unlocked")
