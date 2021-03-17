@@ -532,7 +532,7 @@ async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuenam
 			thislock = true; console.log(queuename + " locked")
 			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 			do {
-				console.log('One loop in queue ' + thislock)
+				console.log('One loop in queue ' + queuename)
 				await delay(loopdelay)
 			} while (nextlock === true && processing === true)
 			await delay(enddelay)
