@@ -539,7 +539,7 @@ async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuenam
 			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 		
 			while (nextlock === true) {
-			  console.log('One loop in queue ' + queuename);
+			  console.log('One loop in queue ' + queuename+ ' for message ' + message.content);
 				await delay(loopdelay)
 			  
 			} 
