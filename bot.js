@@ -521,7 +521,6 @@ client.on('message', async message => {
 // 3. green 🟩
 //=======================================
 
-var queue = 0
 var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false; q7locked = false;
 
 //square colour change commands (!red, !orange, !green)
@@ -529,12 +528,13 @@ client.on('message', async message => {
 
 	async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
 
-		return await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename)
+		await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename)
+		return message
 
 	}//end bucket function
 
 	async function bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename) {
-		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && nextlock === true) {
+		
 			thislock = true; console.log(queuename + " locked")
 			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 
@@ -548,7 +548,7 @@ client.on('message', async message => {
 			thislock = false; console.log(queuename + " unlocked")
 			console.log('returning message from ' + queuename)
 			return message
-		}//end if
+		
 	}//end bucketloop function 
 
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
@@ -562,9 +562,8 @@ client.on('message', async message => {
 		if (q1locked === true) { bucket(message, q2locked, q1locked, 1000, 200, 'q2') }; console.log(message.content + ' passed from q2 to q1')
 		if (q0locked === true) { bucket(message, q1locked, q0locked, 1000, 200, 'q1') }; console.log(message.content + ' passed from q1 to q0')
 
-
 		//queue 0
-		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && queue == 0) {
+		if (processing === true) {
 			q0locked = true; console.log("q0 locked")
 			console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
 			do {
