@@ -533,22 +533,22 @@ client.on('message', async message => {
 
 	}//end bucket function
 
-	function bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename) {
-		
-			thislock = true; console.log(queuename + " locked")
-			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
+	async function bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename) {
 
-			while (nextlock === true) {
-				console.log('One loop in queue ' + queuename + ' for message ' + message.content);
-				delay(loopdelay)
+		thislock = true; console.log(queuename + " locked")
+		console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 
-			}
+		while (nextlock === true) {
+			console.log('One loop in queue ' + queuename + ' for message ' + message.content);
+			await delay(loopdelay)
+			//if (nextlock === false) { return message; console.log(nextlock + " is unlocked...returning message!") }
+		}
 
-			delay(enddelay)
-			thislock = false; console.log(queuename + " unlocked")
-			console.log('returning message from ' + queuename)
-			return message
-		
+		await delay(enddelay)
+		thislock = false; console.log(queuename + " unlocked")
+		//console.log('returning message from ' + queuename)
+		//return message
+
 	}//end bucketloop function 
 
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
