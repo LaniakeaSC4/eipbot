@@ -538,14 +538,14 @@ client.on('message', async message => {
 	}//end bucket function
 
 	async function bucketloop(m, tlock, nlock, ldelay, edelay, qname) {
-
-		while (nlock === true) {
+do {
 			console.log('One loop in queue ' + qname + ' for message ' + m.content);
 			await delay(ldelay)
 			//if (nextlock === false) { return message; console.log(nextlock + " is unlocked...returning message!") }
-		}
-
-
+		} 
+		while (nlock === true) 
+console.log('does this ever get triggered?')
+return m
 		//console.log('returning message from ' + queuename)
 		//return message
 
