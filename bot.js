@@ -537,9 +537,10 @@ async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuenam
 			} while (nextlock === true && processing === true)
 			await delay(enddelay)
 			thislock = false; console.log(queuename + " unlocked")
-		}
-		return message
+			return message
 		console.log('returning message from ' + queuename)
+		}
+		
   }
   
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
