@@ -527,28 +527,28 @@ var q0locked = false; var q1locked = false; var q2locked = false; var q3locked =
 client.on('message', async message => {
 
 	async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
-
-		await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename).then(message => { return message })
+		thislock = true; console.log(queuename + " locked")
+		console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
+		await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename).then(message => {
+			await delay(enddelay)
+			thislock = false; console.log(queuename + " unlocked")
+			return message
+		})
 
 	}//end bucket function
 
 	async function bucketloop(m, tlock, nlock, ldelay, edelay, qname) {
-		
-			tlock = true; console.log(qname + " locked")
-			console.log('Message: ' + m.content + ' is about to go into the' + qname + ' waiting loop. Processing var was ' + processing)
 
-			while (nlock === true) {
-				console.log('One loop in queue ' + qname + ' for message ' + m.content);
-				await delay(ldelay)
-				//if (nextlock === false) { return message; console.log(nextlock + " is unlocked...returning message!") }
-			}
+		while (nlock === true) {
+			console.log('One loop in queue ' + qname + ' for message ' + m.content);
+			await delay(ldelay)
+			//if (nextlock === false) { return message; console.log(nextlock + " is unlocked...returning message!") }
+		}
 
-			await delay(edelay)
-			tlock = false; console.log(qname + " unlocked")
-			return m
-			//console.log('returning message from ' + queuename)
-			//return message
-		
+
+		//console.log('returning message from ' + queuename)
+		//return message
+
 	}//end bucketloop function 
 
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
