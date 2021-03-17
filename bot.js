@@ -533,7 +533,7 @@ client.on('message', async message => {
 	}//end bucket function
 
 	async function bucketloop(m, tlock, nlock, ldelay, edelay, qname) {
-		return new Promise((resolve, reject) => {
+		
 			tlock = true; console.log(qname + " locked")
 			console.log('Message: ' + m.content + ' is about to go into the' + qname + ' waiting loop. Processing var was ' + processing)
 
@@ -545,10 +545,10 @@ client.on('message', async message => {
 
 			await delay(edelay)
 			tlock = false; console.log(qname + " unlocked")
-			resolve(m)
+			return m
 			//console.log('returning message from ' + queuename)
 			//return message
-		})//end prommise
+		
 	}//end bucketloop function 
 
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
