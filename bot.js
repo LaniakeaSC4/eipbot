@@ -528,7 +528,9 @@ var q0locked = false; var q1locked = false; var q2locked = false; var q3locked =
 client.on('message', async message => {
   
 async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename){
-		if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && nextlock === true) {
+		
+		  async function bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename){
+		    if ((message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) && processing === true && nextlock === true) {
 			thislock = true; console.log(queuename + " locked")
 			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 			do {
@@ -539,9 +541,11 @@ async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuenam
 			thislock = false; console.log(queuename + " unlocked")
 			return message
 		console.log('returning message from ' + queuename)
-		}
-		
-  }
+		  }//end if
+		  return message
+		}//end bucketloop function
+		return await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename)
+  }//end bucket function
   
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 		console.log(message.content + 'just entered the top of the stack above q7')
