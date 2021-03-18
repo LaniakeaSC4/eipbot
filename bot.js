@@ -526,7 +526,7 @@ var q0locked = false; var q1locked = false; var q2locked = false; var q3locked =
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
 
-	async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
+function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
 		
 		//await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename).then(async message => {
 		if (nextlock === true){
@@ -546,7 +546,7 @@ console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + b
 } 
 }, bdelay);
 		
-			await delay(enddelay)
+			
 			thislock = false; console.log(queuename + " unlocked")
 			return message
 		} else {return message;console.log('skipping this queue: ' + queuename)} 
