@@ -531,7 +531,7 @@ client.on('message', async message => {
 		
 		console.log(qlocks)
 		console.log("lockobject.thislock is:")
-		console.log(lockobject.thislock)
+		console.log(lockobject.tostring(thislock))
 
 		if (lockobject.toString(nextlock) === true) {
 			lockobject.toString(thislock) = true; console.log(queuename + " locked")
