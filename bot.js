@@ -522,7 +522,7 @@ client.on('message', async message => {
 //=======================================
 
 var qlocks = {q0locked:false,q1locked:false,q2locked:false,q3locked:false,q4locked:false,q5locked:false,q6locked:false,q7locked:false}
-var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false; q7locked = false;
+//var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false; q7locked = false;
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
@@ -561,14 +561,14 @@ client.on('message', async message => {
 		await bucket(message, qlocks.q1locked, qlocks.q0locked, 1000, 200, 'q1') ; console.log(message.content + ' passed from q1 to q0')
 
 		//queue 0
-		if (processing === true && q0locked === false) {
-			q0locked = true; console.log("q0 locked")
+		if (processing === true && qlocks.q0locked === false) {
+			qlocks.q0locked = true; console.log("q0 locked")
 			console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
 			do {
 				console.log('One loop in queue 0 for ' + message.content)
 				await delay(1000)
 			} while (processing === true)
-			q0locked = false; console.log("q0 unlocked")
+			qlocks.q0locked = false; console.log("q0 unlocked")
 		}
 
 		console.log(message.content + 'has just passed all queues')
