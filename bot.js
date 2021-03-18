@@ -539,10 +539,10 @@ console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + b
   if (nextlock === true) {
     // increase the interval to the next run
     bdelay *= 1.2;
-  }
+  
 
   timerId = setTimeout(request, bdelay);
-
+} 
 }, bdelay);
 		
 			await delay(enddelay)
