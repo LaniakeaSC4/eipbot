@@ -556,13 +556,13 @@ client.on('message', async message => {
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 
 		console.log(message.content + 'just entered the top of the stack above q7')
-		await bucket(message, qlocks, q7locked, q6locked, 1000, 'q7') ; console.log(message.content + ' passed from q7 to q6')
-		await bucket(message, qlocks, q6locked, q5locked, 1000, 'q6') ; console.log(message.content + ' passed from q6 to q5')
-		await bucket(message, qlocks, q5locked, q4locked, 1000, 'q5') ; console.log(message.content + ' passed from q5 to q4')
-		await bucket(message, qlocks, q4locked, q3locked, 1000, 'q4') ; console.log(message.content + ' passed from q4 to q3')
-		await bucket(message, qlocks, q3locked, q2locked, 1000, 'q3') ; console.log(message.content + ' passed from q3 to q2')
-		await bucket(message, qlocks, q2locked, q1locked, 1000, 'q2') ; console.log(message.content + ' passed from q2 to q1')
-		await bucket(message, qlocks, q1locked, q0locked, 1000, 'q1') ; console.log(message.content + ' passed from q1 to q0')
+		await bucket(message, qlocks, 'q7locked', 'q6locked', 1000, 'q7') ; console.log(message.content + ' passed from q7 to q6')
+		await bucket(message, qlocks, 'q6locked', 'q5locked', 1000, 'q6') ; console.log(message.content + ' passed from q6 to q5')
+		await bucket(message, qlocks, 'q5locked', 'q4locked', 1000, 'q5') ; console.log(message.content + ' passed from q5 to q4')
+		await bucket(message, qlocks, 'q4locked', 'q3locked', 1000, 'q4') ; console.log(message.content + ' passed from q4 to q3')
+		await bucket(message, qlocks, 'q3locked', 'q2locked', 1000, 'q3') ; console.log(message.content + ' passed from q3 to q2')
+		await bucket(message, qlocks, 'q2locked', 'q1locked', 1000, 'q2') ; console.log(message.content + ' passed from q2 to q1')
+		await bucket(message, qlocks, 'q1locked', 'q0locked', 1000, 'q1') ; console.log(message.content + ' passed from q1 to q0')
 
 		//queue 0
 		if (processing === true && qlocks.q0locked === false) {
