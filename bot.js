@@ -694,7 +694,6 @@ client.on('message', async message => {
 			})//end q6
 		})//end q7
 }//end if !red !orange !green
-else {message.channel.send('too many commands!')} 
 });//end client on message
 
 //delete all bot pin notifications (this is for all bot pins, accross the whole server)
