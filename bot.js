@@ -530,7 +530,7 @@ client.on('message', async message => {
 		thislock = true; console.log(queuename + " locked")
 		console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 		//await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename).then(async message => {
-		
+		if (nextlock === true){
 		let bdelay = loopdelay;
 
 let timerId = setTimeout(function request() {
@@ -548,6 +548,7 @@ console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + b
 			await delay(enddelay)
 			thislock = false; console.log(queuename + " unlocked")
 			return message
+		} else {return message;console.log('skipping this queue: ' + queuename)} 
 		//})
 
 	}//end bucket function
