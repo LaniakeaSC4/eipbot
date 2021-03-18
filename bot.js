@@ -531,23 +531,23 @@ client.on('message', async message => {
 		
 		console.log(qlocks)
 		console.log("lockobject.thislock is:")
-		console.log(lockobject.toString(thislock))
+		console.log(lockobject[thislock])
 
-		if (lockobject.toString(nextlock) === true) {
-			lockobject.toString(thislock) = true; console.log(queuename + " locked")
+		if (lockobject[thislock] === true) {
+			lockobject[thislock] = true; console.log(queuename + " locked")
 			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 			let bdelay = loopdelay;
 			let timerId = setTimeout(function request() {
 				//send request 
 				console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + bdelay)
-				if (lockobject.toString(nextlock) === true) {
+				if (lockobject[nextlock] === true) {
 					console.log(qlocks)
 					bdelay *= 1.2;
 					timerId = setTimeout(request, bdelay);
 				}
-				if (lockobject.toString(nextlock) === false) {
+				if (lockobject[nextlock] === false) {
 					console.log(qlocks)
-					lockobject.toString(thislock) = false; console.log(queuename + " unlocked")
+					lockobject[thislock] = false; console.log(queuename + " unlocked")
 					return message
 				}
 			}, bdelay);
