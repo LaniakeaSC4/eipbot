@@ -528,6 +528,7 @@ var qlocks = {q0locked:false,q1locked:false,q2locked:false,q3locked:false,q4lock
 client.on('message', async message => {
 
 	function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
+		console.log("qlocks: " + qlocks)
 		if (nextlock === true) {
 			thislock = true; console.log(queuename + " locked")
 			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
