@@ -533,7 +533,7 @@ client.on('message', async message => {
 		console.log("lockobject.thislock is:")
 		console.log(lockobject[thislock])
 
-		if (lockobject[thislock] === true) {
+		if (lockobject[nextlock] === true) {
 			lockobject[thislock] = true; console.log(queuename + " locked")
 			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 			let bdelay = loopdelay;
