@@ -528,7 +528,7 @@ var qlocks = { q0locked: false, q1locked: false, q2locked: false, q3locked: fals
 client.on('message', async message => {
 
 	function bucket(message, lockobject, thislock, nextlock, loopdelay, queuename) {
-
+		return new Promise((resolve, reject) => {
 		console.log(qlocks)
 		console.log("lockobject.thislock is:")
 		console.log(lockobject[thislock])
@@ -548,11 +548,12 @@ client.on('message', async message => {
 				if (lockobject[nextlock] === false) {
 					console.log(qlocks)
 					lockobject[thislock] = false; console.log(queuename + " unlocked")
-					return message
+					resolve(message)
 				}
 			}, bdelay);
 
-		} else { console.log('skipping ' + queuename + ' queue'); return message }
+		} else { console.log('skipping ' + queuename + ' queue'); resolve(message) }
+	})//end promise
 	}//end bucket function
 
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
