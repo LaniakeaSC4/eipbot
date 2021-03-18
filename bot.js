@@ -526,58 +526,38 @@ var q0locked = false; var q1locked = false; var q2locked = false; var q3locked =
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
 
-function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
-		
-		//await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename).then(async message => {
-		if (nextlock === true){
-		  thislock = true; console.log(queuename + " locked")
-		console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
-		let bdelay = loopdelay;
+	function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
+		if (nextlock === true) {
+			thislock = true; console.log(queuename + " locked")
+			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
+			let bdelay = loopdelay;
+			let timerId = setTimeout(function request() {
+				//send request 
+				console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + bdelay)
+				if (nextlock === true) {
+					// increase the interval to the next run
+					bdelay *= 1.2;
+					timerId = setTimeout(request, bdelay);
+				}
+				if (nextlock === false) {
+					thislock = false; console.log(queuename + " unlocked")
+					return message
+				}
+			}, bdelay);
 
-let timerId = setTimeout(function request() {
-  //send request 
-console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + bdelay)
-  if (nextlock === true) {
-    // increase the interval to the next run
-    bdelay *= 1.2;
-  
-
-  timerId = setTimeout(request, bdelay);
-} 
-}, bdelay);
-		
-			
-			thislock = false; console.log(queuename + " unlocked")
-			return message
-		} else {return message;console.log('skipping this queue: ' + queuename)} 
-		//})
-
+		} else { console.log('skipping ' + queuename + ' queue'); return message }
 	}//end bucket function
 
-	async function bucketloop(m, tlock, nlock, ldelay, edelay, qname) {
-do {
-			console.log('One loop in queue ' + qname + ' for message ' + m.content);
-			await delay(ldelay)
-			//if (nextlock === false) { return message; console.log(nextlock + " is unlocked...returning message!") }
-		} 
-		while (nlock === true) 
-console.log('does this ever get triggered?')
-return m
-		//console.log('returning message from ' + queuename)
-		//return message
-
-	}//end bucketloop function 
-
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
-		console.log(message.content + 'just entered the top of the stack above q7')
 
-		if (q7locked === false) { await bucket(message, q7locked, q6locked, 1000, 200, 'q7') }; console.log(message.content + ' passed from q7 to q6')
-		if (q6locked === false) { await bucket(message, q6locked, q5locked, 1000, 200, 'q6') }; console.log(message.content + ' passed from q6 to q5')
-		if (q5locked === false) { await bucket(message, q5locked, q4locked, 1000, 200, 'q5') }; console.log(message.content + ' passed from q5 to q4')
-		if (q4locked === false) { await bucket(message, q4locked, q3locked, 1000, 200, 'q4') }; console.log(message.content + ' passed from q4 to q3')
-		if (q3locked === false) { await bucket(message, q3locked, q2locked, 1000, 200, 'q3') }; console.log(message.content + ' passed from q3 to q2')
-		if (q2locked === false) { await bucket(message, q2locked, q1locked, 1000, 200, 'q2') }; console.log(message.content + ' passed from q2 to q1')
-		if (q1locked === false) { await bucket(message, q1locked, q0locked, 1000, 200, 'q1') }; console.log(message.content + ' passed from q1 to q0')
+		console.log(message.content + 'just entered the top of the stack above q7')
+		bucket(message, q7locked, q6locked, 1000, 200, 'q7') ; console.log(message.content + ' passed from q7 to q6')
+		bucket(message, q6locked, q5locked, 1000, 200, 'q6') ; console.log(message.content + ' passed from q6 to q5')
+		bucket(message, q5locked, q4locked, 1000, 200, 'q5') ; console.log(message.content + ' passed from q5 to q4')
+		bucket(message, q4locked, q3locked, 1000, 200, 'q4') ; console.log(message.content + ' passed from q4 to q3')
+		bucket(message, q3locked, q2locked, 1000, 200, 'q3') ; console.log(message.content + ' passed from q3 to q2')
+		bucket(message, q2locked, q1locked, 1000, 200, 'q2') ; console.log(message.content + ' passed from q2 to q1')
+		bucket(message, q1locked, q0locked, 1000, 200, 'q1') ; console.log(message.content + ' passed from q1 to q0')
 
 		//queue 0
 		if (processing === true && q0locked === false) {
