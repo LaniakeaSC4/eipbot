@@ -554,7 +554,7 @@ function bucket(message, lockobject, thislock, nextlock, loopdelay, queuename) {
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
-if (qlocks[q7locked] === false) {
+if (qlocks.q7locked === false) {
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 
 		//try all the queues. Maximum is 1 processing plus 7 waiting
