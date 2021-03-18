@@ -554,7 +554,7 @@ function bucket(message, lockobject, thislock, nextlock, loopdelay, queuename) {
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
-
+if (qlocks[q7locked] === false) {
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 
 		//try all the queues. Maximum is 1 processing plus 7 waiting
@@ -695,6 +695,8 @@ client.on('message', async message => {
 			})//end q6
 		})//end q7
 	}//end if red green orange
+}//end if q7 isn't locked
+else {message.delete;message.channel.send('Too many commands. Command ' + message.content + ' rejected. Please try again in 20 seconds!')} 
 });//end client on message
 
 //delete all bot pin notifications (this is for all bot pins, accross the whole server)
