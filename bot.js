@@ -521,6 +521,7 @@ client.on('message', async message => {
 // 3. green 🟩
 //=======================================
 
+var qlocks = {q0locked:false,q1locked:false,q2locked:false,q3locked:false,q4locked:false,q5locked:false,q6locked:false,q7locked:false}
 var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false; q7locked = false;
 
 //square colour change commands (!red, !orange, !green)
@@ -551,13 +552,13 @@ client.on('message', async message => {
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 
 		console.log(message.content + 'just entered the top of the stack above q7')
-		bucket(message, q7locked, q6locked, 1000, 200, 'q7') ; console.log(message.content + ' passed from q7 to q6')
-		bucket(message, q6locked, q5locked, 1000, 200, 'q6') ; console.log(message.content + ' passed from q6 to q5')
-		bucket(message, q5locked, q4locked, 1000, 200, 'q5') ; console.log(message.content + ' passed from q5 to q4')
-		bucket(message, q4locked, q3locked, 1000, 200, 'q4') ; console.log(message.content + ' passed from q4 to q3')
-		bucket(message, q3locked, q2locked, 1000, 200, 'q3') ; console.log(message.content + ' passed from q3 to q2')
-		bucket(message, q2locked, q1locked, 1000, 200, 'q2') ; console.log(message.content + ' passed from q2 to q1')
-		bucket(message, q1locked, q0locked, 1000, 200, 'q1') ; console.log(message.content + ' passed from q1 to q0')
+		await bucket(message, qlocks.q7locked, qlocks.q6locked, 1000, 200, 'q7') ; console.log(message.content + ' passed from q7 to q6')
+		await bucket(message, qlocks.q6locked, qlocks.q5locked, 1000, 200, 'q6') ; console.log(message.content + ' passed from q6 to q5')
+		await bucket(message, qlocks.q5locked, qlocks.q4locked, 1000, 200, 'q5') ; console.log(message.content + ' passed from q5 to q4')
+		await bucket(message, qlocks.q4locked, qlocks.q3locked, 1000, 200, 'q4') ; console.log(message.content + ' passed from q4 to q3')
+		await bucket(message, qlocks.q3locked, qlocks.q2locked, 1000, 200, 'q3') ; console.log(message.content + ' passed from q3 to q2')
+		await bucket(message, qlocks.q2locked, qlocks.q1locked, 1000, 200, 'q2') ; console.log(message.content + ' passed from q2 to q1')
+		await bucket(message, qlocks.q1locked, qlocks.q0locked, 1000, 200, 'q1') ; console.log(message.content + ' passed from q1 to q0')
 
 		//queue 0
 		if (processing === true && q0locked === false) {
