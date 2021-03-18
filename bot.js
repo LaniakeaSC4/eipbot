@@ -694,9 +694,10 @@ if (qlocks.q7locked === false || qlocks.q6locked === false || qlocks.q5locked ==
 				})//end q5
 			})//end q6
 		})//end q7
-	}//end if red green orange
-}//end if q7 isn't locked
-else {message.delete;message.channel.send('Too many commands. Command ' + message.content + ' rejected. Please try again in 20 seconds!')} 
+	}//end if q7, q6 or q5 isn't locked
+	else {message.delete;message.channel.send('Too many commands. Command ' + message.content + ' rejected. Please try again in 20 seconds!')} 
+}//end if !red !orange !green
+
 });//end client on message
 
 //delete all bot pin notifications (this is for all bot pins, accross the whole server)
