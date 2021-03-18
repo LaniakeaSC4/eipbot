@@ -528,7 +528,7 @@ var qlocks = {q0locked:false,q1locked:false,q2locked:false,q3locked:false,q4lock
 client.on('message', async message => {
 
 	function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
-		console.log("qlocks: " + qlocks)
+		console.log(qlocks)
 		if (nextlock === true) {
 			thislock = true; console.log(queuename + " locked")
 			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
@@ -537,11 +537,12 @@ client.on('message', async message => {
 				//send request 
 				console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + bdelay)
 				if (nextlock === true) {
-					// increase the interval to the next run
+					console.log(qlocks)
 					bdelay *= 1.2;
 					timerId = setTimeout(request, bdelay);
 				}
 				if (nextlock === false) {
+					console.log(qlocks)
 					thislock = false; console.log(queuename + " unlocked")
 					return message
 				}
