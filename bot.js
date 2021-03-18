@@ -507,7 +507,7 @@ client.on('message', async message => {
 				updatedEmbed.setColor('#FF0000')
 				statusboard.edit(updatedEmbed)
 				statusboard.unpin()
-				arraystatusboards()
+				arraystatusboards()//find all statusboard and add to statusboard array
 			})//end .then after find status board
 		};//end the if !close
 		message.delete();//delete input !close command
@@ -516,48 +516,48 @@ client.on('message', async message => {
 
 //=======================================
 // Coop bot | commands | color change 
-// 1. red 🟥
-// 2. orange 🟧
-// 3. green 🟩
+// 1. Bucket function (processing queue)
+// 2. red 🟥
+// 3. orange 🟧
+// 4. green 🟩
 //=======================================
 
+//object containing the locks for the processing queue.
 var qlocks = { q0locked: false, q1locked: false, q2locked: false, q3locked: false, q4locked: false, q5locked: false, q6locked: false, q7locked: false }
-//var q0locked = false; var q1locked = false; var q2locked = false; var q3locked = false; var q4locked = false; var q5locked = false; var q6locked = false; q7locked = false;
+
+//bucket function (processing queue). Holds message in one bucket untill the next one unlocks and the message can flow in
+function bucket(message, lockobject, thislock, nextlock, loopdelay, queuename) {
+	return new Promise((resolve, reject) => {
+		//console.log(qlocks);console.log("lockobject.thislock is:");console.log(lockobject[thislock])
+		if (lockobject[nextlock] === true) {//if the next bucket is locked
+			lockobject[thislock] = true; console.log(queuename + " locked")//lock this bucket
+			//console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
+			let bdelay = loopdelay//set a local variable from the one passed to function. It will increse each loop
+			let qloop = setTimeout(function request() {//establish function which calls itself
+				//console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + bdelay)
+				if (lockobject[nextlock] === true) {//on this loop, if the next bucket is locked, increase timeout and loop again
+					//console.log(qlocks)
+					bdelay *= 1.1;//add 10% to the length of delay
+					qloop = setTimeout(request, bdelay);//call another loop
+				}//end if nextlock is true
+
+				if (lockobject[nextlock] === false) {//on this loop if the next bucket is now open, send message to it and unlock this one
+					//console.log(qlocks)
+					resolve(message)//return message
+					lockobject[thislock] = false; console.log(queuename + " unlocked")//unlock this bucket so messages can flow in from above
+				}//end if nextlock is false
+			}, bdelay);//end qloop/setTimeout function
+
+		} else { console.log('skipping ' + queuename + ' queue'); resolve(message) }//if the next bucket wasnt locked, we can pass the message straight through
+	})//end promise
+}//end bucket function
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
 
-	function bucket(message, lockobject, thislock, nextlock, loopdelay, queuename) {
-		return new Promise((resolve, reject) => {
-		console.log(qlocks)
-		console.log("lockobject.thislock is:")
-		console.log(lockobject[thislock])
-
-		if (lockobject[nextlock] === true) {
-			lockobject[thislock] = true; console.log(queuename + " locked")
-			console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
-			let bdelay = loopdelay;
-			let timerId = setTimeout(function request() {
-				//send request 
-				console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + bdelay)
-				if (lockobject[nextlock] === true) {
-					console.log(qlocks)
-					bdelay *= 1.2;
-					timerId = setTimeout(request, bdelay);
-				}
-				if (lockobject[nextlock] === false) {
-					console.log(qlocks)
-					lockobject[thislock] = false; console.log(queuename + " unlocked")
-					resolve(message)
-				}
-			}, bdelay);
-
-		} else { console.log('skipping ' + queuename + ' queue'); resolve(message) }
-	})//end promise
-	}//end bucket function
-
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
 
+		//try all the queues. Maximum is 1 processing plus 7 waiting
 		console.log(message.content + 'just entered the top of the stack above q7')
 		await bucket(message, qlocks, 'q7locked', 'q6locked', 1000, 'q7').then(async message => {
 			console.log(message.content + ' passed from q7 to q6')
@@ -573,25 +573,26 @@ client.on('message', async message => {
 								console.log(message.content + ' passed from q2 to q1')
 								await bucket(message, qlocks, 'q1locked', 'q0locked', 1000, 'q1').then(async message => {
 									console.log(message.content + ' passed from q1 to q0')
-									
+
 									//queue 0
-									if (processing === true && qlocks.q0locked === false) {
-										qlocks.q0locked = true; console.log("q0 locked")
-										console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
-										do {
-											console.log('One loop in queue 0 for ' + message.content)
+									if (processing === true && qlocks.q0locked === false) {//if there is currently another command processing and this queue isnt locked
+										qlocks.q0locked = true; console.log("q0 locked")//lock this queue
+										//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
+										do {//while processing = true, loop around in 1 second intervals
+											//console.log('One loop in queue 0 for ' + message.content)
 											await delay(1000)
 										} while (processing === true)
-										qlocks.q0locked = false; console.log("q0 unlocked")
-									}
+										qlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
+									}//end queue 0
 
-									console.log(message.content + 'has just passed all queues')
+									console.log(message.content + 'has just passed all queues')//message is now free to enter rest of function
 
 									//!red 🟥
 									if (message.content.startsWith("!red") && processing === false) {
 
 										//lock out any more commands for x millisecond
 										startthinking(18000, message)
+
 										//initalise isuser and isteam as false
 										var isuser = false;//is the command about a user
 										var isteam = false;//is the command about a team
@@ -625,6 +626,7 @@ client.on('message', async message => {
 
 										//lock out any more commands for x millisecond
 										startthinking(20000, message)
+
 										//initalise isuser and isteam as false
 										var isuser = false;//is the command about a user
 										var isteam = false;//is the command about a team
@@ -658,6 +660,7 @@ client.on('message', async message => {
 
 										//lock out any more commands for x millisecond
 										startthinking(20000, message)
+
 										//initalise isuser and isteam as false
 										var isuser = false;//is the command about a user
 										var isteam = false;//is the command about a team
@@ -684,21 +687,13 @@ client.on('message', async message => {
 											updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
 										}//end if isteam = true
 									}//end !green
-								})
-							})
-
-						})
-
-					})
-
-				})
-
-
-			})
-
-		})
-
-
+								})//end q1
+							})//end q2
+						})//end q3
+					})//end q4
+				})//end q5
+			})//end q6
+		})//end q7
 	}//end if red green orange
 });//end client on message
 
