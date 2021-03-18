@@ -527,10 +527,11 @@ var q0locked = false; var q1locked = false; var q2locked = false; var q3locked =
 client.on('message', async message => {
 
 	async function bucket(message, thislock, nextlock, loopdelay, enddelay, queuename) {
-		thislock = true; console.log(queuename + " locked")
-		console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
+		
 		//await bucketloop(message, thislock, nextlock, loopdelay, enddelay, queuename).then(async message => {
 		if (nextlock === true){
+		  thislock = true; console.log(queuename + " locked")
+		console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 		let bdelay = loopdelay;
 
 let timerId = setTimeout(function request() {
