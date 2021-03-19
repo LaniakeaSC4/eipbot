@@ -165,11 +165,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 					await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 						try {
 							//reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
-							
-							msg.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id);
-						  msg.reactions.cache.find(reaction => reaction.emoji.name == "👎").users.remove(user.id);
-						  msg.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id);
-						  msg.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id);  
+							if (reaction.emoji.name == "👍") {reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id)} 
+						  if (reaction.emoji.name == "👎") {reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👎").users.remove(user.id)} 
+						  if (reaction.emoji.name == "🥚") {reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id)} 
+						  if (reaction.emoji.name == "💤") {reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id)} 
 							
 							await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
 							await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
