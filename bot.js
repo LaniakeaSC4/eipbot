@@ -163,12 +163,14 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
 					//get the message object for the status board which recieved the reaction, then...
 					await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-					  reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id);
-						  reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👎").users.remove(user.id);
-						  reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id);
-						  reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id); 
 						try {
 							//reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
+							
+							msg.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id);
+						  msg.reactions.cache.find(reaction => reaction.emoji.name == "👎").users.remove(user.id);
+						  msg.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id);
+						  msg.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id);  
+							
 							await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
 							await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
 							await updateplayerboard(msg)//now the teammembers object is updated, republish the status board
