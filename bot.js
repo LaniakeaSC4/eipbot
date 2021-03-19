@@ -164,15 +164,16 @@ client.on('messageReactionAdd', async (reaction, user) => {
 					//get the message object for the status board which recieved the reaction, then...
 					await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 						try {
-							reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
+						  reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id);
+							//reaction.message.reactions.removeAll()//remove all reactions to prevent extra input
 							await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
 							await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
 							await updateplayerboard(msg)//now the teammembers object is updated, republish the status board
 							//add the reactions back in ready for the next person
-							await msg.react('👍');
-							await msg.react('👎');
-							await msg.react('🥚');
-							await msg.react('💤');
+							//await msg.react('👍');
+							//await msg.react('👎');
+							//await msg.react('🥚');
+							//await msg.react('💤');
 							//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
 							arraystatusboards()
 						} catch (err) {
