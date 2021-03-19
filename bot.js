@@ -556,147 +556,147 @@ function bucket(message, lockobject, thislock, nextlock, loopdelay, queuename) {
 client.on('message', async message => {
 
 	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
-	  if (qlocks.q7locked === false || qlocks.q6locked === false || qlocks.q5locked === false){
-		//try all the queues. Maximum is 1 processing plus 7 waiting
-		console.log(message.content + 'just entered the top of the stack above q7')
-		await bucket(message, qlocks, 'q7locked', 'q6locked', 1000, 'q7').then(async message => {
-			console.log(message.content + ' passed from q7 to q6')
-			await bucket(message, qlocks, 'q6locked', 'q5locked', 1000, 'q6').then(async message => {
-				console.log(message.content + ' passed from q6 to q5')
-				await bucket(message, qlocks, 'q5locked', 'q4locked', 1000, 'q5').then(async message => {
-					console.log(message.content + ' passed from q5 to q4')
-					await bucket(message, qlocks, 'q4locked', 'q3locked', 1000, 'q4').then(async message => {
-						console.log(message.content + ' passed from q4 to q3')
-						await bucket(message, qlocks, 'q3locked', 'q2locked', 1000, 'q3').then(async message => {
-							console.log(message.content + ' passed from q3 to q2')
-							await bucket(message, qlocks, 'q2locked', 'q1locked', 1000, 'q2').then(async message => {
-								console.log(message.content + ' passed from q2 to q1')
-								await bucket(message, qlocks, 'q1locked', 'q0locked', 1000, 'q1').then(async message => {
-									console.log(message.content + ' passed from q1 to q0')
+		if (qlocks.q7locked === false || qlocks.q6locked === false || qlocks.q5locked === false) {
+			//try all the queues. Maximum is 1 processing plus 7 waiting
+			console.log(message.content + 'just entered the top of the stack above q7')
+			await bucket(message, qlocks, 'q7locked', 'q6locked', 1000, 'q7').then(async message => {
+				console.log(message.content + ' passed from q7 to q6')
+				await bucket(message, qlocks, 'q6locked', 'q5locked', 1000, 'q6').then(async message => {
+					console.log(message.content + ' passed from q6 to q5')
+					await bucket(message, qlocks, 'q5locked', 'q4locked', 1000, 'q5').then(async message => {
+						console.log(message.content + ' passed from q5 to q4')
+						await bucket(message, qlocks, 'q4locked', 'q3locked', 1000, 'q4').then(async message => {
+							console.log(message.content + ' passed from q4 to q3')
+							await bucket(message, qlocks, 'q3locked', 'q2locked', 1000, 'q3').then(async message => {
+								console.log(message.content + ' passed from q3 to q2')
+								await bucket(message, qlocks, 'q2locked', 'q1locked', 1000, 'q2').then(async message => {
+									console.log(message.content + ' passed from q2 to q1')
+									await bucket(message, qlocks, 'q1locked', 'q0locked', 1000, 'q1').then(async message => {
+										console.log(message.content + ' passed from q1 to q0')
 
-									//queue 0
-									if (processing === true && qlocks.q0locked === false) {//if there is currently another command processing and this queue isnt locked
-										qlocks.q0locked = true; console.log("q0 locked")//lock this queue
-										//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
-										do {//while processing = true, loop around in 1 second intervals
-											//console.log('One loop in queue 0 for ' + message.content)
-											await delay(1000)
-										} while (processing === true)
-										qlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
-									}//end queue 0
+										//queue 0
+										if (processing === true && qlocks.q0locked === false) {//if there is currently another command processing and this queue isnt locked
+											qlocks.q0locked = true; console.log("q0 locked")//lock this queue
+											//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
+											do {//while processing = true, loop around in 1 second intervals
+												//console.log('One loop in queue 0 for ' + message.content)
+												await delay(1000)
+											} while (processing === true)
+											qlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
+										}//end queue 0
 
-									console.log(message.content + 'has just passed all queues')//message is now free to enter rest of function
+										console.log(message.content + 'has just passed all queues')//message is now free to enter rest of function
 
-									//!red 🟥
-									if (message.content.startsWith("!red") && processing === false) {
+										//!red 🟥
+										if (message.content.startsWith("!red") && processing === false) {
 
-										//lock out any more commands for x millisecond
-										startthinking(18000, message)
+											//lock out any more commands for x millisecond
+											startthinking(18000, message)
 
-										//initalise isuser and isteam as false
-										var isuser = false;//is the command about a user
-										var isteam = false;//is the command about a team
-										var checkeduser = false//is the user a valid user?
-										var checkedteam = false//is the team a valid team? 
+											//initalise isuser and isteam as false
+											var isuser = false;//is the command about a user
+											var isteam = false;//is the command about a team
+											var checkeduser = false//is the user a valid user?
+											var checkedteam = false//is the team a valid team? 
 
-										//what user or team was mentioned?
-										if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
-											var mentioneduser = getname(message); isuser = true;
-										} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
-											var mentionedrole = message.mentions.roles.first().name; isteam = true;
-										} else { console.log('did not find either'); }//else do nothing
+											//what user or team was mentioned?
+											if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
+												var mentioneduser = getname(message); isuser = true;
+											} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
+												var mentionedrole = message.mentions.roles.first().name; isteam = true;
+											} else { console.log('did not find either'); }//else do nothing
 
-										if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
-										if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
+											if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
+											if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
 
-										//if mention is a valid user
-										if (isuser == true && checkeduser == true) {
-											thankyou(message.member.displayName, mentioneduser, "red", message)
-											updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message)
-										}//end if isuser = true
-										//if mentioned is a valid team
-										if (isteam == true && checkedteam == true) {
-											thankyou(message.member.displayName, mentionedrole, "red", message)
-											updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message)
-										}//end if isteam = true
-									}//end !red
+											//if mention is a valid user
+											if (isuser == true && checkeduser == true) {
+												thankyou(message.member.displayName, mentioneduser, "red", message)
+												updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message)
+											}//end if isuser = true
+											//if mentioned is a valid team
+											if (isteam == true && checkedteam == true) {
+												thankyou(message.member.displayName, mentionedrole, "red", message)
+												updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message)
+											}//end if isteam = true
+										}//end !red
 
-									//!orange 🟧
-									if (message.content.startsWith("!orange") && processing === false) {
+										//!orange 🟧
+										if (message.content.startsWith("!orange") && processing === false) {
 
-										//lock out any more commands for x millisecond
-										startthinking(20000, message)
+											//lock out any more commands for x millisecond
+											startthinking(20000, message)
 
-										//initalise isuser and isteam as false
-										var isuser = false;//is the command about a user
-										var isteam = false;//is the command about a team
-										var checkeduser = false//is the user a valid user?
-										var checkedteam = false//is the team a valid team? 
+											//initalise isuser and isteam as false
+											var isuser = false;//is the command about a user
+											var isteam = false;//is the command about a team
+											var checkeduser = false//is the user a valid user?
+											var checkedteam = false//is the team a valid team? 
 
-										//what user or team was mentioned?
-										if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
-											var mentioneduser = getname(message); isuser = true;
-										} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
-											var mentionedrole = message.mentions.roles.first().name; isteam = true;
-										} else { console.log('did not find either'); }//else do nothing
+											//what user or team was mentioned?
+											if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
+												var mentioneduser = getname(message); isuser = true;
+											} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
+												var mentionedrole = message.mentions.roles.first().name; isteam = true;
+											} else { console.log('did not find either'); }//else do nothing
 
-										if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
-										if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
+											if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
+											if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
 
-										//if mention is a valid user
-										if (isuser == true && checkeduser == true) {
-											thankyou(message.member.displayName, mentioneduser, "orange", message)
-											updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message)
-										}//end if isuser = true
-										//if mentioned is a valid team
-										if (isteam == true && checkedteam == true) {
-											thankyou(message.member.displayName, mentionedrole, "orange", message)
-											updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message)
-										}//end if isteam = true
-									}//end !orange
+											//if mention is a valid user
+											if (isuser == true && checkeduser == true) {
+												thankyou(message.member.displayName, mentioneduser, "orange", message)
+												updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message)
+											}//end if isuser = true
+											//if mentioned is a valid team
+											if (isteam == true && checkedteam == true) {
+												thankyou(message.member.displayName, mentionedrole, "orange", message)
+												updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message)
+											}//end if isteam = true
+										}//end !orange
 
-									//!green 🟩
-									if (message.content.startsWith("!green") && processing == false) {
+										//!green 🟩
+										if (message.content.startsWith("!green") && processing == false) {
 
-										//lock out any more commands for x millisecond
-										startthinking(20000, message)
+											//lock out any more commands for x millisecond
+											startthinking(20000, message)
 
-										//initalise isuser and isteam as false
-										var isuser = false;//is the command about a user
-										var isteam = false;//is the command about a team
-										var checkeduser = false//is the user a valid user?
-										var checkedteam = false//is the team a valid team? 
+											//initalise isuser and isteam as false
+											var isuser = false;//is the command about a user
+											var isteam = false;//is the command about a team
+											var checkeduser = false//is the user a valid user?
+											var checkedteam = false//is the team a valid team? 
 
-										//what user or team was mentioned?
-										if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
-											var mentioneduser = getname(message); isuser = true;
-										} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
-											var mentionedrole = message.mentions.roles.first().name; isteam = true;
-										} else { console.log('did not find either'); }//else do nothing
+											//what user or team was mentioned?
+											if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
+												var mentioneduser = getname(message); isuser = true;
+											} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
+												var mentionedrole = message.mentions.roles.first().name; isteam = true;
+											} else { console.log('did not find either'); }//else do nothing
 
-										if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
-										if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
-										//if mention is a valid user
-										if (isuser == true && checkeduser == true) {
-											thankyou(message.member.displayName, mentioneduser, "green", message);
-											updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
-										}//end if isuser = true
-										//if mentioned is a valid team
-										if (isteam == true && checkedteam == true) {
-											thankyou(message.member.displayName, mentionedrole, "green", message)
-											updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
-										}//end if isteam = true
-									}//end !green
-								})//end q1
-							})//end q2
-						})//end q3
-					})//end q4
-				})//end q5
-			})//end q6
-		})//end q7
-	  }//end if q7, q6 or 15 is locked
-	  else {message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content)} 
-}//end if !red !orange !green
+											if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
+											if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
+											//if mention is a valid user
+											if (isuser == true && checkeduser == true) {
+												thankyou(message.member.displayName, mentioneduser, "green", message);
+												updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
+											}//end if isuser = true
+											//if mentioned is a valid team
+											if (isteam == true && checkedteam == true) {
+												thankyou(message.member.displayName, mentionedrole, "green", message)
+												updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
+											}//end if isteam = true
+										}//end !green
+									})//end q1
+								})//end q2
+							})//end q3
+						})//end q4
+					})//end q5
+				})//end q6
+			})//end q7
+		}//end if q7, q6 or 15 is locked
+		else { message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) }
+	}//end if !red !orange !green
 });//end client on message
 
 //delete all bot pin notifications (this is for all bot pins, accross the whole server)
