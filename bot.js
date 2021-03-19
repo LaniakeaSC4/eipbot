@@ -695,7 +695,7 @@ client.on('message', async message => {
 			})//end q6
 		})//end q7
 	  }//end if q7, q6 or 15 is locked
-	  else {message.channel.send('too many commands')} 
+	  else {message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content)} 
 }//end if !red !orange !green
 });//end client on message
 
