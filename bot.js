@@ -241,9 +241,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 													startthinking(18000, message)
 
 													try {
-														await rebuildteamobj(message)//rebuild the teammembers object for *this* status board
-														await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
-														await updateplayerboard(message)//now the teammembers object is updated, republish the status board
+														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
+														await changeplayerstatus(result.emoji, result.user)//update the user in the teammembers object with the new emojj
+														await updateplayerboard(result.message)//now the teammembers object is updated, republish the status board
 
 														//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
 														arraystatusboards()
