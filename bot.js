@@ -210,19 +210,19 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			await ebucket(msg, reaction.emoji.name , thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
 			  console.log(result)
 			
-				console.log('Reaction : ' + result.reaction + ' for ' + result.user + ' passed from e7 to e6')
-				await bucket(result.message, result.reaction, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
-					console.log('Reaction : ' + result.reaction + ' for ' + result.user + ' passed from e6 to e5')
-					await bucket(result.message, result.reaction, result.user, elocks, 'e5locked', 'e4locked', 1000, 'e5').then(async result => {
-						console.log('Reaction : ' + result.reaction + ' for ' + result.user + ' passed from e5 to e4')
-						await bucket(result.message, result.reaction, result.user, elocks, 'e4locked', 'e3locked', 1000, 'e4').then(async result => {
-							console.log('Reaction : ' + result.reaction + ' for ' + result.user + ' passed from e4 to e3')
-							await bucket(result.message, result.reaction, result.user, elocks, 'e3locked', 'e2locked', 1000, 'e3').then(async result => {
-								console.log('Reaction : ' + result.reaction + ' for ' + result.user + ' passed from e3 to e2')
-								await bucket(result.message, result.reaction, result.user, elocks, 'e2locked', 'e1locked', 1000, 'e2').then(async result => {
-									console.log('Reaction : ' + result.reaction + ' for ' + result.user + ' passed from e2 to e1')
-									await bucket(result.message, result.reaction, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
-										console.log('Reaction : ' + result.reaction + ' for ' + result.user + ' passed from e1 to e0')
+				console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
+				await bucket(result.message, result.emoji, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
+					console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e6 to e5')
+					await bucket(result.message, result.emoji, result.user, elocks, 'e5locked', 'e4locked', 1000, 'e5').then(async result => {
+						console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e5 to e4')
+						await bucket(result.message, result.emoji, result.user, elocks, 'e4locked', 'e3locked', 1000, 'e4').then(async result => {
+							console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e4 to e3')
+							await bucket(result.message, result.emoji, result.user, elocks, 'e3locked', 'e2locked', 1000, 'e3').then(async result => {
+								console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e3 to e2')
+								await bucket(result.message, result.emoji, result.user, elocks, 'e2locked', 'e1locked', 1000, 'e2').then(async result => {
+									console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
+									await bucket(result.message, result.emoji, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
+										console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
 console.log(result)
 										//queue 0
 										if (processing === true && elocks.e0locked === false) {//if there is currently another command processing and this queue isnt locked
