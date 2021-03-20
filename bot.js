@@ -123,7 +123,7 @@ var elocks = { e0locked: false, e1locked: false, e2locked: false, e3locked: fals
 
 // 1. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
-	if (processing === false) {
+	//if (processing === false) {
 		startthinking(15000, false)
 		// When we receive a reaction we check if the reaction is partial or not
 		if (reaction.partial) {
@@ -236,7 +236,7 @@ try {
 				}//end if EIP Bot and allowed reaction
 			}//end if reaction message is a statusboard message
 		}//end for loop checking through stored reaction board message ids for a match for this reaction add
-	}//end if processing is false
+	//}//end if processing is false
 });//end client on reaction add 
 
 //global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuilt on startup and when any reaction is added to a status board message
