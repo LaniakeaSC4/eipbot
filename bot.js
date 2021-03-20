@@ -208,7 +208,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			console.log(msg.content + 'just entered the top of the stack above e7')
 			//console.log(msg)
 			await ebucket(msg, reaction.emoji.name , thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
-			  
+			  console.log(result)
 			
 				console.log('Reaction : ' + result.reaction + ' for ' + result.user + ' passed from e7 to e6')
 				await bucket(result.message, result.reaction, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
