@@ -130,7 +130,7 @@ function ebucket(message, emoji, user, lockobject, thislock, nextlock, loopdelay
 			//console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 			let bdelay = loopdelay//set a local variable from the one passed to function. It will increse each loop
 			let qloop = setTimeout(function request() {//establish function which calls itself
-				console.log('One loop in timeout function for ' + queuename + " emoji: "+ emoji + " User: " +  user + '. Delay is: ' + bdelay)
+				console.log('One loop in timeout function for ' + queuename + " emoji: " + emoji + " User: " + user + '. Delay is: ' + bdelay)
 				if (lockobject[nextlock] === true) {//on this loop, if the next bucket is locked, increase timeout and loop again
 					//console.log(qlocks)
 					bdelay *= 1.1;//add 10% to the length of delay
@@ -186,10 +186,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				thisuser = dName
 			} else { thisuser = uName }
 
-if (reaction.emoji.name == "👍" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
+			if (reaction.emoji.name == "👍" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
 			if (reaction.emoji.name == "👎" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👎").users.remove(user.id) }
 			if (reaction.emoji.name == "🥚" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
-			if (reaction.emoji.name == "💤" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) } 
+			if (reaction.emoji.name == "💤" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
 
 			//if user is not the bot, log whats going to happen
 			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
@@ -200,17 +200,10 @@ if (reaction.emoji.name == "👍" && thisuser != "EiP Bot") { reaction.message.r
 				//get the message object for the status board which recieved the reaction, then...
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
-
-					//put q here? 
-
-
 					if (elocks.e7locked === false || elocks.e6locked === false || elocks.e5locked === false) {
 						//try all the queues. Maximum is 1 processing plus 7 waiting
 						console.log(msg.content + 'just entered the top of the stack above e7')
-						//console.log(msg)
 						await ebucket(msg, reaction.emoji.name, thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
-							//console.log(result)
-
 							console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
 							await ebucket(result.message, result.emoji, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
 								console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e6 to e5')
@@ -224,7 +217,7 @@ if (reaction.emoji.name == "👍" && thisuser != "EiP Bot") { reaction.message.r
 												console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
 												await ebucket(result.message, result.emoji, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
 													console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
-													//console.log(result)
+
 													//queue 0
 													if (processing === true && elocks.e0locked === false) {//if there is currently another command processing and this queue isnt locked
 														elocks.e0locked = true; console.log("e0 locked")//lock this queue
@@ -251,8 +244,6 @@ if (reaction.emoji.name == "👍" && thisuser != "EiP Bot") { reaction.message.r
 													} catch (err) {
 														console.log(err)
 													}//end catch error
-													//})//end .then after fetching statusboard
-
 												})//end q1
 											})//end q2
 										})//end q3
@@ -261,8 +252,7 @@ if (reaction.emoji.name == "👍" && thisuser != "EiP Bot") { reaction.message.r
 							})//end q6
 						})//end q7
 					}//end if q7, q6 or 15 is locked
-					else { message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) }
-
+					else { reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) }
 				})
 			}//end if EIP Bot and allowed reaction
 		}//end if reaction message is a statusboard message
