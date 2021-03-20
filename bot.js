@@ -139,133 +139,133 @@ function ebucket(message, emoji, user, lockobject, thislock, nextlock, loopdelay
 
 				if (lockobject[nextlock] === false) {//on this loop if the next bucket is now open, send message to it and unlock this one
 					//console.log(qlocks)
-					resolve({message:message, emoji:emoji, user:user})//return message
+					resolve({ message: message, emoji: emoji, user: user })//return message
 					lockobject[thislock] = false; console.log(queuename + " unlocked")//unlock this bucket so messages can flow in from above
 				}//end if nextlock is false
 			}, bdelay);//end qloop/setTimeout function
 
-		} else { console.log('skipping ' + queuename + ' queue'); resolve({message:message, emoji:emoji, user:user}) }//if the next bucket wasnt locked, we can pass the message straight through
+		} else { console.log('skipping ' + queuename + ' queue'); resolve({ message: message, emoji: emoji, user: user }) }//if the next bucket wasnt locked, we can pass the message straight through
 	})//end promise
 }//end bucket function
 
 // 1. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
 	//if (processing === false) {
-		startthinking(15000, false)
-		// When we receive a reaction we check if the reaction is partial or not
-		if (reaction.partial) {
-			// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
-			try {
-				await reaction.fetch();
-				console.log('a partial reaction was fetched')
-			} catch (error) {
-				console.error('Something went wrong when fetching the message: ', error);
-				// Return as `reaction.message.author` may be undefined/null
-				return;
-			}//end catch
-		}//end if reaction.partial
+	startthinking(15000, false)
+	// When we receive a reaction we check if the reaction is partial or not
+	if (reaction.partial) {
+		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
+		try {
+			await reaction.fetch();
+			console.log('a partial reaction was fetched')
+		} catch (error) {
+			console.error('Something went wrong when fetching the message: ', error);
+			// Return as `reaction.message.author` may be undefined/null
+			return;
+		}//end catch
+	}//end if reaction.partial
 
-		//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
-		for (var i = 0; i < statusboardmessages.length; i++) {
-			if (statusboardmessages[i].includes(reaction.message.id)) {
-							if (reaction.emoji.name == "👍") {reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id)} 
-						  if (reaction.emoji.name == "👎") {reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👎").users.remove(user.id)} 
-						  if (reaction.emoji.name == "🥚") {reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id)} 
-						  if (reaction.emoji.name == "💤") {reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id)} 
-			  
-				//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
-				var thischannel = reaction.message.channel.id
-				var thismessage = reaction.message.id
+	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
+	for (var i = 0; i < statusboardmessages.length; i++) {
+		if (statusboardmessages[i].includes(reaction.message.id)) {
+			if (reaction.emoji.name == "👍") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
+			if (reaction.emoji.name == "👎") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👎").users.remove(user.id) }
+			if (reaction.emoji.name == "🥚") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
+			if (reaction.emoji.name == "💤") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
 
-				//get displayname from userid. Need this for the string match in the status board/teammembers object
-				//check if they have a nickname set
-				const member = await client.users.fetch(user.id)//retrieve the user from ID
-				var dName = member.nickname;//set dName (displayName) to the member object's nickname
-				//if they dont have a nickname, thier username is what is displayed by discord.
-				var uName = member.username
+			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
+			var thischannel = reaction.message.channel.id
+			var thismessage = reaction.message.id
 
-				var thisuser = ""
-				//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
-				if (dName !== undefined && uName !== undefined) {
-					thisuser = dName
-				} else { thisuser = uName }
+			//get displayname from userid. Need this for the string match in the status board/teammembers object
+			//check if they have a nickname set
+			const member = await client.users.fetch(user.id)//retrieve the user from ID
+			var dName = member.nickname;//set dName (displayName) to the member object's nickname
+			//if they dont have a nickname, thier username is what is displayed by discord.
+			var uName = member.username
 
-				//if user is not the bot, log whats going to happen
-				if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
+			var thisuser = ""
+			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
+			if (dName !== undefined && uName !== undefined) {
+				thisuser = dName
+			} else { thisuser = uName }
 
-				//we are only going further into the function with one of these 4 emoji
-				var allowedemoji = ['👍', '👎', '🥚', '💤']
-				if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
-					//get the message object for the status board which recieved the reaction, then...
-					await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-						
-							
-							//put q here? 
-							
-							
-							if (elocks.e7locked === false || elocks.e6locked === false || elocks.e5locked === false) {
-			//try all the queues. Maximum is 1 processing plus 7 waiting
-			console.log(msg.content + 'just entered the top of the stack above e7')
-			//console.log(msg)
-			await ebucket(msg, reaction.emoji.name , thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
-			  console.log(result)
-			
-				console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
-				await bucket(result.message, result.emoji, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
-					console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e6 to e5')
-					await bucket(result.message, result.emoji, result.user, elocks, 'e5locked', 'e4locked', 1000, 'e5').then(async result => {
-						console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e5 to e4')
-						await bucket(result.message, result.emoji, result.user, elocks, 'e4locked', 'e3locked', 1000, 'e4').then(async result => {
-							console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e4 to e3')
-							await bucket(result.message, result.emoji, result.user, elocks, 'e3locked', 'e2locked', 1000, 'e3').then(async result => {
-								console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e3 to e2')
-								await bucket(result.message, result.emoji, result.user, elocks, 'e2locked', 'e1locked', 1000, 'e2').then(async result => {
-									console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
-									await bucket(result.message, result.emoji, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
-										console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
-console.log(result)
-										//queue 0
-										if (processing === true && elocks.e0locked === false) {//if there is currently another command processing and this queue isnt locked
-											elocks.e0locked = true; console.log("e0 locked")//lock this queue
-											//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
-											do {//while processing = true, loop around in 1 second intervals
-												console.log('One loop in queue 0 for ' + message.content)
-												await delay(1000)
-											} while (processing === true)
-											elocks.e0locked = false; console.log("e0 unlocked")//unlock this queue
-										}//end queue 0
+			//if user is not the bot, log whats going to happen
+			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
 
-										console.log(message.content + 'has just passed all e-queues')//message is now free to enter rest of function
+			//we are only going further into the function with one of these 4 emoji
+			var allowedemoji = ['👍', '👎', '🥚', '💤']
+			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
+				//get the message object for the status board which recieved the reaction, then...
+				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
-											//lock out any more commands for x millisecond
-											startthinking(18000, message)
 
-try {
-							await rebuildteamobj(message)//rebuild the teammembers object for *this* status board
-							await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
-							await updateplayerboard(message)//now the teammembers object is updated, republish the status board
-							
-							//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
-							arraystatusboards()
-						} catch (err) {
-							console.log(err)
-						}//end catch error
-					//})//end .then after fetching statusboard
-	
-									})//end q1
-								})//end q2
-							})//end q3
-						})//end q4
-					})//end q5
-				})//end q6
-			})//end q7
-		}//end if q7, q6 or 15 is locked
-		else { message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) } 
+					//put q here? 
 
-					}) 
-				}//end if EIP Bot and allowed reaction
-			}//end if reaction message is a statusboard message
-		}//end for loop checking through stored reaction board message ids for a match for this reaction add
+
+					if (elocks.e7locked === false || elocks.e6locked === false || elocks.e5locked === false) {
+						//try all the queues. Maximum is 1 processing plus 7 waiting
+						console.log(msg.content + 'just entered the top of the stack above e7')
+						//console.log(msg)
+						await ebucket(msg, reaction.emoji.name, thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
+							console.log(result)
+
+							console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
+							await ebucket(result.message, result.emoji, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
+								console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e6 to e5')
+								await ebucket(result.message, result.emoji, result.user, elocks, 'e5locked', 'e4locked', 1000, 'e5').then(async result => {
+									console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e5 to e4')
+									await ebucket(result.message, result.emoji, result.user, elocks, 'e4locked', 'e3locked', 1000, 'e4').then(async result => {
+										console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e4 to e3')
+										await ebucket(result.message, result.emoji, result.user, elocks, 'e3locked', 'e2locked', 1000, 'e3').then(async result => {
+											console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e3 to e2')
+											await ebucket(result.message, result.emoji, result.user, elocks, 'e2locked', 'e1locked', 1000, 'e2').then(async result => {
+												console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
+												await ebucket(result.message, result.emoji, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
+													console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
+													console.log(result)
+													//queue 0
+													if (processing === true && elocks.e0locked === false) {//if there is currently another command processing and this queue isnt locked
+														elocks.e0locked = true; console.log("e0 locked")//lock this queue
+														//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
+														do {//while processing = true, loop around in 1 second intervals
+															console.log('One loop in queue 0 for ' + message.content)
+															await delay(1000)
+														} while (processing === true)
+														elocks.e0locked = false; console.log("e0 unlocked")//unlock this queue
+													}//end queue 0
+
+													console.log(message.content + 'has just passed all e-queues')//message is now free to enter rest of function
+
+													//lock out any more commands for x millisecond
+													startthinking(18000, message)
+
+													try {
+														await rebuildteamobj(message)//rebuild the teammembers object for *this* status board
+														await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
+														await updateplayerboard(message)//now the teammembers object is updated, republish the status board
+
+														//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
+														arraystatusboards()
+													} catch (err) {
+														console.log(err)
+													}//end catch error
+													//})//end .then after fetching statusboard
+
+												})//end q1
+											})//end q2
+										})//end q3
+									})//end q4
+								})//end q5
+							})//end q6
+						})//end q7
+					}//end if q7, q6 or 15 is locked
+					else { message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) }
+
+				})
+			}//end if EIP Bot and allowed reaction
+		}//end if reaction message is a statusboard message
+	}//end for loop checking through stored reaction board message ids for a match for this reaction add
 	//}//end if processing is false
 });//end client on reaction add 
 
