@@ -130,7 +130,7 @@ function ebucket(message, emoji, user, lockobject, thislock, nextlock, loopdelay
 			//console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
 			let bdelay = loopdelay//set a local variable from the one passed to function. It will increse each loop
 			let qloop = setTimeout(function request() {//establish function which calls itself
-				//console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + bdelay)
+				console.log('One loop in timeout function for ' + queuename + " emoji: "+ emoji + " User: " +  user + '. Delay is: ' + bdelay)
 				if (lockobject[nextlock] === true) {//on this loop, if the next bucket is locked, increase timeout and loop again
 					//console.log(qlocks)
 					bdelay *= 1.1;//add 10% to the length of delay
@@ -208,7 +208,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 						console.log(msg.content + 'just entered the top of the stack above e7')
 						//console.log(msg)
 						await ebucket(msg, reaction.emoji.name, thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
-							console.log(result)
+							//console.log(result)
 
 							console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
 							await ebucket(result.message, result.emoji, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
@@ -223,7 +223,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 												console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
 												await ebucket(result.message, result.emoji, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
 													console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
-													console.log(result)
+													//console.log(result)
 													//queue 0
 													if (processing === true && elocks.e0locked === false) {//if there is currently another command processing and this queue isnt locked
 														elocks.e0locked = true; console.log("e0 locked")//lock this queue
