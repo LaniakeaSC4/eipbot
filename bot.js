@@ -151,7 +151,7 @@ function ebucket(message, emoji, user, lockobject, thislock, nextlock, loopdelay
 // 1. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
 	//if (processing === false) {
-	startthinking(15000, false)
+	//startthinking(15000, false)
 	// When we receive a reaction we check if the reaction is partial or not
 	if (reaction.partial) {
 		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
@@ -229,13 +229,13 @@ client.on('messageReactionAdd', async (reaction, user) => {
 														elocks.e0locked = true; console.log("e0 locked")//lock this queue
 														//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
 														do {//while processing = true, loop around in 1 second intervals
-															console.log('One loop in queue 0 for reaction : ' + result.emoji + ' for ' + result.usert)
+															console.log('One loop in queue 0 for reaction : ' + result.emoji + ' for ' + result.user)
 															await delay(1000)
 														} while (processing === true)
 														elocks.e0locked = false; console.log("e0 unlocked")//unlock this queue
 													}//end queue 0
 
-													console.log(message.content + 'has just passed all e-queues')//message is now free to enter rest of function
+													console.log('reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
 
 													//lock out any more commands for x millisecond
 													startthinking(18000, message)
