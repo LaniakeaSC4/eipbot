@@ -121,6 +121,33 @@ function buildteamobj(message) {
 //object containing the locks for the processing queue.
 var elocks = { e0locked: false, e1locked: false, e2locked: false, e3locked: false, e4locked: false, e5locked: false, e6locked: false, e7locked: false }
 
+//bucket function (processing queue). Holds message in one bucket untill the next one unlocks and the message can flow in
+function ebucket(message, emoji, user, lockobject, thislock, nextlock, loopdelay, queuename) {
+	return new Promise((resolve, reject) => {
+		//console.log(qlocks);console.log("lockobject.thislock is:");console.log(lockobject[thislock])
+		if (lockobject[nextlock] === true) {//if the next bucket is locked
+			lockobject[thislock] = true; console.log(queuename + " locked")//lock this bucket
+			//console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. Processing var was ' + processing)
+			let bdelay = loopdelay//set a local variable from the one passed to function. It will increse each loop
+			let qloop = setTimeout(function request() {//establish function which calls itself
+				//console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + bdelay)
+				if (lockobject[nextlock] === true) {//on this loop, if the next bucket is locked, increase timeout and loop again
+					//console.log(qlocks)
+					bdelay *= 1.1;//add 10% to the length of delay
+					qloop = setTimeout(request, bdelay);//call another loop
+				}//end if nextlock is true
+
+				if (lockobject[nextlock] === false) {//on this loop if the next bucket is now open, send message to it and unlock this one
+					//console.log(qlocks)
+					resolve({message:message, emoji:emoji, user:user})//return message
+					lockobject[thislock] = false; console.log(queuename + " unlocked")//unlock this bucket so messages can flow in from above
+				}//end if nextlock is false
+			}, bdelay);//end qloop/setTimeout function
+
+		} else { console.log('skipping ' + queuename + ' queue'); resolve({message:message, emoji:emoji, user:user}) }//if the next bucket wasnt locked, we can pass the message straight through
+	})//end promise
+}//end bucket function
+
 // 1. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
 	//if (processing === false) {
@@ -180,8 +207,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			//try all the queues. Maximum is 1 processing plus 7 waiting
 			console.log(msg.content + 'just entered the top of the stack above e7')
 			//console.log(msg)
-			await bucket(msg, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async message => {
-			  //console.log(message)
+			await ebucket(msg, reaction.emoji.name , thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async message => {
+			  console.log(message)
 			
 				console.log(message.content + ' passed from e7 to e6')
 				await bucket(message, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async message => {
@@ -202,7 +229,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 											elocks.e0locked = true; console.log("e0 locked")//lock this queue
 											//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
 											do {//while processing = true, loop around in 1 second intervals
-												//console.log('One loop in queue 0 for ' + message.content)
+												console.log('One loop in queue 0 for ' + message.content)
 												await delay(1000)
 											} while (processing === true)
 											elocks.e0locked = false; console.log("e0 unlocked")//unlock this queue
