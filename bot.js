@@ -118,6 +118,9 @@ function buildteamobj(message) {
 //  3. Emoji swapper function
 //======================================================
 
+//object containing the locks for the processing queue.
+var elocks = { e0locked: false, e1locked: false, e2locked: false, e3locked: false, e4locked: false, e5locked: false, e6locked: false, e7locked: false }
+
 // 1. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
 	if (processing === false) {
@@ -168,11 +171,46 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
 					//get the message object for the status board which recieved the reaction, then...
 					await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-						try {
+						
 							
-							//put queue here? 
+							//put q here? 
+							
+							
+							if (elocks.e7locked === false || elocks.e6locked === false || elocks.e5locked === false) {
+			//try all the queues. Maximum is 1 processing plus 7 waiting
+			console.log(msg.content + 'just entered the top of the stack above e7')
+			await bucket(msg, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async message => {
+				console.log(message.content + ' passed from e7 to e6')
+				await bucket(message.content, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async message => {
+					console.log(message.content + ' passed from e6 to e5')
+					await bucket(message, qlocks, 'e5locked', 'e4locked', 1000, 'e5').then(async message => {
+						console.log(message.content + ' passed from e5 to e4')
+						await bucket(message, elocks, 'e4locked', 'e3locked', 1000, 'e4').then(async message => {
+							console.log(message.content + ' passed from e4 to e3')
+							await bucket(message, elocks, 'e3locked', 'e2locked', 1000, 'e3').then(async message => {
+								console.log(message.content + ' passed from e3 to e2')
+								await bucket(message, elocks, 'e2locked', 'e1locked', 1000, 'e2').then(async message => {
+									console.log(message.content + ' passed from e2 to e1')
+									await bucket(message, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async message => {
+										console.log(message.content + ' passed from e1 to e0')
 
-							
+										//queue 0
+										if (processing === true && elocks.e0locked === false) {//if there is currently another command processing and this queue isnt locked
+											elocks.e0locked = true; console.log("e0 locked")//lock this queue
+											//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
+											do {//while processing = true, loop around in 1 second intervals
+												//console.log('One loop in queue 0 for ' + message.content)
+												await delay(1000)
+											} while (processing === true)
+											elocks.e0locked = false; console.log("e0 unlocked")//unlock this queue
+										}//end queue 0
+
+										console.log(message.content + 'has just passed all e-queues')//message is now free to enter rest of function
+
+											//lock out any more commands for x millisecond
+											startthinking(18000, message)
+
+try {
 							await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
 							await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
 							await updateplayerboard(msg)//now the teammembers object is updated, republish the status board
@@ -182,7 +220,19 @@ client.on('messageReactionAdd', async (reaction, user) => {
 						} catch (err) {
 							console.log(err)
 						}//end catch error
-					})//end .then after fetching statusboard
+					//})//end .then after fetching statusboard
+	
+									})//end q1
+								})//end q2
+							})//end q3
+						})//end q4
+					})//end q5
+				})//end q6
+			})//end q7
+		}//end if q7, q6 or 15 is locked
+		else { message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) } 
+
+					}) 
 				}//end if EIP Bot and allowed reaction
 			}//end if reaction message is a statusboard message
 		}//end for loop checking through stored reaction board message ids for a match for this reaction add
