@@ -179,7 +179,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 							if (elocks.e7locked === false || elocks.e6locked === false || elocks.e5locked === false) {
 			//try all the queues. Maximum is 1 processing plus 7 waiting
 			console.log(msg.content + 'just entered the top of the stack above e7')
+			console.log(msg)
 			await bucket(msg, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async message => {
+			  console.log(message)
+			
 				console.log(message.content + ' passed from e7 to e6')
 				await bucket(message.content, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async message => {
 					console.log(message.content + ' passed from e6 to e5')
@@ -211,9 +214,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 											startthinking(18000, message)
 
 try {
-							await rebuildteamobj(msg)//rebuild the teammembers object for *this* status board
+							await rebuildteamobj(message)//rebuild the teammembers object for *this* status board
 							await changeplayerstatus(reaction.emoji.name, thisuser)//update the user in the teammembers object with the new emojj
-							await updateplayerboard(msg)//now the teammembers object is updated, republish the status board
+							await updateplayerboard(message)//now the teammembers object is updated, republish the status board
 							
 							//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
 							arraystatusboards()
