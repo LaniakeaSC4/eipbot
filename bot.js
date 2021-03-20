@@ -229,7 +229,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 														elocks.e0locked = true; console.log("e0 locked")//lock this queue
 														//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. Processing var was ' + processing)
 														do {//while processing = true, loop around in 1 second intervals
-															console.log('One loop in queue 0 for ' + message.content)
+															console.log('One loop in queue 0 for reaction : ' + result.emoji + ' for ' + result.usert)
 															await delay(1000)
 														} while (processing === true)
 														elocks.e0locked = false; console.log("e0 unlocked")//unlock this queue
