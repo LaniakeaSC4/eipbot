@@ -238,7 +238,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 													console.log('reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
 
 													//lock out any more commands for x millisecond
-													startthinking(18000, message)
+													startthinking(18000, result.message)
 
 													try {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
