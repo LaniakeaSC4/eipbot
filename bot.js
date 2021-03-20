@@ -252,7 +252,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 							})//end q6
 						})//end q7
 					}//end if q7, q6 or 15 is locked
-					else { reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) }
+					else { reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many reactions silly human! You are going to have to wait 15 seconds and try to add your reaction again') }
 				})
 			}//end if EIP Bot and allowed reaction
 		}//end if reaction message is a statusboard message
