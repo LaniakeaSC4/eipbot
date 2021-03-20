@@ -179,12 +179,12 @@ client.on('messageReactionAdd', async (reaction, user) => {
 							if (elocks.e7locked === false || elocks.e6locked === false || elocks.e5locked === false) {
 			//try all the queues. Maximum is 1 processing plus 7 waiting
 			console.log(msg.content + 'just entered the top of the stack above e7')
-			console.log(msg)
+			//console.log(msg)
 			await bucket(msg, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async message => {
-			  console.log(message)
+			  //console.log(message)
 			
 				console.log(message.content + ' passed from e7 to e6')
-				await bucket(message.content, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async message => {
+				await bucket(message, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async message => {
 					console.log(message.content + ' passed from e6 to e5')
 					await bucket(message, qlocks, 'e5locked', 'e4locked', 1000, 'e5').then(async message => {
 						console.log(message.content + ' passed from e5 to e4')
