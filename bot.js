@@ -19,6 +19,12 @@ var processingMaster = false//initalise on false
 var processingSquares = false
 var processingEmoji = false
 var emojiQueueCount = 0
+
+async function emojilock(lock){
+if(lock === true){processingEmoji = true;console.log("Locking emoji processing")}
+if(lock === false && emojiQueueCount == 0){processingEmoji = false;console.log("unlocking emoji processing")}
+}
+
 const delay = async (ms) => new Promise(res => setTimeout(res, ms));//delay function used by startthinkin function
 //delays for x millisecods
 const startthinking = async (x, message) => {
@@ -196,7 +202,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 			if (thisuser != "EiP Bot") {
 				emojiQueueCount = emojiQueueCount + 1
-				processingEmoji = true//stop other processing types
+				await emojilock(true)//stop other processing types
 			}
 
 			//if user is not the bot, log whats going to happen
@@ -239,16 +245,17 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 													console.log('reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
 
-													emojiQueueCount = emojiQueueCount - 1
-													console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
-
 													//lock out any more commands for x millisecond
 													startthinking(12000, result.message)
+
+													emojiQueueCount = emojiQueueCount - 1
+													console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 
 													try {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
 														await changeplayerstatus(result.emoji, result.user)//update the user in the teammembers object with the new emojj
 														await updateplayerboard(result.message, 'emoji')//now the teammembers object is updated, republish the status board
+														await emojilock(false)
 													} catch (err) {
 														console.log(err)
 													}//end catch error
@@ -442,10 +449,6 @@ function updateplayerboard(message, source) {
 
 					//send the updated embed
 					message.edit(updatedEmbed);
-
-					if (source == 'emoji' && emojiQueueCount == 0) {
-						console.log('unlocking emoji processing'); processingEmoji = false
-					} //reset emoji processing flag to allow other processes to run
 					resolve(true);
 				}//end if embed and footer text contains
 			})//end message.forEach
