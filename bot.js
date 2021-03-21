@@ -249,8 +249,7 @@ console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + 
 														await updateplayerboard(result.message)//now the teammembers object is updated, republish the status board
 
 														if (emojiQueueCount == 0) {
-													//rebuild the statusboards array (not needed for this function, but keeps us up to date)
-														arraystatusboards();console.log('unlocking emoji processing') ;processingEmoji = false} //reset emoji processing flag to allow other processes to run
+													console.log('unlocking emoji processing') ;processingEmoji = false} //reset emoji processing flag to allow other processes to run
 													} catch (err) {
 														console.log(err)
 													}//end catch error
