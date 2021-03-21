@@ -10,7 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-		console.log('processing emoji is:' + processingEmoji)
+		console.log('processing emoji is:' + processingEmoji + ' emoji q count is: ' + emojiQueueCount)
 	}
 });//end client on message 
 
@@ -237,6 +237,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 													console.log('reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
 
+emojiQueueCount = emojiQueueCount - 1
+console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
+
 													//lock out any more commands for x millisecond
 													startthinking(12000, result.message)
 
@@ -244,8 +247,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
 														await changeplayerstatus(result.emoji, result.user)//update the user in the teammembers object with the new emojj
 														await updateplayerboard(result.message)//now the teammembers object is updated, republish the status board
-emojiQueueCount = emojiQueueCount - 1
-console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 
 														if (emojiQueueCount == 0) {
 													//rebuild the statusboards array (not needed for this function, but keeps us up to date)
