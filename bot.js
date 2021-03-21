@@ -435,10 +435,12 @@ function updateplayerboard(message) {
 						var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
 						updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
 					}//end loop through teams updating from memory teammembers object
-if (emojiQueueCount == 0) {
-													console.log('unlocking emoji processing') ;processingEmoji = false} //reset emoji processing flag to allow other processes to run
+
 					//send the updated embed
 					message.edit(updatedEmbed);
+					
+					if (emojiQueueCount == 0) {
+													console.log('unlocking emoji processing') ;processingEmoji = false} //reset emoji processing flag to allow other processes to run
 					resolve(true);
 				}//end if embed and footer text contains
 			})//end message.forEach
