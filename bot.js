@@ -10,12 +10,14 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.startsWith("!test")) {
-		console.log('testing queue var. It is:' + queue)
+		console.log('processing emoji is:' + processingEmoji)
 	}
 });//end client on message 
 
 // Global lockout - when processingMaster is true, nothing else should run
 var processingMaster = false//initalise on false
+var processingSquares = false
+var processingEmoji = false
 const delay = async (ms) => new Promise(res => setTimeout(res, ms));//delay function used by startthinkin function
 //delays for x millisecods
 const startthinking = async (x, message) => {
@@ -168,6 +170,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
+		  
+		  processingEmoji = true//stop other processing types
 
 			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
 			var thischannel = reaction.message.channel.id
@@ -241,6 +245,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 														//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
 														arraystatusboards()
+														processingEmoji = false//reset emoji processing flag to allow other processes to run
 													} catch (err) {
 														console.log(err)
 													}//end catch error
@@ -656,7 +661,7 @@ client.on('message', async message => {
 											do {//while processingMaster = true, loop around in 1 second intervals
 												//console.log('One loop in queue 0 for ' + message.content)
 												await delay(1000)
-											} while (processingMaster === true)
+											} while (processingMaster === true || processingEmoji === true)
 											sqlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
 										}//end queue 0
 
