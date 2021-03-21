@@ -671,7 +671,7 @@ client.on('message', async message => {
 											do {//while processingMaster = true, loop around in 1 second intervals
 												//console.log('One loop in queue 0 for ' + message.content)
 												await delay(1000)
-											} while (processingMaster === true || (processingMaster === true || processingEmoji === true))
+											} while (processingMaster === true && (processingMaster === true || processingEmoji === true))
 											sqlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
 										}//end queue 0
 
