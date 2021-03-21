@@ -211,7 +211,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 				if (thisuser != "EiP Bot") {
 					emojiQueueCount = emojiQueueCount + 1
-					await emojilock(true)//stop other processing types
+					console.log("addined one to emojiqueuecount")
 				}
 
 				//get the message object for the status board which recieved the reaction, then...
@@ -247,6 +247,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 													}//end queue 0
 
 													console.log('reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
+
+													await emojilock(true)//stop other processing types
 
 													//lock out any more commands for x millisecond
 													startthinking(12000, result.message)
