@@ -18,6 +18,7 @@ client.on('message', async message => {
 var processingMaster = false//initalise on false
 var processingSquares = false
 var processingEmoji = false
+var emojiQueueCount = 0
 const delay = async (ms) => new Promise(res => setTimeout(res, ms));//delay function used by startthinkin function
 //delays for x millisecods
 const startthinking = async (x, message) => {
@@ -171,6 +172,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
 		  
+		  emojiQueueCount = emojiQueueCount + 1
 		  processingEmoji = true//stop other processing types
 
 			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
@@ -242,10 +244,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
 														await changeplayerstatus(result.emoji, result.user)//update the user in the teammembers object with the new emojj
 														await updateplayerboard(result.message)//now the teammembers object is updated, republish the status board
-
+emojiQueueCount = emojiQueueCount - 1
+console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 														//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
 														arraystatusboards()
-														processingEmoji = false//reset emoji processing flag to allow other processes to run
+														if (emojiQueueCount == 0) {processingEmoji = false} //reset emoji processing flag to allow other processes to run
 													} catch (err) {
 														console.log(err)
 													}//end catch error
