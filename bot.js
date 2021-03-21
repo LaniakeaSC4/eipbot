@@ -194,10 +194,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			if (reaction.emoji.name == "🥚" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
 			if (reaction.emoji.name == "💤" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
 
-    if (thisuser != "EiP Bot"){
-      emojiQueueCount = emojiQueueCount + 1
-		  processingEmoji = true//stop other processing types
-    } 
+			if (thisuser != "EiP Bot") {
+				emojiQueueCount = emojiQueueCount + 1
+				processingEmoji = true//stop other processing types
+			}
 
 			//if user is not the bot, log whats going to happen
 			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
@@ -239,8 +239,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 													console.log('reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
 
-emojiQueueCount = emojiQueueCount - 1
-console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
+													emojiQueueCount = emojiQueueCount - 1
+													console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 
 													//lock out any more commands for x millisecond
 													startthinking(12000, result.message)
@@ -260,8 +260,10 @@ console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + 
 							})//end q6
 						})//end q7
 					}//end if q7, q6 or 15 is locked
-					else { reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many reactions silly human! Please wait 15 seconds and try to add your reaction again')
-					emojiQueueCount = emojiQueueCount - 1}
+					else {
+						reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many reactions silly human! Please wait 15 seconds and try to add your reaction again')
+						emojiQueueCount = emojiQueueCount - 1
+					}
 				})
 			}//end if EIP Bot and allowed reaction
 		}//end if reaction message is a statusboard message
@@ -438,9 +440,10 @@ function updateplayerboard(message) {
 
 					//send the updated embed
 					message.edit(updatedEmbed);
-					
+
 					if (emojiQueueCount == 0) {
-													console.log('unlocking emoji processing') ;processingEmoji = false} //reset emoji processing flag to allow other processes to run
+						console.log('unlocking emoji processing'); processingEmoji = false
+					} //reset emoji processing flag to allow other processes to run
 					resolve(true);
 				}//end if embed and footer text contains
 			})//end message.forEach
@@ -668,7 +671,7 @@ client.on('message', async message => {
 											do {//while processingMaster = true, loop around in 1 second intervals
 												//console.log('One loop in queue 0 for ' + message.content)
 												await delay(1000)
-											} while (processingMaster === true || (processingMaster === true || processingEmoji === true)) 
+											} while (processingMaster === true || (processingMaster === true || processingEmoji === true))
 											sqlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
 										}//end queue 0
 
