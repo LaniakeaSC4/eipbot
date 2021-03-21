@@ -248,7 +248,7 @@ emojiQueueCount = emojiQueueCount - 1
 console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 														//lastly, trigger a rebuild of the statusboards array (not needed for this function, but keeps us up to date)
 														arraystatusboards()
-														if (emojiQueueCount == 0) {processingEmoji = false} //reset emoji processing flag to allow other processes to run
+														if (emojiQueueCount == 0) {processingEmoji = false;console.log('unlocking emoji processing')} //reset emoji processing flag to allow other processes to run
 													} catch (err) {
 														console.log(err)
 													}//end catch error
