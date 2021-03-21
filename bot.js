@@ -23,7 +23,7 @@ var emojiQueueCount = 0
 async function emojilock(lock){
 if(lock === true){processingEmoji = true;console.log("Locking emoji processing")}
 
-if(lock === false && emojiQueueCount == 0){console.log("delaying 10 seconds before unlocking emoji processing");delay(10000);processingEmoji = false;console.log("unlocking emoji processing")}
+if(lock === false && emojiQueueCount == 0){console.log("delaying 10 seconds before unlocking emoji processing");await delay(10000);processingEmoji = false;console.log("unlocking emoji processing")}
 
 }
 
