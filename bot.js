@@ -736,7 +736,7 @@ client.on('message', async message => {
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
 												thankyou(message.member.displayName, mentioneduser, "orange", message)
-												updateplayersquare("🟩", "🟥", "🟧", mentioneduser, messag, 'sq')
+												updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message, 'sq')
 											}//end if isuser = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
