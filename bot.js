@@ -681,7 +681,7 @@ client.on('message', async message => {
 										if (message.content.startsWith("!red") && processingMaster === false) {
 
 											//lock out any more commands for x millisecond
-											startthinking(15500, message)
+											startthinking(18500, message)
 
 											//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
@@ -715,7 +715,7 @@ client.on('message', async message => {
 										if (message.content.startsWith("!orange") && processingMaster === false) {
 
 											//lock out any more commands for x millisecond
-											startthinking(15500, message)
+											startthinking(18500, message)
 
 											//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
@@ -749,7 +749,7 @@ client.on('message', async message => {
 										if (message.content.startsWith("!green") && processingMaster == false) {
 
 											//lock out any more commands for x millisecond
-											startthinking(15500, message)
+											startthinking(18500, message)
 
 											//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
