@@ -20,10 +20,10 @@ var processingSquares = false
 var processingEmoji = false
 var emojiQueueCount = 0
 
-async function emojilock(lock){
-if(lock === true){processingEmoji = true;console.log("Locking emoji processing")}
+async function emojilock(lock) {
+	if (lock === true) { processingEmoji = true; console.log("Locking emoji processing") }
 
-if(lock === false && emojiQueueCount == 0){console.log("delaying 10 seconds before unlocking emoji processing");await delay(10000);processingEmoji = false;console.log("unlocking emoji processing")}
+	if (lock === false && emojiQueueCount == 0) { console.log("delaying 15 seconds before unlocking emoji processing"); await delay(15000); processingEmoji = false; console.log("unlocking emoji processing") }
 
 }
 
@@ -202,17 +202,18 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			if (reaction.emoji.name == "🥚" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
 			if (reaction.emoji.name == "💤" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
 
-			if (thisuser != "EiP Bot") {
-				emojiQueueCount = emojiQueueCount + 1
-				await emojilock(true)//stop other processing types
-			}
-
 			//if user is not the bot, log whats going to happen
 			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
 
 			//we are only going further into the function with one of these 4 emoji
 			var allowedemoji = ['👍', '👎', '🥚', '💤']
 			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
+
+				if (thisuser != "EiP Bot") {
+					emojiQueueCount = emojiQueueCount + 1
+					await emojilock(true)//stop other processing types
+				}
+
 				//get the message object for the status board which recieved the reaction, then...
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
@@ -360,7 +361,7 @@ function findstatusboard(message) {
 // 2. Function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
-	  console.log('rebuilding team object')
+		console.log('rebuilding team object')
 		//clear object for rebuilding it
 		teammembers = {};
 		//define teams array, team names will be stored here for use by other functions
@@ -431,7 +432,7 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 // 4. function to republish the player status board from current state of arrays
 function updateplayerboard(message, source) {
 	return new Promise((resolve, reject) => {
-	  console.log('updating player board with source: ' + source)
+		console.log('updating player board with source: ' + source)
 		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message
