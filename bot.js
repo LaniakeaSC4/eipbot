@@ -421,6 +421,7 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 // 4. function to republish the player status board from current state of arrays
 function updateplayerboard(message, source) {
 	return new Promise((resolve, reject) => {
+	  console.log('updating player board with source: ' + source)
 		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message
