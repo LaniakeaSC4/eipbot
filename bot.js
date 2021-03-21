@@ -248,7 +248,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 													try {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
 														await changeplayerstatus(result.emoji, result.user)//update the user in the teammembers object with the new emojj
-														await updateplayerboard(result.message)//now the teammembers object is updated, republish the status board
+														await updateplayerboard(result.message, 'emoji')//now the teammembers object is updated, republish the status board
 													} catch (err) {
 														console.log(err)
 													}//end catch error
@@ -419,7 +419,7 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 }//end of changeteamsquare function
 
 // 4. function to republish the player status board from current state of arrays
-function updateplayerboard(message) {
+function updateplayerboard(message, source) {
 	return new Promise((resolve, reject) => {
 		//fetch pinned messages
 		message.channel.messages.fetchPinned().then(messages => {
@@ -441,7 +441,7 @@ function updateplayerboard(message) {
 					//send the updated embed
 					message.edit(updatedEmbed);
 
-					if (emojiQueueCount == 0) {
+					if (source == 'emoji' && emojiQueueCount == 0) {
 						console.log('unlocking emoji processing'); processingEmoji = false
 					} //reset emoji processing flag to allow other processes to run
 					resolve(true);
@@ -452,23 +452,23 @@ function updateplayerboard(message) {
 }//end function updateplayerboard
 
 // 5a. async function to chain rebuild functions to follow each other - for single user
-async function updateplayersquare(oldsq1, oldsq2, newsq, user, message) {
+async function updateplayersquare(oldsq1, oldsq2, newsq, user, message, source) {
 	try {
 		console.log('user ' + user + ' started being updated to ' + newsq)
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
-		await updateplayerboard(message)//update player board from memory object
+		await updateplayerboard(message, source)//update player board from memory object
 		console.log('user ' + user + ' finished being updated to ' + newsq)
 	} catch (err) { console.log(err) }
 }//end function
 
 // 5b. async function to chain rebuild functions to follow each other - for team
-async function updateteamsquare(oldsq1, oldsq2, newsq, team, message) {
+async function updateteamsquare(oldsq1, oldsq2, newsq, team, message, source) {
 	try {
 		console.log('team ' + team + ' started being updated to ' + newsq)
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
 		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
-		await updateplayerboard(message)//update player board from memory object
+		await updateplayerboard(message, source)//update player board from memory object
 		console.log('team ' + team + ' finished being updated to ' + newsq)
 	} catch (err) { console.log(err) }
 }//end function
@@ -669,9 +669,9 @@ client.on('message', async message => {
 											sqlocks.q0locked = true; console.log("q0 locked")//lock this queue
 											//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. processingMaster var was ' + processingMaster)
 											do {//while processingMaster = true, loop around in 1 second intervals
-												//console.log('One loop in queue 0 for ' + message.content)
+												console.log('One loop in queue 0 for ' + message.content)
 												await delay(1000)
-											} while (processingMaster === true && (processingMaster === true || processingEmoji === true))
+											} while (processingMaster === true || processingEmoji === true)
 											sqlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
 										}//end queue 0
 
@@ -702,12 +702,12 @@ client.on('message', async message => {
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
 												thankyou(message.member.displayName, mentioneduser, "red", message)
-												updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message)
+												updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message, 'sq')
 											}//end if isuser = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
 												thankyou(message.member.displayName, mentionedrole, "red", message)
-												updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message)
+												updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message, 'sq')
 											}//end if isteam = true
 										}//end !red
 
@@ -736,12 +736,12 @@ client.on('message', async message => {
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
 												thankyou(message.member.displayName, mentioneduser, "orange", message)
-												updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message)
+												updateplayersquare("🟩", "🟥", "🟧", mentioneduser, messag, 'sq')
 											}//end if isuser = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
 												thankyou(message.member.displayName, mentionedrole, "orange", message)
-												updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message)
+												updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message, 'sq')
 											}//end if isteam = true
 										}//end !orange
 
@@ -769,12 +769,12 @@ client.on('message', async message => {
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
 												thankyou(message.member.displayName, mentioneduser, "green", message);
-												updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message);
+												updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message, 'sq');
 											}//end if isuser = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
 												thankyou(message.member.displayName, mentionedrole, "green", message)
-												updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message)
+												updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message, 'sq')
 											}//end if isteam = true
 										}//end !green
 									})//end q1
