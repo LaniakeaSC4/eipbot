@@ -23,9 +23,16 @@ var emojiQueueCount = 0
 async function emojilock(lock) {
 	if (lock === true) { processingEmoji = true; console.log("Locking emoji processing") }
 
-	if (lock === false && emojiQueueCount == 0) { console.log("delaying 15 seconds before unlocking emoji processing"); await delay(15000); processingEmoji = false; console.log("unlocking emoji processing") }
-
-}
+	if (lock === false && emojiQueueCount == 0) {
+		console.log("delaying 15 seconds before trying to unlock emoji processing");
+		await delay(15000);
+		console.log("rechecking after wait if we can unlock")
+		if (emojiQueueCount == 0) {//if still 0
+			processingEmoji = false;
+			console.log("unlocked emoji processing")
+		} else (console.log("emojiqueuecount was not 0. Didnt unlock"))
+	}//end if lock === false (unlock attempt)
+}//end function
 
 const delay = async (ms) => new Promise(res => setTimeout(res, ms));//delay function used by startthinkin function
 //delays for x millisecods
