@@ -14,58 +14,15 @@ client.on('message', async message => {
 	}
 });//end client on message 
 
-// Global lockout - when processingMaster is true, nothing else should run
-var processingMaster = false//initalise on false
-var processingSquares = false
-var processingEmoji = false
-var emojiQueueCount = 0
+//=================================================
+//  Coop bot | Functions | Initalise
+//  1. Log startup to console + array status boards
+//  2. Build initial team object during !coop open
+//=================================================
 
-async function emojilock(lock) {
-	if (lock === true) { processingEmoji = true; console.log("Locking emoji processing") }
-
-	if (lock === false && emojiQueueCount == 0) {
-		console.log("delaying 15 seconds before trying to unlock emoji processing");
-		await delay(15000);
-		console.log("rechecking after wait if we can unlock")
-		if (emojiQueueCount == 0) {//if still 0
-			processingEmoji = false;
-			console.log("unlocked emoji processing")
-		} else (console.log("emojiqueuecount was not 0. Didnt unlock"))
-	}//end if lock === false (unlock attempt)
-}//end function
-
-const delay = async (ms) => new Promise(res => setTimeout(res, ms));//delay function used by startthinkin function
-//delays for x millisecods
-const startthinking = async (x, message) => {
-	if (message !== false) {
-		//do this first
-		processingMaster = true
-		message.channel.startTyping()//start discord typing signifier
-		console.log("Starting to think for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
-		await delay(x)//wait for x milliseconds
-		//then do this
-		message.channel.stopTyping()//stop discord typing signifier
-		processingMaster = false
-		console.log("Done thinking for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
-	}//end if not false
-
-	if (message === false) {
-		//do this first
-		processingMaster = true
-		console.log("No message recieved. Starting to think for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
-		await delay(x)//wait for x milliseconds
-		//then do this
-		processingMaster = false
-		console.log("No message recieved. Done thinking for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
-	}//end if false
-}//end start thinking function
-
-//=======================================
-// Coop bot | Functions | Initalise
-//=======================================
-
+// 1. Report ready to console and build array of open coop boards
 client.on('ready', () => {
-	startthinking(6000, false)
+	startthinking(3000, false)
 	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!');
@@ -76,7 +33,7 @@ var teams = {}//this one is for just the teams/roles that match the home team ch
 var teammembers = {}//the main data storage for the status board. Team titles and team members with squares and farming status
 var lastmessage = {}//store the last retrieved message for last access.
 
-//function to build team object from home team channels. This object contains the teams and team members. 🟥's added during initalisation
+// 2. Function to build team object from home team channels. This object contains the teams and team members. 🟥's added. Run during !coop open
 function buildteamobj(message) {
 	//not sure if this will ever trigger. Here as a safety net. If this goes off, we might have problems. 
 	if (message.partial) { console.log("Partial message!!!!") }
@@ -129,47 +86,90 @@ function buildteamobj(message) {
 	teams['teams'] = teamnames;
 }//end function
 
+//=======================================
+//  Coop bot | Functions | Processing
+//  1. Emoji processing lock function
+//  2. Delay/wait functions
+//=======================================
+
+var processingMaster = false//Global lockout - when processingMaster is true, nothing else should run. initalise on false
+var processingSquares = false//processing lockout for square color change. NOT CURRENTLY USED/NEEDED. Emoji lockout controls flow
+var processingEmoji = false//processing lockout for when we are processing emoji changes
+var emojiQueueCount = 0//counter of the number of emoji changes in the processing queue. When 0 an attempt can be made to unlock car processingEmoji
+
+// 1. emoji processing lock/unlock functiom
+async function emojilock(lock) {
+	if (lock === true) { processingEmoji = true; console.log("Locking emoji processing") }//if lock is true, set emojiprocessing to true
+
+	if (lock === false && emojiQueueCount == 0) {//if function is called with false, then unlock if no more emoji's are in queue
+		console.log("delaying 15 seconds before trying to unlock emoji processing");
+		await delay(15000);
+		console.log("rechecking after wait if we can unlock")
+		if (emojiQueueCount == 0) {//if still 0. Another emoji could have came in during the 15 seconds
+			processingEmoji = false
+			console.log("unlocked emoji processing")
+		} else (console.log("emojiqueuecount was not 0. Didnt unlock"))
+	}//end if lock === false (unlock attempt)
+}//end function
+
+// 2. Delay functions. Can be used with await delay (x) and code in async function will wait for x milliseconds before continue
+const delay = async (ms) => new Promise(res => setTimeout(res, ms));//delay function used by startthinking function
+const startthinking = async (x, message) => {
+	if (message !== false) {
+		//do this first
+		processingMaster = true
+		message.channel.startTyping()//start discord typing signifier
+		console.log("Starting to think for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
+		await delay(x)//wait for x milliseconds
+		//then do this
+		message.channel.stopTyping()//stop discord typing signifier
+		processingMaster = false
+		console.log("Done thinking for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
+	}//end if not false
+
+	if (message === false) {
+		//do this first
+		processingMaster = true
+		console.log("No message recieved. Starting to think for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
+		await delay(x)//wait for x milliseconds
+		//then do this
+		processingMaster = false
+		console.log("No message recieved. Done thinking for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
+	}//end if false
+}//end start thinking function
+
 //======================================================
 //	Coop bot | Functions | Reaction Status (👍👎🥚💤)
-//  1. Message reaction add listener
-//  2. Refresh array of currently open coops
-//  3. Emoji swapper function
+//  1. ebucket - emoji queue (bucket) function
+//  2. Message reaction add listener
+//  3. Refresh array of currently open coops
+//  4. Emoji swapper function
 //======================================================
 
 //object containing the locks for the task queue.
 var elocks = { e0locked: false, e1locked: false, e2locked: false, e3locked: false, e4locked: false, e5locked: false, e6locked: false, e7locked: false }
-
-//bucket function (processingMaster queue). Holds message in one bucket untill the next one unlocks and the message can flow in
+// 1. ebucket function (processingMaster queue). Holds message in one bucket untill the next one unlocks and the message can flow in
 function ebucket(message, emoji, user, lockobject, thislock, nextlock, loopdelay, queuename) {
 	return new Promise((resolve, reject) => {
-		//console.log(sqlocks);console.log("lockobject.thislock is:");console.log(lockobject[thislock])
 		if (lockobject[nextlock] === true) {//if the next bucket is locked
 			lockobject[thislock] = true; console.log(queuename + " locked")//lock this bucket
-			//console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. processingMaster var was ' + processingMaster)
 			let bdelay = loopdelay//set a local variable from the one passed to function. It will increse each loop
 			let qloop = setTimeout(function request() {//establish function which calls itself
-				//console.log('One loop in timeout function for ' + queuename + " emoji: " + emoji + " User: " + user + '. Delay is: ' + bdelay)
 				if (lockobject[nextlock] === true) {//on this loop, if the next bucket is locked, increase timeout and loop again
-					//console.log(sqlocks)
 					bdelay *= 1.1;//add 10% to the length of delay
 					qloop = setTimeout(request, bdelay);//call another loop
 				}//end if nextlock is true
-
 				if (lockobject[nextlock] === false) {//on this loop if the next bucket is now open, send message to it and unlock this one
-					//console.log(sqlocks)
 					resolve({ message: message, emoji: emoji, user: user })//return message
 					lockobject[thislock] = false; console.log(queuename + " unlocked")//unlock this bucket so messages can flow in from above
 				}//end if nextlock is false
 			}, bdelay);//end qloop/setTimeout function
-
 		} else { console.log('skipping ' + queuename + ' queue'); resolve({ message: message, emoji: emoji, user: user }) }//if the next bucket wasnt locked, we can pass the message straight through
 	})//end promise
 }//end bucket function
 
-// 1. reaction add listener
+// 2. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
-	//if (processingMaster === false) {
-	//startthinking(15000, false)
 	// When we receive a reaction we check if the reaction is partial or not
 	if (reaction.partial) {
 		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
@@ -216,16 +216,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			var allowedemoji = ['👍', '👎', '🥚', '💤']
 			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
 
-				if (thisuser != "EiP Bot") {
-					emojiQueueCount = emojiQueueCount + 1
-					console.log("addined one to emojiqueuecount")
-				}
-
+				//add one to the queue count. Needs to be 0 before we can leave emoji processing
+				if (thisuser != "EiP Bot") { emojiQueueCount = emojiQueueCount + 1; console.log("adding one to emojiqueuecount") }
 				//get the message object for the status board which recieved the reaction, then...
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-
-					if (elocks.e7locked === false || elocks.e6locked === false) {
-						//try all the queues. Maximum is 1 running plus 7 waiting
+					if (elocks.e7locked === false || elocks.e6locked === false) {//try all the queues. Maximum is 1 running plus 7 waiting
 						console.log(msg.content + 'just entered the top of the stack above e7')
 						await ebucket(msg, reaction.emoji.name, thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
 							console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
@@ -241,7 +236,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 												console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
 												await ebucket(result.message, result.emoji, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
 													console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
-
 													//queue 0
 													if (processingMaster === true && elocks.e0locked === false) {//if there is currently another command processingMaster and this queue isnt locked
 														elocks.e0locked = true; console.log("e0 locked")//lock this queue
@@ -254,15 +248,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 													}//end queue 0
 
 													console.log('reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
-
 													await emojilock(true)//stop other processing types
-
-													//lock out any more commands for x millisecond
-													startthinking(12000, result.message)
-
-													emojiQueueCount = emojiQueueCount - 1
+													startthinking(12000, result.message)//lock out any more commands for x millisecond
+													emojiQueueCount = emojiQueueCount - 1//this one is now being processed. Let's remove it from queue count
 													console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
-
 													try {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
 														await changeplayerstatus(result.emoji, result.user)//update the user in the teammembers object with the new emojj
@@ -282,25 +271,22 @@ client.on('messageReactionAdd', async (reaction, user) => {
 					else {
 						reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many reactions silly human! Please wait 15 seconds and try to add your reaction again')
 						emojiQueueCount = emojiQueueCount - 1
-					}
-				})
+					}//end else (for queue is full)
+				})//end fetch statusboard message then...
 			}//end if EIP Bot and allowed reaction
 		}//end if reaction message is a statusboard message
 	}//end for loop checking through stored reaction board message ids for a match for this reaction add
-	//}//end if processingMaster is false
 });//end client on reaction add 
 
 //global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuilt on startup and when any reaction is added to a status board message
 var statusboardmessages = [];
-
-// 2. function to rebuild statusboardmessages with open coop status boards
+// 3. function to rebuild statusboardmessages with open coop status boards
 function arraystatusboards() {
 	//clear array before rebuild
 	statusboardmessages = []
 	//get all text channels
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
 	categoryChannels.forEach(channel => {//for each non-deleted test channel
-
 		channel.messages.fetchPinned().then(messages => {//fetch pinned messsages
 			messages.forEach(msg => {//for each pinned message
 				//embed[0] is first/only embed in message. Copy it to embed variable
@@ -317,7 +303,7 @@ function arraystatusboards() {
 
 }//end array statusboards function 
 
-// 3. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
+// 4. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
 function changeplayerstatus(newemoji, user) {
 	//log the change we are making
 	console.log('(in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
@@ -355,12 +341,10 @@ function findstatusboard(message) {
 		message.channel.messages.fetchPinned().then(messages => {
 			//for each pinned message 
 			messages.forEach(msg => {
-				//embed[0] is first/only embed in message. Copy it to embed variable
-				let embed = msg.embeds[0];
-				//find the right pinned message
-				if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) {
+				let embed = msg.embeds[0]//embed[0] is first/only embed in message. Copy it to embed variable
+				if (embed != undefined && embed.footer.text.includes('LaniakeaSC')) {//find the right pinned message
 					console.log('found a pinned statusboard message with ID: ' + msg.id)
-					resolve(msg)
+					resolve(msg)//return the statusboard
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
@@ -371,40 +355,26 @@ function findstatusboard(message) {
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
 		console.log('rebuilding team object')
-		//clear object for rebuilding it
-		teammembers = {};
-		//define teams array, team names will be stored here for use by other functions
-		var teamnames = [];
-		//fetch pinned messages from this channel then...
-		message.channel.messages.fetchPinned().then(messages => {
-			//for each pinned message 
-			messages.forEach(message => {
-				//embed[0] is first/only embed in message. Copy it to embed variable
-				let embed = message.embeds[0];
-				//find the right pinned message
-				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+		teammembers = {}//clear object for rebuilding it
+		var teamnames = []//define teams array, team names will be stored here for use by other functions
+		message.channel.messages.fetchPinned().then(messages => {//fetch pinned messages from this channel then...
+			messages.forEach(message => {//for each pinned message 
+				let embed = message.embeds[0];//embed[0] is first/only embed in message. Copy it to embed variable
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {//find the right pinned message
 					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
-						//get the values (team members). Is loaded as string with \n after each player
-						var thesemembers = embed.fields[i].value
-						//split into array. thesemembers is now array of team members with thier current status square
-						thesemembers = thesemembers.split('\n');
-						//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
-						var thisteam = embed.fields[i].name.split(' ').pop()
-						//save the team (role) name itself for use by other functions
-						teamnames.push(thisteam)
-						//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
-						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "");
-						//store members in the team members object, keyed by cleaned team name
-						teammembers[cleanrole] = thesemembers;
-						//store message to get URL
-						thismessage = message
+						var thesemembers = embed.fields[i].value//get the values (team members). Is loaded as string with \n after each player
+						thesemembers = thesemembers.split('\n')//split into array. thesemembers is now array of team members with thier current status square
+						var thisteam = embed.fields[i].name.split(' ').pop()//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
+						teamnames.push(thisteam)//save the team (role) name itself for use by other functions
+						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "")//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
+						teammembers[cleanrole] = thesemembers//store members in the team members object, keyed by cleaned team name
+						thismessage = message//store message to get URL
 					}//end for loop
-					resolve(true);
+					resolve(true)
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
-		//store the teams (roles) in the object
-		teams['teams'] = teamnames;
+		teams['teams'] = teamnames//store the teams (roles) in the object
 	})//end promise
 }//end function rebuildteamobj 
 
@@ -412,29 +382,25 @@ function rebuildteamobj(message) {
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	return new Promise((resolve, reject) => {
 		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
-			//teammebers object is keyed with a cleaned version of role (no hyphen) 
-			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")
-			//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
-			for (var j = 0; j < teammembers[cleanrole].length; j++) {
+			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
+			for (var j = 0; j < teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 				if (teammembers[cleanrole][j].includes(user)) {
 					let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
 				} //end replace square core function
 			}//end for this team loop
 		}//end teams for loop
-		resolve(true);
+		resolve(true)
 	})//end promise
 }//end of changeusersquare function
 
 // 3b. function to change whole team's squares at once
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 	return new Promise((resolve, reject) => {
-		//teammebers object is keyed with a cleaned version of role (no hyphen)
-		var cleanrole = team.replace(/[^a-zA-Z ]/g, "")
-		//access teammembers object at cleaned teamname provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
-		for (var i = 0; i < teammembers[cleanrole].length; i++) {
+		var cleanrole = team.replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
+		for (var i = 0; i < teammembers[cleanrole].length; i++) {//access teammembers object at cleaned teamname provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 			let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
 		}//end for loop
-		resolve(true);
+		resolve(true)
 	})//end promise
 }//end of changeteamsquare function
 
@@ -442,14 +408,10 @@ function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 function updateplayerboard(message, source) {
 	return new Promise((resolve, reject) => {
 		console.log('updating player board with source: ' + source)
-		//fetch pinned messages
-		message.channel.messages.fetchPinned().then(messages => {
-			//for each pinned message
-			messages.forEach(message => {
-				//embed[0] is first/only embed in message. Copy it to embed variable
-				let embed = message.embeds[0];
-				//find the right pinned message
-				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+		message.channel.messages.fetchPinned().then(messages => {//fetch pinned messages
+			messages.forEach(message => {//for each pinned message
+				let embed = message.embeds[0]//embed[0] is first/only embed in message. Copy it to embed variable
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {//find the right pinned message
 					var receivedEmbed = message.embeds[0]; //copy embeds from it
 					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
 					updatedEmbed.fields = []//clear fields
@@ -458,10 +420,8 @@ function updateplayerboard(message, source) {
 						var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
 						updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
 					}//end loop through teams updating from memory teammembers object
-
-					//send the updated embed
-					message.edit(updatedEmbed);
-					resolve(true);
+					message.edit(updatedEmbed)//send the updated embed
+					resolve(true)
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned 
@@ -596,7 +556,7 @@ client.on('message', async message => {
 				statusboardmessages.push(msg.id);
 				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
 				await msg.react('👍'); await msg.react('👎'); await msg.react('🥚'); await msg.react('💤');//add reactions for clicking
-				await msg.pin();//pin message
+				await delay(500); await msg.pin();//pin message after 500 milliseconds
 			})//end pin placed user embed
 		};//end the if !open
 
@@ -632,29 +592,22 @@ client.on('message', async message => {
 //object containing the locks for the queue.
 var sqlocks = { q0locked: false, q1locked: false, q2locked: false, q3locked: false, q4locked: false, q5locked: false, q6locked: false, q7locked: false }
 
-//bucket function (task queue). Holds message in one bucket untill the next one unlocks and the message can flow in
+// 1. bucket function (task queue). Holds message in one bucket untill the next one unlocks and the message can flow in
 function bucket(message, lockobject, thislock, nextlock, loopdelay, queuename) {
 	return new Promise((resolve, reject) => {
-		//console.log(ssqlocks);console.log("lockobject.thislock is:");console.log(lockobject[thislock])
 		if (lockobject[nextlock] === true) {//if the next bucket is locked
 			lockobject[thislock] = true; console.log(queuename + " locked")//lock this bucket
-			//console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. processingMaster var was ' + processingMaster)
 			let bdelay = loopdelay//set a local variable from the one passed to function. It will increse each loop
 			let qloop = setTimeout(function request() {//establish function which calls itself
-				//console.log('One loop in timeout function for ' + queuename + '. Delay is: ' + bdelay)
 				if (lockobject[nextlock] === true) {//on this loop, if the next bucket is locked, increase timeout and loop again
-					//console.log(ssqlocks)
 					bdelay *= 1.1;//add 10% to the length of delay
 					qloop = setTimeout(request, bdelay);//call another loop
 				}//end if nextlock is true
-
 				if (lockobject[nextlock] === false) {//on this loop if the next bucket is now open, send message to it and unlock this one
-					//console.log(sqlocks)
 					resolve(message)//return message
 					lockobject[thislock] = false; console.log(queuename + " unlocked")//unlock this bucket so messages can flow in from above
 				}//end if nextlock is false
 			}, bdelay);//end qloop/setTimeout function
-
 		} else { console.log('skipping ' + queuename + ' queue'); resolve(message) }//if the next bucket wasnt locked, we can pass the message straight through
 	})//end promise
 }//end bucket function
@@ -691,15 +644,11 @@ client.on('message', async message => {
 											} while (processingMaster === true || processingEmoji === true)
 											sqlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
 										}//end queue 0
-
 										console.log(message.content + 'has just passed all queues')//message is now free to enter rest of function
 
 										//!red 🟥
 										if (message.content.startsWith("!red") && processingMaster === false) {
-
-											//lock out any more commands for x millisecond
-											startthinking(18500, message)
-
+											startthinking(18500, message)//lock out any more commands for x millisecond
 											//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
 											var isteam = false;//is the command about a team
@@ -730,10 +679,7 @@ client.on('message', async message => {
 
 										//!orange 🟧
 										if (message.content.startsWith("!orange") && processingMaster === false) {
-
-											//lock out any more commands for x millisecond
-											startthinking(18500, message)
-
+											startthinking(18500, message)//lock out any more commands for x millisecond
 											//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
 											var isteam = false;//is the command about a team
@@ -764,9 +710,7 @@ client.on('message', async message => {
 
 										//!green 🟩
 										if (message.content.startsWith("!green") && processingMaster == false) {
-
-											//lock out any more commands for x millisecond
-											startthinking(18500, message)
+											startthinking(18500, message)//lock out any more commands for x millisecond
 
 											//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
@@ -805,9 +749,6 @@ client.on('message', async message => {
 		else { message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) }
 	}//end if !red !orange !green
 });//end client on message
-
-//delete all bot pin notifications (this is for all bot pins, accross the whole server)
-//client.on("message", (message) => { if (message.type === "PINS_ADD" && message.author.bot) message.delete(); })
 
 //=======================================
 //		team card bot	|	Functions
