@@ -171,9 +171,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
-		  
-		  emojiQueueCount = emojiQueueCount + 1
-		  processingEmoji = true//stop other processing types
 
 			//I will need a message object. need to get the channel and message ID from reaction, then fetch it to be used by these functions below.
 			var thischannel = reaction.message.channel.id
@@ -196,6 +193,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			if (reaction.emoji.name == "👎" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👎").users.remove(user.id) }
 			if (reaction.emoji.name == "🥚" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
 			if (reaction.emoji.name == "💤" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
+
+    if (thisuser != "EiP Bot"){
+      emojiQueueCount = emojiQueueCount + 1
+		  processingEmoji = true//stop other processing types
+    } 
 
 			//if user is not the bot, log whats going to happen
 			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
