@@ -261,7 +261,8 @@ console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + 
 							})//end q6
 						})//end q7
 					}//end if q7, q6 or 15 is locked
-					else { reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many reactions silly human! Please wait 15 seconds and try to add your reaction again') }
+					else { reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many reactions silly human! Please wait 15 seconds and try to add your reaction again')
+					emojiQueueCount = emojiQueueCount - 1}
 				})
 			}//end if EIP Bot and allowed reaction
 		}//end if reaction message is a statusboard message
