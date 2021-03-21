@@ -206,7 +206,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				//get the message object for the status board which recieved the reaction, then...
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 
-					if (elocks.e7locked === false || elocks.e6locked === false || elocks.e5locked === false) {
+					if (elocks.e7locked === false || elocks.e6locked === false) {
 						//try all the queues. Maximum is 1 running plus 7 waiting
 						console.log(msg.content + 'just entered the top of the stack above e7')
 						await ebucket(msg, reaction.emoji.name, thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
@@ -666,7 +666,7 @@ client.on('message', async message => {
 											do {//while processingMaster = true, loop around in 1 second intervals
 												//console.log('One loop in queue 0 for ' + message.content)
 												await delay(1000)
-											} while (processingMaster === true && processingEmoji === true)
+											} while (processingMaster === true || processingEmoji === true)
 											sqlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
 										}//end queue 0
 
