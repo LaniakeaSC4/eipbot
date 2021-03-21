@@ -247,9 +247,6 @@ console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + 
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
 														await changeplayerstatus(result.emoji, result.user)//update the user in the teammembers object with the new emojj
 														await updateplayerboard(result.message)//now the teammembers object is updated, republish the status board
-
-														if (emojiQueueCount == 0) {
-													console.log('unlocking emoji processing') ;processingEmoji = false} //reset emoji processing flag to allow other processes to run
 													} catch (err) {
 														console.log(err)
 													}//end catch error
@@ -436,7 +433,8 @@ function updateplayerboard(message) {
 						var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
 						updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
 					}//end loop through teams updating from memory teammembers object
-
+if (emojiQueueCount == 0) {
+													console.log('unlocking emoji processing') ;processingEmoji = false} //reset emoji processing flag to allow other processes to run
 					//send the updated embed
 					message.edit(updatedEmbed);
 					resolve(true);
