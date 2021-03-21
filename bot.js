@@ -133,7 +133,7 @@ function ebucket(message, emoji, user, lockobject, thislock, nextlock, loopdelay
 			//console.log('Message: ' + message.content + ' is about to go into the' + queuename + ' waiting loop. processingMaster var was ' + processingMaster)
 			let bdelay = loopdelay//set a local variable from the one passed to function. It will increse each loop
 			let qloop = setTimeout(function request() {//establish function which calls itself
-				console.log('One loop in timeout function for ' + queuename + " emoji: " + emoji + " User: " + user + '. Delay is: ' + bdelay)
+				//console.log('One loop in timeout function for ' + queuename + " emoji: " + emoji + " User: " + user + '. Delay is: ' + bdelay)
 				if (lockobject[nextlock] === true) {//on this loop, if the next bucket is locked, increase timeout and loop again
 					//console.log(sqlocks)
 					bdelay *= 1.1;//add 10% to the length of delay
@@ -301,7 +301,7 @@ function arraystatusboards() {
 // 3. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
 function changeplayerstatus(newemoji, user) {
 	//log the change we are making
-	console.log('user: ' + user + 'just changed thier status to: ' + newemoji)
+	console.log('(in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
 		var oldemoji = ['👍', '👎', '🥚', '💤']//these are the possible emoji that we will be replacing
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
@@ -351,6 +351,7 @@ function findstatusboard(message) {
 // 2. Function to rebuild teammembers object by finding it in the channel the command was sent
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
+	  console.log('rebuilding team object')
 		//clear object for rebuilding it
 		teammembers = {};
 		//define teams array, team names will be stored here for use by other functions
