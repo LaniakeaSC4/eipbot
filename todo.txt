@@ -1,4 +1,0 @@
-code tidy and release
-efficiency. Can I cache message in code and access for later functions. Need to map out the path through functions. 
-can I run locally to debug for efficiency? 
-command queuing system? 
