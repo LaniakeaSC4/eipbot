@@ -205,7 +205,7 @@ console.log('uname is: ' + uName)
 console.log('dName is: ' + dName)
 			var thisuser = ""
 			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
-			if (typeof dName !== 'undefined' && typeof uName !== 'undefined') {
+			if (dName !== null ) {
 				thisuser = dName
 			} else { thisuser = uName }
 
