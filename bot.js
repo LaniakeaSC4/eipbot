@@ -501,7 +501,7 @@ function getname(message) {
 function thankyou(author, updatedthis, color, message) {
 	//make new discord embed. Tidier than normal message
 	thanksembed = new Discord.MessageEmbed()
-	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Coop board will update in ~12 seconds. You can not enter another command during this time (will be ignored).')
+	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Coop board will update in 12-15 seconds.')
 	thanksembed.addField("Jump to coop board", thismessage.url)
 	message.channel.send(thanksembed)
 	message.delete()//delete the input message
