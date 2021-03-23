@@ -200,12 +200,12 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
 			//if they dont have a nickname, thier username is what is displayed by discord.
-			var uName = member.username
+			var uName = getmember.username
 console.log('uname is: ' + uName)
 console.log('dName is: ' + dName)
 			var thisuser = ""
 			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
-			if (dName !== undefined && uName !== undefined) {
+			if (typeof dName !== 'undefined' && typeof uName !== 'undefined') {
 				thisuser = dName
 			} else { thisuser = uName }
 
