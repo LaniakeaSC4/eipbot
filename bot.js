@@ -194,8 +194,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			//get displayname from userid. Need this for the string match in the status board/teammembers object
 			//check if they have a nickname set
 			const member = await client.users.fetch(user.id)//retrieve the user from ID
-			
-			var membertest = await reaction.message.guild.member(reaction.user);
+			console.log(member)
+			var membertest = await reaction.message.guild.member(member);
 			console.log(membertest)
 			
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
