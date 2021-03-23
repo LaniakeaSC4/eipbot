@@ -195,7 +195,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			//check if they have a nickname set
 			const member = await client.users.fetch(user.id)//retrieve the user from ID
 			
-			var membertest = await reaction.message.guild.member(reaction.message.author);
+			var membertest = await reaction.message.guild.member(reaction.user);
 			console.log(membertest)
 			
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
