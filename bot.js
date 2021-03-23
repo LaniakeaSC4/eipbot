@@ -197,15 +197,15 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			console.log(getmember)
 			const member = await reaction.message.guild.member(getmember);
 			console.log(member)
-			
+
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
 			//if they dont have a nickname, thier username is what is displayed by discord.
 			var uName = getmember.username
-console.log('uname is: ' + uName)
-console.log('dName is: ' + dName)
+			console.log('uname is: ' + uName)
+			console.log('dName is: ' + dName)
 			var thisuser = ""
 			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
-			if (dName !== null ) {
+			if (dName !== null) {
 				thisuser = dName
 			} else { thisuser = uName }
 
