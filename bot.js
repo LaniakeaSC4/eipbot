@@ -10,7 +10,12 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.includes("private elite co-op")) {
-	  console.log(message.content)
+var regExp = /\(([^)]+)\)/;
+var matches = regExp.exec(message.content);
+
+//matches[1] contains the value between the parentheses
+console.log(matches[1]);
+	 // console.log(message.content)
 	}
 });//end client on message 
 
