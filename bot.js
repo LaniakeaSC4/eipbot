@@ -18,8 +18,9 @@ for (i = 0;i < coopdetails.length; i++){
 } 
 var coopname = coopdetails[0]
 var coopid = coopdetails[1]
+var thiscoop = message.content.substr(0,indexOf(","))
 
-console.log("Hey " + message.author + " I couldn't help but notice you posted an update for " + coopname + ". If anyone else wanted to ask egg inc by for an update they could do it with `ecoopad " + coopid);
+console.log("Hey there... I couldn't help but notice you posted an update for " + coopname + ". Thanks for doing that. If anyone else wanted to ask egg inc bot for an update they could do it with `ecoopad " + coopid + " " + thiscoop + "`");
 	 // console.log(message.content)
 	}
 });//end client on message 
