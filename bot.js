@@ -9,8 +9,8 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 
 //!test command for testing things
 client.on('message', async message => {
-	if (message.content.startsWith("!test")) {
-		console.log('processing emoji is:' + processingEmoji + ' emoji q count is: ' + emojiQueueCount)
+	if (message.content.includes("private elite co-op")) {
+	  console.log(message.content)
 	}
 });//end client on message 
 
