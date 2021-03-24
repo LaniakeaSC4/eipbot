@@ -12,7 +12,7 @@ client.on('message', async message => {
 	if (message.content.includes("private elite co-op")) {
 var regExp = /\(([^)]+)\)/;
 var matches = regExp.exec(message.content);
-var coopdetails = matches[i].split(":")
+var coopdetails = matches[1].split(":")
 //matches[1] contains the value between the parentheses
 console.log(coopdetails);
 	 // console.log(message.content)
