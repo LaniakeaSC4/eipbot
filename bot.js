@@ -13,8 +13,13 @@ client.on('message', async message => {
 var regExp = /\(([^)]+)\)/;
 var matches = regExp.exec(message.content);
 var coopdetails = matches[1].split(":")
-//matches[1] contains the value between the parentheses
-console.log(coopdetails);
+for (i = 0;i < coopdetails.length; i++){
+  coopdetails[i] = coopdetails[i].trim()
+} 
+var coopname = coopdetails[0]
+var coopid = coopdetails[1]
+
+console.log("Hey " + message.author + " I couldn't help but notice you posted an update for " + coopname + ". If anyone else wanted to ask egg inc by for an update they could do it with `ecoopad " + coopid);
 	 // console.log(message.content)
 	}
 });//end client on message 
