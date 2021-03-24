@@ -19,9 +19,9 @@ for (i = 0;i < coopdetails.length; i++){
 var coopname = coopdetails[0]
 var coopid = coopdetails[1]
 var thiscoop = message.content.substr(0,message. content.indexOf(","))
-
-console.log("Hey there... I couldn't help but notice you posted an update for " + coopname + ". Thanks for doing that. If anyone else wanted to ask egg inc bot for an update they could do it with `ecoopad " + coopid + " " + thiscoop + "`");
-	 // console.log(message.content)
+var embed = new Discord.MessageEmbed
+embed.setDescription("Hey there... I couldn't help but notice you posted an update for " + coopname + ". Thanks for doing that. If anyone else wanted to ask egg inc bot for an update they could do it with `e!coop " + coopid + " " + thiscoop + "`. Remember, only DM the bot... We don't want our coop names to leak")
+message.channel.send(embed)
 	}
 });//end client on message 
 
