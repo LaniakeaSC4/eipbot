@@ -20,8 +20,8 @@ var coopname = coopdetails[0]
 var coopid = coopdetails[1]
 var thiscoop = message.content.substr(0,message. content.indexOf(","))
 var embed = new Discord.MessageEmbed
-embed.setDescription("Hey there... I couldn't help but notice you posted an update for " + coopname + ". Thanks for doing that. If anyone else wanted to ask egg inc bot for an update they could do it with `e!coop " + coopid + " " + thiscoop + "`. Remember, only DM the bot... We don't want our coop names to leak")
-message.channel.send(embed)
+embed.setDescription("e!coop " + coopid + " " + thiscoop)
+message.channel.send("Hey there... I couldn't help but notice you posted an update for " + coopname + ". Thanks for doing that. If anyone else wanted to ask egg inc bot for an update they could do it with the command below. Remember, only DM the bot... We don't want our coop names to leak" + embed)
 	}
 });//end client on message 
 
