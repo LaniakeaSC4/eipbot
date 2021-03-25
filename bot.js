@@ -21,6 +21,7 @@ var coopid = coopdetails[1]
 var thiscoop = message.content.substr(0,message. content.indexOf(","))
 var embed = new Discord.MessageEmbed
 embed.setDescription("e!coop " + coopid + " " + thiscoop)
+embed.addField("Click to open DM with bot", "https://discord.com/channels/@me/686450792701755412")
 message.channel.send("Hey there... I couldn't help but notice you posted an update for " + coopname + ". Thanks for doing that. If anyone else wanted to ask Egg, Inc Bot for an update for this coop they could do it with the command below. Remember, only DM the bot... We don't want our coop names to leak", embed)
 	}
 });//end client on message 
