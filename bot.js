@@ -26,6 +26,7 @@ embed.setTitle("Command to DM Egg. Inc Bot:")
 embed.setDescription("e!coop " + coopid + " " + thiscoop)
 message.channel.send(embed)
 	}
+	if (matches == null){message.channel.send("Hey! I said don't feed me fake coops")} 
 	} 
 });//end client on message 
 
