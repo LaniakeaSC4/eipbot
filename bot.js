@@ -21,7 +21,8 @@ var coopid = coopdetails[1]
 var thiscoop = message.content.substr(0,message. content.indexOf(","))
 var embed = new Discord.MessageEmbed
 embed.addField("View this contract on mioi.io", "https://egginc.mioi.io/contract/view/"+coopid+"/"+thiscoop+"/")
-embed.addField("Command to DM Egg. Inc Bot:", "e!coopad " + coopid + " " + thiscoop)
+embed.setTitle("Command to DM Egg. Inc Bot:")
+embed.setDescription("e!coop " + coopid + " " + thiscoop)
 message.channel.send(embed)
 	}
 });//end client on message 
