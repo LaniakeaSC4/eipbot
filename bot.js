@@ -12,6 +12,7 @@ client.on('message', async message => {
 	if (message.content.includes("private elite co-op")) {
 var regExp = /\(([^)]+)\)/;
 var matches = regExp.exec(message.content);
+if (matches!= null){
 var coopdetails = matches[1].split(":")
 for (i = 0;i < coopdetails.length; i++){
   coopdetails[i] = coopdetails[i].trim()
@@ -25,6 +26,7 @@ embed.setTitle("Command to DM Egg. Inc Bot:")
 embed.setDescription("e!coop " + coopid + " " + thiscoop)
 message.channel.send(embed)
 	}
+	} 
 });//end client on message 
 
 //=================================================
