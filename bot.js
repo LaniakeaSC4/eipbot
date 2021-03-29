@@ -10,24 +10,24 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.includes("private elite co-op")) {
-var regExp = /\(([^)]+)\)/;
-var matches = regExp.exec(message.content);
-if (matches!= null){
-var coopdetails = matches[1].split(":")
-for (i = 0;i < coopdetails.length; i++){
-  coopdetails[i] = coopdetails[i].trim()
-} 
-var coopname = coopdetails[0]
-var coopid = coopdetails[1]
-var thiscoop = message.content.substr(0,message. content.indexOf(","))
-var embed = new Discord.MessageEmbed
-embed.addField("View this contract on mioi.io", "https://egginc.mioi.io/contract/view/"+coopid+"/"+thiscoop+"/")
-embed.setTitle("Command to DM Egg. Inc Bot:")
-embed.setDescription("e!coop " + coopid + " " + thiscoop)
-message.channel.send(embed)
+		var regExp = /\(([^)]+)\)/;
+		var matches = regExp.exec(message.content);
+		if (matches != null) {
+			var coopdetails = matches[1].split(":")
+			for (i = 0; i < coopdetails.length; i++) {
+				coopdetails[i] = coopdetails[i].trim()
+			}
+			var coopname = coopdetails[0]
+			var coopid = coopdetails[1]
+			var thiscoop = message.content.substr(0, message.content.indexOf(","))
+			var embed = new Discord.MessageEmbed
+			embed.addField("View this contract on mioi.io", "https://egginc.mioi.io/contract/view/" + coopid + "/" + thiscoop + "/")
+			embed.setTitle("Command to DM Egg. Inc Bot:")
+			embed.setDescription("e!coop " + coopid + " " + thiscoop)
+			message.channel.send(embed)
+		}
+		if (matches == null) { message.channel.send("Hey! I said don't feed me fake coops") }
 	}
-	if (matches == null){message.channel.send("Hey! I said don't feed me fake coops")} 
-	} 
 });//end client on message 
 
 //=================================================
@@ -347,7 +347,7 @@ function changeplayerstatus(newemoji, user) {
 }//end of changeplayerstatus function
 
 //========================================================
-// Coop bot | Functions | Coop status (🟥🟧🟩)
+// Coop bot | Functions | Coop status (🟥🔶🟢)
 // 1. Find and return promise of statusboard 
 // 2. Rebuild from current status board (scrape)
 // 3. modify the object in memory (for team or individual)
@@ -519,7 +519,8 @@ function thankyou(author, updatedthis, color, message) {
 	thanksembed = new Discord.MessageEmbed()
 	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Coop board will update in 12-15 seconds.')
 	thanksembed.addField("Jump to coop board", thismessage.url)
-	message.channel.send(thanksembed)
+	var botoutputchannel = client.channels.cache.find("name","🤖bot-status")
+	botoutputchannel.message.channel.send(thanksembed)
 	message.delete()//delete the input message
 }//end thankyou function
 
@@ -562,7 +563,7 @@ client.on('message', async message => {
 			//build initial embed
 			let placedEmbed = new Discord.MessageEmbed()
 				.setTitle("EiP Status Board for contract: " + eggcommand2)
-				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n👎 if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🟧 - Player offered coop (set this with !orange @user or !orange @team)\n🟩 - Player is confirmed in coop (set this with !green @user or !green @team)\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
+				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n👎 if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🔶 - Player offered coop (set this with !orange @user or !orange @team)\n🟢 - Player is confirmed in coop (set this with !green @user or !green @team)\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC\n⬇️ Please add a reaction below ⬇️')
 
@@ -606,8 +607,8 @@ client.on('message', async message => {
 // Coop bot | commands | color change 
 // 1. Bucket function (task queue)
 // 2. red 🟥
-// 3. orange 🟧
-// 4. green 🟩
+// 3. orange 🔶
+// 4. green 🟢
 //=======================================
 
 //object containing the locks for the queue.
@@ -689,16 +690,16 @@ client.on('message', async message => {
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
 												thankyou(message.member.displayName, mentioneduser, "red", message)
-												updateplayersquare("🟩", "🟧", "🟥", mentioneduser, message, 'sq')
+												updateplayersquare("🟢", "🔶", "🟥", mentioneduser, message, 'sq')
 											}//end if isuser = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
 												thankyou(message.member.displayName, mentionedrole, "red", message)
-												updateteamsquare("🟩", "🟧", "🟥", mentionedrole, message, 'sq')
+												updateteamsquare("🟢", "🔶", "🟥", mentionedrole, message, 'sq')
 											}//end if isteam = true
 										}//end !red
 
-										//!orange 🟧
+										//!orange 🔶
 										if (message.content.startsWith("!orange") && processingMaster === false) {
 											startthinking(18500, message)//lock out any more commands for x millisecond
 											//initalise isuser and isteam as false
@@ -720,16 +721,16 @@ client.on('message', async message => {
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
 												thankyou(message.member.displayName, mentioneduser, "orange", message)
-												updateplayersquare("🟩", "🟥", "🟧", mentioneduser, message, 'sq')
+												updateplayersquare("🟢", "🟥", "🔶", mentioneduser, message, 'sq')
 											}//end if isuser = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
 												thankyou(message.member.displayName, mentionedrole, "orange", message)
-												updateteamsquare("🟩", "🟥", "🟧", mentionedrole, message, 'sq')
+												updateteamsquare("🟢", "🟥", "🔶", mentionedrole, message, 'sq')
 											}//end if isteam = true
 										}//end !orange
 
-										//!green 🟩
+										//!green 🟢
 										if (message.content.startsWith("!green") && processingMaster == false) {
 											startthinking(18500, message)//lock out any more commands for x millisecond
 
@@ -751,12 +752,12 @@ client.on('message', async message => {
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
 												thankyou(message.member.displayName, mentioneduser, "green", message);
-												updateplayersquare("🟧", "🟥", "🟩", mentioneduser, message, 'sq');
+												updateplayersquare("🔶", "🟥", "🟢", mentioneduser, message, 'sq');
 											}//end if isuser = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
 												thankyou(message.member.displayName, mentionedrole, "green", message)
-												updateteamsquare("🟧", "🟥", "🟩", mentionedrole, message, 'sq')
+												updateteamsquare("🔶", "🟥", "🟢", mentionedrole, message, 'sq')
 											}//end if isteam = true
 										}//end !green
 									})//end q1
