@@ -521,7 +521,7 @@ function thankyou(author, updatedthis, color, message) {
 	thanksembed.addField("Jump to coop board", thismessage.url)
 	var botoutputchannel = message.guild.channels.cache.find(channel => channel.name === "🤖bot-status")
 	
-	botoutputchannel.message.channel.send(thanksembed)
+	botoutputchannel.send(thanksembed)
 	message.delete()//delete the input message
 }//end thankyou function
 
