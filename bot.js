@@ -519,7 +519,7 @@ function thankyou(author, updatedthis, color, message) {
 	thanksembed = new Discord.MessageEmbed()
 	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + '). Coop board will update in 12-15 seconds.')
 	thanksembed.addField("Jump to coop board", thismessage.url)
-	var botoutputchannel = message.guild.channels.cache.find(channel => channel.name == "🤖bot-status")
+	var botoutputchannel = message.guild.channels.cache.find(channel => channel.name === "🤖bot-status")
 	
 	botoutputchannel.message.channel.send(thanksembed)
 	message.delete()//delete the input message
