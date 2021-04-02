@@ -155,7 +155,7 @@ const startthinking = async (x, message) => {
 }//end start thinking function
 
 //======================================================
-//	Coop bot | Functions | Reaction Status (👍👎🥚💤)
+//	Coop bot | Functions | Reaction Status (👍❌🥚💤)
 //  1. ebucket - emoji queue (bucket) function
 //  2. Message reaction add listener
 //  3. Refresh array of currently open coops
@@ -226,7 +226,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			} else { thisuser = uName }
 
 			if (reaction.emoji.name == "👍" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
-			if (reaction.emoji.name == "👎" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👎").users.remove(user.id) }
+			if (reaction.emoji.name == "❌" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
 			if (reaction.emoji.name == "🥚" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
 			if (reaction.emoji.name == "💤" && thisuser != "EiP Bot") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
 
@@ -234,7 +234,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			if (thisuser != "EiP Bot") { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
 
 			//we are only going further into the function with one of these 4 emoji
-			var allowedemoji = ['👍', '👎', '🥚', '💤']
+			var allowedemoji = ['👍', '❌', '🥚', '💤']
 			if (thisuser != "EiP Bot" && allowedemoji.includes(reaction.emoji.name)) {
 
 				//add one to the queue count. Needs to be 0 before we can leave emoji processing
@@ -329,7 +329,7 @@ function changeplayerstatus(newemoji, user) {
 	//log the change we are making
 	console.log('(in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
-		var oldemoji = ['👍', '👎', '🥚', '💤']//these are the possible emoji that we will be replacing
+		var oldemoji = ['👍', '❌', '🥚', '💤']//these are the possible emoji that we will be replacing
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
 		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
 			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
@@ -566,7 +566,7 @@ client.on('message', async message => {
 			//build initial embed
 			let placedEmbed = new Discord.MessageEmbed()
 				.setTitle("EiP Status Board for contract: " + eggcommand2)
-				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n👎 if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🔶 - Player offered coop (set this with !orange @user or !orange @team)\n🟢 - Player is confirmed in coop (set this with !green @user or !green @team)\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
+				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🔶 - Player offered coop (set this with !orange @user or !orange @team)\n🟢 - Player is confirmed in coop (set this with !green @user or !green @team)\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC\n⬇️ Please add a reaction below ⬇️')
 
@@ -580,7 +580,7 @@ client.on('message', async message => {
 				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
 				statusboardmessages.push(msg.id);
 				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
-				await msg.react('👍'); await msg.react('👎'); await msg.react('🥚'); await msg.react('💤');//add reactions for clicking
+				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤');//add reactions for clicking
 				await delay(500); await msg.pin();//pin message after 500 milliseconds
 			})//end pin placed user embed
 		};//end the if !open
