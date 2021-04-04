@@ -97,6 +97,7 @@ var idcounter = 0
 	for (let key in teammembers) {
 		for (var i = 0; i < teammembers[key].length; i++) {
 		  hexid = idcounter.toString(16)
+		  hexid = hexid.padStart(2,"0")
 		  idcounter = idcounter + 1
 			teammembers[key][i] = "[" + hexid + ",🟥,💤] " + teammembers[key][i];
 		}//end for each team member
