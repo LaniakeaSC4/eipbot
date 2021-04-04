@@ -734,7 +734,7 @@ var command = ""
 											
 												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [thiscommand] = argArr;
 												console.log('command is: ' + thiscommand)
-												if (thiscommand.length === 3 && command.startsWith("+")) { ishex = true
+												if (thiscommand.length === 3 && thiscommand.startsWith("+")) { ishex = true
 												command = thiscommand
 												  console.log('found a +3 command') }
 
