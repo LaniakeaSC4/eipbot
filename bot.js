@@ -8,10 +8,10 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 // ---- ---- ----
 
 //!test command for testing things
-client.on('message', async message => { 
-  if (message.content.includes("!test")){
-  }
-}) 
+client.on('message', async message => {
+	if (message.content.includes("!test")) {
+	}
+})
 
 client.on('message', async message => {
 	if (message.content.includes("[Turn Off] private elite co-op")) {
@@ -96,19 +96,19 @@ function buildteamobj(message) {
 		}//end for roles
 	}//end for homechannels
 
-var idcounter = 160
+	var idcounter = 160
 
 	//add red squares
 	for (let key in teammembers) {
 		for (var i = 0; i < teammembers[key].length; i++) {
-		  hexid = idcounter.toString(16)
-		  hexid = hexid.padStart(2,"0")
-		  hexid = hexid.toUpperCase()
-		  idcounter = idcounter + 1
-			teammembers[key][i] = "🟥 💤 - " +  teammembers[key][i] + " (+" + hexid + ")"
+			hexid = idcounter.toString(16)
+			hexid = hexid.padStart(2, "0")
+			hexid = hexid.toUpperCase()
+			idcounter = idcounter + 1
+			teammembers[key][i] = "🟥 💤 - " + teammembers[key][i] + " (+" + hexid + ")"
 		}//end for each team member
 	}//end for each team
-idcounter = 160
+	idcounter = 160
 	//store the teams (roles) in the object
 	teams['teams'] = teamnames;
 }//end function
@@ -482,22 +482,22 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message, source) {
 	} catch (err) { console.log(err) }
 }//end function
 
-async function replacebyhex (oldsq1, oldsq2, newsq, team, message, source){
-  console.log('starting replace by hex')
+async function replacebyhex(oldsq1, oldsq2, newsq, team, message, source) {
+	console.log('starting replace by hex')
 
-  
-  try {
-   await rebuildteamobj(message)
-   let user = await hexsearch(playerid)
-   console.log('user is: ' + user)
-   await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
+
+	try {
+		await rebuildteamobj(message)
+		let user = await hexsearch(playerid)
+		console.log('user is: ' + user)
+		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
 		await updateplayerboard(message, source)//update player board from memory object
 		console.log('user ' + user + ' finished being updated to ' + newsq)
-   
-  } catch (err) { console.log(err) }
+
+	} catch (err) { console.log(err) }
 }
 
-async function hexsearch(id){
+async function hexsearch(id) {
 	return new Promise((resolve, reject) => {
 		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
 			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
@@ -560,9 +560,9 @@ function thankyou(author, updatedthis, color, message) {
 	thanksembed = new Discord.MessageEmbed()
 	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + ' in channel ' + commandchannel + '). Coop board will update in 12-15 seconds.')
 	thanksembed.addField("Jump to coop board", thismessage.url)
-	
+
 	var botoutputchannel = message.guild.channels.cache.find(channel => channel.name === "🤖bot-status")
-	
+
 	botoutputchannel.send(thanksembed)
 	message.delete()//delete the input message
 }//end thankyou function
@@ -725,21 +725,22 @@ client.on('message', async message => {
 												var mentioneduser = getname(message); isuser = true;
 											} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 												var mentionedrole = message.mentions.roles.first().name; isteam = true;
-											} else { 
-											  
-											        //get command after space
-											       console.log(message.content)
-		let themsg = message.content;
-		console.log(themsg)
-		let argString = themsg.substr(themsg.indexOf(' ') + 1);
-		console.log(argString)
-		let argArr = argString.split(' ');
-		console.log(argArr)
-		let [command] = argArr;
-   console.log('command is: ' + command)
-   if (command == "test"){console.log('found the test command thing')} 
-											  
-											  console.log('did not find either'); }//else do nothing
+											} else {
+
+												//get command after space
+												console.log(message.content)
+												let themsg = message.content;
+												console.log(themsg)
+												let argString = themsg.substr(themsg.indexOf(' ') + 1);
+												console.log(argString)
+												let argArr = argString.split(' ');
+												console.log(argArr)
+												let [command] = argArr;
+												console.log('command is: ' + command)
+												if (command == "test") { console.log('found the test command thing') }
+
+												console.log('did not find either');
+											}//else do nothing
 
 											if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
 											if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
