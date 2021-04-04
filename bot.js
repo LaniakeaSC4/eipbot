@@ -10,14 +10,6 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => { 
   if (message.content.includes("!test")){
-    //first lets split up commands
-		let msg = message.content;//transfer message contents into msg
-		let argString = msg.substr(msg.indexOf(' ') + 1);//make substring from first space onwards (after!coop)
-		let argArr = argString.split(' ');//split into multiple parts and store in array - might get errors if more then 3 parts?
-		let [playerid] = argArr;//for each element in array, make into variable
-		
-		console.log("player is was: " + playerid)
-		findhex(playerid)
   }
 }) 
 
@@ -113,7 +105,7 @@ var idcounter = 160
 		  hexid = hexid.padStart(2,"0")
 		  hexid = hexid.toUpperCase()
 		  idcounter = idcounter + 1
-			teammembers[key][i] = "🟥 💤 - " +  teammembers[key][i] + " (#" + hexid + ")"
+			teammembers[key][i] = "🟥 💤 - " +  teammembers[key][i] + " (*" + hexid + ")"
 		}//end for each team member
 	}//end for each team
 idcounter = 160
@@ -490,16 +482,34 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message, source) {
 	} catch (err) { console.log(err) }
 }//end function
 
-function findhex (id){
-  for (let key in teammembers) {
-		for (var i = 0; i < teammembers[key].length; i++) {
-		  if (teammembers[key][i].includes(id)){
-		    console.log("found " + teammembers[key][i] + " by hexid: " + id)
-		  }
-		}//end for each team member
-	}//end for each team
+async function replacebyhex (oldsq1, oldsq2, newsq, team, message, source){
+  console.log('starting replace by hex')
+
   
+  try {
+   await rebuildteamobj(message)
+   let user = await hexsearch(playerid)
+   console.log('user is: ' + user)
+   await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
+		await updateplayerboard(message, source)//update player board from memory object
+		console.log('user ' + user + ' finished being updated to ' + newsq)
+   
+  } catch (err) { console.log(err) }
 }
+
+async function hexsearch(id){
+	return new Promise((resolve, reject) => {
+		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
+			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
+			for (var j = 0; j < teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+				if (teammembers[cleanrole][j].includes(id)) {
+					console.log('found user with id: ' + id)
+					resolve(teammembers[cleanrole][j])
+				} //end replace square core function
+			}//end for this team loop
+		}//end teams for loop
+	})//end promise 
+}//end function
 
 //=======================================================
 // Coop bot | Functions | other
@@ -715,7 +725,14 @@ client.on('message', async message => {
 												var mentioneduser = getname(message); isuser = true;
 											} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 												var mentionedrole = message.mentions.roles.first().name; isteam = true;
-											} else { console.log('did not find either'); }//else do nothing
+											} else { 
+											  
+											        //get command after space
+		let msg = message.content;let argString = msg.substr(msg.indexOf(' ') + 1);let argArr = argString.split(' ');let [command] = argArr;
+   
+   if (command == "test"){console.log('found the test command thing')} 
+											  
+											  console.log('did not find either'); }//else do nothing
 
 											if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
 											if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
