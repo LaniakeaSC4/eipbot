@@ -731,7 +731,7 @@ client.on('message', async message => {
 											
 												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [command] = argArr;
 												console.log('command is: ' + command)
-												if (command == "test") { console.log('found the test command thing') }
+												if (command.length === 3 && command.startsWith("+")) { console.log('found a +3 command') }
 
 												console.log('did not find either');
 											}//else do nothing
