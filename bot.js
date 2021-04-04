@@ -608,7 +608,7 @@ client.on('message', async message => {
 			//build initial embed
 			let placedEmbed = new Discord.MessageEmbed()
 				.setTitle("EiP Status Board for contract: " + eggcommand2)
-				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red @user or !red @team)\n🔶 - Player offered coop (set this with !orange @user or !orange @team)\n🟢 - Player is confirmed in coop (set this with !green @user or !green @team)\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
+				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop (set this with !red +[player code], !red @user or !red @team)\n🔶 - Player offered coop (set this with !orange +[player code], !orange @user or !orange @team)\n🟢 - Player is confirmed in coop (set this with !green +[player code], !green @user or !green @team)\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC\n⬇️ Please add a reaction below ⬇️')
 
@@ -749,7 +749,7 @@ client.on('message', async message => {
 
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
-												updateplayersquare("🟢", "🔶", "🟥", mentioneduser, message, 'sq')
+												await updateplayersquare("🟢", "🔶", "🟥", mentioneduser, message, 'sq')
 												thankyou(message.member.displayName, mentioneduser, "red", message)
 											}//end if isuser = true
 											//if command is a hex
@@ -759,7 +759,7 @@ client.on('message', async message => {
 											}//end if ishex = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
-												updateteamsquare("🟢", "🔶", "🟥", mentionedrole, message, 'sq')
+												await updateteamsquare("🟢", "🔶", "🟥", mentionedrole, message, 'sq')
 												thankyou(message.member.displayName, mentionedrole, "red", message)
 											}//end if isteam = true
 										}//end !red
@@ -800,17 +800,17 @@ client.on('message', async message => {
 
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
-												updateplayersquare("🟢", "🟥", "🔶", mentioneduser, message, 'sq')
+												await updateplayersquare("🟢", "🟥", "🔶", mentioneduser, message, 'sq')
 												thankyou(message.member.displayName, mentioneduser, "orange", message)
 											}//end if isuser = true
 											//if ishex = true
 											if (ishex === true) {
-												updateHEXplayersquare("🟢", "🟥", "🔶", message, command, 'sq')
+												await updateHEXplayersquare("🟢", "🟥", "🔶", message, command, 'sq')
 												thankyou(message.member.displayName, command, "red", message)
 											}//end if ishex = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
-												updateteamsquare("🟢", "🟥", "🔶", mentionedrole, message, 'sq')
+												await updateteamsquare("🟢", "🟥", "🔶", mentionedrole, message, 'sq')
 												thankyou(message.member.displayName, mentionedrole, "orange", message)
 											}//end if isteam = true
 										}//end !orange
@@ -850,17 +850,17 @@ client.on('message', async message => {
 											if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
-												updateplayersquare("🔶", "🟥", "🟢", mentioneduser, message, 'sq')
+												await updateplayersquare("🔶", "🟥", "🟢", mentioneduser, message, 'sq')
 												thankyou(message.member.displayName, mentioneduser, "green", message)
 											}//end if isuser = true
 											//if ishex = true
 											if (ishex === true) {
-												updateHEXplayersquare("🔶", "🟥", "🟢", message, command, 'sq')
+												await updateHEXplayersquare("🔶", "🟥", "🟢", message, command, 'sq')
 												thankyou(message.member.displayName, command, "red", message)
 											}//end if ishex = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
-												updateteamsquare("🔶", "🟥", "🟢", mentionedrole, message, 'sq')
+												await updateteamsquare("🔶", "🟥", "🟢", mentionedrole, message, 'sq')
 												thankyou(message.member.displayName, mentionedrole, "green", message)
 											}//end if isteam = true
 										}//end !green
