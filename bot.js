@@ -105,7 +105,7 @@ var idcounter = 160
 		  hexid = hexid.padStart(2,"0")
 		  hexid = hexid.toUpperCase()
 		  idcounter = idcounter + 1
-			teammembers[key][i] = "🟥 💤 - " +  teammembers[key][i] + " (%" + hexid + ")"
+			teammembers[key][i] = "🟥 💤 - " +  teammembers[key][i] + " (+" + hexid + ")"
 		}//end for each team member
 	}//end for each team
 idcounter = 160
