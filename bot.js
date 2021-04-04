@@ -9,7 +9,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 
 //!test command for testing things
 client.on('message', async message => {
-	if (message.content.includes("private elite co-op")) {
+	if (message.content.includes("[Turn Off] private elite co-op")) {
 		var regExp = /\(([^)]+)\)/;
 		var matches = regExp.exec(message.content);
 		if (matches != null) {
@@ -91,13 +91,17 @@ function buildteamobj(message) {
 		}//end for roles
 	}//end for homechannels
 
+var idcounter = 0
+
 	//add red squares
 	for (let key in teammembers) {
 		for (var i = 0; i < teammembers[key].length; i++) {
-			teammembers[key][i] = "🟥 (💤) " + teammembers[key][i];
+		  hexid = idcounter.toString(16)
+		  idcounter = idcounter + 1
+			teammembers[key][i] = "[" + hexid + ",🟥,💤] " + teammembers[key][i];
 		}//end for each team member
 	}//end for each team
-
+idcounter = 0
 	//store the teams (roles) in the object
 	teams['teams'] = teamnames;
 }//end function
