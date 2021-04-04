@@ -8,6 +8,19 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 // ---- ---- ----
 
 //!test command for testing things
+client.on('message', async message => { 
+  if (message.content.includes("!test")){
+    //first lets split up commands
+		let msg = message.content;//transfer message contents into msg
+		let argString = msg.substr(msg.indexOf(' ') + 1);//make substring from first space onwards (after!coop)
+		let argArr = argString.split(' ');//split into multiple parts and store in array - might get errors if more then 3 parts?
+		let [playerid] = argArr;//for each element in array, make into variable
+		
+		console.log("player is was: " + playerid)
+		findhex(playerid)
+  }
+}) 
+
 client.on('message', async message => {
 	if (message.content.includes("[Turn Off] private elite co-op")) {
 		var regExp = /\(([^)]+)\)/;
@@ -100,7 +113,7 @@ var idcounter = 160
 		  hexid = hexid.padStart(2,"0")
 		  hexid = hexid.toUpperCase()
 		  idcounter = idcounter + 1
-			teammembers[key][i] = "🟥 💤 - " +  teammembers[key][i] + "(#" + hexid + ")"
+			teammembers[key][i] = "🟥 💤 - " +  teammembers[key][i] + " (#" + hexid + ")"
 		}//end for each team member
 	}//end for each team
 idcounter = 160
@@ -476,6 +489,17 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message, source) {
 		console.log('team ' + team + ' finished being updated to ' + newsq)
 	} catch (err) { console.log(err) }
 }//end function
+
+function findhex (id){
+  for (let key in teammembers) {
+		for (var i = 0; i < teammembers[key].length; i++) {
+		  if (teammembers[key][i].includes(id)){
+		    console.log("found " + teammembers[key][i] + " by hexid: " + id)
+		  }
+		}//end for each team member
+	}//end for each team
+  
+}
 
 //=======================================================
 // Coop bot | Functions | other
