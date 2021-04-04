@@ -484,13 +484,13 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message, source) {
 
 async function updateHEXplayersquare(oldsq1, oldsq2, newsq, message, playerid, source) {
 	console.log('starting replace by hex')
-console.log('playerid is: ' + playerid)
+	console.log('playerid is: ' + playerid)
 
 	try {
 		await rebuildteamobj(message)
 		let user = await hexsearch(playerid)
 		console.log('user is: ' + user)
-		var trimuser = user.substring(user.indexOf("-") + 1,user.indexOf('(') - 1)
+		var trimuser = user.substring(user.indexOf("-") + 1, user.indexOf('(') - 1)
 		console.log('user is now: ' + trimuser)
 		await changeusersquare(oldsq1, oldsq2, newsq, trimuser)//change squares in the memory object
 		await updateplayerboard(message, source)//update player board from memory object
@@ -723,7 +723,7 @@ client.on('message', async message => {
 											var checkeduser = false//is the user a valid user?
 											var checkedteam = false//is the team a valid team? 
 
-var command = ""
+											var command = ""
 
 											//what user or team was mentioned?
 											if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
@@ -733,12 +733,14 @@ var command = ""
 											} else {
 
 												//check if HEx input
-												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [thiscommand] = argArr;
+												let themsg = message.content; let argString = themsg.substr(themsg.indexOf(' ') + 1); let argArr = argString.split(' '); let [thiscommand] = argArr;
 												console.log('command is: ' + thiscommand)
 												thiscommand = thiscommand.toUpperCase()
-												if (thiscommand.length === 3 && thiscommand.startsWith("+")) { ishex = true
-												command = thiscommand
-												  console.log('found a +3 command') }
+												if (thiscommand.length === 3 && thiscommand.startsWith("+")) {
+													ishex = true
+													command = thiscommand
+													console.log('found a +3 command')
+												}
 
 											}//else do nothing
 
@@ -747,33 +749,32 @@ var command = ""
 
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
-												thankyou(message.member.displayName, mentioneduser, "red", message)
 												updateplayersquare("🟢", "🔶", "🟥", mentioneduser, message, 'sq')
+												thankyou(message.member.displayName, mentioneduser, "red", message)
 											}//end if isuser = true
 											//if command is a hex
 											if (ishex === true) {
-											  console.log('ishex was true')
-												thankyou(message.member.displayName, command, "red", message)
 												updateHEXplayersquare("🟢", "🔶", "🟥", message, command, 'sq')
+												thankyou(message.member.displayName, command, "red", message)
 											}//end if ishex = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
-												thankyou(message.member.displayName, mentionedrole, "red", message)
 												updateteamsquare("🟢", "🔶", "🟥", mentionedrole, message, 'sq')
+												thankyou(message.member.displayName, mentionedrole, "red", message)
 											}//end if isteam = true
 										}//end !red
 
 										//!orange 🔶
 										if (message.content.startsWith("!orange") && processingMaster === false) {
 											startthinking(18500, message)//lock out any more commands for x millisecond
-										//initalise isuser and isteam as false
+											//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
 											var isteam = false;//is the command about a team
 											var ishex = false;//is the command a hex code? 
 											var checkeduser = false//is the user a valid user?
 											var checkedteam = false//is the team a valid team? 
 
-var command = ""
+											var command = ""
 
 											//what user or team was mentioned?
 											if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
@@ -783,12 +784,14 @@ var command = ""
 											} else {
 
 												//check if HEx input
-												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [thiscommand] = argArr;
+												let themsg = message.content; let argString = themsg.substr(themsg.indexOf(' ') + 1); let argArr = argString.split(' '); let [thiscommand] = argArr;
 												console.log('command is: ' + thiscommand)
 												thiscommand = thiscommand.toUpperCase()
-												if (thiscommand.length === 3 && thiscommand.startsWith("+")) { ishex = true
-												command = thiscommand
-												  console.log('found a +3 command') }
+												if (thiscommand.length === 3 && thiscommand.startsWith("+")) {
+													ishex = true
+													command = thiscommand
+													console.log('found a +3 command')
+												}
 
 											}//else do nothing
 
@@ -797,19 +800,18 @@ var command = ""
 
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
-												thankyou(message.member.displayName, mentioneduser, "orange", message)
 												updateplayersquare("🟢", "🟥", "🔶", mentioneduser, message, 'sq')
+												thankyou(message.member.displayName, mentioneduser, "orange", message)
 											}//end if isuser = true
 											//if ishex = true
 											if (ishex === true) {
-											  console.log('ishex was true')
-												thankyou(message.member.displayName, command, "red", message)
 												updateHEXplayersquare("🟢", "🟥", "🔶", message, command, 'sq')
+												thankyou(message.member.displayName, command, "red", message)
 											}//end if ishex = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
-												thankyou(message.member.displayName, mentionedrole, "orange", message)
 												updateteamsquare("🟢", "🟥", "🔶", mentionedrole, message, 'sq')
+												thankyou(message.member.displayName, mentionedrole, "orange", message)
 											}//end if isteam = true
 										}//end !orange
 
@@ -817,13 +819,13 @@ var command = ""
 										if (message.content.startsWith("!green") && processingMaster == false) {
 											startthinking(18500, message)//lock out any more commands for x millisecond
 
-										//initalise isuser and isteam as false
+											//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
 											var isteam = false;//is the command about a team
 											var ishex = false;//is the command a hex code? 
 											var checkeduser = false//is the user a valid user?
 											var checkedteam = false//is the team a valid team? 
-var command = ""
+											var command = ""
 
 											//what user or team was mentioned?
 											if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
@@ -833,12 +835,14 @@ var command = ""
 											} else {
 
 												//check if HEx input
-												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [thiscommand] = argArr;
+												let themsg = message.content; let argString = themsg.substr(themsg.indexOf(' ') + 1); let argArr = argString.split(' '); let [thiscommand] = argArr;
 												console.log('command is: ' + thiscommand)
 												thiscommand = thiscommand.toUpperCase()
-												if (thiscommand.length === 3 && thiscommand.startsWith("+")) { ishex = true
-												command = thiscommand
-												  console.log('found a +3 command') }
+												if (thiscommand.length === 3 && thiscommand.startsWith("+")) {
+													ishex = true
+													command = thiscommand
+													console.log('found a +3 command')
+												}
 
 											}//else do nothing
 
@@ -846,19 +850,18 @@ var command = ""
 											if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
 											//if mention is a valid user
 											if (isuser == true && checkeduser == true) {
-												thankyou(message.member.displayName, mentioneduser, "green", message);
-												updateplayersquare("🔶", "🟥", "🟢", mentioneduser, message, 'sq');
+												updateplayersquare("🔶", "🟥", "🟢", mentioneduser, message, 'sq')
+												thankyou(message.member.displayName, mentioneduser, "green", message)
 											}//end if isuser = true
-																				//if ishex = true
+											//if ishex = true
 											if (ishex === true) {
-											  console.log('ishex was true')
-												thankyou(message.member.displayName, command, "red", message)
 												updateHEXplayersquare("🔶", "🟥", "🟢", message, command, 'sq')
+												thankyou(message.member.displayName, command, "red", message)
 											}//end if ishex = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
-												thankyou(message.member.displayName, mentionedrole, "green", message)
 												updateteamsquare("🔶", "🟥", "🟢", mentionedrole, message, 'sq')
+												thankyou(message.member.displayName, mentionedrole, "green", message)
 											}//end if isteam = true
 										}//end !green
 									})//end q1
