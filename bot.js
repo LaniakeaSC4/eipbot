@@ -732,8 +732,7 @@ var command = ""
 												var mentionedrole = message.mentions.roles.first().name; isteam = true;
 											} else {
 
-												//get command after space
-											
+												//check if HEx input
 												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [thiscommand] = argArr;
 												console.log('command is: ' + thiscommand)
 												thiscommand = thiscommand.toUpperCase()
@@ -767,18 +766,31 @@ var command = ""
 										//!orange 🔶
 										if (message.content.startsWith("!orange") && processingMaster === false) {
 											startthinking(18500, message)//lock out any more commands for x millisecond
-											//initalise isuser and isteam as false
+										//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
 											var isteam = false;//is the command about a team
+											var ishex = false;//is the command a hex code? 
 											var checkeduser = false//is the user a valid user?
 											var checkedteam = false//is the team a valid team? 
+
+var command = ""
 
 											//what user or team was mentioned?
 											if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
 												var mentioneduser = getname(message); isuser = true;
 											} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 												var mentionedrole = message.mentions.roles.first().name; isteam = true;
-											} else { console.log('did not find either'); }//else do nothing
+											} else {
+
+												//check if HEx input
+												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [thiscommand] = argArr;
+												console.log('command is: ' + thiscommand)
+												thiscommand = thiscommand.toUpperCase()
+												if (thiscommand.length === 3 && thiscommand.startsWith("+")) { ishex = true
+												command = thiscommand
+												  console.log('found a +3 command') }
+
+											}//else do nothing
 
 											if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
 											if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
@@ -788,6 +800,12 @@ var command = ""
 												thankyou(message.member.displayName, mentioneduser, "orange", message)
 												updateplayersquare("🟢", "🟥", "🔶", mentioneduser, message, 'sq')
 											}//end if isuser = true
+											//if ishex = true
+											if (ishex === true) {
+											  console.log('ishex was true')
+												//thankyou(message.member.displayName, mentioneduser, "red", message)
+												updateHEXplayersquare("🟢", "🟥", "🔶", message, command, 'sq')
+											}//end if ishex = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
 												thankyou(message.member.displayName, mentionedrole, "orange", message)
@@ -799,18 +817,30 @@ var command = ""
 										if (message.content.startsWith("!green") && processingMaster == false) {
 											startthinking(18500, message)//lock out any more commands for x millisecond
 
-											//initalise isuser and isteam as false
+										//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
 											var isteam = false;//is the command about a team
+											var ishex = false;//is the command a hex code? 
 											var checkeduser = false//is the user a valid user?
 											var checkedteam = false//is the team a valid team? 
+var command = ""
 
 											//what user or team was mentioned?
 											if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
 												var mentioneduser = getname(message); isuser = true;
 											} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
 												var mentionedrole = message.mentions.roles.first().name; isteam = true;
-											} else { console.log('did not find either'); }//else do nothing
+											} else {
+
+												//check if HEx input
+												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [thiscommand] = argArr;
+												console.log('command is: ' + thiscommand)
+												thiscommand = thiscommand.toUpperCase()
+												if (thiscommand.length === 3 && thiscommand.startsWith("+")) { ishex = true
+												command = thiscommand
+												  console.log('found a +3 command') }
+
+											}//else do nothing
 
 											if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
 											if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
@@ -819,6 +849,12 @@ var command = ""
 												thankyou(message.member.displayName, mentioneduser, "green", message);
 												updateplayersquare("🔶", "🟥", "🟢", mentioneduser, message, 'sq');
 											}//end if isuser = true
+																				//if ishex = true
+											if (ishex === true) {
+											  console.log('ishex was true')
+												//thankyou(message.member.displayName, mentioneduser, "red", message)
+												updateHEXplayersquare("🔶", "🟥", "🟢", message, command, 'sq')
+											}//end if ishex = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
 												thankyou(message.member.displayName, mentionedrole, "green", message)
