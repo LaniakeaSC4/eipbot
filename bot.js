@@ -482,9 +482,9 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message, source) {
 	} catch (err) { console.log(err) }
 }//end function
 
-async function replacebyhex(oldsq1, oldsq2, newsq, team, message, source) {
+async function updateHEXplayersquare(oldsq1, oldsq2, newsq, message, playerid, source) {
 	console.log('starting replace by hex')
-
+console.log('playerid is: ' + playerid)
 
 	try {
 		await rebuildteamobj(message)
@@ -717,6 +717,7 @@ client.on('message', async message => {
 											//initalise isuser and isteam as false
 											var isuser = false;//is the command about a user
 											var isteam = false;//is the command about a team
+											var ishex = false;//is the command a hex code? 
 											var checkeduser = false//is the user a valid user?
 											var checkedteam = false//is the team a valid team? 
 
@@ -731,9 +732,9 @@ client.on('message', async message => {
 											
 												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [command] = argArr;
 												console.log('command is: ' + command)
-												if (command.length === 3 && command.startsWith("+")) { console.log('found a +3 command') }
+												if (command.length === 3 && command.startsWith("+")) { ishex = true
+												  console.log('found a +3 command') }
 
-												console.log('did not find either');
 											}//else do nothing
 
 											if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
@@ -744,6 +745,11 @@ client.on('message', async message => {
 												thankyou(message.member.displayName, mentioneduser, "red", message)
 												updateplayersquare("🟢", "🔶", "🟥", mentioneduser, message, 'sq')
 											}//end if isuser = true
+											//if command is a hex
+											if (ishex == true) {
+												//thankyou(message.member.displayName, mentioneduser, "red", message)
+												updateHEXplayersquare("🟢", "🔶", "🟥", message, command, 'sq')
+											}//end if ishex = true
 											//if mentioned is a valid team
 											if (isteam == true && checkedteam == true) {
 												thankyou(message.member.displayName, mentionedrole, "red", message)
