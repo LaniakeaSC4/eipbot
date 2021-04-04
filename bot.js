@@ -728,9 +728,13 @@ client.on('message', async message => {
 											} else { 
 											  
 											        //get command after space
+											       console.log(message.content)
 		let themsg = message.content;
+		console.log(themsg)
 		let argString = themsg.substr(themsg.indexOf(' ') + 1);
+		console.log(argString)
 		let argArr = argString.split(' ');
+		console.log(argArr)
 		let [command] = argArr;
    console.log('command is: ' + command)
    if (command == "test"){console.log('found the test command thing')} 
