@@ -721,6 +721,8 @@ client.on('message', async message => {
 											var checkeduser = false//is the user a valid user?
 											var checkedteam = false//is the team a valid team? 
 
+var command = ""
+
 											//what user or team was mentioned?
 											if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
 												var mentioneduser = getname(message); isuser = true;
@@ -730,9 +732,10 @@ client.on('message', async message => {
 
 												//get command after space
 											
-												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [command] = argArr;
-												console.log('command is: ' + command)
-												if (command.length === 3 && command.startsWith("+")) { ishex = true
+												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [thiscommand] = argArr;
+												console.log('command is: ' + thiscommand)
+												if (thiscommand.length === 3 && command.startsWith("+")) { ishex = true
+												command = thiscommand
 												  console.log('found a +3 command') }
 
 											}//else do nothing
