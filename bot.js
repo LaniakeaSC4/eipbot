@@ -736,6 +736,7 @@ var command = ""
 											
 												let themsg = message.content;let argString = themsg.substr(themsg.indexOf(' ') + 1);let argArr = argString.split(' ');let [thiscommand] = argArr;
 												console.log('command is: ' + thiscommand)
+												thiscommand = thiscommand.toUpperCase()
 												if (thiscommand.length === 3 && thiscommand.startsWith("+")) { ishex = true
 												command = thiscommand
 												  console.log('found a +3 command') }
