@@ -749,7 +749,8 @@ var command = ""
 												updateplayersquare("🟢", "🔶", "🟥", mentioneduser, message, 'sq')
 											}//end if isuser = true
 											//if command is a hex
-											if (ishex == true) {
+											if (ishex === true) {
+											  console.log('ishex was true')
 												//thankyou(message.member.displayName, mentioneduser, "red", message)
 												updateHEXplayersquare("🟢", "🔶", "🟥", message, command, 'sq')
 											}//end if ishex = true
