@@ -490,7 +490,7 @@ console.log('playerid is: ' + playerid)
 		await rebuildteamobj(message)
 		let user = await hexsearch(playerid)
 		console.log('user is: ' + user)
-		var trimuser = user.substr(user.indexOf("-") + 1,user.indexOf('(') - 1)
+		var trimuser = user.substring(user.indexOf("-") + 1,user.indexOf('(') - 1)
 		console.log('user is now: ' + trimuser)
 		await changeusersquare(oldsq1, oldsq2, newsq, trimuser)//change squares in the memory object
 		await updateplayerboard(message, source)//update player board from memory object
