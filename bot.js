@@ -729,7 +729,7 @@ client.on('message', async message => {
 											  
 											        //get command after space
 		let msg = message.content;let argString = msg.substr(msg.indexOf(' ') + 1);let argArr = argString.split(' ');let [command] = argArr;
-   
+   console.log('command is: ' + command)
    if (command == "test"){console.log('found the test command thing')} 
 											  
 											  console.log('did not find either'); }//else do nothing
