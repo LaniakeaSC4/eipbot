@@ -754,7 +754,7 @@ client.on('message', async message => {
 											}//end if isuser = true
 											//if command is a hex
 											if (ishex === true) {
-												updateHEXplayersquare("🟢", "🔶", "🟥", message, command, 'sq')
+												await updateHEXplayersquare("🟢", "🔶", "🟥", message, command, 'sq')
 												thankyou(message.member.displayName, command, "red", message)
 											}//end if ishex = true
 											//if mentioned is a valid team
