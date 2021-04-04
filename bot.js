@@ -753,7 +753,7 @@ var command = ""
 											//if command is a hex
 											if (ishex === true) {
 											  console.log('ishex was true')
-												//thankyou(message.member.displayName, mentioneduser, "red", message)
+												thankyou(message.member.displayName, command, "red", message)
 												updateHEXplayersquare("🟢", "🔶", "🟥", message, command, 'sq')
 											}//end if ishex = true
 											//if mentioned is a valid team
@@ -803,7 +803,7 @@ var command = ""
 											//if ishex = true
 											if (ishex === true) {
 											  console.log('ishex was true')
-												//thankyou(message.member.displayName, mentioneduser, "red", message)
+												thankyou(message.member.displayName, command, "red", message)
 												updateHEXplayersquare("🟢", "🟥", "🔶", message, command, 'sq')
 											}//end if ishex = true
 											//if mentioned is a valid team
@@ -852,7 +852,7 @@ var command = ""
 																				//if ishex = true
 											if (ishex === true) {
 											  console.log('ishex was true')
-												//thankyou(message.member.displayName, mentioneduser, "red", message)
+												thankyou(message.member.displayName, command, "red", message)
 												updateHEXplayersquare("🔶", "🟥", "🟢", message, command, 'sq')
 											}//end if ishex = true
 											//if mentioned is a valid team
