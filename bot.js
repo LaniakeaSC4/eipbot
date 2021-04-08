@@ -569,6 +569,16 @@ function thankyou(author, updatedthis, color, message) {
 	message.delete()//delete the input message
 }//end thankyou function
 
+client.on('message', async message => {
+	if (message.content.startsWith("!help")) {
+		helpembed = new Discord.MessageEmbed()
+		.setTitle("**Bot Functions**")
+		.setDescription('\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop\n\nTo set the players coop status use these commands\n**!colour +[player code]** - changes the coop of player with that code (also **!colour @user** works, but this will ping the user)\n**!colour @team** - sets the coops status of the whole team\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
+		.setColor('#00FF00')
+		message.channel.send(helpembed)
+	}	
+})
+
 //==========================================
 // Coop bot	| User Commands | open and close
 // 1. !Coop (which has open and close)
@@ -608,7 +618,7 @@ client.on('message', async message => {
 			//build initial embed
 			let placedEmbed = new Discord.MessageEmbed()
 				.setTitle("EiP Status Board for contract: " + eggcommand2)
-				.setDescription('**Bot Functions**\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop\n\nTo set the players coop status use these commands\n**!colour +[player code]** - changes the coop of player with that code (also **!colour @user** works, but this will ping the user)\n**!colour @team** - sets the coops status of the whole team\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
+				.setDescription('__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop')
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC\n⬇️ Please add a reaction below ⬇️')
 
@@ -973,7 +983,7 @@ function prepupdate(color, title, description, array) {
 	//loop to add the team members to the rich embed. Team specific array contains object for each member, so we loop through them to ad fields to the embed.
 	for (var i = 0; i < array.length; i++) {
 		TeamEmbed.addFields(
-			{ name: array[i][0], value: 'Rank: ' + array[i][3] + '\n' + 'Time Zone: ' + array[i][1] + '\n' + 'Permit: ' + array[i][4], inline: true },
+			{ name: array[i][0], value: 'Rank: ' + array[i][3] + '\n' + 'Time Zone: ' + array[i][1] + '\n' + 'Permit: ' + array[i][4], inline: false },
 		);//end addfields
 	}//end for
 	return TeamEmbed;//return embed back to caller
