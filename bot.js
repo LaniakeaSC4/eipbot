@@ -450,7 +450,7 @@ function updateplayerboard(message, source) {
 					//add teams and players for embed from teams/teammeber objects
 					for (var i = 0; i < teams.teams.length; i++) {
 						var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
-						updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
+						updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], false)
 					}//end loop through teams updating from memory teammembers object
 					message.edit(updatedEmbed)//send the updated embed
 					resolve(true)
@@ -625,7 +625,7 @@ client.on('message', async message => {
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < teams.teams.length; i++) {
 				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
-				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], true)
+				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], false)
 			}//end loop to add team fields to embed
 
 			message.channel.send(placedEmbed).then(async msg => {//send the embed then
