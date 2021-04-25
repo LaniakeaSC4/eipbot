@@ -630,7 +630,7 @@ client.on('message', async message => {
 			thisteamhex = thisteamhex.toUpperCase()
 			teamhex = teamhex - 1
 				
-				placedEmbed.addField(`Team ${teams.teams[i]}  (+${thisteamhex})`, teammembers[cleanrole], false)
+placedEmbed.addField(`Team ${teams.teams[i]} (+${thisteamhex})`, teammembers[cleanrole], false)
 			}//end loop to add team fields to embed
 teamhex = 255
 
