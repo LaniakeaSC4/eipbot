@@ -560,7 +560,7 @@ function thankyou(author, updatedthis, color, message) {
 	var commandchannel = message.channel.name
 	//make new discord embed. Tidier than normal message
 	thanksembed = new Discord.MessageEmbed()
-	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + ' to ' + color + ' (using command ' + message.content + ' in channel ' + commandchannel + '). Coop board will update in 12-15 seconds.')
+	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + 'using command ' + message.content + ' in channel ' + commandchannel + '. Coop board will update in 12-15 seconds.')
 	thanksembed.addField("Jump to coop board", thismessage.url)
 
 	var botoutputchannel = message.guild.channels.cache.find(channel => channel.name === "🤖bot-status")
