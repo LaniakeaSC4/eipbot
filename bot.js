@@ -96,7 +96,7 @@ function buildteamobj(message) {
 		}//end for roles
 	}//end for homechannels
 
-	var idcounter = 160
+	var idcounter = 0
 
 	//add red squares
 	for (let key in teammembers) {
@@ -108,7 +108,7 @@ function buildteamobj(message) {
 			teammembers[key][i] = "🟥 💤 - " + teammembers[key][i] + " (+" + hexid + ")"
 		}//end for each team member
 	}//end for each team
-	idcounter = 160
+	idcounter = 0
 	//store the teams (roles) in the object
 	teams['teams'] = teamnames;
 }//end function
