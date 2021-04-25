@@ -396,7 +396,7 @@ function rebuildteamobj(message) {
 					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
 						var thesemembers = embed.fields[i].value//get the values (team members). Is loaded as string with \n after each player
 						thesemembers = thesemembers.split('\n')//split into array. thesemembers is now array of team members with thier current status square
-						var thisteam = embed.fields[i].name.substring(indexOf(" ") + 1,lastIndexOf(" "))//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
+						var thisteam = embed.fields[i].name.substring(embed.fields[i].name.indexOf(" ") + 1,embed.fields[i].name.lastIndexOf(" "))//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
 						teamnames.push(thisteam)//save the team (role) name itself for use by other functions
 						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "")//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 						teammembers[cleanrole] = thesemembers//store members in the team members object, keyed by cleaned team name
