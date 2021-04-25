@@ -396,7 +396,7 @@ function rebuildteamobj(message) {
 					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
 						var thesemembers = embed.fields[i].value//get the values (team members). Is loaded as string with \n after each player
 						thesemembers = thesemembers.split('\n')//split into array. thesemembers is now array of team members with thier current status square
-						var thisteam = embed.fields[i].name.substring(embed.fields[i].name.indexOf(" ") + 1,embed.fields[i].name.lastIndexOf(" "))//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
+						var thisteam = embed.fields[i].name.split(' ').pop()//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
 						teamnames.push(thisteam)//save the team (role) name itself for use by other functions
 						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "")//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 						teammembers[cleanrole] = thesemembers//store members in the team members object, keyed by cleaned team name
@@ -621,18 +621,12 @@ client.on('message', async message => {
 				.setDescription('__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop')
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️')
- var teamhex = 255
+
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < teams.teams.length; i++) {
 				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
-				thisteamhex = teamhex.toString(16)
-			thisteamhex = thisteamhex.padStart(2, "0")
-			thisteamhex = thisteamhex.toUpperCase()
-			teamhex = teamhex - 1
-				
-placedEmbed.addField(`Team ${teams.teams[i]} (+${thisteamhex})`, teammembers[cleanrole], false)
+				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], false)
 			}//end loop to add team fields to embed
-teamhex = 255
 
 			message.channel.send(placedEmbed).then(async msg => {//send the embed then
 				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
