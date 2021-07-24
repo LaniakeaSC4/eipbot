@@ -236,20 +236,20 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				thisuser = dName
 			} else { thisuser = uName }
 
-			if (reaction.emoji.name == "👍" && (thisuser != "EiP Bot" || thisuser != "EIP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
-			if (reaction.emoji.name == "❌" && (thisuser != "EiP Bot" || thisuser != "EIP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
-			if (reaction.emoji.name == "🥚" && (thisuser != "EiP Bot" || thisuser != "EIP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
-			if (reaction.emoji.name == "💤" && (thisuser != "EiP Bot" || thisuser != "EIP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
+			if (reaction.emoji.name == "👍" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
+			if (reaction.emoji.name == "❌" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
+			if (reaction.emoji.name == "🥚" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
+			if (reaction.emoji.name == "💤" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
 
 			//if user is not the bot, log whats going to happen
-			if ((thisuser != "EiP Bot" || thisuser != "EIP Dev Bot") ) { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
+			if (thisuser != ("EiP Bot" || "EiP Dev Bot") ) { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
 
 			//we are only going further into the function with one of these 4 emoji
 			var allowedemoji = ['👍', '❌', '🥚', '💤']
-			if ((thisuser != "EiP Bot" || thisuser != "EIP Dev Bot")  && allowedemoji.includes(reaction.emoji.name)) {
+			if (thisuser != ("EiP Bot" || "EiP Dev Bot")  && allowedemoji.includes(reaction.emoji.name)) {
 
 				//add one to the queue count. Needs to be 0 before we can leave emoji processing
-				if ((thisuser != "EiP Bot" || thisuser != "EIP Dev Bot") ) { emojiQueueCount = emojiQueueCount + 1; console.log("adding one to emojiqueuecount") }
+				if (thisuser != ("EiP Bot" || "EiP Dev Bot")) { emojiQueueCount = emojiQueueCount + 1; console.log("adding one to emojiqueuecount") }
 				//get the message object for the status board which recieved the reaction, then...
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 					if (elocks.e7locked === false || elocks.e6locked === false) {//try all the queues. Maximum is 1 running plus 7 waiting
