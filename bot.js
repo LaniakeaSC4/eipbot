@@ -235,7 +235,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			if (dName !== null) {
 				thisuser = dName
 			} else { thisuser = uName }
-
+console.log('thisuser is dev: ' + thisuser)
 			if (reaction.emoji.name == "👍" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
 			if (reaction.emoji.name == "❌" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
 			if (reaction.emoji.name == "🥚" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
