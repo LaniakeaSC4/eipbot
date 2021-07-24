@@ -221,9 +221,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			//get displayname from userid. Need this for the string match in the status board/teammembers object
 			//check if they have a nickname set
 			var getmember = await client.users.fetch(user.id)//retrieve the user from ID
-			console.log(getmember)
+
 			const member = await reaction.message.guild.member(getmember);
-			console.log(member)
+		
 
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
 			//if they dont have a nickname, thier username is what is displayed by discord.
@@ -244,7 +244,7 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 			if (reaction.emoji.name == "❌") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
 			if (reaction.emoji.name == "🥚") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
 			if (reaction.emoji.name == "💤") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
-} else {console.log('was a bot')}//end if not bots
+//} else {console.log('was a bot')}//end if not bots
 
 			//if user is not the bot, log whats going to happen
 			if (thisuser != ("EiP Bot" || "EiP Dev Bot") ) { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
@@ -311,6 +311,8 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 					}//end else (for queue is full)
 				})//end fetch statusboard message then...
 			}//end if EIP Bot and allowed reaction
+} else {console.log('was a bot')}//end if not bots
+
 		}//end if reaction message is a statusboard message
 	}//end for loop checking through stored reaction board message ids for a match for this reaction add
 });//end client on reaction add 
