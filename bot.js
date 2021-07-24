@@ -235,11 +235,16 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			if (dName !== null) {
 				thisuser = dName
 			} else { thisuser = uName }
+			
 console.log('thisuser is dev: ' + thisuser)
-			if (reaction.emoji.name == "👍" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
-			if (reaction.emoji.name == "❌" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
-			if (reaction.emoji.name == "🥚" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
-			if (reaction.emoji.name == "💤" && thisuser != ("EiP Bot" || "EiP Dev Bot") ) { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
+
+if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
+  console.log('not one of the bots!')
+			if (reaction.emoji.name == "👍") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
+			if (reaction.emoji.name == "❌") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
+			if (reaction.emoji.name == "🥚") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
+			if (reaction.emoji.name == "💤") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
+} else {console.log('was a bot')}//end if not bots
 
 			//if user is not the bot, log whats going to happen
 			if (thisuser != ("EiP Bot" || "EiP Dev Bot") ) { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
