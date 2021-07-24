@@ -244,17 +244,18 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 			if (reaction.emoji.name == "❌") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
 			if (reaction.emoji.name == "🥚") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
 			if (reaction.emoji.name == "💤") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
-//} else {console.log('was a bot')}//end if not bots
 
-			//if user is not the bot, log whats going to happen
-			if (thisuser != ("EiP Bot" || "EiP Dev Bot") ) { console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id) }
+
+			//log whats going to happen
+			console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id)
 
 			//we are only going further into the function with one of these 4 emoji
 			var allowedemoji = ['👍', '❌', '🥚', '💤']
-			if (thisuser != ("EiP Bot" || "EiP Dev Bot")  && allowedemoji.includes(reaction.emoji.name)) {
+			if (allowedemoji.includes(reaction.emoji.name)) {
 
 				//add one to the queue count. Needs to be 0 before we can leave emoji processing
-				if (thisuser != ("EiP Bot" || "EiP Dev Bot")) { emojiQueueCount = emojiQueueCount + 1; console.log("adding one to emojiqueuecount") }
+				emojiQueueCount = emojiQueueCount + 1; console.log("adding one to emojiqueuecount")
+				
 				//get the message object for the status board which recieved the reaction, then...
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 					if (elocks.e7locked === false || elocks.e6locked === false) {//try all the queues. Maximum is 1 running plus 7 waiting
@@ -310,7 +311,7 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 						emojiQueueCount = emojiQueueCount - 1
 					}//end else (for queue is full)
 				})//end fetch statusboard message then...
-			}//end if EIP Bot and allowed reaction
+			}//end if allowed reaction
 } else {console.log('was a bot')}//end if not bots
 
 		}//end if reaction message is a statusboard message
