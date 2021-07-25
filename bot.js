@@ -46,7 +46,8 @@ client.on('ready', () => {
 	startthinking(3000, false)
 	//build arrary of open status boards
 	arraystatusboards()
-	console.log('I am ready!');
+	console.log('I am ready!')
+	console.log('I am in these servers: '+client.guilds)
 });
 
 //define global storage objects
