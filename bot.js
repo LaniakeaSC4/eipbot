@@ -88,7 +88,7 @@ function buildteamobj(message) {
 				//search by role ID to get all members with that role
 				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
 				//store members in the team members object, keyed by cleaned team name
-				teammembers[cleanrole] = thesemembers;
+				master[message.guild.id][teammembers][cleanrole] = thesemembers;
 			}//end if match
 		}//end for roles
 	}//end for homechannels
@@ -96,18 +96,17 @@ function buildteamobj(message) {
 	var idcounter = 0
 
 	//add red squares
-	for (let key in teammembers) {
-		for (var i = 0; i < teammembers[key].length; i++) {
+	for (let key in master[message.guild.id][teammembers]) {
+		for (var i = 0; i < master[message.guild.id][teammembers][key].length; i++) {
 			hexid = idcounter.toString(16)
 			hexid = hexid.padStart(2, "0")
 			hexid = hexid.toUpperCase()
 			idcounter = idcounter + 1
-			teammembers[key][i] = "🟥 💤 - " + teammembers[key][i] + " (+" + hexid + ")"
+			master[message.guild.id][teammembers][key][i] = "🟥 💤 - " + master[message.guild.id][teammembers][key][i] + " (+" + hexid + ")"
 		}//end for each team member
 	}//end for each team
 	idcounter = 0
 	//store the teams (roles) in the object
-	//teams['teams'] = teamnames;
 	master[message.guild.id][teams] = teamnames;
 }//end function
 
@@ -351,11 +350,11 @@ function changeplayerstatus(newemoji, user) {
 		for (var i = 0; i < master[message.guild.id][teams].length; i++) {//for each of the teams (roles)
 			var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
-			for (var j = 0; j < teammembers[cleanrole].length; j++) {
-				if (teammembers[cleanrole][j].includes(user)) {
-					let str = teammembers[cleanrole][j];
+			for (var j = 0; j < master[message.guild.id][teammembers][cleanrole].length; j++) {
+				if (master[message.guild.id][teammembers][cleanrole][j].includes(user)) {
+					let str = master[message.guild.id][teammembers][cleanrole][j];
 					let res = str.replace(oldemoji[0], newemoji).replace(oldemoji[1], newemoji).replace(oldemoji[2], newemoji).replace(oldemoji[3], newemoji);
-					teammembers[cleanrole][j] = res;
+					master[message.guild.id][teammembers][cleanrole][j] = res;
 				} //end replace emoji core function
 			}//end for this team loop
 		}//end teams for loop
@@ -393,7 +392,7 @@ function findstatusboard(message) {
 function rebuildteamobj(message) {
 	return new Promise((resolve, reject) => {
 		console.log('rebuilding team object')
-		teammembers = {}//clear object for rebuilding it
+		master[message.guild.id][teammembers] = {}//clear object for rebuilding it
 		var teamnames = []//define teams array, team names will be stored here for use by other functions
 		message.channel.messages.fetchPinned().then(messages => {//fetch pinned messages from this channel then...
 			messages.forEach(message => {//for each pinned message 
@@ -405,7 +404,7 @@ function rebuildteamobj(message) {
 						var thisteam = embed.fields[i].name.split(' ').pop()//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
 						teamnames.push(thisteam)//save the team (role) name itself for use by other functions
 						var cleanrole = thisteam.replace(/[^a-zA-Z ]/g, "")//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
-						teammembers[cleanrole] = thesemembers//store members in the team members object, keyed by cleaned team name
+						master[message.guild.id][teammembers][cleanrole] = thesemembers//store members in the team members object, keyed by cleaned team name
 						thismessage = message//store message to get URL
 					}//end for loop
 					resolve(true)
@@ -421,9 +420,9 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	return new Promise((resolve, reject) => {
 		for (var i = 0; i < master[message.guild.id][teams].length; i++) {//for each of the teams (roles)
 			var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
-			for (var j = 0; j < teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
-				if (teammembers[cleanrole][j].includes(user)) {
-					let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
+			for (var j = 0; j < master[message.guild.id][teammembers][cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+				if (master[message.guild.id][teammembers][cleanrole][j].includes(user)) {
+					let str = master[message.guild.id][teammembers][cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); master[message.guild.id][teammembers][cleanrole][j] = res;
 				} //end replace square core function
 			}//end for this team loop
 		}//end teams for loop
@@ -435,8 +434,8 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 function changeteamsquare(oldsq1, oldsq2, newsq, team) {
 	return new Promise((resolve, reject) => {
 		var cleanrole = team.replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
-		for (var i = 0; i < teammembers[cleanrole].length; i++) {//access teammembers object at cleaned teamname provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
-			let str = teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][i] = res;
+		for (var i = 0; i < master[message.guild.id][teammembers][cleanrole].length; i++) {//access teammembers object at cleaned teamname provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+			let str = master[message.guild.id][teammembers][cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); master[message.guild.id][teammembers][cleanrole][i] = res;
 		}//end for loop
 		resolve(true)
 	})//end promise
@@ -456,7 +455,7 @@ function updateplayerboard(message, source) {
 					//add teams and players for embed from teams/teammeber objects
 					for (var i = 0; i < master[message.guild.id][teams].length; i++) {
 						var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
-						updatedEmbed.addField(`Team ${master[message.guild.id][teams][i]}`, teammembers[cleanrole], false)
+						updatedEmbed.addField(`Team ${master[message.guild.id][teams][i]}`, master[message.guild.id][teammembers][cleanrole], false)
 					}//end loop through teams updating from memory teammembers object
 					message.edit(updatedEmbed)//send the updated embed
 					resolve(true)
@@ -509,10 +508,10 @@ async function hexsearch(id) {
 	return new Promise((resolve, reject) => {
 		for (var i = 0; i < master[message.guild.id][teams].length; i++) {//for each of the teams (roles)
 			var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
-			for (var j = 0; j < teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
-				if (teammembers[cleanrole][j].includes(id)) {
+			for (var j = 0; j < master[message.guild.id][teammembers][cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+				if (master[message.guild.id][teammembers][cleanrole][j].includes(id)) {
 					console.log('found user with id: ' + id)
-					resolve(teammembers[cleanrole][j])
+					resolve(master[message.guild.id][teammembers][cleanrole][j])
 				} //end replace square core function
 			}//end for this team loop
 		}//end teams for loop
@@ -530,7 +529,7 @@ async function hexsearch(id) {
 // 1. check if the user is on one of the home teams
 async function checkifvaliduser(message, user) {
 	await rebuildteamobj(message)//rebuild team object so we can search through valid users
-	var teammembervalues = Object.values(teammembers)//get all the values from the object
+	var teammembervalues = Object.values(master[message.guild.id][teammembers])//get all the values from the object
 	var merged = [].concat.apply([], teammembervalues)//merge all values into 1 dimensional array
 	var found = merged.find(element => element.includes(user))//search merged array for user passed to function. If there, return user, else undefined
 	//if user passed to function is in that array, return true, else false
@@ -631,7 +630,7 @@ client.on('message', async message => {
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < master[message.guild.id][teams].length; i++) {
 				var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
-				placedEmbed.addField(`Team ${master[message.guild.id][teams][i]}`, teammembers[cleanrole], false)
+				placedEmbed.addField(`Team ${master[message.guild.id][teams][i]}`, master[message.guild.id][teammembers][cleanrole], false)
 			}//end loop to add team fields to embed
 
 			message.channel.send(placedEmbed).then(async msg => {//send the embed then
