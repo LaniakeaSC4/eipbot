@@ -56,9 +56,9 @@ for (var i = 0; i < serverlist.length; i++) {
  //var teams = {}
  //var teammembers = {}
  //var lastmessage = {}
-  master.serverlist[i][teams] = {}
-  master.serverlist[i][teammembers] = {}
-  master.serverlist[i][lastmessage] = {}
+  master[serverlist[i]][teams] = {}
+  master[serverlist[i]][teammembers] = {}
+  master[serverlist[i]][lastmessage] = {}
 } 
 
 console.log(master)
