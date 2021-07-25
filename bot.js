@@ -10,7 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.includes("!test")) {
-	  console.log(master['695793841592336426'][teams]. test)
+	  console.log(master['695793841592336426'][teams])
 	}
 })
 
@@ -59,7 +59,7 @@ for (var i = 0; i < serverlist.length; i++) {
  //var teams = {}
  //var teammembers = {}
  //var lastmessage = {}
-  master[serverlist[i]][teams] = {test:'banana'}
+  master[serverlist[i]][teams] = {}
   master[serverlist[i]][teammembers] = {}
   master[serverlist[i]][lastmessage] = {}
 } 
@@ -133,6 +133,7 @@ function buildteamobj(message) {
 	idcounter = 0
 	//store the teams (roles) in the object
 	teams['teams'] = teamnames;
+	master[message.guild.id][teams] = teamnames;
 }//end function
 
 //=======================================
