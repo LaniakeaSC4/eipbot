@@ -45,7 +45,7 @@ client.on('message', async message => {
 client.on('ready', () => {
 	startthinking(3000, false) 
 	const serverlist = client.guilds.cache.map(guild => guild.id);
-    console.log(serverlist);
+    //console.log(serverlist);
  
  var master = {}
 // master['server'] = serverlist
@@ -61,7 +61,7 @@ for (var i = 0; i < serverlist.length; i++) {
   master[serverlist[i]][lastmessage] = {}
 } 
 
-console.log(master)
+console.log(master[guild.id])
 
 
 	//build arrary of open status boards
