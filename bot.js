@@ -52,14 +52,17 @@ client.on('ready', () => {
  
  
 for (var i = 0; i < serverlist.length; i++) {
-  master[serverlist[i]] = {}
-  
+  master[serverlist[i]] = {} 
+ //var teams = {}
+ //var teammembers = {}
+ //var lastmessage = {}
+  master.serverlist[i][teams] = {}
+  master.serverlist[i][teammembers] = {}
+  master.serverlist[i][lastmessage] = {}
 } 
 
 console.log(master)
-//var teams = {}
-//var teammembers = {}
-//var lastmessage = {}
+
 
 	//build arrary of open status boards
 	arraystatusboards()
