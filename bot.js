@@ -61,7 +61,7 @@ for (var i = 0; i < serverlist.length; i++) {
   master[serverlist[i]][lastmessage] = {}
 } 
 
-console.log(master[guild.id])
+console.log(master[695793841592336426])
 
 
 	//build arrary of open status boards
