@@ -105,7 +105,7 @@ function buildteamobj(message) {
 			hexid = hexid.toUpperCase()
 			idcounter = idcounter + 1
 			master[message.guild.id][teammembers][key][i] = "🟥 💤 - " + master[message.guild.id][teammembers][key][i] + " (+" + hexid + ")"
-			console.log(master[message.guild.id][teammembers][key][i])
+			//console.log(master[message.guild.id][teammembers][key][i])
 		}//end for each team member
 	}//end for each team
 	idcounter = 0
@@ -633,6 +633,7 @@ client.on('message', async message => {
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < master[message.guild.id][teams].length; i++) {
 				var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
+				console.log(master[message.guild.id][teammembers][cleanrole])
 				placedEmbed.addField(`Team ${master[message.guild.id][teams][i]}`, master[message.guild.id][teammembers][cleanrole], false)
 			}//end loop to add team fields to embed
 
