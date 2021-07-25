@@ -47,7 +47,8 @@ client.on('ready', () => {
 	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!')
-	console.log('I am in these servers: '+client.guilds)
+	const servers = client.guilds.cache.map(guild => guild.id);
+    console.log(servers); 
 });
 
 //define global storage objects
