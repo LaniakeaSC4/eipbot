@@ -43,12 +43,23 @@ client.on('message', async message => {
 
 // 1. Report ready to console and build array of open coop boards
 client.on('ready', () => {
-	startthinking(3000, false)
+	startthinking(3000, false) 
+	const serverlist = client.guilds.cache.map(guild => guild.id);
+    console.log(serverlist);
+ 
+ var master = {}
+ master['server'] = serverlist
+ console.log(master)
+ 
+//for (var i = 0; i < serverlist.length; i++) {} 
+//var teams = {}
+//var teammembers = {}
+//var lastmessage = {}
+
 	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!')
-	const servers = client.guilds.cache.map(guild => guild.id);
-    console.log(servers); 
+	
 });
 
 //define global storage objects
