@@ -48,10 +48,15 @@ client.on('ready', () => {
     console.log(serverlist);
  
  var master = {}
- master['server'] = serverlist
- console.log(master)
+// master['server'] = serverlist
  
-//for (var i = 0; i < serverlist.length; i++) {} 
+ 
+for (var i = 0; i < serverlist.length; i++) {
+  master[serverlist[i]] = {}
+  
+} 
+
+console.log(master)
 //var teams = {}
 //var teammembers = {}
 //var lastmessage = {}
