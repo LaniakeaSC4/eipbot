@@ -10,7 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.includes("!test")) {
-	  console.log(master['695793841592336426'][teams][test])
+	  console.log(master['695793841592336426'][teams]. test)
 	}
 })
 
