@@ -87,8 +87,10 @@ function buildteamobj(message) {
 				let role = message.guild.roles.cache.find(r => r.name === roles[j]);
 				//search by role ID to get all members with that role
 				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
+				console.log('thesemembers: ' + thesemembers)
 				//store members in the team members object, keyed by cleaned team name
 				master[message.guild.id][teammembers][cleanrole] = thesemembers;
+				console.log('master[message.guild.id][teammembers][cleanrole]' + master[message.guild.id][teammembers][cleanrole])
 			}//end if match
 		}//end for roles
 	}//end for homechannels
