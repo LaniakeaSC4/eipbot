@@ -10,6 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.includes("!test")) {
+	  console.log(master['695793841592336426'][teams])
 	}
 })
 
@@ -60,8 +61,6 @@ for (var i = 0; i < serverlist.length; i++) {
   master[serverlist[i]][teammembers] = {}
   master[serverlist[i]][lastmessage] = {}
 } 
-
-console.log(master['695793841592336426'][teams])
 
 
 	//build arrary of open status boards
