@@ -10,31 +10,9 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.includes("!test")) {
-	  console.log(master['695793841592336426'][teams])
+	  console.log(master[message.guild.id][teams])
 	}
 })
-
-client.on('message', async message => {
-	if (message.content.includes("[Turn Off] private elite co-op")) {
-		var regExp = /\(([^)]+)\)/;
-		var matches = regExp.exec(message.content);
-		if (matches != null) {
-			var coopdetails = matches[1].split(":")
-			for (i = 0; i < coopdetails.length; i++) {
-				coopdetails[i] = coopdetails[i].trim()
-			}
-			var coopname = coopdetails[0]
-			var coopid = coopdetails[1]
-			var thiscoop = message.content.substr(0, message.content.indexOf(","))
-			var embed = new Discord.MessageEmbed
-			embed.addField("View this contract on mioi.io", "https://egginc.mioi.io/contract/view/" + coopid + "/" + thiscoop + "/")
-			embed.setTitle("Command to DM Egg. Inc Bot:")
-			embed.setDescription("e!coop " + coopid + " " + thiscoop)
-			message.channel.send(embed)
-		}
-		if (matches == null) { message.channel.send("Hey! I said don't feed me fake coops") }
-	}
-});//end client on message 
 
 //=================================================
 //  Coop bot | Functions | Initalise
@@ -56,9 +34,6 @@ client.on('ready', () => {
  
 for (var i = 0; i < serverlist.length; i++) {
   master[serverlist[i]] = {} 
- //var teams = {}
- //var teammembers = {}
- //var lastmessage = {}
   master[serverlist[i]][teams] = {}
   master[serverlist[i]][teammembers] = {}
   master[serverlist[i]][lastmessage] = {}
@@ -132,7 +107,7 @@ function buildteamobj(message) {
 	}//end for each team
 	idcounter = 0
 	//store the teams (roles) in the object
-	teams['teams'] = teamnames;
+	//teams['teams'] = teamnames;
 	master[message.guild.id][teams] = teamnames;
 }//end function
 
@@ -373,8 +348,8 @@ function changeplayerstatus(newemoji, user) {
 	return new Promise((resolve, reject) => {
 		var oldemoji = ['👍', '❌', '🥚', '💤']//these are the possible emoji that we will be replacing
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
-		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
-			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+		for (var i = 0; i < master[message.guild.id][teams].length; i++) {//for each of the teams (roles)
+			var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
 			for (var j = 0; j < teammembers[cleanrole].length; j++) {
 				if (teammembers[cleanrole][j].includes(user)) {
@@ -437,15 +412,15 @@ function rebuildteamobj(message) {
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
-		teams['teams'] = teamnames//store the teams (roles) in the object
+		master[message.guild.id][teams] = teamnames//store the teams (roles) in the object
 	})//end promise
 }//end function rebuildteamobj 
 
 // 3a. function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user) {
 	return new Promise((resolve, reject) => {
-		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
-			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
+		for (var i = 0; i < master[message.guild.id][teams].length; i++) {//for each of the teams (roles)
+			var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
 			for (var j = 0; j < teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 				if (teammembers[cleanrole][j].includes(user)) {
 					let str = teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); teammembers[cleanrole][j] = res;
@@ -479,9 +454,9 @@ function updateplayerboard(message, source) {
 					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
 					updatedEmbed.fields = []//clear fields
 					//add teams and players for embed from teams/teammeber objects
-					for (var i = 0; i < teams.teams.length; i++) {
-						var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
-						updatedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], false)
+					for (var i = 0; i < master[message.guild.id][teams].length; i++) {
+						var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
+						updatedEmbed.addField(`Team ${master[message.guild.id][teams][i]}`, teammembers[cleanrole], false)
 					}//end loop through teams updating from memory teammembers object
 					message.edit(updatedEmbed)//send the updated embed
 					resolve(true)
@@ -532,8 +507,8 @@ async function updateHEXplayersquare(oldsq1, oldsq2, newsq, message, playerid, s
 
 async function hexsearch(id) {
 	return new Promise((resolve, reject) => {
-		for (var i = 0; i < teams.teams.length; i++) {//for each of the teams (roles)
-			var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
+		for (var i = 0; i < master[message.guild.id][teams].length; i++) {//for each of the teams (roles)
+			var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
 			for (var j = 0; j < teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 				if (teammembers[cleanrole][j].includes(id)) {
 					console.log('found user with id: ' + id)
@@ -566,7 +541,7 @@ async function checkifvaliduser(message, user) {
 async function checkifvalidteam(message, team) {
 	await rebuildteamobj(message)
 	console.log("team:" + team)//rebuild team object so we can search through valid users
-	var validteams = Object.values(teams)//get all the values from the object
+	var validteams = Object.values(master[message.guild.id][teams])//get all the values from the object
 	var merged = [].concat.apply([], validteams)//merge all values into 1 dimensional array
 	var found = merged.find(element => element.includes(team))//search merged array for user passed to function. If there, r
 	//if team passed to function is in that array, return true, else false
@@ -654,9 +629,9 @@ client.on('message', async message => {
 				.setFooter('Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️')
 
 			//add teams and players for embed from teams/teammeber objects
-			for (var i = 0; i < teams.teams.length; i++) {
-				var cleanrole = teams.teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
-				placedEmbed.addField(`Team ${teams.teams[i]}`, teammembers[cleanrole], false)
+			for (var i = 0; i < master[message.guild.id][teams].length; i++) {
+				var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
+				placedEmbed.addField(`Team ${master[message.guild.id][teams][i]}`, teammembers[cleanrole], false)
 			}//end loop to add team fields to embed
 
 			message.channel.send(placedEmbed).then(async msg => {//send the embed then
