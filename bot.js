@@ -624,7 +624,7 @@ client.on('message', async message => {
 
 			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
 			buildteamobj(message);
-console.log(master[message.guild.id][teammembers] ['egg-streme'])
+console.log(master[message.guild.id][teammembers][1])
 			//build initial embed
 			let placedEmbed = new Discord.MessageEmbed()
 				.setTitle("EiP Status Board for contract: " + eggcommand2)
