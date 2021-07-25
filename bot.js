@@ -56,12 +56,12 @@ for (var i = 0; i < serverlist.length; i++) {
  //var teams = {}
  //var teammembers = {}
  //var lastmessage = {}
-  master[serverlist[i]][teams] = {}
+  master[serverlist[i]][teams] = {test:'banana'}
   master[serverlist[i]][teammembers] = {}
   master[serverlist[i]][lastmessage] = {}
 } 
 
-console.log(master['695793841592336426'])
+console.log(master['695793841592336426'][teams])
 
 
 	//build arrary of open status boards
