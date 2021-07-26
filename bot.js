@@ -33,10 +33,10 @@ client.on('ready', () => {
  
  
 for (var i = 0; i < serverlist.length; i++) {
-  master[serverlist[i]] = {} 
-  master[serverlist[i]][teams] = {}
-  master[serverlist[i]][teammembers] = {}
-  master[serverlist[i]][lastmessage] = {}
+  master[serverlist[i]] = {'teams':{}, 'teammembers':{}, 'lastmessage':{}} 
+  //master[serverlist[i]].teams = {}
+  //master[serverlist[i]].teammembers = {}
+  //master[serverlist[i]].lastmessage = {}
 } 
 
 
@@ -47,9 +47,9 @@ for (var i = 0; i < serverlist.length; i++) {
 });
 
 //define global storage objects
-var teams = {}//this one is for just the teams/roles that match the home team channels
-var teammembers = {}//the main data storage for the status board. Team titles and team members with squares and farming status
-var lastmessage = {}//store the last retrieved message for last access.
+//var teams = {}//this one is for just the teams/roles that match the home team channels
+//var teammembers = {}//the main data storage for the status board. Team titles and team members with squares and farming status
+//var lastmessage = {}//store the last retrieved message for last access.
 
 // 2. Function to build team object from home team channels. This object contains the teams and team members. 🟥's added. Run during !coop open
 function buildteamobj(message) {
@@ -88,11 +88,12 @@ function buildteamobj(message) {
 				//search by role ID to get all members with that role
 				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
 				//console.log('thesemembers: ' + thesemembers)
+				
 				//store members in the team members object, keyed by cleaned team name
-				master[message.guild.id][teammembers] = {cleanrole:thesemembers} 
+				master[message.guild.id].teammembers = {cleanrole:thesemembers} 
 				
 console.log('log ' + cleanrole + ' as we build')
-console.log(master[message.guild.id][teammembers][cleanrole])
+console.log(master[message.guild.id].teammembers)
 
 			}//end if match
 		}//end for roles
