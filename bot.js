@@ -632,8 +632,8 @@ client.on('message', async message => {
 			})//end .then messages:
 
 			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
-console.log('before build team object on open')
-console.log(master[message.guild.id][teammembers])
+//console.log('before build team object on open')
+//console.log(master[message.guild.id][teammembers])
 			buildteamobj(message)
 console.log('after build team object on open')
 console.log(master[message.guild.id][teammembers])
