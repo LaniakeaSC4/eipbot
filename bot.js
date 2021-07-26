@@ -103,27 +103,27 @@ console.log(master[message.guild.id].teammembers)
 
 	//add red squares
 	for (let key in master[message.guild.id][teammembers]) {
-		for (var i = 0; i < master[message.guild.id][teammembers][key].length; i++) {
+		for (var i = 0; i < master[message.guild.id]. teammembers[key].length; i++) {
 			hexid = idcounter.toString(16)
 			hexid = hexid.padStart(2, "0")
 			hexid = hexid.toUpperCase()
 			idcounter = idcounter + 1
-			master[message.guild.id][teammembers][key][i] = "🟥 💤 - " + master[message.guild.id][teammembers][key][i] + " (+" + hexid + ")"
+			master[message.guild.id].teammembers[key][i] = "🟥 💤 - " + master[message.guild.id].teammembers[key][i] + " (+" + hexid + ")"
 			//console.log(master[message.guild.id][teammembers][key][i])
 		}//end for each team member
 	}//end for each team
 	console.log('log after adding squares')
-	console.log(master[message.guild.id][teammembers])
+	console.log(master[message.guild.id].teammembers)
 	idcounter = 0
 	//store the teams (roles) in the object
 	console.log('log teams before setting')
-	console.log(master[message.guild.id][teams])
-	var thisserver = message.guild.id
-	master.thisserver.teams = teamnames;
+	console.log(master[message.guild.id].teams)
+	
+	master[message.guild.id].teams = {teams:teamnames} ;
 	console.log('log teams after setting')
-	console.log(master[message.guild.id][teams])
+	console.log(master[message.guild.id].teams)
 	console.log('log after storing team names')
-	console.log(master[message.guild.id][teammembers]) 
+	console.log(master[message.guild.id].teammembers) 
 }//end function
 
 //=======================================
