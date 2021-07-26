@@ -114,7 +114,12 @@ console.log(master[message.guild.id][teammembers][cleanrole])
 	console.log(master[message.guild.id][teammembers])
 	idcounter = 0
 	//store the teams (roles) in the object
-	master[message.guild.id].teams = teamnames;
+	console.log('log teams before setting')
+	console.log(master[message.guild.id][teams])
+	var thisserver = message.guild.id
+	master.thisserver.teams = teamnames;
+	console.log('log teams after setting')
+	console.log(master[message.guild.id][teams])
 	console.log('log after storing team names')
 	console.log(master[message.guild.id][teammembers]) 
 }//end function
