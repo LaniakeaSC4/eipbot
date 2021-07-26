@@ -90,7 +90,7 @@ function buildteamobj(message) {
 				//console.log('thesemembers: ' + thesemembers)
 				
 				//store members in the team members object, keyed by cleaned team name
-				master[message.guild.id].teammembers = {cleanrole:thesemembers} 
+				master[message.guild.id].teammembers = {[cleanrole]:thesemembers} 
 				
 console.log('log ' + cleanrole + ' as we build')
 console.log(master[message.guild.id].teammembers)
