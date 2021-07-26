@@ -90,7 +90,7 @@ function buildteamobj(message) {
 				//console.log('thesemembers: ' + thesemembers)
 				//store members in the team members object, keyed by cleaned team name
 				master[message.guild.id][teammembers][cleanrole]=thesemembers
-
+console.log('log ' + cleanrole + ' as we build')
 console.log(master[message.guild.id][teammembers][cleanrole])
 
 			}//end if match
@@ -110,6 +110,7 @@ console.log(master[message.guild.id][teammembers][cleanrole])
 			//console.log(master[message.guild.id][teammembers][key][i])
 		}//end for each team member
 	}//end for each team
+	console.log('log after adding squares')
 	console.log(master[message.guild.id][teammembers])
 	idcounter = 0
 	//store the teams (roles) in the object
@@ -238,8 +239,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			if (dName !== null) {
 				thisuser = dName
 			} else { thisuser = uName }
-			
-console.log('thisuser is dev: ' + thisuser)
 
 if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
   console.log('not one of the bots!')
@@ -624,9 +623,9 @@ client.on('message', async message => {
 			})//end .then messages:
 
 			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
-			buildteamobj(message);
+			buildteamobj(message)
+console.log('after build team object on open')
 console.log(master[message.guild.id][teammembers])
-console.log(master[message.guild.id][teammembers]['sunny-side'])
 
 
 			//build initial embed
