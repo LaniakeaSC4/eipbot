@@ -89,7 +89,7 @@ function buildteamobj(message) {
 				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
 				//console.log('thesemembers: ' + thesemembers)
 				//store members in the team members object, keyed by cleaned team name
-				master[message.guild.id][teammembers][i] = {[cleanrole]:thesemembers};
+				master[message.guild.id][teammembers][i][cleanrole]=thesemembers
 
 console.log(master[message.guild.id][teammembers][cleanrole])
 
