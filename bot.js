@@ -110,7 +110,7 @@ console.log(master[message.guild.id][teammembers][cleanrole])
 			//console.log(master[message.guild.id][teammembers][key][i])
 		}//end for each team member
 	}//end for each team
-	console.log(master[message.guild.id][teammembers]['egg-streme'])
+	console.log(master[message.guild.id][teammembers])
 	idcounter = 0
 	//store the teams (roles) in the object
 	master[message.guild.id][teams] = teamnames;
