@@ -102,7 +102,7 @@ console.log(master[message.guild.id].teammembers)
 	var idcounter = 0
 
 	//add red squares
-	for (let key in master[message.guild.id][teammembers]) {
+	for (let key in master[message.guild.id]. teammembers) {
 		for (var i = 0; i < master[message.guild.id]. teammembers[key].length; i++) {
 			hexid = idcounter.toString(16)
 			hexid = hexid.padStart(2, "0")
