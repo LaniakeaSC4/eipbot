@@ -636,7 +636,7 @@ client.on('message', async message => {
 //console.log(master[message.guild.id][teammembers])
 			buildteamobj(message)
 console.log('after build team object on open')
-console.log(master[message.guild.id][teammembers])
+console.log(master[message.guild.id].teammembers)
 
 
 			//build initial embed
@@ -647,10 +647,10 @@ console.log(master[message.guild.id][teammembers])
 				.setFooter('Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️')
 
 			//add teams and players for embed from teams/teammeber objects
-			for (var i = 0; i < master[message.guild.id][teams].length; i++) {
-				var cleanrole = master[message.guild.id][teams][i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
+			for (var i = 0; i < master[message.guild.id].teams.length; i++) {
+				var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
 				
-				placedEmbed.addField(`Team ${master[message.guild.id][teams][i]}`, master[message.guild.id][teammembers][cleanrole], false)
+				placedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole], false)
 			}//end loop to add team fields to embed
 
 			message.channel.send(placedEmbed).then(async msg => {//send the embed then
