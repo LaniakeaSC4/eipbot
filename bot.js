@@ -303,7 +303,7 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 													console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 													try {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
-														await changeplayerstatus(result.emoji, result.user, message)//update the user in the teammembers object with the new emojj
+														await changeplayerstatus(result.emoji, result.user, reaction.guild.id)//update the user in the teammembers object with the new emojj
 														await updateplayerboard(result.message, 'emoji')//now the teammembers object is updated, republish the status board
 														await emojilock(false)
 													} catch (err) {
@@ -355,20 +355,20 @@ function arraystatusboards() {
 }//end array statusboards function 
 
 // 4. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
-function changeplayerstatus(newemoji, user, message) {
+function changeplayerstatus(newemoji, user, guildid) {
 	//log the change we are making
 	console.log('(in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
 		var oldemoji = ['👍', '❌', '🥚', '💤']//these are the possible emoji that we will be replacing
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
-		for (var i = 0; i < master[message.guild.id]. teams.length; i++) {//for each of the teams (roles)
-			var cleanrole = master[message.guild.id]. teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+		for (var i = 0; i < master[guildid]. teams.length; i++) {//for each of the teams (roles)
+			var cleanrole = master[guildid]. teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
-			for (var j = 0; j < master[message.guild.id]. teammembers[cleanrole].length; j++) {
-				if (master[message.guild.id]. teammembers[cleanrole][j].includes(user)) {
-					let str = master[message.guild.id]. teammembers[cleanrole][j];
+			for (var j = 0; j < master[guildid]. teammembers[cleanrole].length; j++) {
+				if (master[guildid]. teammembers[cleanrole][j].includes(user)) {
+					let str = master[guildid]. teammembers[cleanrole][j];
 					let res = str.replace(oldemoji[0], newemoji).replace(oldemoji[1], newemoji).replace(oldemoji[2], newemoji).replace(oldemoji[3], newemoji);
-					master[message.guild.id]. teammembers[cleanrole][j] = res;
+					master[guildid]. teammembers[cleanrole][j] = res;
 				} //end replace emoji core function
 			}//end for this team loop
 		}//end teams for loop
