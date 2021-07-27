@@ -204,7 +204,7 @@ function ebucket(message, emoji, user, lockobject, thislock, nextlock, loopdelay
 					lockobject[thislock] = false; console.log(queuename + " unlocked")//unlock this bucket so messages can flow in from above
 				}//end if nextlock is false
 			}, bdelay);//end qloop/setTimeout function
-		} else { console.log('skipping ' + queuename + ' queue'); resolve({ message: message, emoji: emoji, user: user }) }//if the next bucket wasnt locked, we can pass the message straight through
+		} else { console.log(message.guild.id + ': skipping ' + queuename + ' queue'); resolve({ message: message, emoji: emoji, user: user }) }//if the next bucket wasnt locked, we can pass the message straight through
 	})//end promise
 }//end bucket function
 
@@ -293,7 +293,7 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 														elocks.e0locked = false; console.log(reaction.message.guild.id+": e0 unlocked")//unlock this queue
 													}//end queue 0
 
-													console.log(reaction.message.guild.id+': Reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
+													console.log(reaction.message.guild.id+': Reaction : ' + result.emoji + ' for ' + result.user + ' has just passed all e-queues')//message is now free to enter rest of function
 													await emojilock(true)//stop other processing types
 													startthinking(12000, result.message)//lock out any more commands for x millisecond
 													emojiQueueCount = emojiQueueCount - 1//this one is now being processed. Let's remove it from queue count
