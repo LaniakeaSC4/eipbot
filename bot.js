@@ -507,7 +507,7 @@ async function updateHEXplayersquare(oldsq1, oldsq2, newsq, message, playerid, s
 
 	try {
 		await rebuildteamobj(message)
-		let user = await hexsearch(playerid)
+		let user = await hexsearch(playerid,message)
 		console.log('user is: ' + user)
 		var trimuser = user.substring(user.indexOf("-") + 1, user.indexOf('(') - 1)
 		console.log('user is now: ' + trimuser)
@@ -518,7 +518,7 @@ async function updateHEXplayersquare(oldsq1, oldsq2, newsq, message, playerid, s
 	} catch (err) { console.log(err) }
 }
 
-async function hexsearch(id) {
+async function hexsearch(id,message) {
 	return new Promise((resolve, reject) => {
 		for (var i = 0; i < master[message.guild.id][teams].length; i++) {//for each of the teams (roles)
 			var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
