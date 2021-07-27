@@ -10,7 +10,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 //!test command for testing things
 client.on('message', async message => {
 	if (message.content.includes("!test")) {
-	  console.log(master[message.guild.id][teams])
+		console.log(master[message.guild.id][teams])
 	}
 })
 
@@ -25,25 +25,25 @@ client.on('message', async message => {
 var master = {}
 
 client.on('ready', () => {
-	startthinking(3000, false) 
+	startthinking(3000, false)
 	const serverlist = client.guilds.cache.map(guild => guild.id);
-    //console.log(serverlist);
- 
-// master['server'] = serverlist
- 
- 
-for (var i = 0; i < serverlist.length; i++) {
-  master[serverlist[i]] = {'teams':{}, 'teammembers':{}, 'lastmessage':{}} 
-  //master[serverlist[i]].teams = {}
-  //master[serverlist[i]].teammembers = {}
-  //master[serverlist[i]].lastmessage = {}
-} 
+	//console.log(serverlist);
+
+	// master['server'] = serverlist
+
+
+	for (var i = 0; i < serverlist.length; i++) {
+		master[serverlist[i]] = { 'teams': {}, 'teammembers': {}, 'lastmessage': {} }
+		//master[serverlist[i]].teams = {}
+		//master[serverlist[i]].teammembers = {}
+		//master[serverlist[i]].lastmessage = {}
+	}
 
 
 	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!')
-	
+
 });
 
 //define global storage objects
@@ -88,12 +88,12 @@ function buildteamobj(message) {
 				//search by role ID to get all members with that role
 				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
 				//console.log('thesemembers: ' + thesemembers)
-				
+
 				//store members in the team members object, keyed by cleaned team name
-				master[message.guild.id].teammembers[cleanrole] = thesemembers 
-				
-console.log('log ' + cleanrole + ' as we build')
-console.log(master[message.guild.id].teammembers)
+				master[message.guild.id].teammembers[cleanrole] = thesemembers
+
+				console.log('log ' + cleanrole + ' as we build')
+				console.log(master[message.guild.id].teammembers)
 
 			}//end if match
 		}//end for roles
@@ -102,8 +102,8 @@ console.log(master[message.guild.id].teammembers)
 	var idcounter = 0
 
 	//add red squares
-	for (let key in master[message.guild.id]. teammembers) {
-		for (var i = 0; i < master[message.guild.id]. teammembers[key].length; i++) {
+	for (let key in master[message.guild.id].teammembers) {
+		for (var i = 0; i < master[message.guild.id].teammembers[key].length; i++) {
 			hexid = idcounter.toString(16)
 			hexid = hexid.padStart(2, "0")
 			hexid = hexid.toUpperCase()
@@ -118,12 +118,12 @@ console.log(master[message.guild.id].teammembers)
 	//store the teams (roles) in the object
 	console.log('log teams before setting')
 	console.log(master[message.guild.id].teams)
-	
+
 	master[message.guild.id].teams = teamnames;
 	console.log('log teams after setting')
 	console.log(master[message.guild.id].teams)
 	console.log('log after storing team names')
-	console.log(master[message.guild.id].teammembers) 
+	console.log(master[message.guild.id].teammembers)
 }//end function
 
 //=======================================
@@ -215,7 +215,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
 		try {
 			await reaction.fetch();
-			console.log(reaction.message.guild.id+': a partial reaction was fetched')
+			console.log(reaction.message.guild.id + ': a partial reaction was fetched')
 		} catch (error) {
 			console.error('Something went wrong when fetching the message: ', error);
 			// Return as `reaction.message.author` may be undefined/null
@@ -236,7 +236,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			var getmember = await client.users.fetch(user.id)//retrieve the user from ID
 
 			const member = await reaction.message.guild.member(getmember);
-		
+
 
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
 			//if they dont have a nickname, thier username is what is displayed by discord.
@@ -247,80 +247,80 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				thisuser = dName
 			} else { thisuser = uName }
 
-if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
-			if (reaction.emoji.name == "👍") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
-			if (reaction.emoji.name == "❌") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
-			if (reaction.emoji.name == "🥚") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
-			if (reaction.emoji.name == "💤") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
+			if (!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
+				if (reaction.emoji.name == "👍") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
+				if (reaction.emoji.name == "❌") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
+				if (reaction.emoji.name == "🥚") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
+				if (reaction.emoji.name == "💤") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
 
 
-			//log whats going to happen
-			console.log(reaction.message.guild.id+": " +thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id)
+				//log whats going to happen
+				console.log(reaction.message.guild.id + ": " + thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id)
 
-			//we are only going further into the function with one of these 4 emoji
-			var allowedemoji = ['👍', '❌', '🥚', '💤']
-			if (allowedemoji.includes(reaction.emoji.name)) {
+				//we are only going further into the function with one of these 4 emoji
+				var allowedemoji = ['👍', '❌', '🥚', '💤']
+				if (allowedemoji.includes(reaction.emoji.name)) {
 
-				//add one to the queue count. Needs to be 0 before we can leave emoji processing
-				emojiQueueCount = emojiQueueCount + 1
-				
-				//get the message object for the status board which recieved the reaction, then...
-				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
-					if (elocks.e7locked === false || elocks.e6locked === false) {//try all the queues. Maximum is 1 running plus 7 waiting
-						console.log(reaction.message.guild.id+": " + msg.content + 'just entered the top of the stack above e7')
-						await ebucket(msg, reaction.emoji.name, thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
-							console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
-							await ebucket(result.message, result.emoji, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
-								console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e6 to e5')
-								await ebucket(result.message, result.emoji, result.user, elocks, 'e5locked', 'e4locked', 1000, 'e5').then(async result => {
-									console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e5 to e4')
-									await ebucket(result.message, result.emoji, result.user, elocks, 'e4locked', 'e3locked', 1000, 'e4').then(async result => {
-										console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e4 to e3')
-										await ebucket(result.message, result.emoji, result.user, elocks, 'e3locked', 'e2locked', 1000, 'e3').then(async result => {
-											console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e3 to e2')
-											await ebucket(result.message, result.emoji, result.user, elocks, 'e2locked', 'e1locked', 1000, 'e2').then(async result => {
-												console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
-												await ebucket(result.message, result.emoji, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
-													console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
-													//queue 0
-													if (processingMaster === true && elocks.e0locked === false) {//if there is currently another command processingMaster and this queue isnt locked
-														elocks.e0locked = true; console.log(reaction.message.guild.id+": e0 locked")//lock this queue
-														//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. processingMaster var was ' + processingMaster)
-														do {//while processingMaster = true, loop around in 1 second intervals
-															console.log(reaction.message.guild.id+': One loop in queue 0 for reaction : ' + result.emoji + ' for ' + result.user)
-															await delay(1000)
-														} while (processingMaster === true)
-														elocks.e0locked = false; console.log(reaction.message.guild.id+": e0 unlocked")//unlock this queue
-													}//end queue 0
+					//add one to the queue count. Needs to be 0 before we can leave emoji processing
+					emojiQueueCount = emojiQueueCount + 1
 
-													console.log(reaction.message.guild.id+': Reaction : ' + result.emoji + ' for ' + result.user + ' has just passed all e-queues')//message is now free to enter rest of function
-													await emojilock(true)//stop other processing types
-													startthinking(12000, result.message)//lock out any more commands for x millisecond
-													emojiQueueCount = emojiQueueCount - 1//this one is now being processed. Let's remove it from queue count
-													console.log(reaction.message.guild.id+': emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
-													try {
-														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
-														await changeplayerstatus(result.emoji, result.user, reaction.message.guild.id)//update the user in the teammembers object with the new emojj
-														await updateplayerboard(result.message, 'emoji')//now the teammembers object is updated, republish the status board
-														await emojilock(false)
-													} catch (err) {
-														console.log(err)
-													}//end catch error
-												})//end q1
-											})//end q2
-										})//end q3
-									})//end q4
-								})//end q5
-							})//end q6
-						})//end q7
-					}//end if q7, q6 or 15 is locked
-					else {
-						reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many reactions silly human! Please wait 15 seconds and try to add your reaction again')
-						emojiQueueCount = emojiQueueCount - 1
-					}//end else (for queue is full)
-				})//end fetch statusboard message then...
-			}//end if allowed reaction
-} else {console.log(reaction.message.guild.id+': Reacting user was a bot')}//end if not bots
+					//get the message object for the status board which recieved the reaction, then...
+					await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
+						if (elocks.e7locked === false || elocks.e6locked === false) {//try all the queues. Maximum is 1 running plus 7 waiting
+							console.log(reaction.message.guild.id + ": " + msg.content + 'just entered the top of the stack above e7')
+							await ebucket(msg, reaction.emoji.name, thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
+								console.log(reaction.message.guild.id + ': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
+								await ebucket(result.message, result.emoji, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
+									console.log(reaction.message.guild.id + ': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e6 to e5')
+									await ebucket(result.message, result.emoji, result.user, elocks, 'e5locked', 'e4locked', 1000, 'e5').then(async result => {
+										console.log(reaction.message.guild.id + ': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e5 to e4')
+										await ebucket(result.message, result.emoji, result.user, elocks, 'e4locked', 'e3locked', 1000, 'e4').then(async result => {
+											console.log(reaction.message.guild.id + ': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e4 to e3')
+											await ebucket(result.message, result.emoji, result.user, elocks, 'e3locked', 'e2locked', 1000, 'e3').then(async result => {
+												console.log(reaction.message.guild.id + ': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e3 to e2')
+												await ebucket(result.message, result.emoji, result.user, elocks, 'e2locked', 'e1locked', 1000, 'e2').then(async result => {
+													console.log(reaction.message.guild.id + ': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
+													await ebucket(result.message, result.emoji, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
+														console.log(reaction.message.guild.id + ': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
+														//queue 0
+														if (processingMaster === true && elocks.e0locked === false) {//if there is currently another command processingMaster and this queue isnt locked
+															elocks.e0locked = true; console.log(reaction.message.guild.id + ": e0 locked")//lock this queue
+															//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. processingMaster var was ' + processingMaster)
+															do {//while processingMaster = true, loop around in 1 second intervals
+																console.log(reaction.message.guild.id + ': One loop in queue 0 for reaction : ' + result.emoji + ' for ' + result.user)
+																await delay(1000)
+															} while (processingMaster === true)
+															elocks.e0locked = false; console.log(reaction.message.guild.id + ": e0 unlocked")//unlock this queue
+														}//end queue 0
+
+														console.log(reaction.message.guild.id + ': Reaction : ' + result.emoji + ' for ' + result.user + ' has just passed all e-queues')//message is now free to enter rest of function
+														await emojilock(true)//stop other processing types
+														startthinking(12000, result.message)//lock out any more commands for x millisecond
+														emojiQueueCount = emojiQueueCount - 1//this one is now being processed. Let's remove it from queue count
+														console.log(reaction.message.guild.id + ': emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
+														try {
+															await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
+															await changeplayerstatus(result.emoji, result.user, reaction.message.guild.id)//update the user in the teammembers object with the new emojj
+															await updateplayerboard(result.message, 'emoji')//now the teammembers object is updated, republish the status board
+															await emojilock(false)
+														} catch (err) {
+															console.log(err)
+														}//end catch error
+													})//end q1
+												})//end q2
+											})//end q3
+										})//end q4
+									})//end q5
+								})//end q6
+							})//end q7
+						}//end if q7, q6 or 15 is locked
+						else {
+							reaction.message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many reactions silly human! Please wait 15 seconds and try to add your reaction again')
+							emojiQueueCount = emojiQueueCount - 1
+						}//end else (for queue is full)
+					})//end fetch statusboard message then...
+				}//end if allowed reaction
+			} else { console.log(reaction.message.guild.id + ': Reacting user was a bot') }//end if not bots
 
 		}//end if reaction message is a statusboard message
 	}//end for loop checking through stored reaction board message ids for a match for this reaction add
@@ -358,14 +358,14 @@ function changeplayerstatus(newemoji, user, guildid) {
 	return new Promise((resolve, reject) => {
 		var oldemoji = ['👍', '❌', '🥚', '💤']//these are the possible emoji that we will be replacing
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
-		for (var i = 0; i < master[guildid]. teams.length; i++) {//for each of the teams (roles)
-			var cleanrole = master[guildid]. teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+		for (var i = 0; i < master[guildid].teams.length; i++) {//for each of the teams (roles)
+			var cleanrole = master[guildid].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
-			for (var j = 0; j < master[guildid]. teammembers[cleanrole].length; j++) {
-				if (master[guildid]. teammembers[cleanrole][j].includes(user)) {
-					let str = master[guildid]. teammembers[cleanrole][j];
+			for (var j = 0; j < master[guildid].teammembers[cleanrole].length; j++) {
+				if (master[guildid].teammembers[cleanrole][j].includes(user)) {
+					let str = master[guildid].teammembers[cleanrole][j];
 					let res = str.replace(oldemoji[0], newemoji).replace(oldemoji[1], newemoji).replace(oldemoji[2], newemoji).replace(oldemoji[3], newemoji);
-					master[guildid]. teammembers[cleanrole][j] = res;
+					master[guildid].teammembers[cleanrole][j] = res;
 				} //end replace emoji core function
 			}//end for this team loop
 		}//end teams for loop
@@ -415,7 +415,7 @@ function rebuildteamobj(message) {
 						var thisteam = embed.fields[i].name.split(' ').pop()//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
 						teamnames.push(thisteam)//save the team (role) name itself for use by other functions
 						var cleanrole = thisteam.replace(/[^a-zA-Z0-9 ]/g, "")//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
-						master[message.guild.id]. teammembers[cleanrole] = thesemembers//store members in the team members object, keyed by cleaned team name
+						master[message.guild.id].teammembers[cleanrole] = thesemembers//store members in the team members object, keyed by cleaned team name
 						thismessage = message//store message to get URL
 					}//end for loop
 					resolve(true)
@@ -427,14 +427,14 @@ function rebuildteamobj(message) {
 }//end function rebuildteamobj 
 
 // 3a. function to loop through all of the team arrarys looking for the user and change thier square colour
-function changeusersquare(oldsq1, oldsq2, newsq, user,message) {
-  console.log(message.guild.id)
+function changeusersquare(oldsq1, oldsq2, newsq, user, message) {
+	console.log(message.guild.id)
 	return new Promise((resolve, reject) => {
-		for (var i = 0; i < master[message.guild.id]. teams.length; i++) {//for each of the teams (roles)
-			var cleanrole = master[message.guild.id]. teams[i].replace(/[^a-zA-Z0-9 ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
-			for (var j = 0; j < master[message.guild.id]. teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
-				if (master[message.guild.id]. teammembers[cleanrole][j].includes(user)) {
-					let str = master[message.guild.id]. teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); master[message.guild.id]. teammembers[cleanrole][j] = res;
+		for (var i = 0; i < master[message.guild.id].teams.length; i++) {//for each of the teams (roles)
+			var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
+			for (var j = 0; j < master[message.guild.id].teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+				if (master[message.guild.id].teammembers[cleanrole][j].includes(user)) {
+					let str = master[message.guild.id].teammembers[cleanrole][j]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); master[message.guild.id].teammembers[cleanrole][j] = res;
 				} //end replace square core function
 			}//end for this team loop
 		}//end teams for loop
@@ -443,11 +443,11 @@ function changeusersquare(oldsq1, oldsq2, newsq, user,message) {
 }//end of changeusersquare function
 
 // 3b. function to change whole team's squares at once
-function changeteamsquare(oldsq1, oldsq2, newsq, team,message) {
+function changeteamsquare(oldsq1, oldsq2, newsq, team, message) {
 	return new Promise((resolve, reject) => {
 		var cleanrole = team.replace(/[^a-zA-Z0-9 ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
-		for (var i = 0; i < master[message.guild.id]. teammembers[cleanrole].length; i++) {//access teammembers object at cleaned teamname provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
-			let str = master[message.guild.id]. teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); master[message.guild.id]. teammembers[cleanrole][i] = res;
+		for (var i = 0; i < master[message.guild.id].teammembers[cleanrole].length; i++) {//access teammembers object at cleaned teamname provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
+			let str = master[message.guild.id].teammembers[cleanrole][i]; let res = str.replace(oldsq1, newsq).replace(oldsq2, newsq); master[message.guild.id].teammembers[cleanrole][i] = res;
 		}//end for loop
 		resolve(true)
 	})//end promise
@@ -505,7 +505,7 @@ async function updateHEXplayersquare(oldsq1, oldsq2, newsq, message, playerid, s
 
 	try {
 		await rebuildteamobj(message)
-		let user = await hexsearch(playerid,message)
+		let user = await hexsearch(playerid, message)
 		console.log('user is: ' + user)
 		var trimuser = user.substring(user.indexOf("-") + 1, user.indexOf('(') - 1)
 		console.log('user is now: ' + trimuser)
@@ -516,9 +516,9 @@ async function updateHEXplayersquare(oldsq1, oldsq2, newsq, message, playerid, s
 	} catch (err) { console.log(err) }
 }
 
-async function hexsearch(id,message) {
+async function hexsearch(id, message) {
 	return new Promise((resolve, reject) => {
-		for (var i = 0; i < master[message.guild.id]. teams.length; i++) {//for each of the teams (roles)
+		for (var i = 0; i < master[message.guild.id].teams.length; i++) {//for each of the teams (roles)
 			var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
 			for (var j = 0; j < master[message.guild.id].teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 				if (master[message.guild.id].teammembers[cleanrole][j].includes(id)) {
@@ -589,11 +589,11 @@ function thankyou(author, updatedthis, color, message) {
 client.on('message', async message => {
 	if (message.content.startsWith("!help")) {
 		helpembed = new Discord.MessageEmbed()
-		.setTitle("**Bot Functions**")
-		.setDescription('\n\nNote: this help text needs updated\n\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop\n\nTo set the players coop status use these commands\n**!colour +[player code]** - changes the coop of player with that code (also **!colour @user** works, but this will ping the user)\n**!colour @team** - sets the coops status of the whole team\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
-		.setColor('#00FF00')
+			.setTitle("**Bot Functions**")
+			.setDescription('\n\nNote: this help text needs updated\n\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop\n\nTo set the players coop status use these commands\n**!colour +[player code]** - changes the coop of player with that code (also **!colour @user** works, but this will ping the user)\n**!colour @team** - sets the coops status of the whole team\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
+			.setColor('#00FF00')
 		message.channel.send(helpembed)
-	}	
+	}
 })
 
 //==========================================
@@ -630,11 +630,11 @@ client.on('message', async message => {
 			})//end .then messages:
 
 			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
-//console.log('before build team object on open')
-//console.log(master[message.guild.id][teammembers])
+			//console.log('before build team object on open')
+			//console.log(master[message.guild.id][teammembers])
 			buildteamobj(message)
-console.log('after build team object on open')
-console.log(master[message.guild.id].teammembers)
+			console.log('after build team object on open')
+			console.log(master[message.guild.id].teammembers)
 
 
 			//build initial embed
