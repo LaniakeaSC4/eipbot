@@ -303,7 +303,7 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 													console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 													try {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
-														await changeplayerstatus(result.emoji, result.user)//update the user in the teammembers object with the new emojj
+														await changeplayerstatus(result.emoji, result.user, message)//update the user in the teammembers object with the new emojj
 														await updateplayerboard(result.message, 'emoji')//now the teammembers object is updated, republish the status board
 														await emojilock(false)
 													} catch (err) {
@@ -355,7 +355,7 @@ function arraystatusboards() {
 }//end array statusboards function 
 
 // 4. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
-function changeplayerstatus(newemoji, user) {
+function changeplayerstatus(newemoji, user, message) {
 	//log the change we are making
 	console.log('(in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
@@ -430,7 +430,7 @@ function rebuildteamobj(message) {
 }//end function rebuildteamobj 
 
 // 3a. function to loop through all of the team arrarys looking for the user and change thier square colour
-function changeusersquare(oldsq1, oldsq2, newsq, user) {
+function changeusersquare(oldsq1, oldsq2, newsq, user,message) {
 	return new Promise((resolve, reject) => {
 		for (var i = 0; i < master[message.guild.id]. teams.length; i++) {//for each of the teams (roles)
 			var cleanrole = master[message.guild.id]. teams[i].replace(/[^a-zA-Z0-9 ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
@@ -445,7 +445,7 @@ function changeusersquare(oldsq1, oldsq2, newsq, user) {
 }//end of changeusersquare function
 
 // 3b. function to change whole team's squares at once
-function changeteamsquare(oldsq1, oldsq2, newsq, team) {
+function changeteamsquare(oldsq1, oldsq2, newsq, team,message) {
 	return new Promise((resolve, reject) => {
 		var cleanrole = team.replace(/[^a-zA-Z0-9 ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
 		for (var i = 0; i < master[message.guild.id]. teammembers[cleanrole].length; i++) {//access teammembers object at cleaned teamname provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
@@ -484,7 +484,7 @@ async function updateplayersquare(oldsq1, oldsq2, newsq, user, message, source) 
 	try {
 		console.log('user ' + user + ' started being updated to ' + newsq)
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
-		await changeusersquare(oldsq1, oldsq2, newsq, user)//change squares in the memory object
+		await changeusersquare(oldsq1, oldsq2, newsq, user, message)//change squares in the memory object
 		await updateplayerboard(message, source)//update player board from memory object
 		console.log('user ' + user + ' finished being updated to ' + newsq)
 	} catch (err) { console.log(err) }
@@ -495,7 +495,7 @@ async function updateteamsquare(oldsq1, oldsq2, newsq, team, message, source) {
 	try {
 		console.log('team ' + team + ' started being updated to ' + newsq)
 		await rebuildteamobj(message)//rebuild memory object from message passed to function
-		await changeteamsquare(oldsq1, oldsq2, newsq, team)//change squares in the memory object
+		await changeteamsquare(oldsq1, oldsq2, newsq, team, message)//change squares in the memory object
 		await updateplayerboard(message, source)//update player board from memory object
 		console.log('team ' + team + ' finished being updated to ' + newsq)
 	} catch (err) { console.log(err) }
