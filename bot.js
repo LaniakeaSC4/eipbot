@@ -236,6 +236,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 				if (reaction.emoji.name == "💤") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
 
 
+if (reaction.emoji.name == "🟥") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🟥").users.remove(user.id) }
+if (reaction.emoji.name == "🔶") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🔶").users.remove(user.id)} 
+if (reaction.emoji.name == "🟢") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🟢").users.remove(user.id) }
+
 				//log whats going to happen
 				console.log(reaction.message.guild.id + ": " + thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id)
 
@@ -336,9 +340,9 @@ function arraystatusboards() {
 // 4. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
 function changeplayerstatus(newemoji, user, guildid) {
 	//log the change we are making
-	console.log('(in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
+	console.log(guildid+': in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
-		var oldemoji = ['👍', '❌', '🥚', '💤']//these are the possible emoji that we will be replacing
+		var oldemoji = ['🟥', '🔶', '🟢', '👍', '❌', '🥚', '💤'],//these are the possible emoji that we will be replacing
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
 		for (var i = 0; i < master[guildid].teams.length; i++) {//for each of the teams (roles)
 			var cleanrole = master[guildid].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
@@ -639,7 +643,7 @@ client.on('message', async message => {
 				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
 				statusboardmessages.push(msg.id);
 				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
-				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤');//add reactions for clicking
+				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤');await msg.react('🟢');await msg.react('🔶');await msg.react('🟥');//add reactions for clicking
 				await delay(500); await msg.pin();//pin message after 500 milliseconds
 			})//end pin placed user embed
 		};//end the if !open
