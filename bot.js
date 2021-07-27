@@ -244,7 +244,7 @@ if (reaction.emoji.name == "🟢") { reaction.message.reactions.cache.find(react
 				console.log(reaction.message.guild.id + ": " + thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id)
 
 				//we are only going further into the function with one of these 4 emoji
-				var allowedemoji = ['👍', '❌', '🥚', '💤']
+				var allowedemoji = ['🟥','🔶','🟢', '👍', '❌', '🥚', '💤']
 				if (allowedemoji.includes(reaction.emoji.name)) {
 
 					//add one to the queue count. Needs to be 0 before we can leave emoji processing
