@@ -303,7 +303,7 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 													console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 													try {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
-														await changeplayerstatus(result.emoji, result.user, reaction.guild.id)//update the user in the teammembers object with the new emojj
+														await changeplayerstatus(result.emoji, result.user, reaction.message.guild.id)//update the user in the teammembers object with the new emojj
 														await updateplayerboard(result.message, 'emoji')//now the teammembers object is updated, republish the status board
 														await emojilock(false)
 													} catch (err) {
