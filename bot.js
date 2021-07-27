@@ -431,6 +431,7 @@ function rebuildteamobj(message) {
 
 // 3a. function to loop through all of the team arrarys looking for the user and change thier square colour
 function changeusersquare(oldsq1, oldsq2, newsq, user,message) {
+  console.log(message.guild.id)
 	return new Promise((resolve, reject) => {
 		for (var i = 0; i < master[message.guild.id]. teams.length; i++) {//for each of the teams (roles)
 			var cleanrole = master[message.guild.id]. teams[i].replace(/[^a-zA-Z0-9 ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
