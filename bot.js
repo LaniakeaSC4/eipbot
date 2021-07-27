@@ -28,7 +28,7 @@ client.on('ready', () => {
 	startthinking(3000, false)
 	
 	//establish server specific storage objects
-	const serverlist = client.guilds.cache.map(guild => guild.id);
+	var serverlist = []; serverlist = client.guilds.cache.map(guild => guild.id);
 	console.log('I am online on ' + serverlist.lenght + ' servers. They are :' + serverlist);
 	for (var i = 0; i < serverlist.length; i++) {
 		master[serverlist[i]] = { 'teams': {}, 'teammembers': {}, 'lastmessage': {} }
