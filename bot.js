@@ -520,7 +520,7 @@ async function updateHEXplayersquare(oldsq1, oldsq2, newsq, message, playerid, s
 
 async function hexsearch(id,message) {
 	return new Promise((resolve, reject) => {
-		for (var i = 0; i < master[message.guild.id][teams].length; i++) {//for each of the teams (roles)
+		for (var i = 0; i < master[message.guild.id]. teams.length; i++) {//for each of the teams (roles)
 			var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "")//teammebers object is keyed with a cleaned version of role (no hyphen)
 			for (var j = 0; j < master[message.guild.id].teammembers[cleanrole].length; j++) {//loop through teammembers object looking for the user displayname which was provided. If found, replace oldsq1 or oldsq2 with newsq and save back into object
 				if (master[message.guild.id].teammembers[cleanrole][j].includes(id)) {
