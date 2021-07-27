@@ -344,7 +344,8 @@ function changeplayerstatus(newemoji, user, guildid) {
 	return new Promise((resolve, reject) => {
 		var oldemoji = ['🟥', '🔶', '🟢', '👍', '❌', '🥚', '💤'],//these are the possible emoji that we will be replacing
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
-		for (var i = 0; i < master[guildid].teams.length; i++) {//for each of the teams (roles)
+		for (var i = 0; i < master[guildid].teams.length; i++) {
+		  //for each of the teams (roles)
 			var cleanrole = master[guildid].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
 			for (var j = 0; j < master[guildid].teammembers[cleanrole].length; j++) {
