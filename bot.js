@@ -26,24 +26,17 @@ var master = {}
 
 client.on('ready', () => {
 	startthinking(3000, false)
+	
+	//establish server specific storage objects
 	const serverlist = client.guilds.cache.map(guild => guild.id);
-	//console.log(serverlist);
-
-	// master['server'] = serverlist
-
-
+	console.log('I am online on ' + serverlist.lenght + ' servers. They are :' + serverlist);
 	for (var i = 0; i < serverlist.length; i++) {
 		master[serverlist[i]] = { 'teams': {}, 'teammembers': {}, 'lastmessage': {} }
-		//master[serverlist[i]].teams = {}
-		//master[serverlist[i]].teammembers = {}
-		//master[serverlist[i]].lastmessage = {}
 	}
-
 
 	//build arrary of open status boards
 	arraystatusboards()
 	console.log('I am ready!')
-
 });
 
 //define global storage objects
@@ -91,9 +84,6 @@ function buildteamobj(message) {
 
 				//store members in the team members object, keyed by cleaned team name
 				master[message.guild.id].teammembers[cleanrole] = thesemembers
-
-				console.log('log ' + cleanrole + ' as we build')
-				console.log(master[message.guild.id].teammembers)
 
 			}//end if match
 		}//end for roles
