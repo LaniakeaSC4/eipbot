@@ -342,7 +342,7 @@ function changeplayerstatus(newemoji, user, guildid) {
 	//log the change we are making
 	console.log(guildid+': in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
-		var oldemoji = ['🟥', '🔶', '🟢', '👍', '❌', '🥚', '💤'],//these are the possible emoji that we will be replacing
+		var oldemoji = ['🟥', '🔶', '🟢', '👍', '❌', '🥚', '💤']//these are the possible emoji that we will be replacing
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
 		for (var i = 0; i < master[guildid].teams.length; i++) {
 		  //for each of the teams (roles)
