@@ -512,7 +512,7 @@ async function updateHEXplayersquare(oldsq1, oldsq2, newsq, message, playerid, s
 		console.log('user is: ' + user)
 		var trimuser = user.substring(user.indexOf("-") + 1, user.indexOf('(') - 1)
 		console.log('user is now: ' + trimuser)
-		await changeusersquare(oldsq1, oldsq2, newsq, trimuser)//change squares in the memory object
+		await changeusersquare(oldsq1, oldsq2, newsq, trimuser, message)//change squares in the memory object
 		await updateplayerboard(message, source)//update player board from memory object
 		console.log('user ' + user + ' finished being updated to ' + newsq)
 
