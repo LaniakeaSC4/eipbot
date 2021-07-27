@@ -215,7 +215,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
 		try {
 			await reaction.fetch();
-			console.log('a partial reaction was fetched')
+			console.log(reaction.message.guild.id+': a partial reaction was fetched')
 		} catch (error) {
 			console.error('Something went wrong when fetching the message: ', error);
 			// Return as `reaction.message.author` may be undefined/null
@@ -241,8 +241,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			var dName = member.nickname;//set dName (displayName) to the member object's nickname
 			//if they dont have a nickname, thier username is what is displayed by discord.
 			var uName = getmember.username
-			console.log('uname is: ' + uName)
-			console.log('dName is: ' + dName)
 			var thisuser = ""
 			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
 			if (dName !== null) {
@@ -250,7 +248,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			} else { thisuser = uName }
 
 if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
-  console.log('not one of the bots!')
 			if (reaction.emoji.name == "👍") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
 			if (reaction.emoji.name == "❌") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
 			if (reaction.emoji.name == "🥚") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
@@ -258,49 +255,49 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 
 
 			//log whats going to happen
-			console.log(thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id)
+			console.log(reaction.message.guild.id+": " +thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id)
 
 			//we are only going further into the function with one of these 4 emoji
 			var allowedemoji = ['👍', '❌', '🥚', '💤']
 			if (allowedemoji.includes(reaction.emoji.name)) {
 
 				//add one to the queue count. Needs to be 0 before we can leave emoji processing
-				emojiQueueCount = emojiQueueCount + 1; console.log("adding one to emojiqueuecount")
+				emojiQueueCount = emojiQueueCount + 1
 				
 				//get the message object for the status board which recieved the reaction, then...
 				await client.channels.cache.get(thischannel).messages.fetch(thismessage).then(async msg => {
 					if (elocks.e7locked === false || elocks.e6locked === false) {//try all the queues. Maximum is 1 running plus 7 waiting
-						console.log(msg.content + 'just entered the top of the stack above e7')
+						console.log(reaction.message.guild.id+": " + msg.content + 'just entered the top of the stack above e7')
 						await ebucket(msg, reaction.emoji.name, thisuser, elocks, 'e7locked', 'e6locked', 1000, 'e7').then(async result => {
-							console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
+							console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e7 to e6')
 							await ebucket(result.message, result.emoji, result.user, elocks, 'e6locked', 'e5locked', 1000, 'e6').then(async result => {
-								console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e6 to e5')
+								console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e6 to e5')
 								await ebucket(result.message, result.emoji, result.user, elocks, 'e5locked', 'e4locked', 1000, 'e5').then(async result => {
-									console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e5 to e4')
+									console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e5 to e4')
 									await ebucket(result.message, result.emoji, result.user, elocks, 'e4locked', 'e3locked', 1000, 'e4').then(async result => {
-										console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e4 to e3')
+										console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e4 to e3')
 										await ebucket(result.message, result.emoji, result.user, elocks, 'e3locked', 'e2locked', 1000, 'e3').then(async result => {
-											console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e3 to e2')
+											console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e3 to e2')
 											await ebucket(result.message, result.emoji, result.user, elocks, 'e2locked', 'e1locked', 1000, 'e2').then(async result => {
-												console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
+												console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e2 to e1')
 												await ebucket(result.message, result.emoji, result.user, elocks, 'e1locked', 'e0locked', 1000, 'e1').then(async result => {
-													console.log('Reaction : ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
+													console.log(reaction.message.guild.id+': Reaction: ' + result.emoji + ' for ' + result.user + ' passed from e1 to e0')
 													//queue 0
 													if (processingMaster === true && elocks.e0locked === false) {//if there is currently another command processingMaster and this queue isnt locked
-														elocks.e0locked = true; console.log("e0 locked")//lock this queue
+														elocks.e0locked = true; console.log(reaction.message.guild.id+": e0 locked")//lock this queue
 														//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. processingMaster var was ' + processingMaster)
 														do {//while processingMaster = true, loop around in 1 second intervals
-															console.log('One loop in queue 0 for reaction : ' + result.emoji + ' for ' + result.user)
+															console.log(reaction.message.guild.id+': One loop in queue 0 for reaction : ' + result.emoji + ' for ' + result.user)
 															await delay(1000)
 														} while (processingMaster === true)
-														elocks.e0locked = false; console.log("e0 unlocked")//unlock this queue
+														elocks.e0locked = false; console.log(reaction.message.guild.id+": e0 unlocked")//unlock this queue
 													}//end queue 0
 
-													console.log('reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
+													console.log(reaction.message.guild.id+': Reaction : ' + result.emoji + ' for ' + result.user + 'has just passed all e-queues')//message is now free to enter rest of function
 													await emojilock(true)//stop other processing types
 													startthinking(12000, result.message)//lock out any more commands for x millisecond
 													emojiQueueCount = emojiQueueCount - 1//this one is now being processed. Let's remove it from queue count
-													console.log('emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
+													console.log(reaction.message.guild.id+': emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 													try {
 														await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
 														await changeplayerstatus(result.emoji, result.user, reaction.message.guild.id)//update the user in the teammembers object with the new emojj
@@ -323,7 +320,7 @@ if(!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
 					}//end else (for queue is full)
 				})//end fetch statusboard message then...
 			}//end if allowed reaction
-} else {console.log('was a bot')}//end if not bots
+} else {console.log(reaction.message.guild.id+': Reacting user was a bot')}//end if not bots
 
 		}//end if reaction message is a statusboard message
 	}//end for loop checking through stored reaction board message ids for a match for this reaction add
