@@ -112,18 +112,10 @@ function buildteamobj(message) {
 			//console.log(master[message.guild.id][teammembers][key][i])
 		}//end for each team member
 	}//end for each team
-	console.log('log after adding squares')
-	console.log(master[message.guild.id].teammembers)
+  
 	idcounter = 0
 	//store the teams (roles) in the object
-	console.log('log teams before setting')
-	console.log(master[message.guild.id].teams)
-
 	master[message.guild.id].teams = teamnames;
-	console.log('log teams after setting')
-	console.log(master[message.guild.id].teams)
-	console.log('log after storing team names')
-	console.log(master[message.guild.id].teammembers)
 }//end function
 
 //=======================================
