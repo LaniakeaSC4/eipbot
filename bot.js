@@ -26,7 +26,7 @@ var master = {}
 
 client.on('ready', () => {
 	startthinking(3000, false)
-	
+
 	//establish server specific storage objects
 	var serverlist = client.guilds.cache.map(guild => guild.id);
 	console.log('I am online on ' + serverlist.length + ' servers. They are :' + serverlist);
@@ -80,11 +80,8 @@ function buildteamobj(message) {
 				let role = message.guild.roles.cache.find(r => r.name === roles[j]);
 				//search by role ID to get all members with that role
 				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
-				//console.log('thesemembers: ' + thesemembers)
-
 				//store members in the team members object, keyed by cleaned team name
 				master[message.guild.id].teammembers[cleanrole] = thesemembers
-
 			}//end if match
 		}//end for roles
 	}//end for homechannels
@@ -102,7 +99,6 @@ function buildteamobj(message) {
 			//console.log(master[message.guild.id][teammembers][key][i])
 		}//end for each team member
 	}//end for each team
-  
 	idcounter = 0
 	//store the teams (roles) in the object
 	master[message.guild.id].teams = teamnames;
@@ -216,35 +212,30 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			//get displayname from userid. Need this for the string match in the status board/teammembers object
 			//check if they have a nickname set
 			var getmember = await client.users.fetch(user.id)//retrieve the user from ID
-
 			const member = await reaction.message.guild.member(getmember);
 
-
-			var dName = member.nickname;//set dName (displayName) to the member object's nickname
-			//if they dont have a nickname, thier username is what is displayed by discord.
-			var uName = getmember.username
+			var dName = member.nickname//set dName (displayName) to the member object's nickname
+			var uName = getmember.username//if they dont have a nickname, thier username is what is displayed by discord.
 			var thisuser = ""
 			//if both dname and uName are not null, we must have found a nickname (this user has both). Therefore return nickname, or instead set thisuser to the username
-			if (dName !== null) {
-				thisuser = dName
-			} else { thisuser = uName }
+			if (dName !== null) { thisuser = dName } else { thisuser = uName }
 
+			//proceed futher only if user was not one of our bots
 			if (!(thisuser == "EiP Bot" || thisuser == "EiP Dev Bot")) {
+				//remove any reaction that wasnt by one of our bots
 				if (reaction.emoji.name == "👍") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "👍").users.remove(user.id) }
 				if (reaction.emoji.name == "❌") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "❌").users.remove(user.id) }
 				if (reaction.emoji.name == "🥚") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🥚").users.remove(user.id) }
 				if (reaction.emoji.name == "💤") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "💤").users.remove(user.id) }
-
-
-if (reaction.emoji.name == "🟥") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🟥").users.remove(user.id) }
-if (reaction.emoji.name == "🔶") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🔶").users.remove(user.id)} 
-if (reaction.emoji.name == "🟢") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🟢").users.remove(user.id) }
+				if (reaction.emoji.name == "🟥") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🟥").users.remove(user.id) }
+				if (reaction.emoji.name == "🔶") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🔶").users.remove(user.id) }
+				if (reaction.emoji.name == "🟢") { reaction.message.reactions.cache.find(reaction => reaction.emoji.name == "🟢").users.remove(user.id) }
 
 				//log whats going to happen
 				console.log(reaction.message.guild.id + ": " + thisuser + "reacted with " + reaction.emoji.name + " on status board message: " + reaction.message.id)
 
-				//we are only going further into the function with one of these 4 emoji
-				var allowedemoji = ['🟥','🔶','🟢', '👍', '❌', '🥚', '💤']
+				//we are only going further into the function with one of these emoji
+				var allowedemoji = ['🟥', '🔶', '🟢', '👍', '❌', '🥚', '💤']
 
 				if (allowedemoji.includes(reaction.emoji.name)) {
 
@@ -287,7 +278,7 @@ if (reaction.emoji.name == "🟢") { reaction.message.reactions.cache.find(react
 														console.log(reaction.message.guild.id + ': emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 														try {
 															await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
-															await changeplayerstatus(result.emoji, result.user,reaction.emoji.name, reaction.message.guild.id)//update the user in the teammembers object with the new emojj
+															await changeplayerstatus(result.emoji, result.user, reaction.emoji.name, reaction.message.guild.id)//update the user in the teammembers object with the new emojj
 															await updateplayerboard(result.message, 'emoji')//now the teammembers object is updated, republish the status board
 															await emojilock(false)
 														} catch (err) {
@@ -314,7 +305,7 @@ if (reaction.emoji.name == "🟢") { reaction.message.reactions.cache.find(react
 });//end client on reaction add 
 
 //global var array to we can find status board messages later and/or filter the reactionAdd event to these message IDs. Rebuilt on startup and when any reaction is added to a status board message
-var statusboardmessages = [];
+var statusboardmessages = []
 // 3. function to rebuild statusboardmessages with open coop status boards
 function arraystatusboards() {
 	//clear array before rebuild
@@ -335,22 +326,20 @@ function arraystatusboards() {
 		})//end .then after fetchPinned
 			.catch((err) => { });
 	});//end categoryChannels.forEach
-
 }//end array statusboards function 
 
 // 4. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
 function changeplayerstatus(newemoji, user, reactionemoji, guildid) {
 	//log the change we are making
-	console.log(guildid+': in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
+	console.log(guildid + ': in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
-		//var oldemoji = ['🟥', '🔶', '🟢', '👍', '❌', '🥚', '💤']//these are the possible emoji that we will be replacing
-		var oldemoji = []
-				var coopemoji = ['🟥','🔶','🟢'] 
-				var playeremoji = ['👍', '❌', '🥚', '💤']
-if (coopemoji.includes(reactionemoji)) {oldemoji = coopemoji} else {oldemoji = playeremoji }  
+		//work out which emoji set we are replacing based on the reaction
+		var oldemoji = []; var coopemoji = ['🟥', '🔶', '🟢']; var playeremoji = ['👍', '❌', '🥚', '💤']
+		//which emoji set are we making a replacement in for this changeplayerstatus?
+		if (coopemoji.includes(reactionemoji)) { oldemoji = coopemoji } else { oldemoji = playeremoji }
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
 		for (var i = 0; i < master[guildid].teams.length; i++) {
-		  //for each of the teams (roles)
+			//for each of the teams (roles)
 			var cleanrole = master[guildid].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 			//loop through teammembers object looking for the user displayname which was provided. If found, replace emoji and save back into object
 			for (var j = 0; j < master[guildid].teammembers[cleanrole].length; j++) {
@@ -414,7 +403,7 @@ function rebuildteamobj(message) {
 				}//end if embed and footer text contains
 			})//end message.forEach
 		})//end .then after fetchPinned
-		master[message.guild.id].teams = teamnames//store the teams (roles) in the object
+		master[message.guild.id].teams = teamnames//store the teams in the master object
 	})//end promise
 }//end function rebuildteamobj 
 
@@ -625,9 +614,6 @@ client.on('message', async message => {
 			//console.log('before build team object on open')
 			//console.log(master[message.guild.id][teammembers])
 			buildteamobj(message)
-			console.log('after build team object on open')
-			console.log(master[message.guild.id].teammembers)
-
 
 			//build initial embed
 			let placedEmbed = new Discord.MessageEmbed()
@@ -639,9 +625,6 @@ client.on('message', async message => {
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < master[message.guild.id].teams.length; i++) {
 				var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
-				console.log('log before adding to embed')
-				console.log(master[message.guild.id].teams[i])
-				console.log(master[message.guild.id].teammembers[cleanrole])
 				placedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole], false)
 			}//end loop to add team fields to embed
 
@@ -649,7 +632,8 @@ client.on('message', async message => {
 				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
 				statusboardmessages.push(msg.id);
 				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
-				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤');await msg.react('🟢');await msg.react('🔶');await msg.react('🟥');//add reactions for clicking
+				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤')//add player status reactions
+				await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
 				await delay(500); await msg.pin();//pin message after 500 milliseconds
 			})//end pin placed user embed
 		};//end the if !open
