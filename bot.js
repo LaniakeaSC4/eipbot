@@ -287,7 +287,7 @@ if (reaction.emoji.name == "🟢") { reaction.message.reactions.cache.find(react
 														console.log(reaction.message.guild.id + ': emoji q count is: ' + emojiQueueCount + ' processing emoji is: ' + processingEmoji)
 														try {
 															await rebuildteamobj(result.message)//rebuild the teammembers object for *this* status board
-															await changeplayerstatus(result.emoji, result.user, reaction.message.guild.id)//update the user in the teammembers object with the new emojj
+															await changeplayerstatus(result.emoji, result.user,reaction.emoji.name, reaction.message.guild.id)//update the user in the teammembers object with the new emojj
 															await updateplayerboard(result.message, 'emoji')//now the teammembers object is updated, republish the status board
 															await emojilock(false)
 														} catch (err) {
@@ -339,7 +339,7 @@ function arraystatusboards() {
 }//end array statusboards function 
 
 // 4. function to swap any of the 4 emoji for the clicked one (swaps in bot memory, need to update status board)
-function changeplayerstatus(newemoji, user, guildid) {
+function changeplayerstatus(newemoji, user, reactionemoji, guildid) {
 	//log the change we are making
 	console.log(guildid+': in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
@@ -347,7 +347,7 @@ function changeplayerstatus(newemoji, user, guildid) {
 		var oldemoji = []
 				var coopemoji = ['🟥','🔶','🟢'] 
 				var playeremoji = ['👍', '❌', '🥚', '💤']
-if (coopemoji.includes(reaction.emoji.name)) {oldemoji = coopemoji} else {oldemoji = playeremojielse }  
+if (coopemoji.includes(reactionemoji)) {oldemoji = coopemoji} else {oldemoji = playeremojielse }  
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
 		for (var i = 0; i < master[guildid].teams.length; i++) {
 		  //for each of the teams (roles)
