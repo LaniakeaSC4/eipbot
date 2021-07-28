@@ -97,7 +97,7 @@ function buildteamobj(message) {
 			idcounter = idcounter + 1
 			master[message.guild.id].teammembers[key][i] = "🟥 💤 - " + master[message.guild.id].teammembers[key][i] + " (+" + hexid + ")"
 		}//end for each team member
-		console.log(master[message.guild.id].teammembers[key])
+		console.log(master[message.guild.id].teammembers.key)
 	}//end for each team
 	idcounter = 0
 	//store the teams (roles) in the object
