@@ -96,8 +96,8 @@ function buildteamobj(message) {
 			hexid = hexid.toUpperCase()
 			idcounter = idcounter + 1
 			master[message.guild.id].teammembers[key][i] = "🟥 💤 - " + master[message.guild.id].teammembers[key][i] + " (+" + hexid + ")"
-			//console.log(master[message.guild.id][teammembers][key][i])
 		}//end for each team member
+		master[message.guild.id].teammembers[key] = master[message.guild.id].teammembers[key] + " (test)"
 	}//end for each team
 	idcounter = 0
 	//store the teams (roles) in the object
