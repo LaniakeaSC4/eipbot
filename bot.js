@@ -584,79 +584,81 @@ client.on('message', async message => {
 
 // 1. !coop (including !coop open [name] and !coop close)
 client.on('message', async message => {
-	if (message.content.startsWith("!coop") && processingMaster === false) {
+	if (message.content.startsWith("!coop")) {
+		if (processingMaster === false) {
 
-		//first lets split up commands
-		let msg = message.content;//transfer message contents into msg
-		let argString = msg.substr(msg.indexOf(' ') + 1);//make substring from first space onwards (after!coop)
-		let argArr = argString.split(' ');//split into multiple parts and store in array - might get errors if more then 3 parts?
-		let [eggcommand1, eggcommand2, eggcommand3] = argArr;//for each element in array, make into variable
+			//first lets split up commands
+			let msg = message.content;//transfer message contents into msg
+			let argString = msg.substr(msg.indexOf(' ') + 1);//make substring from first space onwards (after!coop)
+			let argArr = argString.split(' ');//split into multiple parts and store in array - might get errors if more then 3 parts?
+			let [eggcommand1, eggcommand2, eggcommand3] = argArr;//for each element in array, make into variable
 
-		console.log('!coop detected. Commmand 1 is: ' + eggcommand1 + '. Command 2 is: ' + eggcommand2 + '. Command 3 is: ' + eggcommand3);
+			console.log('!coop detected. Commmand 1 is: ' + eggcommand1 + '. Command 2 is: ' + eggcommand2 + '. Command 3 is: ' + eggcommand3);
 
-		//open a new coop
-		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
-			//lock out any more commands for x milliseconds
-			startthinking(6000, message)
-			//unpin status board message
-			message.channel.messages.fetchPinned().then(messages => {
-				messages.forEach(message => {
-					//embed[0] is first/only embed in message. Copy it to embed variable
-					let embed = message.embeds[0];
-					//find the right pinned message
-					if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
-						message.unpin()
-					}//end if embed and footer text contains
-				})//end message.forEach
-			})//end .then messages:
+			//open a new coop
+			if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
+				//lock out any more commands for x milliseconds
+				startthinking(6000, message)
+				//unpin status board message
+				message.channel.messages.fetchPinned().then(messages => {
+					messages.forEach(message => {
+						//embed[0] is first/only embed in message. Copy it to embed variable
+						let embed = message.embeds[0];
+						//find the right pinned message
+						if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+							message.unpin()
+						}//end if embed and footer text contains
+					})//end message.forEach
+				})//end .then messages:
 
-			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
-			//console.log('before build team object on open')
-			//console.log(master[message.guild.id][teammembers])
-			buildteamobj(message)
+				//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
+				//console.log('before build team object on open')
+				//console.log(master[message.guild.id][teammembers])
+				buildteamobj(message)
 
-			//build initial embed
-			let placedEmbed = new Discord.MessageEmbed()
-				.setTitle("EiP Status Board for contract: " + eggcommand2)
-				.setDescription('__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop')
-				.setColor('#00FF00')
-				.setFooter('Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️')
+				//build initial embed
+				let placedEmbed = new Discord.MessageEmbed()
+					.setTitle("EiP Status Board for contract: " + eggcommand2)
+					.setDescription('__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop')
+					.setColor('#00FF00')
+					.setFooter('Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️')
 
-			//add teams and players for embed from teams/teammeber objects
-			for (var i = 0; i < master[message.guild.id].teams.length; i++) {
-				var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
-				placedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole], false)
-			}//end loop to add team fields to embed
+				//add teams and players for embed from teams/teammeber objects
+				for (var i = 0; i < master[message.guild.id].teams.length; i++) {
+					var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
+					placedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole], false)
+				}//end loop to add team fields to embed
 
-			message.channel.send(placedEmbed).then(async msg => {//send the embed then
-				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
-				statusboardmessages.push(msg.id);
-				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
-				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤')//add player status reactions
-				await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
-				await delay(500); await msg.pin();//pin message after 500 milliseconds
-			})//end pin placed user embed
-		}//end the if !open
+				message.channel.send(placedEmbed).then(async msg => {//send the embed then
+					//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
+					statusboardmessages.push(msg.id);
+					console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
+					await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤')//add player status reactions
+					await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
+					await delay(500); await msg.pin();//pin message after 500 milliseconds
+				})//end pin placed user embed
+			}//end the if !open
 
-		//close coop
-		if (eggcommand1 == 'close' && processingMaster === false) {
-			//lock out any more commands for x milliseconds
-			startthinking(6000, message)
+			//close coop
+			if (eggcommand1 == 'close') {
+				//lock out any more commands for x milliseconds
+				startthinking(6000, message)
 
-			await findstatusboard(message).then(statusboard => {
-				console.log('Closing statusboard: ' + statusboard)
-				statusboard.reactions.removeAll()
-				var receivedEmbed = statusboard.embeds[0] //copy embeds from it
-				var updatedEmbed = new Discord.MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
-				updatedEmbed.setFooter('Bot created by LaniakeaSC (type !help for more info)\nThis coop is closed')
-				updatedEmbed.setColor('#FF0000')
-				statusboard.edit(updatedEmbed)
-				statusboard.unpin()
-				arraystatusboards()//find all statusboard and add to statusboard array
-			})//end .then after find status board
-		};//end the if !close
-		message.delete();//delete input !close command
-	} else {message.channel.send('Sorry, I am processing another task right now. Please try this command again in 30 seconds');console.log('skipping !open command becasuse ')}//end if !coop and processing master = false block
+				await findstatusboard(message).then(statusboard => {
+					console.log('Closing statusboard: ' + statusboard)
+					statusboard.reactions.removeAll()
+					var receivedEmbed = statusboard.embeds[0] //copy embeds from it
+					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
+					updatedEmbed.setFooter('Bot created by LaniakeaSC (type !help for more info)\nThis coop is closed')
+					updatedEmbed.setColor('#FF0000')
+					statusboard.edit(updatedEmbed)
+					statusboard.unpin()
+					arraystatusboards()//find all statusboard and add to statusboard array
+				})//end .then after find status board
+			};//end the if !close
+			message.delete()//delete input !close command
+		} else { message.channel.send('Sorry, I am processing another task right now. Please try this command again in 30 seconds'); console.log('skipping !open command becasuse ') }
+	}//end !coop open
 });//end client on message
 
 //=======================================
