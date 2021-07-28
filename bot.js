@@ -245,6 +245,7 @@ if (reaction.emoji.name == "🟢") { reaction.message.reactions.cache.find(react
 
 				//we are only going further into the function with one of these 4 emoji
 				var allowedemoji = ['🟥','🔶','🟢', '👍', '❌', '🥚', '💤']
+
 				if (allowedemoji.includes(reaction.emoji.name)) {
 
 					//add one to the queue count. Needs to be 0 before we can leave emoji processing
@@ -342,7 +343,11 @@ function changeplayerstatus(newemoji, user, guildid) {
 	//log the change we are making
 	console.log(guildid+': in changeplayerstatus function. User: ' + user + 'just changed thier status to: ' + newemoji)
 	return new Promise((resolve, reject) => {
-		var oldemoji = ['🟥', '🔶', '🟢', '👍', '❌', '🥚', '💤']//these are the possible emoji that we will be replacing
+		//var oldemoji = ['🟥', '🔶', '🟢', '👍', '❌', '🥚', '💤']//these are the possible emoji that we will be replacing
+		var oldemoji = []
+				var coopemoji = ['🟥','🔶','🟢'] 
+				var playeremoji = ['👍', '❌', '🥚', '💤']
+if (coopemoji.includes(reaction.emoji.name)) {oldemoji = coopemoji} else {oldemoji = playeremojielse }  
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
 		for (var i = 0; i < master[guildid].teams.length; i++) {
 		  //for each of the teams (roles)
