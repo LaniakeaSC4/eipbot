@@ -91,7 +91,7 @@ function buildteamobj(message) {
 	//add red squares
 	for (let key in master[message.guild.id].teammembers) {
 		for (var i = 0; i < master[message.guild.id].teammembers[key].length; i++) {
-			hexid = idcounter.toString(16)
+			hexid = idcounter.toString()
 			hexid = hexid.padStart(2, "0")
 			hexid = hexid.toUpperCase()
 			idcounter = idcounter + 1
