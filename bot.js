@@ -347,7 +347,7 @@ function changeplayerstatus(newemoji, user, reactionemoji, guildid) {
 		var oldemoji = []
 				var coopemoji = ['🟥','🔶','🟢'] 
 				var playeremoji = ['👍', '❌', '🥚', '💤']
-if (coopemoji.includes(reactionemoji)) {oldemoji = coopemoji} else {oldemoji = playeremojielse }  
+if (coopemoji.includes(reactionemoji)) {oldemoji = coopemoji} else {oldemoji = playeremoji }  
 		//loop through all teams/users for the memeber we are looking for, then update thier emoji in the teammembers object
 		for (var i = 0; i < master[guildid].teams.length; i++) {
 		  //for each of the teams (roles)
