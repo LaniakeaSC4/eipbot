@@ -596,7 +596,6 @@ client.on('message', async message => {
 
 		//open a new coop
 		if (eggcommand1 == 'open' && String(eggcommand2) !== "undefined") {
-		  if (processingMaster == false){
 			//lock out any more commands for x milliseconds
 			startthinking(6000, message)
 			//unpin status board message
@@ -637,8 +636,7 @@ client.on('message', async message => {
 				await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
 				await delay(500); await msg.pin();//pin message after 500 milliseconds
 			})//end pin placed user embed
-		} else {message.channel.send('Sorry, I am processing another task right now. Please try this command again in 30 seconds')} 
-		};//end the if !open
+		}//end the if !open
 
 		//close coop
 		if (eggcommand1 == 'close' && processingMaster === false) {
@@ -658,7 +656,7 @@ client.on('message', async message => {
 			})//end .then after find status board
 		};//end the if !close
 		message.delete();//delete input !close command
-	};//end if !coop block
+	} else {message.channel.send('Sorry, I am processing another task right now. Please try this command again in 30 seconds');console.log('skipping !open command becasuse ')}//end if !coop and processing master = false block
 });//end client on message
 
 //=======================================
