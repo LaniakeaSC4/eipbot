@@ -73,7 +73,7 @@ function buildteamobj(message) {
 			//if a channel has a role/team match
 			if (homechannels[i].includes(roles[j])) {
 				//first lets save the team name itself for use by other functions
-				teampush = roles[j] + " (test)" ;teamnames.push(teampush)
+			var	teampush = roles[j] + " (test)" ;teamnames.push(teampush)
 				//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 				var cleanrole = roles[j].replace(/[^a-zA-Z0-9 ]/g, "");
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
