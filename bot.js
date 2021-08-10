@@ -69,7 +69,7 @@ function buildteamobj(message) {
 			//if a channel has a role/team match
 			if (homechannels[i].includes(roles[j])) {
 				//first lets save the team name itself for use by other functions
-				teamnames.push(roles[j])
+		  	teamnames.push(roles[j])
 				//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 				var cleanrole = roles[j].replace(/[^a-zA-Z0-9 ]/g, "");
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
@@ -87,12 +87,11 @@ function buildteamobj(message) {
 	//add red squares
 	for (let key in master[message.guild.id].teammembers) {
 		for (var i = 0; i < master[message.guild.id].teammembers[key].length; i++) {
-			hexid = idcounter.toString(16)
+			hexid = idcounter.toString()
 			hexid = hexid.padStart(2, "0")
 			hexid = hexid.toUpperCase()
 			idcounter = idcounter + 1
 			master[message.guild.id].teammembers[key][i] = "🟥 💤 - " + master[message.guild.id].teammembers[key][i] + " (+" + hexid + ")"
-			//console.log(master[message.guild.id][teammembers][key][i])
 		}//end for each team member
 	}//end for each team
 	idcounter = 0
