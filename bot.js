@@ -22,6 +22,7 @@ client.on('message', async message => {
 
 // 1. Report ready to console and build array of open coop boards
 
+//define global storage objects
 var master = {}
 
 client.on('ready', () => {
@@ -38,11 +39,6 @@ client.on('ready', () => {
 	arraystatusboards()
 	console.log('I am ready!')
 });
-
-//define global storage objects
-//var teams = {}//this one is for just the teams/roles that match the home team channels
-//var teammembers = {}//the main data storage for the status board. Team titles and team members with squares and farming status
-//var lastmessage = {}//store the last retrieved message for last access.
 
 // 2. Function to build team object from home team channels. This object contains the teams and team members. 🟥's added. Run during !coop open
 function buildteamobj(message) {
@@ -630,7 +626,7 @@ client.on('message', async message => {
 				//add teams and players for embed from teams/teammeber objects
 				for (var i = 0; i < master[message.guild.id].teams.length; i++) {
 					var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
-					if (master[message.guild.id].teammembers[cleanrole].length != 0) {
+					if (master[message.guild.id].teammembers[cleanrole].length != 0) {//only add if the team has members on it
 						placedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole], false)
 					}
 				}//end loop to add team fields to embed
