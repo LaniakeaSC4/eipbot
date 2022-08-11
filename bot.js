@@ -619,7 +619,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			var interactionchannel = interaction.channel_id
 			var channel = await client.channels.fetch(interactionchannel)
 			let messages = await channel.messages.fetchPinned()
-			messages.then(async (messages) => {
+			
 				messages.forEach(message => {
 					//embed[0] is first/only embed in message. Copy it to embed variable
 					let embed = message.embeds[0];
@@ -628,7 +628,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 						message.unpin()
 					}//end if embed and footer text contains
 				})//end message.forEach
-			})//end .then messages:
+			
 
 			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
 			console.log('before build team object one !open')
