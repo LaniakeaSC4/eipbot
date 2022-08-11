@@ -631,11 +631,22 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			console.log(master[interaction.guild_id].teammembers)
 
 			//build initial embed
-			let placedEmbed = new MessageEmbed()
-				.setTitle("EiP Status Board for contract: " + coopname)
-				.setDescription('__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop')
-				.setColor('#00FF00')
-				.setFooter('Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️')
+			let placedEmbed = [
+        {
+          "title": "EiP Status Board for contract: " + coopname,
+          "color": '#00FF00',
+          "description": '__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop',
+          "footer": {
+            "text": 'Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️' 
+          }
+        }
+      ]//end embed
+    
+				
+				
+				
+				
+				
 console.log(placedEmbed)
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < master[interaction.guild_id].teams.length; i++) {
