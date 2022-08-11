@@ -2,13 +2,14 @@
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });*/
 
 const { Client, Intents, MessageEmbed } = require('discord.js')
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES], partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 
 // ---- Info ----
 // home team should be under category including word "home"
 // channel names under "home" category should contact a match for the role (e.g. "Home Teams" category should contain a channel "team egg-streme" and the "egg-streme" part should match a server role for the team)
 // this is what we will use to establish the teams that there are
 // ---- ---- ----
+
 
 //!test command for testing things
 client.on('message', async message => {
