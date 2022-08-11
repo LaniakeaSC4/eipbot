@@ -630,31 +630,34 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			console.log('after build team object before !open')
 			console.log(master[interaction.guild_id].teammembers)
 
-			//build initial embed
-			let placedEmbed = [
-        {
-          "title": "EiP Status Board for contract: " + coopname,
-          "color": '#00FF00',
-          "description": '__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop',
-          "footer": {
-            "text": 'Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️' 
-          }
-        }
-      ]//end embed
+
     
 				
 				
 				
 				
 				
-console.log(placedEmbed)
 			//add teams and players for embed from teams/teammeber objects
+			var embedteams = []
 			for (var i = 0; i < master[interaction.guild_id].teams.length; i++) {
 				var cleanrole = master[interaction.guild_id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
 				if (master[interaction.guild_id].teammembers[cleanrole].length != 0) {
-					placedEmbed.addField(`Team ${master[interaction.guild_id].teams[i]}`, master[interaction.guild_id].teammembers[cleanrole], false)
+					embedteams.push({ "name" : `Team ${master[interaction.guild_id].teams[i]}`, "value" : master[interaction.guild_id].teammembers[cleanrole], "inline" : false})
 				}
 			}//end loop to add team fields to embed
+			console.log(embedteams)
+						//build initial embed
+			let placedEmbed = [
+        {
+          "title": "EiP Status Board for contract: " + coopname,
+          "color": '#00FF00',
+          "description": '__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop',
+          "fields" : embedteams,
+          "footer": {
+            "text": 'Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️' 
+          }
+        }
+      ]//end embed
 			
 			client.guilds.cache.get(interaction.guild_id).channels.cache.get(interaction.channel_id).send( {
             embeds: placedEmbed
