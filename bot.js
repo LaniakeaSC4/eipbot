@@ -614,7 +614,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 		if (processingMaster === false) {
 
 			//lock out any more commands for x milliseconds
-			startthinking(6000, message)
+			startthinking(6000, false)
 			//unpin status board message
 			interaction.channel.messages.fetchPinned().then(messages => {
 				messages.forEach(message => {
