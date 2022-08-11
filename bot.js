@@ -644,11 +644,15 @@ console.log(placedEmbed)
 					placedEmbed.addField(`Team ${master[interaction.guild_id].teams[i]}`, master[interaction.guild_id].teammembers[cleanrole], false)
 				}
 			}//end loop to add team fields to embed
-
-			channel.send(placedEmbed).then(async msg => {//send the embed then
-				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
-				statusboardmessages.push(msg.id);
-				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
+client.api.interactions(interaction.id, interaction.token).callback.post({
+        data: {
+          type: 4,
+          data: {
+            embeds: placedEmbed
+          }
+        }
+      }).then(async msg => {//send the embed then
+				
 				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤')//add player status reactions
 				await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
 				await delay(500); await msg.pin();//pin message after 500 milliseconds
