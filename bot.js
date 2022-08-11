@@ -644,7 +644,8 @@ console.log(placedEmbed)
 					placedEmbed.addField(`Team ${master[interaction.guild_id].teams[i]}`, master[interaction.guild_id].teammembers[cleanrole], false)
 				}
 			}//end loop to add team fields to embed
-client.api.interactions(interaction.id, interaction.token).callback.post({
+			
+			client.guilds.cache.get(interaction.guild_id).channels.cache.get(interaction.channel_id).send({
         data: {
           type: 4,
           data: {
