@@ -632,12 +632,12 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 
 			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
 			console.log('before build team object one !open')
-			console.log(master[message.guild.id].teammembers)
+			console.log(master[interaction.guild_id].teammembers)
 
 			buildteamobj(message)
 
 			console.log('after build team object before !open')
-			console.log(master[message.guild.id].teammembers)
+			console.log(master[interaction.guild_id].teammembers)
 
 			//build initial embed
 			let placedEmbed = new Discord.MessageEmbed()
@@ -647,10 +647,10 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 				.setFooter('Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️')
 
 			//add teams and players for embed from teams/teammeber objects
-			for (var i = 0; i < master[message.guild.id].teams.length; i++) {
-				var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
-				if (master[message.guild.id].teammembers[cleanrole].length != 0) {
-					placedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole], false)
+			for (var i = 0; i < master[interaction.guild_id].teams.length; i++) {
+				var cleanrole = master[interaction.guild_id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
+				if (master[interaction.guild_id].teammembers[cleanrole].length != 0) {
+					placedEmbed.addField(`Team ${master[interaction.guild_id].teams[i]}`, master[interaction.guild_id].teammembers[cleanrole], false)
 				}
 			}//end loop to add team fields to embed
 
