@@ -652,7 +652,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 				console.log('cleanrole is: ' + cleanrole)
 				console.log('length is: ' + master[interaction.guild_id].teammembers[cleanrole].length)
 				if (master[interaction.guild_id].teammembers[cleanrole].length != 0) {
-					embedteams.push({ "name" : `Team ${master[interaction.guild_id].teams[i]}`, "value" : master[interaction.guild_id].teammembers[cleanrole], "inline" : false})
+					embedteams.push({ "name" : `Team ${master[interaction.guild_id].teams[i]}`, "value" : master[interaction.guild_id].teammembers[cleanrole].join('\n'), "inline" : false})
 				}
 			}//end loop to add team fields to embed
 			console.log(embedteams)
@@ -731,7 +731,7 @@ client.on('message', async message => {
 				for (var i = 0; i < master[message.guild.id].teams.length; i++) {
 					var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
 					if (master[message.guild.id].teammembers[cleanrole].length != 0) {
-						placedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole].join('\n'), false)
+						placedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole], false)
 					}
 				}//end loop to add team fields to embed
 
