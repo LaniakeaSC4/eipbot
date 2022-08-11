@@ -55,7 +55,7 @@ function buildteamobj() {
 	var roles = guild.roles.cache.map((role) => role.name);
 	
 	//get discord category channels (e.g 🏠 Home Teams)
-	const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
+	const categoryChannels = guild.channels.cache.filter(channel => channel.type === "category");
 	//blank array which will hold the channel names of the child channels under the home team category
 	var homechannels = [];
 	//push name of each child channel in "🏠 Home Teams" into array
