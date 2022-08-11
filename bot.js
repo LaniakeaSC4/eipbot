@@ -68,8 +68,7 @@ function buildteamobj() {
 			})//end forEach child channel
 		}//end if channel name includes home
 	});//end categoryChannels.forEach
-console.log('homechannels')
-	console.log(homechannels)
+
 	//define teams array, team names will be stored here for use by other functions
 	var teamnames = [];
 	//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
@@ -637,7 +636,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 				.setDescription('__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop')
 				.setColor('#00FF00')
 				.setFooter('Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️')
-
+console.log(placedEmbed)
 			//add teams and players for embed from teams/teammeber objects
 			for (var i = 0; i < master[interaction.guild_id].teams.length; i++) {
 				var cleanrole = master[interaction.guild_id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
