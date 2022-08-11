@@ -645,14 +645,10 @@ console.log(placedEmbed)
 				}
 			}//end loop to add team fields to embed
 			
-			client.guilds.cache.get(interaction.guild_id).channels.cache.get(interaction.channel_id).send({
-        data: {
-          type: 4,
-          data: {
+			client.guilds.cache.get(interaction.guild_id).channels.cache.get(interaction.channel_id).send( {
             embeds: placedEmbed
           }
-        }
-      }).then(async msg => {//send the embed then
+        ).then(async msg => {//send the embed then
 				
 				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤')//add player status reactions
 				await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
