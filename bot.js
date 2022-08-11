@@ -53,6 +53,8 @@ function buildteamobj() {
 	//get array of all server roles
 	const guild = client.guilds.cache.get("695793841592336426")
 	var roles = guild.roles.cache.map((role) => role.name);
+	console.log('roles')
+	console.log(roles)
 	//get discord category channels (e.g 🏠 Home Teams)
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
 	//blank array which will hold the channel names of the child channels under the home team category
