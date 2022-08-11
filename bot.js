@@ -48,7 +48,7 @@ client.on('ready', () => {
 //var lastmessage = {}//store the last retrieved message for last access.
 
 // 2. Function to build team object from home team channels. This object contains the teams and team members. 🟥's added. Run during !coop open
-async function buildteamobj() {
+async function buildteamobj(interaction) {
 	
 	//get array of all server roles
 	const guild = client.guilds.cache.get("695793841592336426")
@@ -632,7 +632,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			console.log('before build team object one !open')
 			console.log(master[interaction.guild_id].teammembers)
 
-			buildteamobj()
+			buildteamobj(interaction)
 
 			console.log('after build team object before !open')
 			console.log(master[interaction.guild_id].teammembers)
