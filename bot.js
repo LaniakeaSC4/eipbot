@@ -641,6 +641,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			var embedteams = []
 			for (var i = 0; i < master[interaction.guild_id].teams.length; i++) {
 				var cleanrole = master[interaction.guild_id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
+				console.log('cleanrole is: ' + cleanrole)
 				if (master[interaction.guild_id].teammembers[cleanrole].length != 0) {
 					embedteams.push({ "name" : `Team ${master[interaction.guild_id].teams[i]}`, "value" : master[interaction.guild_id].teammembers[cleanrole], "inline" : false})
 				}
