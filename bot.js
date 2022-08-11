@@ -82,7 +82,7 @@ function buildteamobj() {
 				var cleanrole = roles[j].replace(/[^a-zA-Z0-9 ]/g, "");
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
 				let role = guild.roles.cache.find(r => r.name === roles[j]);
-				console.log('building role. It is: ' + role)
+				console.log(role)
 				//search by role ID to get all members with that role
 				var thesemembers = guild.roles.cache.get(role).members.map(m => m.displayName);
 				//store members in the team members object, keyed by cleaned team name
