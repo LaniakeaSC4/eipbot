@@ -76,7 +76,7 @@ function buildteamobj(message) {
 			//if a channel has a role/team match
 			if (homechannels[i].includes(roles[j])) {
 				//first lets save the team name itself for use by other functions
-		  	teamnames.push(roles[j])
+				teamnames.push(roles[j])
 				//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 				var cleanrole = roles[j].replace(/[^a-zA-Z0-9 ]/g, "");
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
@@ -586,33 +586,81 @@ client.on('message', async message => {
 
 //setup slash command
 client.on('ready', () => {
-client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
-	data: {
-	  "name": "start",
-	  "description": "Start a new coop",
-	  "options": [
-		{
-		  "type": 3,
-		  "name": "coopname",
-		  "description": "Enter coop name",
-		  "required": true
-		}
-	  ]
-	}//end data
-  })//end post
+	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+		data: {
+			"name": "start",
+			"description": "Start a new coop",
+			"options": [
+				{
+					"type": 3,
+					"name": "open",
+					"description": "Enter coop name",
+					"required": true
+				}
+			]
+		}//end data
+	})//end post
 })
 
 //reply to slash command
 client.ws.on('INTERACTION_CREATE', async interaction => {
-	
-  
+
 	const command = interaction.data.name.toLowerCase()
-	const args = interaction.data.options//array of the provided data after the slash
-  
+	const coopname = interaction.data.options[0]//array of the provided data after the slash
+
 	if (command === 'start') {
 		console.log('Start command!')
-	}
 
+		if (processingMaster === false) {
+
+			//lock out any more commands for x milliseconds
+			startthinking(6000, message)
+			//unpin status board message
+			interaction.channel.messages.fetchPinned().then(messages => {
+				messages.forEach(message => {
+					//embed[0] is first/only embed in message. Copy it to embed variable
+					let embed = message.embeds[0];
+					//find the right pinned message
+					if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+						message.unpin()
+					}//end if embed and footer text contains
+				})//end message.forEach
+			})//end .then messages:
+
+			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
+			console.log('before build team object one !open')
+			console.log(master[message.guild.id].teammembers)
+
+			buildteamobj(message)
+
+			console.log('after build team object before !open')
+			console.log(master[message.guild.id].teammembers)
+
+			//build initial embed
+			let placedEmbed = new Discord.MessageEmbed()
+				.setTitle("EiP Status Board for contract: " + coopname)
+				.setDescription('__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop')
+				.setColor('#00FF00')
+				.setFooter('Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️')
+
+			//add teams and players for embed from teams/teammeber objects
+			for (var i = 0; i < master[message.guild.id].teams.length; i++) {
+				var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
+				if (master[message.guild.id].teammembers[cleanrole].length != 0) {
+					placedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole], false)
+				}
+			}//end loop to add team fields to embed
+
+			message.channel.send(placedEmbed).then(async msg => {//send the embed then
+				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
+				statusboardmessages.push(msg.id);
+				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
+				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤')//add player status reactions
+				await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
+				await delay(500); await msg.pin();//pin message after 500 milliseconds
+			})//end pin placed user embed
+		} else { message.channel.send('Sorry, I am processing another task right now. Please try this command again in 30 seconds'); console.log('skipping !open command becasuse ') }
+	}
 })
 
 // 1. !coop (including !coop open [name] and !coop close)
