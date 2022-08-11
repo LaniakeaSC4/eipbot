@@ -677,7 +677,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
             embeds: placedEmbed
           }
         ).then(async msg => {//send the embed then
-				
+				statusboardmessages.push(msg.id)
 				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤')//add player status reactions
 				await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
 				await delay(500); await msg.pin();//pin message after 500 milliseconds
