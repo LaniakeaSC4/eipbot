@@ -48,7 +48,7 @@ client.on('ready', () => {
 //var lastmessage = {}//store the last retrieved message for last access.
 
 // 2. Function to build team object from home team channels. This object contains the teams and team members. 🟥's added. Run during !coop open
-function buildteamobj() {
+async function buildteamobj() {
 	
 	//get array of all server roles
 	const guild = client.guilds.cache.get("695793841592336426")
@@ -72,6 +72,12 @@ function buildteamobj() {
 	//define teams array, team names will be stored here for use by other functions
 	var teamnames = [];
 	//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
+	
+
+await interaction.guild.members.fetch() //cache all members in the server
+
+	
+	
 	for (var i = 0; i < homechannels.length; i++) {
 		for (var j = 0; j < roles.length; j++) {
 			//if a channel has a role/team match
@@ -81,10 +87,9 @@ function buildteamobj() {
 				//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 				var cleanrole = roles[j].replace(/[^a-zA-Z0-9 ]/g, "");
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
-				let role = guild.roles.cache.find(r => r.name === roles[j]);
-				console.log(role.id)
-				//search by role ID to get all members with that role
-				var thesemembers = guild.roles.cache.get(role.id).members.map(m => m.displayName);
+				let role = interaction.guild.roles.cache.find(r => r.name === roles[j]);
+				
+const thesemembers = role.members.map(m => m.displayName);
 				//store members in the team members object, keyed by cleaned team name
 				console.log(thesemembers)
 				master['695793841592336426'].teammembers[cleanrole] = thesemembers
