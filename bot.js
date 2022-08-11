@@ -48,11 +48,11 @@ client.on('ready', () => {
 //var lastmessage = {}//store the last retrieved message for last access.
 
 // 2. Function to build team object from home team channels. This object contains the teams and team members. 🟥's added. Run during !coop open
-function buildteamobj(message) {
-	//not sure if this will ever trigger. Here as a safety net. If this goes off, we might have problems. 
-	if (message.partial) { console.log("Partial message!!!!") }
+function buildteamobj() {
+	
 	//get array of all server roles
-	var roles = message.guild.roles.cache.map((role) => role.name);
+	const guild = client.guilds.get("695793841592336426")
+	var roles = guild.roles.cache.map((role) => role.name);
 	//get discord category channels (e.g 🏠 Home Teams)
 	const categoryChannels = client.channels.cache.filter(channel => channel.type === "category");
 	//blank array which will hold the channel names of the child channels under the home team category
@@ -80,11 +80,11 @@ function buildteamobj(message) {
 				//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 				var cleanrole = roles[j].replace(/[^a-zA-Z0-9 ]/g, "");
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
-				let role = message.guild.roles.cache.find(r => r.name === roles[j]);
+				let role = guild.roles.cache.find(r => r.name === roles[j]);
 				//search by role ID to get all members with that role
-				var thesemembers = message.guild.roles.cache.get(role.id).members.map(m => m.displayName);
+				var thesemembers = guild.roles.cache.get(role.id).members.map(m => m.displayName);
 				//store members in the team members object, keyed by cleaned team name
-				master[message.guild.id].teammembers[cleanrole] = thesemembers
+				master['695793841592336426'].teammembers[cleanrole] = thesemembers
 			}//end if match
 		}//end for roles
 	}//end for homechannels
@@ -92,18 +92,18 @@ function buildteamobj(message) {
 	var idcounter = 0
 
 	//add red squares
-	for (let key in master[message.guild.id].teammembers) {
-		for (var i = 0; i < master[message.guild.id].teammembers[key].length; i++) {
+	for (let key in master['695793841592336426'].teammembers) {
+		for (var i = 0; i < master['695793841592336426'].teammembers[key].length; i++) {
 			hexid = idcounter.toString()
 			hexid = hexid.padStart(2, "0")
 			hexid = hexid.toUpperCase()
 			idcounter = idcounter + 1
-			master[message.guild.id].teammembers[key][i] = "🟥 💤 - " + master[message.guild.id].teammembers[key][i] + " (+" + hexid + ")"
+			master['695793841592336426'].teammembers[key][i] = "🟥 💤 - " + master['695793841592336426'].teammembers[key][i] + " (+" + hexid + ")"
 		}//end for each team member
 	}//end for each team
 	idcounter = 0
 	//store the teams (roles) in the object
-	master[message.guild.id].teams = teamnames;
+	master['695793841592336426'].teams = teamnames;
 }//end function
 
 //=======================================
@@ -569,16 +569,6 @@ function thankyou(author, updatedthis, color, message) {
 	message.delete()//delete the input message
 }//end thankyou function
 
-client.on('message', async message => {
-	if (message.content.startsWith("!help")) {
-		helpembed = new Discord.MessageEmbed()
-			.setTitle("**Bot Functions**")
-			.setDescription('\n\nNote: this help text needs updated\n\n__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\nThe bot will take about 8 seconds to update your status then the next person can react.\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop\n\nTo set the players coop status use these commands\n**!colour +[player code]** - changes the coop of player with that code (also **!colour @user** works, but this will ping the user)\n**!colour @team** - sets the coops status of the whole team\n\n__Admin Commands__\nTo open a new coop use: !coop open [coop name]\nTo close the active coop in this channel use: !coop close\n')
-			.setColor('#00FF00')
-		message.channel.send(helpembed)
-	}
-})
-
 //==========================================
 // Coop bot	| User Commands | open and close
 // 1. !Coop (which has open and close)
@@ -634,7 +624,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			console.log('before build team object one !open')
 			console.log(master[interaction.guild_id].teammembers)
 
-			buildteamobj(message)
+			buildteamobj()
 
 			console.log('after build team object before !open')
 			console.log(master[interaction.guild_id].teammembers)
@@ -699,7 +689,7 @@ client.on('message', async message => {
 				console.log('before build team object one !open')
 				console.log(master[message.guild.id].teammembers)
 
-				buildteamobj(message)
+				buildteamobj()
 
 				console.log('after build team object before !open')
 				console.log(master[message.guild.id].teammembers)
