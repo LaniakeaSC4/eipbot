@@ -1,8 +1,8 @@
 /*const Discord = require('discord.js');
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });*/
 
-const Discord = require('discord.js')
-const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES], partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+const { Client, Intents } = require('discord.js')
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES], partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 
 // ---- Info ----
 // home team should be under category including word "home"
@@ -445,7 +445,7 @@ function updateplayerboard(message, source) {
 				let embed = message.embeds[0]//embed[0] is first/only embed in message. Copy it to embed variable
 				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {//find the right pinned message
 					var receivedEmbed = message.embeds[0]; //copy embeds from it
-					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
+					var updatedEmbed = new MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
 					updatedEmbed.fields = []//clear fields
 					//add teams and players for embed from teams/teammeber objects
 					for (var i = 0; i < master[message.guild.id].teams.length; i++) {
@@ -559,7 +559,7 @@ function getname(message) {
 function thankyou(author, updatedthis, color, message) {
 	var commandchannel = message.channel.name
 	//make new discord embed. Tidier than normal message
-	thanksembed = new Discord.MessageEmbed()
+	thanksembed = new MessageEmbed()
 	thanksembed.setDescription('Thank you ' + author + ' for updating ' + updatedthis + 'using command ' + message.content + ' in channel ' + commandchannel + '. Coop board will update in 12-15 seconds.')
 	thanksembed.addField("Jump to coop board", thismessage.url)
 
@@ -630,7 +630,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			console.log(master[interaction.guild_id].teammembers)
 
 			//build initial embed
-			let placedEmbed = new Discord.MessageEmbed()
+			let placedEmbed = new MessageEmbed()
 				.setTitle("EiP Status Board for contract: " + coopname)
 				.setDescription('__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop')
 				.setColor('#00FF00')
@@ -695,7 +695,7 @@ client.on('message', async message => {
 				console.log(master[message.guild.id].teammembers)
 
 				//build initial embed
-				let placedEmbed = new Discord.MessageEmbed()
+				let placedEmbed = new MessageEmbed()
 					.setTitle("EiP Status Board for contract: " + eggcommand2)
 					.setDescription('__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop')
 					.setColor('#00FF00')
@@ -728,7 +728,7 @@ client.on('message', async message => {
 					console.log('Closing statusboard: ' + statusboard)
 					statusboard.reactions.removeAll()
 					var receivedEmbed = statusboard.embeds[0] //copy embeds from it
-					var updatedEmbed = new Discord.MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
+					var updatedEmbed = new MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
 					updatedEmbed.setFooter('Bot created by LaniakeaSC (type !help for more info)\nThis coop is closed')
 					updatedEmbed.setColor('#FF0000')
 					statusboard.edit(updatedEmbed)
@@ -1057,7 +1057,7 @@ function buildteam(teamarray, teamfilter) {
 
 //this function builds and returns the discord embed
 function prepupdate(color, title, description, array) {
-	const TeamEmbed = new Discord.MessageEmbed()
+	const TeamEmbed = new MessageEmbed()
 		.setColor(String(color))
 		.setTitle(String(title))
 		.setDescription(String(description));
