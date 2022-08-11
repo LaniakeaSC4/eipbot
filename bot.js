@@ -2,7 +2,7 @@
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });*/
 
 const { Client, Intents, MessageEmbed } = require('discord.js')
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS], partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, "GUILD_MEMBERS"], partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 
 // ---- Info ----
 // home team should be under category including word "home"
@@ -17,6 +17,7 @@ client.on('message', async message => {
 		console.log(master[message.guild.id][teams])
 	}
 })
+
 
 //=================================================
 //  Coop bot | Functions | Initalise
