@@ -84,8 +84,9 @@ function buildteamobj() {
 				let role = guild.roles.cache.find(r => r.name === roles[j]);
 				console.log('building role. It is: ' + role)
 				//search by role ID to get all members with that role
-				var thesemembers = guild.roles.cache.get(role.id).members.map(m => m.displayName);
+				var thesemembers = guild.roles.cache.get(role).members.map(m => m.displayName);
 				//store members in the team members object, keyed by cleaned team name
+				console.log(thesemembers)
 				master['695793841592336426'].teammembers[cleanrole] = thesemembers
 			}//end if match
 		}//end for roles
