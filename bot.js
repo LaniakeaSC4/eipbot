@@ -644,7 +644,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 				}
 			}//end loop to add team fields to embed
 
-			message.channel.send(placedEmbed).then(async msg => {//send the embed then
+			channel.send(placedEmbed).then(async msg => {//send the embed then
 				//push the message ID into global var array to we can find these messages later and/or filter the reactionAdd event to these message IDs.
 				statusboardmessages.push(msg.id);
 				console.log("Coop opened. Current Status Boards are: " + statusboardmessages)
@@ -652,7 +652,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 				await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
 				await delay(500); await msg.pin();//pin message after 500 milliseconds
 			})//end pin placed user embed
-		} else { message.channel.send('Sorry, I am processing another task right now. Please try this command again in 30 seconds'); console.log('skipping !open command becasuse ') }
+		} else { channel.send('Sorry, I am processing another task right now. Please try this command again in 30 seconds'); console.log('skipping !open command becasuse ') }
 	}
 })
 
