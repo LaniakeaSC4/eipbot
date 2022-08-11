@@ -112,6 +112,7 @@ const thesemembers = role.members.map(m => m.displayName);
 	idcounter = 0
 	//store the teams (roles) in the object
 	master['695793841592336426'].teams = teamnames;
+	return
 }//end function
 
 //=======================================
@@ -632,7 +633,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			console.log('before build team object one !open')
 			console.log(master[interaction.guild_id].teammembers)
 
-			buildteamobj(interaction)
+			await buildteamobj(interaction)
 
 			console.log('after build team object before !open')
 			console.log(master[interaction.guild_id].teammembers)
