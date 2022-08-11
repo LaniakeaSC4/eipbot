@@ -616,7 +616,9 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			//lock out any more commands for x milliseconds
 			startthinking(6000, false)
 			//unpin status board message
-			interaction.channel.messages.fetchPinned().then(messages => {
+
+			let messages = await interaction.channel.messages.fetchPinned()
+			messages.then(async (messages) => {
 				messages.forEach(message => {
 					//embed[0] is first/only embed in message. Copy it to embed variable
 					let embed = message.embeds[0];
