@@ -74,7 +74,7 @@ async function buildteamobj(interaction) {
 	//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
 	
 
-await interaction.guild.members.fetch() //cache all members in the server
+await guild.members.fetch() //cache all members in the server
 
 	
 	
@@ -87,7 +87,7 @@ await interaction.guild.members.fetch() //cache all members in the server
 				//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 				var cleanrole = roles[j].replace(/[^a-zA-Z0-9 ]/g, "");
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
-				let role = interaction.guild.roles.cache.find(r => r.name === roles[j]);
+				let role = guild.roles.cache.find(r => r.name === roles[j]);
 				
 const thesemembers = role.members.map(m => m.displayName);
 				//store members in the team members object, keyed by cleaned team name
