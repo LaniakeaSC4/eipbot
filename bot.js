@@ -613,7 +613,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 		console.log('Start command!')
 	}
 
-}
+})
 
 // 1. !coop (including !coop open [name] and !coop close)
 client.on('message', async message => {
