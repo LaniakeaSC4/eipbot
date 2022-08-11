@@ -1,5 +1,8 @@
-const Discord = require('discord.js');
-const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+/*const Discord = require('discord.js');
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });*/
+
+const { Client, Intents } = require('discord.js')
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES], partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 
 // ---- Info ----
 // home team should be under category including word "home"
@@ -580,6 +583,37 @@ client.on('message', async message => {
 // Coop bot	| User Commands | open and close
 // 1. !Coop (which has open and close)
 //==========================================
+
+//setup slash command
+client.on('ready', () => {
+client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+	data: {
+	  "name": "start",
+	  "description": "Start a new coop",
+	  "options": [
+		{
+		  "type": 3,
+		  "name": "coopname",
+		  "description": "Enter coop name",
+		  "required": true
+		}
+	  ]
+	}//end data
+  })//end post
+})
+
+//reply to slash command
+client.ws.on('INTERACTION_CREATE', async interaction => {
+	
+  
+	const command = interaction.data.name.toLowerCase()
+	const args = interaction.data.options//array of the provided data after the slash
+  
+	if (command === 'start') {
+		console.log('Start command!')
+	}
+
+}
 
 // 1. !coop (including !coop open [name] and !coop close)
 client.on('message', async message => {
