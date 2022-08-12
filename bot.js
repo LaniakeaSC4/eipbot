@@ -93,7 +93,7 @@ async function buildteamobj() {
 
 				const thesemembers = role.members.map(m => m.displayName);
 				//store members in the team members object, keyed by cleaned team name
-				console.log(thesemembers)
+				
 				master['695793841592336426'].teammembers[cleanrole] = thesemembers
 			}//end if match
 		}//end for roles
@@ -642,8 +642,7 @@ client.on('ready', async () => {
 							commandplayers.push({ "name": player, "value": player })
 						}
 			} 
-		console.log ('command players ks')
-		console.log(commandplayers)
+
 
 	}//end teams for loop
 
@@ -729,7 +728,7 @@ client.on('ready', async () => {
 client.ws.on('INTERACTION_CREATE', async interaction => {
 
 	const command = interaction.data.name.toLowerCase()
-console.log(command)
+
 	if (command === 'start') {
 		console.log('Start command!')
 
@@ -943,6 +942,105 @@ const thisteam = args[0].value
 	}
 
 })
+
+client.ws.on('INTERACTION_CREATE', async interaction => {
+const command = interaction.data.name.toLowerCase()
+	const args = interaction.data.options
+	
+
+	if (command === 'updateplayer') {
+
+const thisplayer = args[0].value
+	const updateto = args[1].value
+
+		var message = {}
+		var interactionchannel = interaction.channel_id
+		var channel = await client.channels.fetch(interactionchannel)
+		let messages = await channel.messages.fetchPinned()
+
+		messages.forEach(msg => {
+			//embed[0] is first/only embed in message. Copy it to embed variable
+			let embed = msg.embeds[0];
+			//find the right pinned message
+			if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+				message = msg
+				console.log('found the pinned message')
+			}//end if embed and footer text contains
+		})//end message.forEach
+
+		if (sqlocks.q7locked === false || sqlocks.q6locked === false || sqlocks.q5locked === false) {
+			//try all the queues. Maximum is 1 plus 7 waiting
+			console.log(message.content + 'just entered the top of the stack above q7')
+			await bucket(message, sqlocks, 'q7locked', 'q6locked', 1000, 'q7').then(async message => {
+				console.log(message.content + ' passed from q7 to q6')
+				await bucket(message, sqlocks, 'q6locked', 'q5locked', 1000, 'q6').then(async message => {
+					console.log(message.content + ' passed from q6 to q5')
+					await bucket(message, sqlocks, 'q5locked', 'q4locked', 1000, 'q5').then(async message => {
+						console.log(message.content + ' passed from q5 to q4')
+						await bucket(message, sqlocks, 'q4locked', 'q3locked', 1000, 'q4').then(async message => {
+							console.log(message.content + ' passed from q4 to q3')
+							await bucket(message, sqlocks, 'q3locked', 'q2locked', 1000, 'q3').then(async message => {
+								console.log(message.content + ' passed from q3 to q2')
+								await bucket(message, sqlocks, 'q2locked', 'q1locked', 1000, 'q2').then(async message => {
+									console.log(message.content + ' passed from q2 to q1')
+									await bucket(message, sqlocks, 'q1locked', 'q0locked', 1000, 'q1').then(async message => {
+										console.log(message.content + ' passed from q1 to q0')
+
+										//queue 0
+										if (processingMaster === true && sqlocks.q0locked === false) {//if there is currently another command processingMaster and this queue isnt locked
+											sqlocks.q0locked = true; console.log("q0 locked")//lock this queue
+											//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. processingMaster var was ' + processingMaster)
+											do {//while processingMaster = true, loop around in 1 second intervals
+												console.log('One loop in queue 0 for ' + message.content)
+												await delay(1000)
+											} while (processingMaster === true || processingEmoji === true)
+											sqlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
+										}//end queue 0
+										console.log(message.content + 'has just passed all queues')//message is now free to enter rest of function
+
+
+										//!red 🟥
+										if (updateto === 'red' && processingMaster === false) {
+
+											startthinking(18500, false)//lock out any more commands for x millisecond
+
+											//if mention is a valid user
+											
+												await updateplayersquare("🟢", "🔶", "🟥", thisplayer, message, 'sq')
+										}//end !red
+
+										//!orange 🔶
+										if (updateto === 'orange' && processingMaster === false) {
+
+											startthinking(18500, false)//lock out any more commands for x millisecond
+
+											//if mention is a valid user
+												await updateplayersquare("🟢", "🟥", "🔶", thisplayer, message, 'sq')
+										
+										}//end !orange
+
+										//!green 🟢
+										if (updateto === 'green' && processingMaster == false) {
+
+											startthinking(18500, false)//lock out any more commands for x millisecond
+
+											//if mention is a valid player
+												await updateplayersquare("🔶", "🟥", "🟢", thisplayer, message, 'sq')
+								
+										}//end !green
+									})//end q1
+								})//end q2
+							})//end q3
+						})//end q4
+					})//end q5
+				})//end q6
+			})//end q7
+		}//end if q7, q6 or 15 is locked
+		else { message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) }
+	} 
+	}) 
+
+
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
