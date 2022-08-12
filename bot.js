@@ -623,6 +623,7 @@ client.on('ready', async () => {
 
 
 	var commandteams = []
+	var commandplayers = []
 	console.log(master['695793841592336426'].teams.length)
 
 	for (var i = 0; i < master['695793841592336426'].teams.length; i++) {
@@ -630,6 +631,16 @@ client.on('ready', async () => {
 		var cleanrole = master['695793841592336426'].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 
 		commandteams.push({ "name": cleanrole, "value": cleanrole })
+		
+		
+			if (master[message.guild.id].teammembers[cleanrole].length != 0) {
+			  for (var j = 0; j < master[message.guild.id].teammembers[cleanrole].length; j++){
+			    
+							commandplayers.push({ "name": master[message.guild.id].teams[i][j], "value":master[message.guild.id].teams[i][j] })
+						}
+			} 
+		
+		console.log(commandplayers)
 
 	}//end teams for loop
 
