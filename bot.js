@@ -666,6 +666,44 @@ client.on('ready', async () => {
 					"type": 3,
 					"name": "updateto",
 					"description": "What colour the team be updated to?",
+					"required": true, 
+					"choices": [
+						{
+							"name": "red",
+							"value": "red"
+						},
+						{
+							"name": "orange",
+							"value": "orange"
+						},
+						{
+							"name": "green",
+							"value": "green"
+						}
+					]
+				}
+			]
+		}
+	})//end post
+	
+	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+		data:
+		{
+			"name": "updateplayer",
+			"description": "Update a player to a new emoji",
+			"options": [
+				{
+					"type": 3,
+					"name": "player",
+					"description": "Which player should be updated?",
+					"choices": commandplayers,
+					"required": true
+				},
+				{
+					"type": 3,
+					"name": "updateto",
+					"description": "What colour the player be updated to?",
+					"required": true, 
 					"choices": [
 						{
 							"name": "red",
