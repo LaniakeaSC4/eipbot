@@ -636,7 +636,7 @@ client.on('ready', async () => {
 			if (master['695793841592336426'].teammembers[cleanrole].length != 0) {
 			  for (var j = 0; j < master['695793841592336426'].teammembers[cleanrole].length; j++){
 			    
-							commandplayers.push({ "name": master['695793841592336426'].teams[i][j], "value":master['695793841592336426'].teams[i][j] })
+							commandplayers.push({ "name": master['695793841592336426'].teammembers[cleanrole][j], "value": master['695793841592336426'].teammembers[cleanrole][j] })
 						}
 			} 
 		console.log ('command players ks')
