@@ -688,7 +688,7 @@ client.on('ready', async () => {
 client.ws.on('INTERACTION_CREATE', async interaction => {
 
 	const command = interaction.data.name.toLowerCase()
-
+console.log(command)
 	if (command === 'start') {
 		console.log('Start command!')
 
