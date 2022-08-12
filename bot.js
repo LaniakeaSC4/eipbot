@@ -14,11 +14,10 @@ const client = new Client({ intents: allIntents, partials: ['MESSAGE', 'CHANNEL'
 
 //function to reset slash commands (enable if needed)
 async function clearcommands() {
-	var serverkeys = Object.keys(servers)
-	serverkeys.forEach((key, index) => {
-	  const guild = client.guilds.cache.get(servers[key].id)
+	
+	  const guild = client.guilds.cache.get('695793841592336426')
 	  guild.commands.set([])
-	})
+	
   }//end function to reset commands
 
 
