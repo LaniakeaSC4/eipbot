@@ -610,7 +610,7 @@ function thankyou(author, updatedthis, color, message) {
 //==========================================
 
 //setup slash command
-client.on('ready', () => {
+client.on('ready', async () => {
 	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
 		data: {
 			"name": "start",
@@ -630,43 +630,44 @@ client.on('ready', () => {
 
 	}//end teams for loop
 
-	delay(1000).then({
-		client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
-			data:
-			{
-				"name": "updateteam",
-				"description": "Update a whole team to a new emoji",
-				"options": [
-					{
-						"type": 3,
-						"name": "team",
-						"description": "Which team should be updated?",
-						"choices": commandteams,
-						"required": true
-					},
-					{
-						"type": 3,
-						"name": "updateto",
-						"description": "What colour the team be updated to?",
-						"choices": [
-							{
-								"name": "red",
-								"value": "red"
-							},
-							{
-								"name": "orange",
-								"value": "orange"
-							},
-							{
-								"name": "green",
-								"value": "green"
-							}
-						]
-					}
-				]
-			}
-		})
+	await delay(1000)
+
+	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+		data:
+		{
+			"name": "updateteam",
+			"description": "Update a whole team to a new emoji",
+			"options": [
+				{
+					"type": 3,
+					"name": "team",
+					"description": "Which team should be updated?",
+					"choices": commandteams,
+					"required": true
+				},
+				{
+					"type": 3,
+					"name": "updateto",
+					"description": "What colour the team be updated to?",
+					"choices": [
+						{
+							"name": "red",
+							"value": "red"
+						},
+						{
+							"name": "orange",
+							"value": "orange"
+						},
+						{
+							"name": "green",
+							"value": "green"
+						}
+					]
+				}
+			]
+		}
 	})//end post
+
 })
 
 //reply to slash command
