@@ -150,11 +150,10 @@ const startthinking = async (x, message) => {
 	if (message !== false) {
 		//do this first
 		processingMaster = true
-		message.channel.startTyping()//start discord typing signifier
+		message.channel.sendTyping()//start discord typing signifier
 		console.log("Starting to think for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
 		await delay(x)//wait for x milliseconds
 		//then do this
-		message.channel.stopTyping()//stop discord typing signifier
 		processingMaster = false
 		console.log("Done thinking for " + x / 1000 + " seconds. processingMaster var is: " + processingMaster)
 	}//end if not false
