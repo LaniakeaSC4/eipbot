@@ -639,14 +639,12 @@ client.on('ready', async () => {
 							commandplayers.push({ "name": master['695793841592336426'].teams[i][j], "value":master['695793841592336426'].teams[i][j] })
 						}
 			} 
-		
+		console.log ('command players ks')
 		console.log(commandplayers)
 
 	}//end teams for loop
 
 	await delay(1000)
-
-	console.log(commandteams)
 
 	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
 		data:
