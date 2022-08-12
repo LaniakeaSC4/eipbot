@@ -14,11 +14,11 @@ const client = new Client({ intents: allIntents, partials: ['MESSAGE', 'CHANNEL'
 
 //function to reset slash commands (enable if needed)
 async function clearcommands() {
-	
-	  const guild = client.guilds.cache.get('695793841592336426')
-	  guild.commands.set([])
-	
-  }//end function to reset commands
+
+	const guild = client.guilds.cache.get('695793841592336426')
+	guild.commands.set([])
+
+}//end function to reset commands
 
 
 //=================================================
@@ -34,6 +34,7 @@ var master = {}
 client.on('ready', () => {
 	clearcommands()
 	startthinking(3000, false)
+	buildteamobj()
 
 	//establish server specific storage objects
 	var serverlist = client.guilds.cache.map(guild => guild.id);
@@ -78,10 +79,7 @@ async function buildteamobj() {
 	var teamnames = [];
 	//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
 
-
 	await guild.members.fetch() //cache all members in the server
-
-
 
 	for (var i = 0; i < homechannels.length; i++) {
 		for (var j = 0; j < roles.length; j++) {
@@ -473,13 +471,6 @@ function updateplayerboard(message, source) {
 						}
 					}//end loop to add team fields to embed
 
-					//console.log('embed teams is (in updateplayer board)')
-					//console.log(embedteams)
-
-
-
-
-
 					let updatedEmbed = [
 						{
 							"title": message.embeds[0].title,
@@ -491,11 +482,6 @@ function updateplayerboard(message, source) {
 							}
 						}
 					]//end embed
-
-
-
-					console.log('message is')
-					console.log(message)
 
 					message.edit({
 						embeds: updatedEmbed
@@ -631,6 +617,56 @@ client.on('ready', () => {
 			"description": "Start a new coop",
 		}//end data
 	})//end post
+
+
+
+	var commandteams = []
+
+	for (var i = 0; i < master[guildid].teams.length; i++) {
+		//for each of the teams (roles)
+		var cleanrole = master[guildid].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+
+		commandteams.push({ "name": cleanrole, "value": cleanrole })
+
+	}//end teams for loop
+
+
+	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+		data:
+		{
+			"name": "updateteam",
+			"description": "Update a whole team to a new emoji",
+			"options": [
+				{
+					"type": 3,
+					"name": "team",
+					"description": "",
+					"choices": commandteams,
+					"required": true
+				},
+				{
+					"type": 3,
+					"name": "updateto",
+					"description": "",
+					"choices": [
+						{
+							"name": "red",
+							"value": "red"
+						},
+						{
+							"name": "orange",
+							"value": "orange"
+						},
+						{
+							"name": "green",
+							"value": "green"
+						}
+					]
+				}
+			]
+		}
+	})//end post
+
 })
 
 //reply to slash command
@@ -746,6 +782,18 @@ function bucket(message, lockobject, thislock, nextlock, loopdelay, queuename) {
 		} else { console.log('skipping ' + queuename + ' queue'); resolve(message) }//if the next bucket wasnt locked, we can pass the message straight through
 	})//end promise
 }//end bucket function
+
+client.ws.on('INTERACTION_CREATE', async interaction => {
+
+	const command = interaction.data.name.toLowerCase()
+	const thisteam = interaction.args[0].value
+	const updateto = interaction.args[1].value
+
+	if (command === 'updateteam') {
+
+	}
+
+})
 
 //square colour change commands (!red, !orange, !green)
 client.on('message', async message => {
