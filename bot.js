@@ -791,7 +791,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 
 	if (command === 'updateteam') {
 
-		const message = {}
+		var message = {}
 		var interactionchannel = interaction.channel_id
 		var channel = await client.channels.fetch(interactionchannel)
 		let messages = await channel.messages.fetchPinned()
