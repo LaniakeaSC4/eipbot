@@ -227,8 +227,9 @@ console.log('status board length is ' + statusboardmessages.length)
 			//get displayname from userid. Need this for the string match in the status board/teammembers object
 			//check if they have a nickname set
 			var getmember = await client.users.fetch(user.id)//retrieve the user from ID
+			console.log(getmember)
 			const member = await reaction.message.guild.member.cache.get(getmember);
-console.log(getmember)
+
 console.log(member)
 			var dName = member.nickname//set dName (displayName) to the member object's nickname
 			var uName = getmember.username//if they dont have a nickname, thier username is what is displayed by discord.
