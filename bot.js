@@ -622,9 +622,9 @@ client.on('ready', () => {
 
 	var commandteams = []
 
-	for (var i = 0; i < master[guildid].teams.length; i++) {
+	for (var i = 0; i < master['695793841592336426'].teams.length; i++) {
 		//for each of the teams (roles)
-		var cleanrole = master[guildid].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+		var cleanrole = master['695793841592336426'].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
 
 		commandteams.push({ "name": cleanrole, "value": cleanrole })
 
