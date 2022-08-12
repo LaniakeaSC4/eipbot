@@ -640,14 +640,14 @@ client.on('ready', () => {
 				{
 					"type": 3,
 					"name": "team",
-					"description": "",
+					"description": "Which team should be updated?",
 					"choices": commandteams,
 					"required": true
 				},
 				{
 					"type": 3,
 					"name": "updateto",
-					"description": "",
+					"description": "What colour the team be updated to?",
 					"choices": [
 						{
 							"name": "red",
