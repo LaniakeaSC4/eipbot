@@ -3,7 +3,7 @@ const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 
 const { Client, Intents, MessageEmbed } = require('discord.js')
 const allIntents = new Intents(32767);
-const client = new Client({ intents : allIntents, partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
+const client = new Client({ intents: allIntents, partials: ['MESSAGE', 'CHANNEL', 'REACTION'] })
 
 // ---- Info ----
 // home team should be under category including word "home"
@@ -51,12 +51,12 @@ client.on('ready', () => {
 //var lastmessage = {}//store the last retrieved message for last access.
 
 // 2. Function to build team object from home team channels. This object contains the teams and team members. 🟥's added. Run during !coop open
-async function buildteamobj(interaction) {
-	
+async function buildteamobj() {
+
 	//get array of all server roles
 	const guild = client.guilds.cache.get("695793841592336426")
 	var roles = guild.roles.cache.map((role) => role.name);
-	
+
 	//get discord category channels (e.g 🏠 Home Teams)
 	const categoryChannels = guild.channels.cache.filter(channel => channel.type === "GUILD_CATEGORY");
 	//blank array which will hold the channel names of the child channels under the home team category
@@ -75,12 +75,12 @@ async function buildteamobj(interaction) {
 	//define teams array, team names will be stored here for use by other functions
 	var teamnames = [];
 	//for each channel under the home team category, check all server roles to see if there is a string match (e.g. role is mentioned in channel name)
-	
 
-await guild.members.fetch() //cache all members in the server
 
-	
-	
+	await guild.members.fetch() //cache all members in the server
+
+
+
 	for (var i = 0; i < homechannels.length; i++) {
 		for (var j = 0; j < roles.length; j++) {
 			//if a channel has a role/team match
@@ -91,8 +91,8 @@ await guild.members.fetch() //cache all members in the server
 				var cleanrole = roles[j].replace(/[^a-zA-Z0-9 ]/g, "");
 				//find the role in the sever cache which matches the channel-matched role (we will need it's ID)
 				let role = guild.roles.cache.find(r => r.name === roles[j]);
-				
-const thesemembers = role.members.map(m => m.displayName);
+
+				const thesemembers = role.members.map(m => m.displayName);
 				//store members in the team members object, keyed by cleaned team name
 				console.log(thesemembers)
 				master['695793841592336426'].teammembers[cleanrole] = thesemembers
@@ -201,7 +201,7 @@ function ebucket(message, emoji, user, lockobject, thislock, nextlock, loopdelay
 
 // 2. reaction add listener
 client.on('messageReactionAdd', async (reaction, user) => {
-  console.log('reaction added')
+	console.log('reaction added')
 	// When we receive a reaction we check if the reaction is partial or not
 	if (reaction.partial) {
 		// If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
@@ -214,7 +214,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 			return;
 		}//end catch
 	}//end if reaction.partial
-console.log('status board length is ' + statusboardmessages.length)
+	console.log('status board length is ' + statusboardmessages.length)
 	//when reaction is added, check the ID of the message it was added to. If it matches one of the open status boards then...
 	for (var i = 0; i < statusboardmessages.length; i++) {
 		if (statusboardmessages[i].includes(reaction.message.id)) {
@@ -226,10 +226,10 @@ console.log('status board length is ' + statusboardmessages.length)
 			//get displayname from userid. Need this for the string match in the status board/teammembers object
 			//check if they have a nickname set
 			var getmember = await client.users.fetch(user.id)//retrieve the user from ID
-			
-			
-			
-			const member = await client.guilds.cache.find((guild) => guild.id === '695793841592336426').members.cache.find((member) => member.user.id === getmember.id )
+
+
+
+			const member = await client.guilds.cache.find((guild) => guild.id === '695793841592336426').members.cache.find((member) => member.user.id === getmember.id)
 			var dName = member.nickname//set dName (displayName) to the member object's nickname
 			var uName = getmember.username//if they dont have a nickname, thier username is what is displayed by discord.
 			var thisuser = ""
@@ -407,9 +407,16 @@ function rebuildteamobj(message) {
 				let embed = message.embeds[0];//embed[0] is first/only embed in message. Copy it to embed variable
 				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {//find the right pinned message
 					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
+						console.log('rebuildteamobj logs')
 						var thesemembers = embed.fields[i].value//get the values (team members). Is loaded as string with \n after each player
+						console.log('embed.fields[i].value is')
+						console.log(embed.fields[i].value)
 						thesemembers = thesemembers.split('\n')//split into array. thesemembers is now array of team members with thier current status square
+						console.log('after splitting, thesemembers is')
+						console.log(thesemembers)
 						var thisteam = embed.fields[i].name.split(' ').pop()//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
+						console.log('thisteam is;')
+						console.log(thisteam)
 						teamnames.push(thisteam)//save the team (role) name itself for use by other functions
 						var cleanrole = thisteam.replace(/[^a-zA-Z0-9 ]/g, "")//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 						master[message.guild.id].teammembers[cleanrole] = thesemembers//store members in the team members object, keyed by cleaned team name
@@ -458,43 +465,43 @@ function updateplayerboard(message, source) {
 			messages.forEach(message => {//for each pinned message
 				let embed = message.embeds[0]//embed[0] is first/only embed in message. Copy it to embed variable
 				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {//find the right pinned message
-					
-					
-					
+
+
+
 					var embedteams = []
-			for (var i = 0; i < master[message.guild.id].teams.length; i++) {
-				var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
-				console.log('cleanrole is: ' + cleanrole)
-				console.log('length is: ' + master[message.guild.id].teammembers[cleanrole].length)
-				if (master[message.guild.id].teammembers[cleanrole].length != 0) {
-					embedteams.push({ "name" : `Team ${master[message.guild.id].teams[i]}`, "value" : master[message.guild.id].teammembers[cleanrole].join('\n'), "inline" : false})
-				}
-			}//end loop to add team fields to embed
-					
-					
-					
-					
-					
-					
-				
-					
+					for (var i = 0; i < master[message.guild.id].teams.length; i++) {
+						var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
+						console.log('cleanrole is: ' + cleanrole)
+						console.log('length is: ' + master[message.guild.id].teammembers[cleanrole].length)
+						if (master[message.guild.id].teammembers[cleanrole].length != 0) {
+							embedteams.push({ "name": `Team ${master[message.guild.id].teams[i]}`, "value": master[message.guild.id].teammembers[cleanrole].join('\n'), "inline": false })
+						}
+					}//end loop to add team fields to embed
+
+
+
+
+
+
+
+
 					let updatedEmbed = [
-        {
-          "title": message.embeds[0].title,
-          "color": message.embeds[0].color,
-          "description": message.embeds[0].description,
-          "fields" : embedteams,
-          "footer": {
-            "text": message.embeds[0].footer.text
-          }
-        }
-      ]//end embed
-					
-					
-						
+						{
+							"title": message.embeds[0].title,
+							"color": message.embeds[0].color,
+							"description": message.embeds[0].description,
+							"fields": embedteams,
+							"footer": {
+								"text": message.embeds[0].footer.text
+							}
+						}
+					]//end embed
+
+
+
 					console.log('in update player board updated embed is')
 					console.log(updatedEmbed)
-				
+
 					message.edit(updatedEmbed)//send the updated embed
 					resolve(true)
 				}//end if embed and footer text contains
@@ -652,33 +659,33 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 			var interactionchannel = interaction.channel_id
 			var channel = await client.channels.fetch(interactionchannel)
 			let messages = await channel.messages.fetchPinned()
-			
-				messages.forEach(message => {
-					//embed[0] is first/only embed in message. Copy it to embed variable
-					let embed = message.embeds[0];
-					//find the right pinned message
-					if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
-						message.unpin()
-					}//end if embed and footer text contains
-				})//end message.forEach
-			
+
+			messages.forEach(message => {
+				//embed[0] is first/only embed in message. Copy it to embed variable
+				let embed = message.embeds[0];
+				//find the right pinned message
+				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {
+					message.unpin()
+				}//end if embed and footer text contains
+			})//end message.forEach
+
 
 			//initialise teams object (becasue this is the !coop open command). We don't seem to need to await this? Seems to work. 
 			console.log('before build team object one !open')
 			console.log(master[interaction.guild_id].teammembers)
 
-			await buildteamobj(interaction)
+			await buildteamobj()
 
 			console.log('after build team object before !open')
 			console.log(master[interaction.guild_id].teammembers)
 
 
-    
-				
-				
-				
-				
-				
+
+
+
+
+
+
 			//add teams and players for embed from teams/teammeber objects
 			var embedteams = []
 			for (var i = 0; i < master[interaction.guild_id].teams.length; i++) {
@@ -686,27 +693,27 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 				console.log('cleanrole is: ' + cleanrole)
 				console.log('length is: ' + master[interaction.guild_id].teammembers[cleanrole].length)
 				if (master[interaction.guild_id].teammembers[cleanrole].length != 0) {
-					embedteams.push({ "name" : `Team ${master[interaction.guild_id].teams[i]}`, "value" : master[interaction.guild_id].teammembers[cleanrole].join('\n'), "inline" : false})
+					embedteams.push({ "name": `Team ${master[interaction.guild_id].teams[i]}`, "value": master[interaction.guild_id].teammembers[cleanrole].join('\n'), "inline": false })
 				}
 			}//end loop to add team fields to embed
 			console.log(embedteams)
-						//build initial embed
+			//build initial embed
 			let placedEmbed = [
-        {
-          "title": "EiP Status Board for contract: " + coopname,
-          "color": '#00FF00',
-          "description": '__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop',
-          "fields" : embedteams,
-          "footer": {
-            "text": 'Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️' 
-          }
-        }
-      ]//end embed
-			
-			client.guilds.cache.get(interaction.guild_id).channels.cache.get(interaction.channel_id).send( {
-            embeds: placedEmbed
-          }
-        ).then(async msg => {//send the embed then
+				{
+					"title": "EiP Status Board for contract: " + coopname,
+					"color": '#00FF00',
+					"description": '__Player Status__\nPlease add a reaction below to tell us if you are farming this contract.\n👍 if you are farming\n❌ if you are not farming\n🥚 if you would like to be a starter\n💤 to reset your choice\n\n__Coop Status__\nThe squares below represent the status of the coop\n🟥 - Player not yet offered coop\n🔶 - Player offered coop\n🟢 - Player is confirmed in coop',
+					"fields": embedteams,
+					"footer": {
+						"text": 'Bot created by LaniakeaSC (type !help for more info)\n⬇️ Please add a reaction below ⬇️'
+					}
+				}
+			]//end embed
+
+			client.guilds.cache.get(interaction.guild_id).channels.cache.get(interaction.channel_id).send({
+				embeds: placedEmbed
+			}
+			).then(async msg => {//send the embed then
 				console.log('pushing message id: ' + msg.id)
 				statusboardmessages.push(msg.id)
 				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤')//add player status reactions
