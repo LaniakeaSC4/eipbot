@@ -795,10 +795,12 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 
 	const command = interaction.data.name.toLowerCase()
 	const args = interaction.data.options
-	const thisteam = args[0].value
-	const updateto = args[1].value
+	
 
 	if (command === 'updateteam') {
+
+const thisteam = args[0].value
+	const updateto = args[1].value
 
 		var message = {}
 		var interactionchannel = interaction.channel_id
