@@ -108,7 +108,7 @@ async function buildteamobj() {
 			hexid = hexid.padStart(2, "0")
 			hexid = hexid.toUpperCase()
 			idcounter = idcounter + 1
-			master['695793841592336426'].teammembers[key][i] = "🟥 💤|¦" + master['695793841592336426'].teammembers[key][i]
+			master['695793841592336426'].teammembers[key][i] = "🟥 💤|▪" + master['695793841592336426'].teammembers[key][i]
 		}//end for each team member
 	}//end for each team
 	idcounter = 0
