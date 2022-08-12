@@ -407,16 +407,9 @@ function rebuildteamobj(message) {
 				let embed = message.embeds[0];//embed[0] is first/only embed in message. Copy it to embed variable
 				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {//find the right pinned message
 					for (var i = 0; i < embed.fields.length; i++) {//for each of the fields (teams) in the embed
-						console.log('rebuildteamobj logs')
 						var thesemembers = embed.fields[i].value//get the values (team members). Is loaded as string with \n after each player
-						console.log('embed.fields[i].value is')
-						console.log(embed.fields[i].value)
 						thesemembers = thesemembers.split('\n')//split into array. thesemembers is now array of team members with thier current status square
-						console.log('after splitting, thesemembers is')
-						console.log(thesemembers)
 						var thisteam = embed.fields[i].name.split(' ').pop()//the title of each fiels is set to "Team " followed by the team name (e.g "egg-streme"). Split at ' ' and pop to get just team (role) name
-						console.log('thisteam is;')
-						console.log(thisteam)
 						teamnames.push(thisteam)//save the team (role) name itself for use by other functions
 						var cleanrole = thisteam.replace(/[^a-zA-Z0-9 ]/g, "")//clean the role of any special characters (remove hyphenation) for keying team member storage in the teams object.
 						master[message.guild.id].teammembers[cleanrole] = thesemembers//store members in the team members object, keyed by cleaned team name
@@ -478,8 +471,8 @@ function updateplayerboard(message, source) {
 						}
 					}//end loop to add team fields to embed
 
-
-
+					console.log('embed teams is (in updateplayer board)')
+					console.log(embedteams)
 
 
 
