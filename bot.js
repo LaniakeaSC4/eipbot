@@ -476,9 +476,7 @@ function updateplayerboard(message, source) {
 					
 					
 					
-					
-					console.log('in update player board recieved embed is')
-					console.log(receivedEmbed)
+				
 					
 					let updatedEmbed = [
         {
@@ -493,7 +491,9 @@ function updateplayerboard(message, source) {
       ]//end embed
 					
 					
-					
+						
+					console.log('in update player board updated embed is')
+					console.log(updatedEmbed)
 				
 					message.edit(updatedEmbed)//send the updated embed
 					resolve(true)
