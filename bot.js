@@ -632,6 +632,8 @@ client.on('ready', async () => {
 
 	await delay(1000)
 
+	console.log(commandteams)
+	
 	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
 		data:
 		{
