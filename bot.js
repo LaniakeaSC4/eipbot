@@ -226,15 +226,10 @@ console.log('status board length is ' + statusboardmessages.length)
 			//get displayname from userid. Need this for the string match in the status board/teammembers object
 			//check if they have a nickname set
 			var getmember = await client.users.fetch(user.id)//retrieve the user from ID
-			console.log(getmember)
 			
 			
 			
 			const member = await client.guilds.cache.find((guild) => guild.id === '695793841592336426').members.cache.find((member) => member.user.id === getmember.id )
-			
-			//const member = await client.members.cache.fetch(getmember.id);
-
-console.log(member)
 			var dName = member.nickname//set dName (displayName) to the member object's nickname
 			var uName = getmember.username//if they dont have a nickname, thier username is what is displayed by discord.
 			var thisuser = ""
@@ -332,7 +327,7 @@ function arraystatusboards() {
 	//clear array before rebuild
 	statusboardmessages = []
 	//get all text channels
-	const categoryChannels = client.channels.cache.filter(channel => channel.type === "text" && channel.deleted == false);
+	const categoryChannels = client.channels.cache.filter(channel => channel.type === "GUILD_TEXT" && channel.deleted == false);
 	categoryChannels.forEach(channel => {//for each non-deleted test channel
 		channel.messages.fetchPinned().then(messages => {//fetch pinned messsages
 			messages.forEach(msg => {//for each pinned message
@@ -464,6 +459,8 @@ function updateplayerboard(message, source) {
 				let embed = message.embeds[0]//embed[0] is first/only embed in message. Copy it to embed variable
 				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {//find the right pinned message
 					var receivedEmbed = message.embeds[0]; //copy embeds from it
+					console.log('in update player board recieved embed is')
+					console.log(receivedEmbed)
 					var updatedEmbed = new MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
 					updatedEmbed.fields = []//clear fields
 					//add teams and players for embed from teams/teammeber objects
