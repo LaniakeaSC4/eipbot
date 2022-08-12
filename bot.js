@@ -458,16 +458,43 @@ function updateplayerboard(message, source) {
 			messages.forEach(message => {//for each pinned message
 				let embed = message.embeds[0]//embed[0] is first/only embed in message. Copy it to embed variable
 				if (embed != null && embed.footer.text.includes('LaniakeaSC')) {//find the right pinned message
-					var receivedEmbed = message.embeds[0]; //copy embeds from it
+					
+					
+					
+					var embedteams = []
+			for (var i = 0; i < master[message.guild.id].teams.length; i++) {
+				var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen). Uncleaned roles are in teams object
+				console.log('cleanrole is: ' + cleanrole)
+				console.log('length is: ' + master[message.guild.id].teammembers[cleanrole].length)
+				if (master[message.guild.id].teammembers[cleanrole].length != 0) {
+					embedteams.push({ "name" : `Team ${master[message.guild.id].teams[i]}`, "value" : master[message.guild.id].teammembers[cleanrole].join('\n'), "inline" : false})
+				}
+			}//end loop to add team fields to embed
+					
+					
+					
+					
+					
+					
+					
 					console.log('in update player board recieved embed is')
 					console.log(receivedEmbed)
-					var updatedEmbed = new MessageEmbed(receivedEmbed) //make new embed for updating in this block with old as template
-					updatedEmbed.fields = []//clear fields
-					//add teams and players for embed from teams/teammeber objects
-					for (var i = 0; i < master[message.guild.id].teams.length; i++) {
-						var cleanrole = master[message.guild.id].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen)
-						updatedEmbed.addField(`Team ${master[message.guild.id].teams[i]}`, master[message.guild.id].teammembers[cleanrole], false)
-					}//end loop through teams updating from memory teammembers object
+					
+					let updatedEmbed = [
+        {
+          "title": message.embeds[0].title,
+          "color": message.embeds[0].color,
+          "description": message.embeds[0].description,
+          "fields" : embedteams,
+          "footer": {
+            "text": message.embeds[0].footer.text
+          }
+        }
+      ]//end embed
+					
+					
+					
+				
 					message.edit(updatedEmbed)//send the updated embed
 					resolve(true)
 				}//end if embed and footer text contains
