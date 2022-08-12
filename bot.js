@@ -677,6 +677,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
             embeds: placedEmbed
           }
         ).then(async msg => {//send the embed then
+				console.log('pushing message id: ' + msg.id)
 				statusboardmessages.push(msg.id)
 				await msg.react('👍'); await msg.react('❌'); await msg.react('🥚'); await msg.react('💤')//add player status reactions
 				await msg.react('🟢'); await msg.react('🔶'); await msg.react('🟥')//add coop status reactions
