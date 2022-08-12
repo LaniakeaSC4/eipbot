@@ -471,8 +471,8 @@ function updateplayerboard(message, source) {
 						}
 					}//end loop to add team fields to embed
 
-					console.log('embed teams is (in updateplayer board)')
-					console.log(embedteams)
+					//console.log('embed teams is (in updateplayer board)')
+					//console.log(embedteams)
 
 
 
@@ -492,10 +492,12 @@ function updateplayerboard(message, source) {
 
 
 
-					console.log('in update player board updated embed is')
-					console.log(updatedEmbed)
+					console.log('message is')
+					console.log(message)
 
-					message.edit(updatedEmbed)//send the updated embed
+					message.edit(updatedEmbed).catch(err => {
+						console.error(err);
+					})//send the updated embed
 					resolve(true)
 				}//end if embed and footer text contains
 			})//end message.forEach
