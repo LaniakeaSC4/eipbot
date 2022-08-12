@@ -633,10 +633,10 @@ client.on('ready', async () => {
 		commandteams.push({ "name": cleanrole, "value": cleanrole })
 		
 		
-			if (master[message.guild.id].teammembers[cleanrole].length != 0) {
-			  for (var j = 0; j < master[message.guild.id].teammembers[cleanrole].length; j++){
+			if (master['695793841592336426'].teammembers[cleanrole].length != 0) {
+			  for (var j = 0; j < master['695793841592336426'].teammembers[cleanrole].length; j++){
 			    
-							commandplayers.push({ "name": master[message.guild.id].teams[i][j], "value":master[message.guild.id].teams[i][j] })
+							commandplayers.push({ "name": master['695793841592336426'].teams[i][j], "value":master['695793841592336426'].teams[i][j] })
 						}
 			} 
 		
