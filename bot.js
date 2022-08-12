@@ -630,6 +630,7 @@ client.on('ready', () => {
 
 	}//end teams for loop
 
+	delay(1000)
 
 	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
 		data:
