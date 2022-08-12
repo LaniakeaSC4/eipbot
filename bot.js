@@ -853,7 +853,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 											startthinking(18500, false)//lock out any more commands for x millisecond
 
 											await updateteamsquare("🟢", "🔶", "🟥", thisteam, message, 'sq')
-											thankyou(message.member.displayName, thisteam, "red", message)
+											
 
 										}//end !red
 
@@ -864,7 +864,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 
 
 											await updateteamsquare("🟢", "🟥", "🔶", thisteam, message, 'sq')
-											thankyou(message.member.displayName, thisteam, "orange", message)
+											
 
 										}//end !orange
 
@@ -874,7 +874,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 											startthinking(18500, false)//lock out any more commands for x millisecond
 
 											await updateteamsquare("🔶", "🟥", "🟢", thisteam, message, 'sq')
-											thankyou(message.member.displayName, thisteam, "green", message)
+											
 
 										}//end !green
 									})//end q1
