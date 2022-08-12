@@ -496,7 +496,7 @@ function updateplayerboard(message, source) {
 					console.log(message)
 
 					message.edit({
-						embeds: placedEmbed
+						embeds: updatedEmbed
 					}).catch(err => {
 						console.error(err);
 					})//send the updated embed
