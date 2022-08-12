@@ -34,8 +34,7 @@ var master = {}
 client.on('ready', () => {
 	clearcommands()
 	startthinking(3000, false)
-	buildteamobj()
-
+	
 	//establish server specific storage objects
 	var serverlist = client.guilds.cache.map(guild => guild.id);
 	console.log('I am online on ' + serverlist.length + ' servers. They are :' + serverlist);
@@ -611,6 +610,9 @@ function thankyou(author, updatedthis, color, message) {
 
 //setup slash command
 client.on('ready', async () => {
+
+	await buildteamobj()
+
 	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
 		data: {
 			"name": "start",
@@ -621,6 +623,7 @@ client.on('ready', async () => {
 
 
 	var commandteams = []
+	console.log('master['695793841592336426'].teams.length is' + master['695793841592336426'].teams.length)
 
 	for (var i = 0; i < master['695793841592336426'].teams.length; i++) {
 		//for each of the teams (roles)
@@ -633,7 +636,7 @@ client.on('ready', async () => {
 	await delay(1000)
 
 	console.log(commandteams)
-	
+
 	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
 		data:
 		{
