@@ -785,8 +785,9 @@ function bucket(message, lockobject, thislock, nextlock, loopdelay, queuename) {
 client.ws.on('INTERACTION_CREATE', async interaction => {
 
 	const command = interaction.data.name.toLowerCase()
-	const thisteam = interaction.args[0].value
-	const updateto = interaction.args[1].value
+	const args = interaction.data.options
+	const thisteam = args[0].value
+	const updateto = args[1].value
 
 	if (command === 'updateteam') {
 	console.log(interaction)//get the channel id from this
