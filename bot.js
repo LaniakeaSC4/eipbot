@@ -228,7 +228,12 @@ console.log('status board length is ' + statusboardmessages.length)
 			//check if they have a nickname set
 			var getmember = await client.users.fetch(user.id)//retrieve the user from ID
 			console.log(getmember)
-			const member = await client.members.cache.fetch(getmember.id);
+			
+			
+			
+			const member = await client.guilds.cache.find((guild) => guild.id === '695793841592336426').members.cache.find((member) => member.user.id === getmember.id )
+			
+			//const member = await client.members.cache.fetch(getmember.id);
 
 console.log(member)
 			var dName = member.nickname//set dName (displayName) to the member object's nickname
