@@ -636,7 +636,10 @@ client.on('ready', async () => {
 			if (master['695793841592336426'].teammembers[cleanrole].length != 0) {
 			  for (var j = 0; j < master['695793841592336426'].teammembers[cleanrole].length; j++){
 			    
-							commandplayers.push({ "name": master['695793841592336426'].teammembers[cleanrole][j], "value": master['695793841592336426'].teammembers[cleanrole][j] })
+			    var index = master['695793841592336426'].teammembers[cleanrole][j].indexOf('▪')
+			    var player = master['695793841592336426'].teammembers[cleanrole][j].substr(index + 1)
+			    
+							commandplayers.push({ "name": player, "value": player })
 						}
 			} 
 		console.log ('command players ks')
