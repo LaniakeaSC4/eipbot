@@ -620,7 +620,12 @@ client.on('ready', async () => {
 		}//end data
 	})//end post
 
-
+client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+		data: {
+			"name": "updateplayers",
+			"description": "Run this command if players/teams change. Then restart your discord",
+		}//end data
+	})//end post
 
 	var commandteams = []
 	var commandplayers = []
@@ -724,6 +729,134 @@ client.on('ready', async () => {
 
 })
 
+client.ws.on('INTERACTION_CREATE', async interaction => {
+
+	const command = interaction.data.name.toLowerCase()
+
+	if (command === 'updateplayers') {
+	  clearcommands()
+	  await buildteamobj()
+
+	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+		data: {
+			"name": "start",
+			"description": "Start a new coop",
+		}//end data
+	})//end post
+
+client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+		data: {
+			"name": "updateplayers",
+			"description": "Run this command if players/teams change. Then restart your discord",
+		}//end data
+	})//end post
+
+	var commandteams = []
+	var commandplayers = []
+	console.log(master['695793841592336426'].teams.length)
+
+	for (var i = 0; i < master['695793841592336426'].teams.length; i++) {
+		//for each of the teams (roles)
+		var cleanrole = master['695793841592336426'].teams[i].replace(/[^a-zA-Z0-9 ]/g, "");//teammebers object is keyed with a cleaned version of role (no hyphen) 
+
+		commandteams.push({ "name": cleanrole, "value": cleanrole })
+		
+		
+			if (master['695793841592336426'].teammembers[cleanrole].length != 0) {
+			  for (var j = 0; j < master['695793841592336426'].teammembers[cleanrole].length; j++){
+			    
+			    var index = master['695793841592336426'].teammembers[cleanrole][j].indexOf('▪')
+			    var player = master['695793841592336426'].teammembers[cleanrole][j].substr(index + 1)
+			    
+							commandplayers.push({ "name": player, "value": player })
+						}
+			} 
+
+
+	}//end teams for loop
+
+	await delay(1000)
+
+	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+		data:
+		{
+			"name": "updateteam",
+			"description": "Update a whole team to a new emoji",
+			"options": [
+				{
+					"type": 3,
+					"name": "team",
+					"description": "Which team should be updated?",
+					"choices": commandteams,
+					"required": true
+				},
+				{
+					"type": 3,
+					"name": "updateto",
+					"description": "What colour the team be updated to?",
+					"required": true, 
+					"choices": [
+						{
+							"name": "red",
+							"value": "red"
+						},
+						{
+							"name": "orange",
+							"value": "orange"
+						},
+						{
+							"name": "green",
+							"value": "green"
+						}
+					]
+				}
+			]
+		}
+	})//end post
+	
+	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
+		data:
+		{
+			"name": "updateplayer",
+			"description": "Update a player to a new emoji",
+			"options": [
+				{
+					"type": 3,
+					"name": "player",
+					"description": "Which player should be updated?",
+					"choices": commandplayers,
+					"required": true
+				},
+				{
+					"type": 3,
+					"name": "updateto",
+					"description": "What colour the player be updated to?",
+					"required": true, 
+					"choices": [
+						{
+							"name": "red",
+							"value": "red"
+						},
+						{
+							"name": "orange",
+							"value": "orange"
+						},
+						{
+							"name": "green",
+							"value": "green"
+						}
+					]
+				}
+			]
+		}
+	})//end post
+
+	  
+	} 
+	
+}) 
+
+
 //reply to slash command
 client.ws.on('INTERACTION_CREATE', async interaction => {
 
@@ -731,7 +864,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 
 	if (command === 'start') {
 		console.log('Start command!')
-
+await interaction.reply({ content: 'Start command recieved. Setting up your coop board!', ephemeral: true })
 		if (processingMaster === false) {
 
 			//lock out any more commands for x milliseconds
@@ -838,7 +971,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 	
 
 	if (command === 'updateteam') {
-
+await interaction.reply({ content: 'Command recieved. Updating team', ephemeral: true })
 const thisteam = args[0].value
 	const updateto = args[1].value
 
@@ -949,7 +1082,7 @@ const command = interaction.data.name.toLowerCase()
 	
 
 	if (command === 'updateplayer') {
-
+await interaction.reply({ content: 'Command recieved. Updating player', ephemeral: true })
 const thisplayer = args[0].value
 	const updateto = args[1].value
 
