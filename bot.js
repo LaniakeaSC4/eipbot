@@ -623,7 +623,7 @@ client.on('ready', async () => {
 
 
 	var commandteams = []
-	console.log('master['695793841592336426'].teams.length is' + master['695793841592336426'].teams.length)
+	console.log(master['695793841592336426'].teams.length)
 
 	for (var i = 0; i < master['695793841592336426'].teams.length; i++) {
 		//for each of the teams (roles)
