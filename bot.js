@@ -622,7 +622,7 @@ client.on('ready', async () => {
 
 client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
 		data: {
-			"name": "updateplayers",
+			"name": "fixcommands",
 			"description": "Run this command if players/teams change. Then restart your discord",
 		}//end data
 	})//end post
@@ -733,9 +733,16 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 
 	const command = interaction.data.name.toLowerCase()
 
-	if (command === 'updateplayers') {
+	if (command === 'fixcommands') {
 	  clearcommands()
 	  await buildteamobj()
+	  
+	  client.api.interactions(interaction.id, interaction.token).callback.post({
+                data: {
+                    type: 4,
+                    data: { content: 'Fixing the player and team lists in the other slash commands. Please completely restart your discord to see changes'} 
+                } 
+                })
 
 	client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
 		data: {
@@ -746,7 +753,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 
 client.api.applications(client.user.id).guilds('695793841592336426').commands.post({//adding commmand to our servers
 		data: {
-			"name": "updateplayers",
+			"name": "fixcommands",
 			"description": "Run this command if players/teams change. Then restart your discord",
 		}//end data
 	})//end post
@@ -869,7 +876,7 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 		client.api.interactions(interaction.id, interaction.token).callback.post({
                 data: {
                     type: 4,
-                    data: { content: 'Start command recieved. Setting up your coop board!', ephemeral: true } 
+                    data: { content: 'Start command recieved. Setting up your coop board!'} 
                 } 
                 })
 		
@@ -984,15 +991,17 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 
 	if (command === 'updateteam') {
 
-client.api.interactions(interaction.id, interaction.token).callback.post({
-                data: {
-                    type: 4,
-                    data: { content: 'Command recieved. Updating team.!', ephemeral: true } 
-                } 
-                }) 
+
 
 const thisteam = args[0].value
 	const updateto = args[1].value
+	
+	client.api.interactions(interaction.id, interaction.token).callback.post({
+                data: {
+                    type: 4,
+                    data: { content: 'Command recieved. Updating ' + thisteam + ' to ' + updateto} 
+                } 
+                }) 
 
 		var message = {}
 		var interactionchannel = interaction.channel_id
@@ -1102,15 +1111,17 @@ const command = interaction.data.name.toLowerCase()
 
 	if (command === 'updateplayer') {
 
-client.api.interactions(interaction.id, interaction.token).callback.post({
-                data: {
-                    type: 4,
-                    data: { content: 'Command recieved. Updating player.', ephemeral: true } 
-                } 
-                })
+
 
 const thisplayer = args[0].value
 	const updateto = args[1].value
+	
+	client.api.interactions(interaction.id, interaction.token).callback.post({
+                data: {
+                    type: 4,
+                    data: { content: 'Command recieved. Updating ' + thisplayer + ' to ' + updateto} 
+                } 
+                })
 
 		var message = {}
 		var interactionchannel = interaction.channel_id
