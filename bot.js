@@ -671,17 +671,17 @@ client.api.applications(client.user.id).guilds('695793841592336426').commands.po
 					"name": "updateto",
 					"description": "What colour the team be updated to?",
 					"required": true, 
-					"choices": [
+							"choices": [
 						{
-							"name": "red",
+							"name": "Red 🟥",
 							"value": "red"
 						},
 						{
-							"name": "orange",
+							"name": "Orange 🔶",
 							"value": "orange"
 						},
 						{
-							"name": "green",
+							"name": "Green 🟢",
 							"value": "green"
 						}
 					]
@@ -708,20 +708,20 @@ client.api.applications(client.user.id).guilds('695793841592336426').commands.po
 					"name": "updateto",
 					"description": "What colour the player be updated to?",
 					"required": true, 
-					"choices": [
-						{
-							"name": "red",
-							"value": "red"
-						},
-						{
-							"name": "orange",
-							"value": "orange"
-						},
-						{
-							"name": "green",
-							"value": "green"
-						}
-					]
+								"choices": [
+								  {
+								    "name": "Red 🟥",
+								    "value": "red"
+											},
+								  {
+								    "name": "Orange 🔶",
+								    "value": "orange"
+											},
+								  {
+								    "name": "Green 🟢",
+								    "value": "green"
+											}
+										]
 				}
 			]
 		}
@@ -802,17 +802,17 @@ client.api.applications(client.user.id).guilds('695793841592336426').commands.po
 					"name": "updateto",
 					"description": "What colour the team be updated to?",
 					"required": true, 
-					"choices": [
+								"choices": [
 						{
-							"name": "red",
+							"name": "Red 🟥",
 							"value": "red"
 						},
 						{
-							"name": "orange",
+							"name": "Orange 🔶",
 							"value": "orange"
 						},
 						{
-							"name": "green",
+							"name": "Green 🟢",
 							"value": "green"
 						}
 					]
@@ -841,15 +841,15 @@ client.api.applications(client.user.id).guilds('695793841592336426').commands.po
 					"required": true, 
 					"choices": [
 						{
-							"name": "red",
+							"name": "Red 🟥",
 							"value": "red"
 						},
 						{
-							"name": "orange",
+							"name": "Orange 🔶",
 							"value": "orange"
 						},
 						{
-							"name": "green",
+							"name": "Green 🟢",
 							"value": "green"
 						}
 					]
@@ -1209,150 +1209,6 @@ const thisplayer = args[0].value
 		else { message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) }
 	} 
 	}) 
-
-
-
-//square colour change commands (!red, !orange, !green)
-client.on('message', async message => {
-
-	if (message.content.startsWith("!red") || message.content.startsWith("!green") || message.content.startsWith("!orange")) {
-		if (sqlocks.q7locked === false || sqlocks.q6locked === false || sqlocks.q5locked === false) {
-			//try all the queues. Maximum is 1 plus 7 waiting
-			console.log(message.content + 'just entered the top of the stack above q7')
-			await bucket(message, sqlocks, 'q7locked', 'q6locked', 1000, 'q7').then(async message => {
-				console.log(message.content + ' passed from q7 to q6')
-				await bucket(message, sqlocks, 'q6locked', 'q5locked', 1000, 'q6').then(async message => {
-					console.log(message.content + ' passed from q6 to q5')
-					await bucket(message, sqlocks, 'q5locked', 'q4locked', 1000, 'q5').then(async message => {
-						console.log(message.content + ' passed from q5 to q4')
-						await bucket(message, sqlocks, 'q4locked', 'q3locked', 1000, 'q4').then(async message => {
-							console.log(message.content + ' passed from q4 to q3')
-							await bucket(message, sqlocks, 'q3locked', 'q2locked', 1000, 'q3').then(async message => {
-								console.log(message.content + ' passed from q3 to q2')
-								await bucket(message, sqlocks, 'q2locked', 'q1locked', 1000, 'q2').then(async message => {
-									console.log(message.content + ' passed from q2 to q1')
-									await bucket(message, sqlocks, 'q1locked', 'q0locked', 1000, 'q1').then(async message => {
-										console.log(message.content + ' passed from q1 to q0')
-
-										//queue 0
-										if (processingMaster === true && sqlocks.q0locked === false) {//if there is currently another command processingMaster and this queue isnt locked
-											sqlocks.q0locked = true; console.log("q0 locked")//lock this queue
-											//console.log('Message: ' + message.content + ' is about to go into the queue 0 waiting loop. processingMaster var was ' + processingMaster)
-											do {//while processingMaster = true, loop around in 1 second intervals
-												console.log('One loop in queue 0 for ' + message.content)
-												await delay(1000)
-											} while (processingMaster === true || processingEmoji === true)
-											sqlocks.q0locked = false; console.log("q0 unlocked")//unlock this queue
-										}//end queue 0
-										console.log(message.content + 'has just passed all queues')//message is now free to enter rest of function
-
-										//initalise isuser and isteam as false
-										var isuser = false;//is the command about a user
-										var isteam = false;//is the command about a team
-										var ishex = false;//is the command a hex code? 
-										var checkeduser = false//is the user a valid user?
-										var checkedteam = false//is the team a valid team? 
-										var command = ""
-
-										//what user or team was mentioned?
-										if (message.mentions.users.size !== 0) {//if a user was mentioned isuser=true
-											var mentioneduser = getname(message); isuser = true;
-										} else if (message.mentions.roles.size !== 0) {//if a team was mentioned. Isteam = true
-											var mentionedrole = message.mentions.roles.first().name; isteam = true;
-										} else {
-
-											//check if HEx input
-											let themsg = message.content; let argString = themsg.substr(themsg.indexOf(' ') + 1); let argArr = argString.split(' '); let [thiscommand] = argArr;
-											console.log('command is: ' + thiscommand)
-											thiscommand = thiscommand.toUpperCase()
-											if (thiscommand.length === 3 && thiscommand.startsWith("+")) {
-												ishex = true
-												command = thiscommand
-												console.log('found a +3 command')
-											}
-
-										}//else do nothing
-
-										if (isuser == true) { checkeduser = await checkifvaliduser(message, mentioneduser) }//check if the user is on a home team
-										if (isteam == true) { checkedteam = await checkifvalidteam(message, mentionedrole) }//check if the role mentioned is one of the home team roles
-
-
-										//!red 🟥
-										if (message.content.startsWith("!red") && processingMaster === false) {
-
-											startthinking(18500, message)//lock out any more commands for x millisecond
-
-											//if mention is a valid user
-											if (isuser == true && checkeduser == true) {
-												await updateplayersquare("🟢", "🔶", "🟥", mentioneduser, message, 'sq')
-												thankyou(message.member.displayName, mentioneduser, "red", message)
-											}//end if isuser = true
-											//if command is a hex
-											if (ishex === true) {
-												await updateHEXplayersquare("🟢", "🔶", "🟥", message, command, 'sq')
-												thankyou(message.member.displayName, command, "red", message)
-											}//end if ishex = true
-											//if mentioned is a valid team
-											if (isteam == true && checkedteam == true) {
-												await updateteamsquare("🟢", "🔶", "🟥", mentionedrole, message, 'sq')
-												thankyou(message.member.displayName, mentionedrole, "red", message)
-											}//end if isteam = true
-										}//end !red
-
-										//!orange 🔶
-										if (message.content.startsWith("!orange") && processingMaster === false) {
-
-											startthinking(18500, message)//lock out any more commands for x millisecond
-
-											//if mention is a valid user
-											if (isuser == true && checkeduser == true) {
-												await updateplayersquare("🟢", "🟥", "🔶", mentioneduser, message, 'sq')
-												thankyou(message.member.displayName, mentioneduser, "orange", message)
-											}//end if isuser = true
-											//if ishex = true
-											if (ishex === true) {
-												await updateHEXplayersquare("🟢", "🟥", "🔶", message, command, 'sq')
-												thankyou(message.member.displayName, command, "red", message)
-											}//end if ishex = true
-											//if mentioned is a valid team
-											if (isteam == true && checkedteam == true) {
-												await updateteamsquare("🟢", "🟥", "🔶", mentionedrole, message, 'sq')
-												thankyou(message.member.displayName, mentionedrole, "orange", message)
-											}//end if isteam = true
-										}//end !orange
-
-										//!green 🟢
-										if (message.content.startsWith("!green") && processingMaster == false) {
-
-											startthinking(18500, message)//lock out any more commands for x millisecond
-
-											//if mention is a valid user
-											if (isuser == true && checkeduser == true) {
-												await updateplayersquare("🔶", "🟥", "🟢", mentioneduser, message, 'sq')
-												thankyou(message.member.displayName, mentioneduser, "green", message)
-											}//end if isuser = true
-											//if ishex = true
-											if (ishex === true) {
-												await updateHEXplayersquare("🔶", "🟥", "🟢", message, command, 'sq')
-												thankyou(message.member.displayName, command, "red", message)
-											}//end if ishex = true
-											//if mentioned is a valid team
-											if (isteam == true && checkedteam == true) {
-												await updateteamsquare("🔶", "🟥", "🟢", mentionedrole, message, 'sq')
-												thankyou(message.member.displayName, mentionedrole, "green", message)
-											}//end if isteam = true
-										}//end !green
-									})//end q1
-								})//end q2
-							})//end q3
-						})//end q4
-					})//end q5
-				})//end q6
-			})//end q7
-		}//end if q7, q6 or 15 is locked
-		else { message.channel.send('Woah, Woah, Woah! What are you trying to do to me? That\'s far too many commands silly human! You are going to have to wait 15 seconds and send this one again: ' + message.content) }
-	}//end if !red !orange !green
-});//end client on message
 
 /*
 //=======================================
