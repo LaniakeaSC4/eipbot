@@ -864,7 +864,19 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 
 	if (command === 'start') {
 		console.log('Start command!')
-await interaction.reply({ content: 'Start command recieved. Setting up your coop board!', ephemeral: true })
+		
+		
+		client.api.interactions(interaction.id, interaction.token).callback.post({
+                data: {
+                    type: 4,
+                    data: { content: 'Start command recieved. Setting up your coop board!', ephemeral: true } 
+                } 
+                })
+		
+		
+		
+		
+
 		if (processingMaster === false) {
 
 			//lock out any more commands for x milliseconds
@@ -971,7 +983,14 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
 	
 
 	if (command === 'updateteam') {
-await interaction.reply({ content: 'Command recieved. Updating team', ephemeral: true })
+
+client.api.interactions(interaction.id, interaction.token).callback.post({
+                data: {
+                    type: 4,
+                    data: { content: 'Command recieved. Updating team.!', ephemeral: true } 
+                } 
+                }) 
+
 const thisteam = args[0].value
 	const updateto = args[1].value
 
@@ -1082,7 +1101,14 @@ const command = interaction.data.name.toLowerCase()
 	
 
 	if (command === 'updateplayer') {
-await interaction.reply({ content: 'Command recieved. Updating player', ephemeral: true })
+
+client.api.interactions(interaction.id, interaction.token).callback.post({
+                data: {
+                    type: 4,
+                    data: { content: 'Command recieved. Updating player.', ephemeral: true } 
+                } 
+                })
+
 const thisplayer = args[0].value
 	const updateto = args[1].value
 
